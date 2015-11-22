@@ -1,4 +1,7 @@
 angular.module("app", ["ngX"]);
+
+
+
 (function () {
 
     "use strict";
@@ -13,6 +16,38 @@ angular.module("app", ["ngX"]);
             "<div data-ng-view>",
             "</div>",
             "<wb-footer></wb-footer>",
+        ].join(" ")
+    });
+
+
+})();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
+        component: function CatererComponent() {
+
+        },
+        template: [
+            "<div class='caterer'>",
+            "</div>"
+        ].join(" ")
+    });
+
+
+})();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
+        component: function CustomerComponent() {
+
+        },
+        template: [
+            "<div class='customer'>",
+            "</div>"
         ].join(" ")
     });
 
@@ -68,9 +103,68 @@ angular.module("app", ["ngX"]);
 
 
 })();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
+        component: function LoginComponent() {
+
+        },
+        template: [
+            "<div class='login'>",
+            "<wb-login-form></wb-login-form>",
+            "</div>"
+        ].join(" ")
+    });
 
 
+})();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
+        component: function RegistrationComponent() {
+
+        },
+        template: [
+            "<div class='registration'>",
+            "</div>"
+        ].join(" ")
+    });
 
 
+})();
 
+
+(function () {
+
+    "use strict";
+
+    function eventEmitter(guid) {
+
+        var self = this;
+
+        self.listeners = [];
+
+        self.addListenter = function () {
+
+        };
+
+        self.removeListener = function () {
+
+        }
+
+        self.emit = function () {
+
+        }
+
+
+        return self;
+    }
+
+    angular.module("app").service("dispathcer", ["guid", eventEmitter]);
+
+})();
 
