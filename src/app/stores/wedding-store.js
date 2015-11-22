@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function weddingStore(dispatcher, WEDDING_ACTIONS) {
+    function weddingStore(dispatcher, guid, WEDDING_ACTIONS) {
 
         var self = this;
         self.dispatcher = dispatcher;

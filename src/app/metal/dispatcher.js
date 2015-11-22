@@ -29,7 +29,7 @@
         self.emit = function (options) {
             for (var i = 0; i < self.listeners.length; i++) {
                 if (self.listeners[i].actionType === options.actionType) {
-                    self.listeners[i].callback(options.callbackOptions);
+                    self.listeners[i].callback(options.options);
                 }
             }
         }

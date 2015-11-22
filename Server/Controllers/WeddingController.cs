@@ -42,7 +42,8 @@ namespace WeddingBidders.Server.Controllers
             var wedding = new Wedding() { NumberOfGuests = dto.NumberOfGuests };
             repository.Add(wedding);
             uow.SaveChanges();
-            return Ok();
+            dto.Id = wedding.Id;
+            return Ok(dto);
         }
 
         [HttpPut]

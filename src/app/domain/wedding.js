@@ -10,10 +10,10 @@
         self.weddingActions = weddingActions;
         self.weddingStore = weddingStore;
 
-        self.listenerId = self.dispatcher.addListener(function (options) {
-            switch (options.actionType) {
-                case "CHANGE":
-                    break;
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                alert("works");
             }
         });
 
