@@ -1,0 +1,26 @@
+{
+  "name": "wedding-bidders",
+  "version": "1.0.0",
+  "description": "0.0.1",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QuinntyneBrown/wedding-bidders.git"
+  },
+  "author": "quinntynebrown",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/QuinntyneBrown/wedding-bidders/issues"
+  },
+  "homepage": "https://github.com/QuinntyneBrown/wedding-bidders#readme",
+  "dependencies": {
+    "angular": "^1.4.8",
+    "angular-route": "^1.4.8",
+    "jquery": "^2.1.4",
+    "ng-x": "^0.3.70",
+    "ng-x-components": "0.0.7"
+  }
+}
