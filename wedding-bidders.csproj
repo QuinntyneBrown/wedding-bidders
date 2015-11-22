@@ -214,6 +214,7 @@
     <Content Include="src\app\actions\customer-actions.js" />
     <Content Include="src\app\actions\wedding-actions.js" />
     <Content Include="src\app\app.module.js" />
+    <Content Include="src\app\components\wb-about.js" />
     <Content Include="src\app\components\wb-app.js" />
     <Content Include="src\app\components\wb-banner.js" />
     <Content Include="src\app\components\wb-edit-wedding-form.js" />

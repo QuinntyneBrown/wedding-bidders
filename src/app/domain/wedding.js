@@ -2,12 +2,20 @@
 
     "use strict";
 
-    function wedding(weddingActions, weddingStore) {
+    function wedding(dispatcher, weddingActions, weddingStore) {
         var self = this;
         self.id = null;
+        self.dispatcher = dispatcher;
         self.numberOfGuests = 0;
         self.weddingActions = weddingActions;
         self.weddingStore = weddingStore;
+
+        self.listenerId = self.dispatcher.addListener(function (options) {
+            switch (options.actionType) {
+                case "CHANGE":
+                    break;
+            }
+        });
 
         self.createInstance = function (options) {
             var instance = new wedding(self.weddingActions, self.weddingStore);
@@ -26,13 +34,12 @@
 
         }
 
-        self.listenerId = weddingStore.addListener({ callback: self.onStoreUpdate });
 
-        self.destroy = function () { weddingStore.removeListener({ id: self.listenerId }); }
+        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
 
         return self;
     }
 
-    angular.module("app").service("wedding", ["weddingActions","weddingStore",wedding]);
+    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
 
 })();

@@ -11,10 +11,14 @@
 
         self.add = function (options) {
             var newGuid = guid();
-            weddingService.add({ model: options.model}).then(function(results) {
+            weddingService.add({
+                data: {
+                    numberOfGuests: options.model.numberOfGuests
+                }
+            }).then(function (results) {
                 self.dispatcher.emit({
-                    action: self.WEDDING_ACTIONS.WEDDING_ADDED,
-                    model: model
+                    actionType: self.WEDDING_ACTIONS.ADD_WEDDING,
+                    options: { data: results.data }
                 })
             });
            

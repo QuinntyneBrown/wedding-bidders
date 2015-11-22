@@ -15,6 +15,7 @@
             "<div class='wbNavigation'>",
             "<a href='#/wedding/create'>SUBMIT WEDDING</a>",
             "<a href='#/vendors'>VENDORS</a>",
+            "<a href='#/about'>ABOUT</a>",
             "</div>"
         ].join(" ")
     });

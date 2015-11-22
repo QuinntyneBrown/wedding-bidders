@@ -22,5 +22,11 @@
     "config": {
       "componentName": "vendorsComponent"
     }
+  },
+  {
+    "when": "/about",
+    "config": {
+      "componentName": "aboutComponent"
+    }
   }
 ]

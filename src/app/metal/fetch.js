@@ -5,7 +5,7 @@
     function fetch($http, $q, localStorageManager) {
 
         var self = this;
-        self.$http = self.$http;
+        self.$http = $http;
         self.$q = $q;
         self.localStorageManager = localStorageManager;
 
