@@ -4,8 +4,7 @@
 
     function EditWeddingComponent(wedding) {
         var self = this;
-
-        
+        self.wedding = wedding;        
         return self;
     }
 
@@ -15,7 +14,7 @@
         providers: ["wedding"],
         template: [
             "<div class='editWeddingComponent'>",
-            "<edit-wedding-form></edit-wedding-form>",
+            "<edit-wedding-form model='vm.wedding'></edit-wedding-form>",
             "</div>"
         ].join(" ")
     });

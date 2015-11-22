@@ -9,7 +9,7 @@
         self.$q = $q;
         self.localStorageManager = localStorageManager;
 
-        self.inMemoryCache= any = {};
+        self.inMemoryCache = {};
 
         self.fromCacheOrService = function (options) {
             var deferred = self.$q.defer();

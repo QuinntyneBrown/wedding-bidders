@@ -4,15 +4,10 @@
 
     ngX.Component({
         selector:"edit-wedding-form",
-        component: function EditWeddingFormComponent(model) {
+        component: function EditWeddingFormComponent() {
             var self = this;
 
-            self.model = {};
-            self.model.numberOfGuests = 0;
-
-            self.onSubmit = function ($form) {
-
-            }
+            self.onSubmit = self.model.add;
 
             return self;
         },

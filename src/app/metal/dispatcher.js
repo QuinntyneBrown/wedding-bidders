@@ -8,7 +8,7 @@
 
         self.listeners = [];
 
-        self.addListenter = function () {
+        self.addListener = function (options) {
 
         };
 
@@ -24,6 +24,6 @@
         return self;
     }
 
-    angular.module("app").service("dispathcer", ["guid", eventEmitter]);
+    angular.module("app").service("dispatcher", ["guid", eventEmitter]);
 
 })();

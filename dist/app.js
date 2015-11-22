@@ -128,15 +128,10 @@ angular.module("app").value("WEDDING_ACTIONS", {
 
     ngX.Component({
         selector:"edit-wedding-form",
-        component: function EditWeddingFormComponent(model) {
+        component: function EditWeddingFormComponent() {
             var self = this;
 
-            self.model = {};
-            self.model.numberOfGuests = 0;
-
-            self.onSubmit = function ($form) {
-
-            }
+            self.onSubmit = self.model.add;
 
             return self;
         },
@@ -171,8 +166,7 @@ angular.module("app").value("WEDDING_ACTIONS", {
 
     function EditWeddingComponent(wedding) {
         var self = this;
-
-        
+        self.wedding = wedding;        
         return self;
     }
 
@@ -182,7 +176,7 @@ angular.module("app").value("WEDDING_ACTIONS", {
         providers: ["wedding"],
         template: [
             "<div class='editWeddingComponent'>",
-            "<edit-wedding-form></edit-wedding-form>",
+            "<edit-wedding-form model='vm.wedding'></edit-wedding-form>",
             "</div>"
         ].join(" ")
     });
@@ -390,13 +384,38 @@ angular.module("app").value("WEDDING_ACTIONS", {
 
     "use strict";
 
-    function wedding() {
+    function wedding(weddingActions, weddingStore) {
         var self = this;
+        self.id = null;
+        self.numberOfGuests = 0;
+        self.weddingActions = weddingActions;
+        self.weddingStore = weddingStore;
+
+        self.createInstance = function (options) {
+            var instance = new wedding(self.weddingActions, self.weddingStore);
+            if (options.data) {
+                instance.id = options.data.id;
+                instance.numberOfGuests = options.data.numberOfGuests;
+            }
+            return instance;
+        }
+        
+        self.add = function () {
+            weddingActions.add({ model: self });
+        }
+
+        self.onStoreUpdate = function () {
+
+        }
+
+        self.listenerId = weddingStore.addListener({ callback: self.onStoreUpdate });
+
+        self.destroy = function () { weddingStore.removeListener({ id: self.listenerId }); }
 
         return self;
     }
 
-    angular.module("app").service("wedding", [wedding]);
+    angular.module("app").service("wedding", ["weddingActions","weddingStore",wedding]);
 
 })();
 (function () {
@@ -422,7 +441,7 @@ angular.module("app").value("WEDDING_ACTIONS", {
 
         self.listeners = [];
 
-        self.addListenter = function () {
+        self.addListener = function (options) {
 
         };
 
@@ -438,7 +457,7 @@ angular.module("app").value("WEDDING_ACTIONS", {
         return self;
     }
 
-    angular.module("app").service("dispathcer", ["guid", eventEmitter]);
+    angular.module("app").service("dispatcher", ["guid", eventEmitter]);
 
 })();
 (function () {
@@ -452,7 +471,7 @@ angular.module("app").value("WEDDING_ACTIONS", {
         self.$q = $q;
         self.localStorageManager = localStorageManager;
 
-        self.inMemoryCache= any = {};
+        self.inMemoryCache = {};
 
         self.fromCacheOrService = function (options) {
             var deferred = self.$q.defer();
@@ -531,3 +550,42 @@ angular.module("app").value("WEDDING_ACTIONS", {
 })();
 
 
+(function () {
+
+    "use strict";
+
+    function weddingStore(dispatcher, WEDDING_ACTIONS) {
+
+        var self = this;
+        self.dispatcher = dispatcher;
+
+        self.dispatcher.addListener(function (options) {
+            switch (options.actionType) {
+                case WEDDING_ACTIONS.ADD_ITEM:
+                    self.addItem(action.item);
+                    self.currentWedding;
+                    self.emitChange();
+                    break;
+            }
+
+        });
+
+        self.weddings = [];
+
+        self.currentWedding = null;
+
+        self.addListener = self.dispatcher.addListener
+
+        self.addItem = function (options) {
+            self.weddings.push(options.data);
+        }
+
+        self.emitChange = function () {
+            self.dispatcher.emit("change");
+        }
+
+        return self;
+    }
+
+    angular.module("app").service("weddingStore", ["dispatcher","guid","WEDDING_ACTIONS",weddingStore]);
+})();
