@@ -13,7 +13,7 @@
         ].join(" \n "),
         template: [
             "<div class='wbNavigation'>",
-            "<a href='#/bid/create'>SUBMIT FOR BID</a>",
+            "<a href='#/wedding/create'>SUBMIT WEDDING</a>",
             "<a href='#/vendors'>VENDORS</a>",
             "</div>"
         ].join(" ")

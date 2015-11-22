@@ -2,10 +2,44 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
     $routeProvider.buildFromUrl({ url: "routes.json" });
     apiEndpointProvider.configure("/api");
 }]);
+angular.module("app").value("WEDDING_ACTIONS", {
+    ADD_WEDDING: "WEDDING_ADDED",
+});
 
 
 
+(function () {
 
+    "use strict";
+
+
+    function weddingActions(dispatcher, guid, weddingService, WEDDING_ACTIONS) {
+
+        var self = this;
+        self.dispatcher = dispatcher;
+        self.WEDDING_ACTIONS = WEDDING_ACTIONS;
+
+        self.add = function (options) {
+            var newGuid = guid();
+            weddingService.add({ model: options.model}).then(function(results) {
+                self.dispatcher.emit({
+                    action: self.WEDDING_ACTIONS.WEDDING_ADDED,
+                    model: model
+                })
+            });
+           
+            return newGuid;
+        };
+
+
+        return self;
+    }
+
+    angular.module("app")
+        .service("weddingActions", ["dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
+
+
+})();
 (function () {
 
     "use strict";
@@ -92,19 +126,63 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 
     "use strict";
 
-    function EditBidComponent() {
+    ngX.Component({
+        selector:"edit-wedding-form",
+        component: function EditWeddingFormComponent(model) {
+            var self = this;
+
+            self.model = {};
+            self.model.numberOfGuests = 0;
+
+            self.onSubmit = function ($form) {
+
+            }
+
+            return self;
+        },
+        styles: [
+            " .editWeddingForm { } "
+        ].join(" \n "),
+        inputs:["model"],
+        template: [
+            "<form class='editWeddingForm' name='editWeddingForm'>",
+
+            "<div class='formControl'>",
+            "<label>Number Of Guests:</label>",
+            "<input type='text' data-ng-model='vm.model.numberOfGuests'></input>",
+            "</div>",
+
+            "<div class='formControl'>",
+            "</div>",
+
+            "<div class='formControl'>",
+            "</div>",
+
+            "<button data-ng-click='vm.onSubmit()'>Submit</button>",
+            "</form>"
+        ].join(" ")
+    });
+
+
+})();
+(function () {
+
+    "use strict";
+
+    function EditWeddingComponent(wedding) {
         var self = this;
 
+        
         return self;
     }
 
     ngX.Component({
-        component: EditBidComponent,
-        routes: ["/bid/edit/:id","/bid/create"],
-        providers: [],
+        component: EditWeddingComponent,
+        routes: ["/wedding/edit/:id","/wedding/create"],
+        providers: ["wedding"],
         template: [
-            "<div class='editBidComponent'>",
-            "<h1>Edit Bid</h1>",
+            "<div class='editWeddingComponent'>",
+            "<edit-wedding-form></edit-wedding-form>",
             "</div>"
         ].join(" ")
     });
@@ -212,7 +290,7 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
         ].join(" \n "),
         template: [
             "<div class='wbNavigation'>",
-            "<a href='#/bid/create'>SUBMIT FOR BID</a>",
+            "<a href='#/wedding/create'>SUBMIT WEDDING</a>",
             "<a href='#/vendors'>VENDORS</a>",
             "</div>"
         ].join(" ")
@@ -282,8 +360,58 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 
 
 
+(function () {
 
+    "use strict";
 
+    function caterer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("caterer", [caterer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function customer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("customer", [customer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function wedding() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("wedding", [wedding]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function weddingBid() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("weddingBid", [weddingBid]);
+
+})();
 (function () {
 
     "use strict";
@@ -313,7 +441,93 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
     angular.module("app").service("dispathcer", ["guid", eventEmitter]);
 
 })();
+(function () {
+
+    "use strict";
+
+    function fetch($http, $q, localStorageManager) {
+
+        var self = this;
+        self.$http = self.$http;
+        self.$q = $q;
+        self.localStorageManager = localStorageManager;
+
+        self.inMemoryCache= any = {};
+
+        self.fromCacheOrService = function (options) {
+            var deferred = self.$q.defer();
+            var cachedData = self.localStorageManager.get(self.getCacheKey(options));
+            if (!cachedData) {
+                self.fromService(options).then( function (results) {
+                    deferred.resolve(results);
+                }).catch(function (error) {
+                    deferred.reject(error);
+                });
+            } else {
+                deferred.resolve(cachedData.value);
+            }
+            return deferred.promise;
+        }
+
+        self.fromInMemoryCacheOrService = function (options) {
+            var deferred = self.$q.defer();
+
+            var cachedData = self.inMemoryCache[self.getCacheKey(options)];
+
+            if (!cachedData) {
+                self.$http({ method: options.method, url: options.url, data: options.data, params: options.params }).then( function (results) {
+                    self.inMemoryCache[self.getCacheKey(options)] = results;
+                    deferred.resolve(results);
+                }).catch( function (error) {
+                    deferred.reject(error);
+                });
+            } else {
+                deferred.resolve(cachedData);
+            }
+            return deferred.promise;
+        }
+
+        self.fromService = function (options) {
+            var deferred = self.$q.defer();
+
+            self.$http({ method: options.method, url: options.url, data: options.data, params: options.params }).then( function (results) {
+                deferred.resolve(results);
+            }).catch(function (error) {
+                deferred.reject(error);
+            });
+
+            return deferred.promise;
+        }
+
+        self.getCacheKey = function (options) {
+            return options.key || options.url + JSON.stringify(options.params) + JSON.stringify(options.data);
+        }
+
+        self.invalidateCache = function (cacheKey) {
+            //TODO= Implement
+        }
+
+        return self;
+    }
+
+    angular.module("app").service("fetch", ["$http","$q","localStorageManager",fetch]);
+
+})();
 
 
+
+(function () {
+
+    "use strict";
+
+    function weddingService() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("weddingService", ["fetch",weddingService]);
+
+})();
 
 

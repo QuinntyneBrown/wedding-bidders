@@ -21,6 +21,8 @@ namespace WeddingBidders.Server.Data.Contracts
 
         IRepository<Gallery> Galleries { get; }
 
+        IRepository<Wedding> Weddings { get; }
+
         void SaveChanges();
     }
 }

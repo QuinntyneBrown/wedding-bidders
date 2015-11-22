@@ -215,10 +215,10 @@
     <Content Include="src\app\app.module.js" />
     <Content Include="src\app\components\wb-app.js" />
     <Content Include="src\app\components\wb-banner.js" />
-    <Content Include="src\app\components\wb-bid-form.js" />
+    <Content Include="src\app\components\wb-edit-wedding-form.js" />
     <Content Include="src\app\components\wb-caterer.js" />
     <Content Include="src\app\components\wb-customer.js" />
-    <Content Include="src\app\components\wb-edit-bid.js" />
+    <Content Include="src\app\components\wb-edit-wedding.js" />
     <Content Include="src\app\components\wb-footer.js" />
     <Content Include="src\app\components\wb-header.js" />
     <Content Include="src\app\components\wb-home.js" />
@@ -229,7 +229,10 @@
     <Content Include="src\app\components\wb-vendors.js" />
     <Content Include="src\app\domain\caterer.js" />
     <Content Include="src\app\domain\customer.js" />
+    <Content Include="src\app\domain\wedding.js" />
+    <Content Include="src\app\domain\weddingBid.js" />
     <Content Include="src\app\metal\dispatcher.js" />
+    <Content Include="src\app\metal\fetch.js" />
     <Content Include="src\app\services\bidService.js" />
     <Content Include="src\app\services\customerService.js" />
     <Content Include="src\app\services\vendorService.js" />
@@ -260,6 +263,7 @@
     <Compile Include="Server\Dtos\SignInDto.cs" />
     <Compile Include="Server\Dtos\TokenDto.cs" />
     <Compile Include="Server\Dtos\UserDto.cs" />
+    <Compile Include="Server\Dtos\WeddingDto.cs" />
     <Compile Include="Server\Models\Account.cs" />
     <Compile Include="Server\Models\BaseEntity.cs" />
     <Compile Include="Server\Models\Caterer.cs" />
@@ -274,17 +278,20 @@
     <Compile Include="Server\Models\Tenant.cs" />
     <Compile Include="Server\Models\User.cs" />
     <Compile Include="Server\Models\Wedding.cs" />
+    <Compile Include="Server\Models\WeddingBid.cs" />
     <Compile Include="Server\Services\BaseService.cs" />
     <Compile Include="Server\Services\Contracts\IEncryptionService.cs" />
     <Compile Include="Server\Services\Contracts\IIdentityService.cs" />
     <Compile Include="Server\Services\Contracts\IMembershipService.cs" />
     <Compile Include="Server\Services\Contracts\ISecurityService.cs" />
     <Compile Include="Server\Services\Contracts\ISessionService.cs" />
+    <Compile Include="Server\Services\Contracts\IWeddingService.cs" />
     <Compile Include="Server\Services\EncryptionService.cs" />
     <Compile Include="Server\Services\IdentityService.cs" />
     <Compile Include="Server\Services\MembershipService.cs" />
     <Compile Include="Server\Services\SecurityService.cs" />
     <Compile Include="Server\Services\SessionService.cs" />
+    <Compile Include="Server\Services\WeddingService.cs" />
     <Compile Include="Server\UnityConfiguration.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

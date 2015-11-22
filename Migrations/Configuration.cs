@@ -9,7 +9,7 @@ namespace WeddingBidders.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(WeddingBidders.Server.Data.WeddingBiddersContext context)

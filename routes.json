@@ -6,15 +6,15 @@
     }
   },
   {
-    "when": "/bid/create",
+    "when": "/wedding/create",
     "config": {
-      "componentName": "editBidComponent"
+      "componentName": "editWeddingComponent"
     }
   },
   {
-    "when": "/bid/edit/:id",
+    "when": "/wedding/edit/:id",
     "config": {
-      "componentName": "editBidComponent"
+      "componentName": "editWeddingComponent"
     }
   },
   {
