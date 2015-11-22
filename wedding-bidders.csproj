@@ -196,6 +196,7 @@
     <Content Include="package.json" />
     <Content Include="commonConfiguration.config" />
     <Content Include="connectionStrings.config" />
+    <Content Include="routes.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -212,11 +213,19 @@
     <Content Include="src\app\actions\customer-actions.js" />
     <Content Include="src\app\app.module.js" />
     <Content Include="src\app\components\wb-app.js" />
+    <Content Include="src\app\components\wb-banner.js" />
+    <Content Include="src\app\components\wb-caterer.js" />
+    <Content Include="src\app\components\wb-customer.js" />
     <Content Include="src\app\components\wb-footer.js" />
     <Content Include="src\app\components\wb-header.js" />
     <Content Include="src\app\components\wb-home.js" />
+    <Content Include="src\app\components\wb-login.js" />
+    <Content Include="src\app\components\wb-navigation.js" />
+    <Content Include="src\app\components\wb-registration.js" />
+    <Content Include="src\app\components\wb-top-banner.js" />
     <Content Include="src\app\domain\caterer.js" />
     <Content Include="src\app\domain\customer.js" />
+    <Content Include="src\app\metal\dispatcher.js" />
     <Content Include="src\app\stores\caterer-store.js" />
     <Content Include="src\app\stores\customer-store.js" />
     <Content Include="Web.config" />
@@ -269,6 +278,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dist\" />
+    <Folder Include="tests\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

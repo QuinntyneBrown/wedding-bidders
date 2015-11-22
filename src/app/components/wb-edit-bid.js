@@ -2,18 +2,18 @@
 
     "use strict";
 
-    function HomeComponent() {
+    function EditBidComponent() {
         var self = this;
 
         return self;
     }
 
     ngX.Component({
-        component: HomeComponent,
-        route: "/",
+        component: EditBidComponent,
+        routes: ["/bid/edit/:id","/bid/create"],
         providers: [],
         template: [
-            "<div class='home'>",            
+            "<div class='editBidComponent'>",
             "</div>"
         ].join(" ")
     });

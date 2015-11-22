@@ -1,10 +1,25 @@
 ﻿body, html {
-    background-color:#ededed;
+    background-color: #ededed;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
 }
 
 h1 {
     font-family: 'Great Vibes', cursive;
-    font-size:5em;
+    font-size:2em;
     color:#2a2a2a;
     font-weight:100;
+}
+
+
+.wbApp {
+    width:1024px;
+    margin:0 auto;
+    background-color:#FFF;
+    padding-right:15px;
+    padding-left:15px;
+}
+
+.mainContent {
+    min-height:400px;
 }

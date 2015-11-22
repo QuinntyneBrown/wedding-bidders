@@ -7,6 +7,9 @@
         component: function FooterComponent() {
 
         },
+        styles:[
+            " .wbFooter { height: 300px; } "
+        ].join(" /n "),
         template: [
             "<div class='wbFooter'>",
             "</div>"

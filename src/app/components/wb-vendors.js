@@ -2,18 +2,18 @@
 
     "use strict";
 
-    function HomeComponent() {
+    function VendorsComponent() {
         var self = this;
 
         return self;
     }
 
     ngX.Component({
-        component: HomeComponent,
-        route: "/",
+        component: VendorsComponent,
+        route: "/vendors",
         providers: [],
         template: [
-            "<div class='home'>",            
+            "<div class='vendors'>",
             "</div>"
         ].join(" ")
     });

@@ -8,10 +8,12 @@
 
         },
         template: [
+            "<div class='wbApp'>",
             "<wb-header></wb-header>",
-            "<div data-ng-view>",
+            "<div class='mainContent' data-ng-view>",
             "</div>",
             "<wb-footer></wb-footer>",
+            "</div>"
         ].join(" ")
     });
 
