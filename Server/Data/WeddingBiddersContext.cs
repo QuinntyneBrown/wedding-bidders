@@ -13,7 +13,7 @@ namespace WeddingBidders.Server.Data
     public class WeddingBiddersContext : Common.Data.BaseDbContext, IWeddingBiddersContext
     {
         public WeddingBiddersContext()
-            : base("securityContext")
+            : base("weddingBiddersContext")
         {
             
         }
@@ -29,6 +29,10 @@ namespace WeddingBidders.Server.Data
         public DbSet<Profile> Profiles { get; set; }
 
         public DbSet<Session> Sessions { get; set; }
+
+        public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Caterer> Caterers { get; set; }
 
     }
 }

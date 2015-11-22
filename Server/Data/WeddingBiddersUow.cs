@@ -23,6 +23,10 @@ namespace WeddingBidders.Server.Data
 
         public IRepository<Session> Sessions { get { return GetStandardRepo<Session>(); } }
 
+        public IRepository<Customer> Customers { get { return GetStandardRepo<Customer>(); } }
+
+        public IRepository<Caterer> Caterers { get { return GetStandardRepo<Caterer>(); } }
+
         public void SaveChanges()
         {
             

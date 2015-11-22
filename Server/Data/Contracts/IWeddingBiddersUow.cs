@@ -13,6 +13,10 @@ namespace WeddingBidders.Server.Data.Contracts
 
         IRepository<Session> Sessions { get; }
 
+        IRepository<Customer> Customers { get; }
+
+        IRepository<Caterer> Caterers { get; }
+
         void SaveChanges();
     }
 }
