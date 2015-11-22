@@ -5,6 +5,7 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 
 
 
+
 (function () {
 
     "use strict";
@@ -32,16 +33,23 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 
     ngX.Component({
         selector: "wb-banner",
-        component: function BannerComponent() {
+        component: function BannerComponent($location) {
+            var self = this;
 
+            self.goHome = function () {
+                $location.path("/");
+            };
+
+            return self;
         },
         styles: [
             " .wbBanner { height: 60px; } ",
-            " .wbBanner h1 { text-align: center; font-size: 3em; } "
+            " .wbBanner h1 { text-align: center; font-size: 3em; cursor: pointer; } "
         ].join(" \n "),
+        providers:["$location"],
         template: [
             "<div class='wbBanner'>",
-            "<h1>Wedding Bidders</h1>",
+            "<h1 data-ng-click='vm.goHome()'>Wedding Bidders</h1>",
             "</div>"
         ].join(" ")
     });
@@ -84,13 +92,38 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 
     "use strict";
 
+    function EditBidComponent() {
+        var self = this;
+
+        return self;
+    }
+
+    ngX.Component({
+        component: EditBidComponent,
+        routes: ["/bid/edit/:id","/bid/create"],
+        providers: [],
+        template: [
+            "<div class='editBidComponent'>",
+            "<h1>Edit Bid</h1>",
+            "</div>"
+        ].join(" ")
+    });
+
+})();
+
+
+
+(function () {
+
+    "use strict";
+
     ngX.Component({
         selector: "wb-footer",
         component: function FooterComponent() {
 
         },
         styles:[
-            " .wbFooter { height: 300px; } "
+            " .wbFooter { height: 300px; background-color: #222; } "
         ].join(" /n "),
         template: [
             "<div class='wbFooter'>",
@@ -179,8 +212,8 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
         ].join(" \n "),
         template: [
             "<div class='wbNavigation'>",
-            "<a href=''>SUBMIT FOR BID</a>",
-            "<a href=''>VENDORS</a>",
+            "<a href='#/bid/create'>SUBMIT FOR BID</a>",
+            "<a href='#/vendors'>VENDORS</a>",
             "</div>"
         ].join(" ")
     });
@@ -224,6 +257,31 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 
 
 })();
+(function () {
+
+    "use strict";
+
+    function VendorsComponent() {
+        var self = this;
+
+        return self;
+    }
+
+    ngX.Component({
+        component: VendorsComponent,
+        route: "/vendors",
+        providers: [],
+        template: [
+            "<div class='vendors'>",
+            "<h1>Vendors</h1>",
+            "</div>"
+        ].join(" ")
+    });
+
+})();
+
+
+
 
 
 (function () {
@@ -255,4 +313,7 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
     angular.module("app").service("dispathcer", ["guid", eventEmitter]);
 
 })();
+
+
+
 

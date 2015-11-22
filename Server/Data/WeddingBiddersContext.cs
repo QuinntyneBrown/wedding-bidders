@@ -34,5 +34,9 @@ namespace WeddingBidders.Server.Data
 
         public DbSet<Caterer> Caterers { get; set; }
 
+        public DbSet<Photo> Photos { get; set; }
+
+        public DbSet<Gallery> Galleries { get; set; }
+
     }
 }

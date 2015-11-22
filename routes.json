@@ -4,5 +4,23 @@
     "config": {
       "componentName": "homeComponent"
     }
+  },
+  {
+    "when": "/bid/create",
+    "config": {
+      "componentName": "editBidComponent"
+    }
+  },
+  {
+    "when": "/bid/edit/:id",
+    "config": {
+      "componentName": "editBidComponent"
+    }
+  },
+  {
+    "when": "/vendors",
+    "config": {
+      "componentName": "vendorsComponent"
+    }
   }
 ]

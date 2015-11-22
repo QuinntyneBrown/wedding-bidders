@@ -7,6 +7,13 @@ namespace WeddingBidders.Server.Models
 {
     public class Caterer: BaseEntity
     {
+        public Caterer()
+        {
+            this.Galleries = new HashSet<Gallery>();
+        }
 
+        public int Name { get; set; }
+
+        public ICollection<Gallery> Galleries { get; set; }
     }
 }

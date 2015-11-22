@@ -17,6 +17,10 @@ namespace WeddingBidders.Server.Data.Contracts
 
         IRepository<Caterer> Caterers { get; }
 
+        IRepository<Photo> Photos { get; }
+
+        IRepository<Gallery> Galleries { get; }
+
         void SaveChanges();
     }
 }

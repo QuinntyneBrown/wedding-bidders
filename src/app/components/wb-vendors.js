@@ -14,6 +14,7 @@
         providers: [],
         template: [
             "<div class='vendors'>",
+            "<h1>Vendors</h1>",
             "</div>"
         ].join(" ")
     });

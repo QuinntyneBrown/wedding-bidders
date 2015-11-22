@@ -13,8 +13,8 @@
         ].join(" \n "),
         template: [
             "<div class='wbNavigation'>",
-            "<a href=''>SUBMIT FOR BID</a>",
-            "<a href=''>VENDORS</a>",
+            "<a href='#/bid/create'>SUBMIT FOR BID</a>",
+            "<a href='#/vendors'>VENDORS</a>",
             "</div>"
         ].join(" ")
     });

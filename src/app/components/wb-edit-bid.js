@@ -14,6 +14,7 @@
         providers: [],
         template: [
             "<div class='editBidComponent'>",
+            "<h1>Edit Bid</h1>",
             "</div>"
         ].join(" ")
     });

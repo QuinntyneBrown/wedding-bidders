@@ -2,6 +2,7 @@
     background-color: #ededed;
     width: 100%;
     font-family: 'Roboto', sans-serif;
+    color:#222;
 }
 
 h1 {
@@ -16,8 +17,6 @@ h1 {
     width:1024px;
     margin:0 auto;
     background-color:#FFF;
-    padding-right:15px;
-    padding-left:15px;
 }
 
 .mainContent {

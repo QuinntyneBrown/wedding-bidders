@@ -8,7 +8,7 @@
 
         },
         styles:[
-            " .wbFooter { height: 300px; } "
+            " .wbFooter { height: 300px; background-color: #222; } "
         ].join(" /n "),
         template: [
             "<div class='wbFooter'>",
