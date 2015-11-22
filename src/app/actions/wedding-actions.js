@@ -18,7 +18,10 @@
             }).then(function (results) {
                 self.dispatcher.emit({
                     actionType: self.WEDDING_ACTIONS.ADD_WEDDING,
-                    options: { data: results }
+                    options: {
+                        data: results,
+                        id: newGuid
+                    }                    
                 })
             });
            

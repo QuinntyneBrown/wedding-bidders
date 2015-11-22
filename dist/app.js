@@ -28,7 +28,10 @@ angular.module("app").value("WEDDING_ACTIONS", {
             }).then(function (results) {
                 self.dispatcher.emit({
                     actionType: self.WEDDING_ACTIONS.ADD_WEDDING,
-                    options: { data: results }
+                    options: {
+                        data: results,
+                        id: newGuid
+                    }                    
                 })
             });
            
@@ -184,16 +187,25 @@ angular.module("app").value("WEDDING_ACTIONS", {
 
     "use strict";
 
-    function EditWeddingComponent(wedding) {
+    function EditWeddingComponent($location,dispatcher,wedding) {
         var self = this;
-        self.wedding = wedding;        
+        self.wedding = wedding;
+        self.listenerId = dispatcher.addListener({
+            actionType: "MODEL_ADDED", callback: function (options) {
+                $location.path("/wedding/edit/" + options.id)
+            }
+        });
+
+        self.onDestroy = function () {
+
+        };
         return self;
     }
 
     ngX.Component({
         component: EditWeddingComponent,
         routes: ["/wedding/edit/:id","/wedding/create"],
-        providers: ["wedding"],
+        providers: ["$location","dispatcher", "wedding"],
         template: [
             "<div class='editWeddingComponent'>",
             "<edit-wedding-form model='vm.wedding'></edit-wedding-form>",
@@ -416,7 +428,10 @@ angular.module("app").value("WEDDING_ACTIONS", {
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
             callback: function (options) {
-                alert("works");
+                if (self.addActionId === options.id) {
+                    alert(self.weddingStore.currentWedding.id);
+                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
+                }
             }
         });
 
@@ -430,7 +445,7 @@ angular.module("app").value("WEDDING_ACTIONS", {
         }
         
         self.add = function () {
-            weddingActions.add({ model: self });
+            self.addActionId = weddingActions.add({ model: self });
         }
 
         self.onStoreUpdate = function () {
@@ -613,7 +628,7 @@ angular.module("app").value("WEDDING_ACTIONS", {
             callback: function (options) {
                 self.addItem(options.data);
                 self.currentWedding = options.data;
-                self.emitChange();
+                self.emitChange({ id: options.id });
             }
         });
 
@@ -623,7 +638,9 @@ angular.module("app").value("WEDDING_ACTIONS", {
 
         self.addItem = function (options) { self.weddings.push(options.data); }
 
-        self.emitChange = function () { self.dispatcher.emit({ actionType: "CHANGE" }); }
+        self.emitChange = function (options) {
+            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
+        }
 
         return self;
     }

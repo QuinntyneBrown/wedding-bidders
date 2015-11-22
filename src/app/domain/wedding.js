@@ -13,7 +13,10 @@
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
             callback: function (options) {
-                alert("works");
+                if (self.addActionId === options.id) {
+                    alert(self.weddingStore.currentWedding.id);
+                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
+                }
             }
         });
 
@@ -27,7 +30,7 @@
         }
         
         self.add = function () {
-            weddingActions.add({ model: self });
+            self.addActionId = weddingActions.add({ model: self });
         }
 
         self.onStoreUpdate = function () {

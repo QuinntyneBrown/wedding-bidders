@@ -35,7 +35,7 @@ namespace WeddingBidders.Server.Data
 
         public void SaveChanges()
         {
-            
+            base.dbContext.SaveChanges();
         }
 
     }

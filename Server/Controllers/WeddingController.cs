@@ -40,10 +40,9 @@ namespace WeddingBidders.Server.Controllers
         public IHttpActionResult add(WeddingDto dto)
         {
             var wedding = new Wedding() { NumberOfGuests = dto.NumberOfGuests };
-            repository.Add(wedding);
-            uow.SaveChanges();
-            dto.Id = wedding.Id;
-            return Ok(dto);
+            this.repository.Add(wedding);
+            this.uow.SaveChanges();
+            return Ok(wedding);
         }
 
         [HttpPut]
@@ -53,7 +52,7 @@ namespace WeddingBidders.Server.Controllers
             var wedding = new Wedding() { NumberOfGuests = dto.NumberOfGuests };
             repository.Add(wedding);
             uow.SaveChanges();
-            return Ok();
+            return Ok(wedding);
         }
 
         protected IRepository<Wedding> repository;

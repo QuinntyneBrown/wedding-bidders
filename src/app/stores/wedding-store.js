@@ -12,7 +12,7 @@
             callback: function (options) {
                 self.addItem(options.data);
                 self.currentWedding = options.data;
-                self.emitChange();
+                self.emitChange({ id: options.id });
             }
         });
 
@@ -22,7 +22,9 @@
 
         self.addItem = function (options) { self.weddings.push(options.data); }
 
-        self.emitChange = function () { self.dispatcher.emit({ actionType: "CHANGE" }); }
+        self.emitChange = function (options) {
+            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
+        }
 
         return self;
     }
