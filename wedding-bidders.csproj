@@ -156,6 +156,10 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
       <Private>True</Private>
@@ -188,6 +192,8 @@
     <Content Include="node_modules\ng-x\dist\ngX.js" />
     <Content Include="packages.config" />
     <Content Include="package.json" />
+    <Content Include="commonConfiguration.config" />
+    <Content Include="connectionStrings.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -197,27 +203,66 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
-    <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="reset.css" />
-    <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery-1.6.4.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="site.css" />
+    <Content Include="src\app\actions\action-constants.js" />
+    <Content Include="src\app\actions\caterer-actions.js" />
+    <Content Include="src\app\actions\customer-actions.js" />
     <Content Include="src\app\app.module.js" />
+    <Content Include="src\app\domain\caterer.js" />
+    <Content Include="src\app\domain\customer.js" />
+    <Content Include="src\app\stores\caterer-store.js" />
+    <Content Include="src\app\stores\customer-store.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\ApiConfiguration.cs" />
+    <Compile Include="Server\Auth\JwtOptions.cs" />
+    <Compile Include="Server\Auth\JwtWriterFormat.cs" />
+    <Compile Include="Server\Auth\OAuthOptions.cs" />
+    <Compile Include="Server\Auth\OAuthProvider.cs" />
+    <Compile Include="Server\Config\AppConfiguration.cs" />
+    <Compile Include="Server\Controllers\CustomerController.cs" />
+    <Compile Include="Server\Data\Contracts\IWeddingBiddersUowContext.cs" />
+    <Compile Include="Server\Data\Contracts\IWeddingBiddersUow.cs" />
+    <Compile Include="Server\Data\WeddingBiddersContext.cs" />
+    <Compile Include="Server\Data\WeddingBiddersUow.cs" />
+    <Compile Include="Server\Dtos\ChangePasswordDto.cs" />
+    <Compile Include="Server\Dtos\GroupDto.cs" />
+    <Compile Include="Server\Dtos\RegistrationRequestDto.cs" />
+    <Compile Include="Server\Dtos\RoleDto.cs" />
+    <Compile Include="Server\Dtos\SignInDto.cs" />
+    <Compile Include="Server\Dtos\TokenDto.cs" />
+    <Compile Include="Server\Dtos\UserDto.cs" />
+    <Compile Include="Server\Models\Account.cs" />
+    <Compile Include="Server\Models\BaseEntity.cs" />
+    <Compile Include="Server\Models\Caterer.cs" />
+    <Compile Include="Server\Models\Customer.cs" />
+    <Compile Include="Server\Models\Group.cs" />
+    <Compile Include="Server\Models\ILoggable.cs" />
+    <Compile Include="Server\Models\Profile.cs" />
+    <Compile Include="Server\Models\Role.cs" />
+    <Compile Include="Server\Models\Session.cs" />
+    <Compile Include="Server\Models\Tenant.cs" />
+    <Compile Include="Server\Models\User.cs" />
+    <Compile Include="Server\Services\BaseService.cs" />
+    <Compile Include="Server\Services\Contracts\IEncryptionService.cs" />
+    <Compile Include="Server\Services\Contracts\IIdentityService.cs" />
+    <Compile Include="Server\Services\Contracts\IMembershipService.cs" />
+    <Compile Include="Server\Services\Contracts\ISecurityService.cs" />
+    <Compile Include="Server\Services\Contracts\ISessionService.cs" />
+    <Compile Include="Server\Services\EncryptionService.cs" />
+    <Compile Include="Server\Services\IdentityService.cs" />
+    <Compile Include="Server\Services\MembershipService.cs" />
+    <Compile Include="Server\Services\SecurityService.cs" />
+    <Compile Include="Server\Services\SessionService.cs" />
+    <Compile Include="Server\UnityConfiguration.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Server\Controllers\" />
-    <Folder Include="Server\Data\Contracts\" />
-    <Folder Include="Server\Dtos\" />
-    <Folder Include="Server\Models\" />
-    <Folder Include="Server\Services\Contracts\" />
+    <Folder Include="src\app\components\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

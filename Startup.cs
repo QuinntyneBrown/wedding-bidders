@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.Owin;
 using Owin;
+using Unity.WebApi;
 
 [assembly: OwinStartup(typeof(WeddingBidders.Startup))]
 
@@ -11,7 +13,9 @@ namespace WeddingBidders
     {
         public void Configuration(IAppBuilder app)
         {
-            // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=316888
+            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(WeddingBidders.Server.UnityConfiguration.GetContainer());
+
+            GlobalConfiguration.Configure(config => WeddingBidders.Server.ApiConfiguration.Install(config, app));
         }
     }
 }
