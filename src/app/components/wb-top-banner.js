@@ -8,11 +8,13 @@
 
         },
         styles: [
-            " .wbTopBanner { height: 50px; } "
-        ].join(" /n "),
+            " .wbTopBanner { height: 50px; padding-right:15px; padding-top:15px; } ",
+            " .wbTopBanner .wbHamburgerButton { position:relative; float:right; } "
+        ].join(" \n "),
         template: [
             "<div class='wbTopBanner'>",
-            "&nbsp;",
+            "<wb-hamburger-button></wb-hamburger-button>",
+            "<div style='clear:both;'></div>",
             "</div>"
         ].join(" ")
     });

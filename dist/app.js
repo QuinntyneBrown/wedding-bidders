@@ -306,6 +306,50 @@ angular.module("app").value("WEDDING_ACTIONS", {
     "use strict";
 
     ngX.Component({
+        selector: "wb-hamburger-button",
+        component: function HamburgerButtonComponent() {
+            var self = this;
+
+            return self;
+        },
+        styles: [
+
+            " .wbHamburgerButton { ",
+            "     width:20px; ",
+            "     height:24px; ",
+            "     background-color: #FFF; ",
+            "     border: #aaaaaa 0px solid; ",
+            "     border-radius: 2px; ",
+            "     padding: 2px 5px; ",
+            "     cursor:pointer; ",
+            " } ",
+
+            " .wbHamburgerButton div { ",
+            "     width: 20px; ",
+            "     height: 3px; ",
+            "     background: #333; ",
+            "     margin: 4px 0; ",
+            "     border-radius: 2px; ",
+            " } "
+
+        ].join(" \n "),
+        providers: [],
+        template: [
+            "<div class='wbHamburgerButton'>",
+            "<div></div>",
+            "<div></div>",
+            "<div></div>",
+            "</div>"
+        ].join(" ")
+    });
+
+
+})();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
         selector: "wb-header",
         component: function HeaderComponent() {
 
@@ -382,7 +426,6 @@ angular.module("app").value("WEDDING_ACTIONS", {
             "<div class='wbNavigation'>",
             "<a href='#/wedding/create'>SUBMIT WEDDING</a>",
             "<a href='#/vendors'>VENDORS</a>",
-            "<a href='#/about'>ABOUT</a>",
             "</div>"
         ].join(" ")
     });
@@ -450,11 +493,13 @@ angular.module("app").value("WEDDING_ACTIONS", {
 
         },
         styles: [
-            " .wbTopBanner { height: 50px; } "
-        ].join(" /n "),
+            " .wbTopBanner { height: 50px; padding-right:15px; padding-top:15px; } ",
+            " .wbTopBanner .wbHamburgerButton { position:relative; float:right; } "
+        ].join(" \n "),
         template: [
             "<div class='wbTopBanner'>",
-            "&nbsp;",
+            "<wb-hamburger-button></wb-hamburger-button>",
+            "<div style='clear:both;'></div>",
             "</div>"
         ].join(" ")
     });
@@ -486,92 +531,6 @@ angular.module("app").value("WEDDING_ACTIONS", {
 
 
 
-(function () {
-
-    "use strict";
-
-    function caterer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("caterer", [caterer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function customer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("customer", [customer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function wedding(dispatcher, weddingActions, weddingStore) {
-        var self = this;
-        self.id = null;
-        self.dispatcher = dispatcher;
-        self.numberOfGuests = null;
-        self.weddingActions = weddingActions;
-        self.weddingStore = weddingStore;
-
-        self.listenerId = self.dispatcher.addListener({
-            actionType: "CHANGE",
-            callback: function (options) {
-                if (self.addActionId === options.id) {
-                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
-                }
-            }
-        });
-
-        self.createInstance = function (options) {
-            var instance = new wedding(self.weddingActions, self.weddingStore);
-            if (options.data) {
-                instance.id = options.data.id;
-                instance.numberOfGuests = options.data.numberOfGuests;
-            }
-            return instance;
-        }
-        
-        self.add = function () {
-            self.addActionId = weddingActions.add({ model: self });
-        }
-
-        self.onStoreUpdate = function () {
-
-        }
-
-
-        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
-
-        return self;
-    }
-
-    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function weddingBid() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("weddingBid", [weddingBid]);
-
-})();
 (function () {
 
     "use strict";
@@ -685,6 +644,92 @@ angular.module("app").value("WEDDING_ACTIONS", {
     }
 
     angular.module("app").service("fetch", ["$http","$q","localStorageManager",fetch]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function caterer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("caterer", [caterer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function customer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("customer", [customer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function wedding(dispatcher, weddingActions, weddingStore) {
+        var self = this;
+        self.id = null;
+        self.dispatcher = dispatcher;
+        self.numberOfGuests = null;
+        self.weddingActions = weddingActions;
+        self.weddingStore = weddingStore;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                if (self.addActionId === options.id) {
+                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
+                }
+            }
+        });
+
+        self.createInstance = function (options) {
+            var instance = new wedding(self.weddingActions, self.weddingStore);
+            if (options.data) {
+                instance.id = options.data.id;
+                instance.numberOfGuests = options.data.numberOfGuests;
+            }
+            return instance;
+        }
+        
+        self.add = function () {
+            self.addActionId = weddingActions.add({ model: self });
+        }
+
+        self.onStoreUpdate = function () {
+
+        }
+
+
+        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
+
+        return self;
+    }
+
+    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function weddingBid() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("weddingBid", [weddingBid]);
 
 })();
 
