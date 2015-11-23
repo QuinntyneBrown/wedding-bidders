@@ -28,5 +28,17 @@
     "config": {
       "componentName": "aboutComponent"
     }
+  },
+  {
+    "when": "/caterer/register",
+    "config": {
+      "componentName": "catererRegistrationComponent"
+    }
+  },
+  {
+    "when": "/customer/register",
+    "config": {
+      "componentName": "customerRegistrationComponent"
+    }
   }
 ]

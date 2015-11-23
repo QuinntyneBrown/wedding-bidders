@@ -118,6 +118,54 @@ angular.module("app").value("WEDDING_ACTIONS", {
     "use strict";
 
     ngX.Component({
+        selector: "caterer-registration-form",
+        component: function CatererRegistrationFormComponent() {
+            var self = this;
+            self.firstname = null;
+            self.lastname = null;
+            self.email = null;
+            self.phoneNumber = null;
+
+            self.firstnamePlaceholder = "Firstname";
+            self.lastnamePlaceholder = "Lastname";
+            self.emailPlaceholder = "Email";
+            self.phoneNumberPlaceholder = "Phone Number";
+
+            return self;
+        },
+        template: [
+            "<form class='catererRegistrationForm' name='catererRegistrationForm'>",
+            "<text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
+            "<text-form-control placeholder='vm.lastnamePlaceholder' model='vm.lastname' ></text-form-control>",
+            "<text-form-control placeholder='vm.emailPlaceholder' model='vm.email' ></text-form-control>",
+            "<text-form-control placeholder='vm.phoneNumberPlaceholder' model='vm.phoneNumber' ></text-form-control>",
+            "</form>"
+        ].join(" ")
+    });
+
+})();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
+        component: function CatererRegistrationComponent() {
+
+        },
+        template: [
+            "<div class='catererRegistration viewComponent'>",
+            "<caterer-registration-form></caterer-registration-form>",
+            "</div>"
+        ].join(" ")
+    });
+
+
+})();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
         component: function CatererComponent() {
 
         },
@@ -351,6 +399,41 @@ angular.module("app").value("WEDDING_ACTIONS", {
         },
         template: [
             "<div class='registration'>",
+            "</div>"
+        ].join(" ")
+    });
+
+
+})();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
+        selector: "text-form-control",
+        component: function TextFormControlComponent() {
+            var self = this;
+
+            return self;
+        },
+        styles: [
+            " .inputField { padding-left: 15px; } ",
+
+            " .formControl input { ",
+            " line-height: 30px; ",
+            " height: 30px; ",
+            " border: 1px solid #575656 ",
+            " padding-left: 7px ",
+            " text-align: left; ",
+            " width: 200px; ",
+            " } ",
+
+            " .formControl { margin-bottom: 15px; } ",
+        ].join(" \n "),
+        inputs: ["placeholder", "model"],
+        template: [
+            "<div class='formControl'>",
+            "<input class='inputField' type='text' placeholder='{{vm.placeholder}}' data-ng-model='vm.model'></input>",
             "</div>"
         ].join(" ")
     });
