@@ -159,21 +159,36 @@ angular.module("app").value("WEDDING_ACTIONS", {
             return self;
         },
         styles: [
-            " .editWeddingForm { } "
+            " .editWeddingForm { } ",
+            " .inputField { padding-left: 15px; } ",
+            " .formControl input { ",
+            " line-height: 30px; ",
+            " height: 30px; ",
+            " border: 1px solid #575656 ",
+            " padding-left: 7px ",
+            " text-align: left; ",
+            " width: 200px; ",
+            "  ",
+            " } ",
+
+            " .formControl { margin-bottom: 15px; } ",
+
+            " .editWeddingForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; } "
         ].join(" \n "),
         inputs:["model"],
         template: [
             "<form class='editWeddingForm' name='editWeddingForm'>",
 
             "<div class='formControl'>",
-            "<label>Number Of Guests:</label>",
-            "<input type='text' data-ng-model='vm.model.numberOfGuests'></input>",
+            "<input class='inputField' type='text' data-ng-model='vm.model.numberOfGuests' placeholder='Number Of Guests'></input>",
             "</div>",
 
             "<div class='formControl'>",
+            "<input class='inputField' type='text' data-ng-model='vm.model.location'  placeholder='Location'></input>",
             "</div>",
 
             "<div class='formControl'>",
+            "<input class='inputField' type='text'  data-ng-model='vm.model.numberOfHours'  placeholder='Number Of Hours'></input>",
             "</div>",
 
             "<button data-ng-click='vm.onSubmit()'>Submit</button>",
@@ -205,9 +220,10 @@ angular.module("app").value("WEDDING_ACTIONS", {
     ngX.Component({
         component: EditWeddingComponent,
         routes: ["/wedding/edit/:id","/wedding/create"],
-        providers: ["$location","dispatcher", "wedding"],
+        providers: ["$location", "dispatcher", "wedding"],
+        styles: [" .editWeddingComponent { padding-left:15px; } "].join(" /n "),
         template: [
-            "<div class='editWeddingComponent'>",
+            "<div class='editWeddingComponent viewComponent'>",
             "<edit-wedding-form model='vm.wedding'></edit-wedding-form>",
             "</div>"
         ].join(" ")
@@ -312,7 +328,7 @@ angular.module("app").value("WEDDING_ACTIONS", {
         },
         styles: [
             " .wbNavigation { height: 100px; text-align: center; } ",
-            " .wbNavigation a { text-decoration: none; color: #000; padding-right:7px; padding-left:7px; } "
+            " .wbNavigation a { text-decoration: none; color: #000; padding-right:7px; padding-left:7px; font-weight:300; } "
         ].join(" \n "),
         template: [
             "<div class='wbNavigation'>",
@@ -421,7 +437,7 @@ angular.module("app").value("WEDDING_ACTIONS", {
         var self = this;
         self.id = null;
         self.dispatcher = dispatcher;
-        self.numberOfGuests = 0;
+        self.numberOfGuests = null;
         self.weddingActions = weddingActions;
         self.weddingStore = weddingStore;
 
@@ -429,7 +445,6 @@ angular.module("app").value("WEDDING_ACTIONS", {
             actionType: "CHANGE",
             callback: function (options) {
                 if (self.addActionId === options.id) {
-                    alert(self.weddingStore.currentWedding.id);
                     self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
                 }
             }

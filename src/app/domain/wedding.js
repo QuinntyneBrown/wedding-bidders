@@ -6,7 +6,7 @@
         var self = this;
         self.id = null;
         self.dispatcher = dispatcher;
-        self.numberOfGuests = 0;
+        self.numberOfGuests = null;
         self.weddingActions = weddingActions;
         self.weddingStore = weddingStore;
 
@@ -14,7 +14,6 @@
             actionType: "CHANGE",
             callback: function (options) {
                 if (self.addActionId === options.id) {
-                    alert(self.weddingStore.currentWedding.id);
                     self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
                 }
             }

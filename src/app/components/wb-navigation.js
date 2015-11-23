@@ -9,7 +9,7 @@
         },
         styles: [
             " .wbNavigation { height: 100px; text-align: center; } ",
-            " .wbNavigation a { text-decoration: none; color: #000; padding-right:7px; padding-left:7px; } "
+            " .wbNavigation a { text-decoration: none; color: #000; padding-right:7px; padding-left:7px; font-weight:300; } "
         ].join(" \n "),
         template: [
             "<div class='wbNavigation'>",

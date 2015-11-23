@@ -22,3 +22,5 @@ h1 {
 .mainContent {
     min-height:400px;
 }
+
+.viewComponent { padding-left:15px; } 
