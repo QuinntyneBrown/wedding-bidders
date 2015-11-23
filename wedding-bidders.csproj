@@ -185,6 +185,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dist\app.js" />
     <Content Include="gulpfile.config.js" />
     <Content Include="gulpfile.js" />
     <Content Include="node_modules\angular-route\angular-route.js" />
@@ -197,6 +198,8 @@
     <Content Include="commonConfiguration.config" />
     <Content Include="connectionStrings.config" />
     <Content Include="routes.json" />
+    <None Include="Properties\PublishProfiles\weddingbidders - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\weddingbidders - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -224,6 +227,7 @@
     <Content Include="src\app\components\wb-customer.js" />
     <Content Include="src\app\components\wb-edit-wedding.js" />
     <Content Include="src\app\components\wb-footer.js" />
+    <Content Include="src\app\components\wb-hamburger-button.js" />
     <Content Include="src\app\components\wb-header.js" />
     <Content Include="src\app\components\wb-home.js" />
     <Content Include="src\app\components\wb-login.js" />
@@ -303,7 +307,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="dist\" />
     <Folder Include="tests\" />
   </ItemGroup>
   <PropertyGroup>
