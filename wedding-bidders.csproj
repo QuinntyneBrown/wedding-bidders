@@ -197,7 +197,6 @@
     <Content Include="package.json" />
     <Content Include="commonConfiguration.config" />
     <Content Include="connectionStrings.config" />
-    <Content Include="routes.json" />
     <None Include="Properties\PublishProfiles\weddingbidders - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\weddingbidders - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">

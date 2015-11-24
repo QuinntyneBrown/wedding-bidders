@@ -14,7 +14,7 @@ h1 {
 
 
 .wbApp {
-    width:1024px;
+    max-width:1024px;
     margin:0 auto;
     background-color:#FFF;
 }
