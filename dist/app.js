@@ -693,15 +693,20 @@ angular.module("app").value("SECURITY_ACTIONS", {
             self.$location = $location;
             self.securityActions = securityActions;
 
-            self.username = null;
-            self.password = null;
-            
+            self.onInit = function () {
+                self.username = null;
+                self.password = null;
+                self.attempts = 0;
+            }
 
             self.usernamePlaceholder = "Username";
             self.passwordPlaceholder = "Password";
 
             self.tryToLogin = function () {
-
+                var guid = securityActions.tryToLogin({
+                    username: self.username,
+                    password: self.password
+                });
             }
 
             return self;
@@ -1084,6 +1089,41 @@ angular.module("app").value("SECURITY_ACTIONS", {
 
     "use strict";
 
+    function weddingStore(dispatcher, guid, WEDDING_ACTIONS) {
+
+        var self = this;
+        self.dispatcher = dispatcher;
+
+        self.dispatcher.addListener({
+            actionType: WEDDING_ACTIONS.ADD_WEDDING,
+            callback: function (options) {
+                self.addItem(options.data);
+                self.currentWedding = options.data;
+                self.emitChange({ id: options.id });
+            }
+        });
+
+        self.weddings = [];
+
+        self.currentWedding = null;
+
+        self.addItem = function (options) { self.weddings.push(options.data); }
+
+        self.emitChange = function (options) {
+            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
+        }
+
+        return self;
+    }
+
+    angular.module("app").service("weddingStore", ["dispatcher","guid","WEDDING_ACTIONS",weddingStore]);
+})();
+
+
+(function () {
+
+    "use strict";
+
     function securityService($q, apiEndpoint, fetch, formEncode) {
         var self = this;
 
@@ -1127,39 +1167,4 @@ angular.module("app").value("SECURITY_ACTIONS", {
 
     angular.module("app").service("weddingService", ["$q","apiEndpoint","fetch",weddingService]);
 
-})();
-
-
-(function () {
-
-    "use strict";
-
-    function weddingStore(dispatcher, guid, WEDDING_ACTIONS) {
-
-        var self = this;
-        self.dispatcher = dispatcher;
-
-        self.dispatcher.addListener({
-            actionType: WEDDING_ACTIONS.ADD_WEDDING,
-            callback: function (options) {
-                self.addItem(options.data);
-                self.currentWedding = options.data;
-                self.emitChange({ id: options.id });
-            }
-        });
-
-        self.weddings = [];
-
-        self.currentWedding = null;
-
-        self.addItem = function (options) { self.weddings.push(options.data); }
-
-        self.emitChange = function (options) {
-            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
-        }
-
-        return self;
-    }
-
-    angular.module("app").service("weddingStore", ["dispatcher","guid","WEDDING_ACTIONS",weddingStore]);
 })();

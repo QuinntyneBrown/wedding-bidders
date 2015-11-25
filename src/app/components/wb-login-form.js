@@ -9,15 +9,20 @@
             self.$location = $location;
             self.securityActions = securityActions;
 
-            self.username = null;
-            self.password = null;
-            
+            self.onInit = function () {
+                self.username = null;
+                self.password = null;
+                self.attempts = 0;
+            }
 
             self.usernamePlaceholder = "Username";
             self.passwordPlaceholder = "Password";
 
             self.tryToLogin = function () {
-
+                var guid = securityActions.tryToLogin({
+                    username: self.username,
+                    password: self.password
+                });
             }
 
             return self;
