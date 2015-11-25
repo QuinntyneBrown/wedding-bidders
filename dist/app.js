@@ -190,6 +190,92 @@ angular.module("app").value("BID_ACTIONS", {
 
     "use strict";
 
+    function bid() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("bid", [bid]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function caterer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("caterer", [caterer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function customer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("customer", [customer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function wedding(dispatcher, weddingActions, weddingStore) {
+        var self = this;
+        self.id = null;
+        self.dispatcher = dispatcher;
+        self.numberOfGuests = null;
+        self.weddingActions = weddingActions;
+        self.weddingStore = weddingStore;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                if (self.addActionId === options.id) {
+                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
+                }
+            }
+        });
+
+        self.createInstance = function (options) {
+            var instance = new wedding(self.weddingActions, self.weddingStore);
+            if (options.data) {
+                instance.id = options.data.id;
+                instance.numberOfGuests = options.data.numberOfGuests;
+            }
+            return instance;
+        }
+        
+        self.add = function () {
+            self.addActionId = weddingActions.add({ model: self });
+        }
+
+        self.onStoreUpdate = function () {
+
+        }
+
+
+        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
+
+        return self;
+    }
+
+    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
+
+})();
+(function () {
+
+    "use strict";
+
     ngX.Component({
         component: function AboutComponent() {
 
@@ -257,9 +343,41 @@ angular.module("app").value("BID_ACTIONS", {
     "use strict";
 
     ngX.Component({
-        selector: "caterer-registration-form",
-        component: function CatererRegistrationFormComponent() {
+        selector: "bid-form",
+        component: function BidFormComponent(bidActions) {
             var self = this;
+            self.bidActions = bidActions;
+
+            self.tryToBid = function () {
+
+            };
+
+            return self;
+        },
+        providers: [
+            "bidActions"
+        ],
+        styles: [
+            ".bidForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; } "
+        ],
+        template: [
+            "<form class='bidForm' name='bidForm'>",
+            "   <button data-ng-click='vm.tryToRegister()'>Register</button>",
+            "</form>"
+        ].join(" ")
+    });
+
+})();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
+        selector: "caterer-registration-form",
+        component: function CatererRegistrationFormComponent(catererActions) {
+            var self = this;
+            self.catererActions = catererActions;
+
             self.firstname = null;
             self.lastname = null;
             self.email = null;
@@ -270,14 +388,25 @@ angular.module("app").value("BID_ACTIONS", {
             self.emailPlaceholder = "Email";
             self.phoneNumberPlaceholder = "Phone Number";
 
+            self.tryToRegister = function () {
+
+            };
+
             return self;
         },
+        styles: [
+            "  .catererRegistrationForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; }"
+        ].join( " /n "),
+        providers: [
+            "catererActions"
+        ],
         template: [
             "<form class='catererRegistrationForm' name='catererRegistrationForm'>",
-            "<text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
-            "<text-form-control placeholder='vm.lastnamePlaceholder' model='vm.lastname' ></text-form-control>",
-            "<text-form-control placeholder='vm.emailPlaceholder' model='vm.email' ></text-form-control>",
-            "<text-form-control placeholder='vm.phoneNumberPlaceholder' model='vm.phoneNumber' ></text-form-control>",
+            "   <text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
+            "   <text-form-control placeholder='vm.lastnamePlaceholder' model='vm.lastname' ></text-form-control>",
+            "   <text-form-control placeholder='vm.emailPlaceholder' model='vm.email' ></text-form-control>",
+            "   <text-form-control placeholder='vm.phoneNumberPlaceholder' model='vm.phoneNumber' ></text-form-control>",
+            "   <button data-ng-click='vm.tryToRegister()'>Register</button>",
             "</form>"
         ].join(" ")
     });
@@ -322,8 +451,10 @@ angular.module("app").value("BID_ACTIONS", {
 
     ngX.Component({
         selector: "customer-registration-form",
-        component: function CustomerRegistrationFormComponent() {
+        component: function CustomerRegistrationFormComponent(customerActions) {
             var self = this;
+            self.customerActions = customerActions;
+
             self.firstname = null;
             self.lastname = null;
             self.email = null;
@@ -334,14 +465,28 @@ angular.module("app").value("BID_ACTIONS", {
             self.emailPlaceholder = "Email";
             self.phoneNumberPlaceholder = "Phone Number";
 
+            self.tryToRegister = function () {
+
+            };
+
             return self;
         },
+        providers: [
+            "customerActions"
+        ],
+        styles: [
+            " .customerRegistrationForm { ",
+            "  ",
+            "  }",
+            " .customerRegistrationForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; } "
+        ].join(" \n "),
         template: [
             "<form class='customerRegistrationForm' name='customerRegistrationForm'>",
-            "<text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
-            "<text-form-control placeholder='vm.lastnamePlaceholder' model='vm.lastname' ></text-form-control>",
-            "<text-form-control placeholder='vm.emailPlaceholder' model='vm.email' ></text-form-control>",
-            "<text-form-control placeholder='vm.phoneNumberPlaceholder' model='vm.phoneNumber' ></text-form-control>",
+            "   <text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
+            "   <text-form-control placeholder='vm.lastnamePlaceholder' model='vm.lastname' ></text-form-control>",
+            "   <text-form-control placeholder='vm.emailPlaceholder' model='vm.email' ></text-form-control>",
+            "   <text-form-control placeholder='vm.phoneNumberPlaceholder' model='vm.phoneNumber' ></text-form-control>",
+            "   <button data-ng-click='vm.tryToRegister()'>Register</button>",
             "</form>"
         ].join(" ")
     });
@@ -558,12 +703,19 @@ angular.module("app").value("BID_ACTIONS", {
                 });
             }
 
+            self.navigateToCreateVendorAccount = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/caterer/register");
+                });
+            }
+
             self.menuHTML = [
                 "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
                 "   <div class='wbHamburgerMenu-container'>",
                 "       <div class='wbHamburgerMenu-links'>",
                 "           <div><a data-ng-click='vm.navigateToLogin()'>Login</a><div>",
                 "           <div><a data-ng-click='vm.navigateToCreateAccount()'>Create Account</a><div>",
+                "           <div><a data-ng-click='vm.navigateToCreateVendorAccount()'>Create Vendor Account</a><div>",
                 "       </div>",
                 "   </div>",
                 "</div>"
@@ -575,6 +727,7 @@ angular.module("app").value("BID_ACTIONS", {
                 "       <div class='wbHamburgerMenu-links'>",
                 "           <div><a data-ng-click='vm.navigateToLogin()'>Login</a><div>",
                 "           <div><a data-ng-click='vm.navigateToCreateAccount()'>Create Account</a><div>",
+                "           <div><a data-ng-click='vm.navigateToCreateVendorAccount()'>Create Vendor Account</a><div>",
                 "       </div>",
                 "   </div>",
                 "</div>"
@@ -949,92 +1102,6 @@ angular.module("app").value("BID_ACTIONS", {
 
 
 
-(function () {
-
-    "use strict";
-
-    function bid() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("bid", [bid]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function caterer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("caterer", [caterer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function customer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("customer", [customer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function wedding(dispatcher, weddingActions, weddingStore) {
-        var self = this;
-        self.id = null;
-        self.dispatcher = dispatcher;
-        self.numberOfGuests = null;
-        self.weddingActions = weddingActions;
-        self.weddingStore = weddingStore;
-
-        self.listenerId = self.dispatcher.addListener({
-            actionType: "CHANGE",
-            callback: function (options) {
-                if (self.addActionId === options.id) {
-                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
-                }
-            }
-        });
-
-        self.createInstance = function (options) {
-            var instance = new wedding(self.weddingActions, self.weddingStore);
-            if (options.data) {
-                instance.id = options.data.id;
-                instance.numberOfGuests = options.data.numberOfGuests;
-            }
-            return instance;
-        }
-        
-        self.add = function () {
-            self.addActionId = weddingActions.add({ model: self });
-        }
-
-        self.onStoreUpdate = function () {
-
-        }
-
-
-        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
-
-        return self;
-    }
-
-    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
-
-})();
 (function () {
 
     "use strict";

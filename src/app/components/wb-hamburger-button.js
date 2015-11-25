@@ -68,12 +68,19 @@
                 });
             }
 
+            self.navigateToCreateVendorAccount = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/caterer/register");
+                });
+            }
+
             self.menuHTML = [
                 "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
                 "   <div class='wbHamburgerMenu-container'>",
                 "       <div class='wbHamburgerMenu-links'>",
                 "           <div><a data-ng-click='vm.navigateToLogin()'>Login</a><div>",
                 "           <div><a data-ng-click='vm.navigateToCreateAccount()'>Create Account</a><div>",
+                "           <div><a data-ng-click='vm.navigateToCreateVendorAccount()'>Create Vendor Account</a><div>",
                 "       </div>",
                 "   </div>",
                 "</div>"
@@ -85,6 +92,7 @@
                 "       <div class='wbHamburgerMenu-links'>",
                 "           <div><a data-ng-click='vm.navigateToLogin()'>Login</a><div>",
                 "           <div><a data-ng-click='vm.navigateToCreateAccount()'>Create Account</a><div>",
+                "           <div><a data-ng-click='vm.navigateToCreateVendorAccount()'>Create Vendor Account</a><div>",
                 "       </div>",
                 "   </div>",
                 "</div>"
