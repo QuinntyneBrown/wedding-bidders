@@ -1,5 +1,5 @@
 ﻿angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiEndpointProvider", function ($routeProvider, apiEndpointProvider) {
-    
+
     $routeProvider.when("/", {
         "componentName": "homeComponent"
     });
@@ -17,7 +17,7 @@
     });
 
     $routeProvider.when("/vendors", {
-      "componentName": "vendorsComponent"
+        "componentName": "vendorsComponent"
     });
 
     $routeProvider.when("/about", {
@@ -33,4 +33,6 @@
     });
 
     apiEndpointProvider.configure("/api");
+}]).run([function () {
+    FastClick.attach(document.body);
 }]);

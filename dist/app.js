@@ -1,5 +1,5 @@
 angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiEndpointProvider", function ($routeProvider, apiEndpointProvider) {
-    
+
     $routeProvider.when("/", {
         "componentName": "homeComponent"
     });
@@ -17,7 +17,7 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
     });
 
     $routeProvider.when("/vendors", {
-      "componentName": "vendorsComponent"
+        "componentName": "vendorsComponent"
     });
 
     $routeProvider.when("/about", {
@@ -33,7 +33,93 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
     });
 
     apiEndpointProvider.configure("/api");
+}]).run([function () {
+    FastClick.attach(document.body);
 }]);
+angular.module("app").value("WEDDING_ACTIONS", {
+    ADD_WEDDING: "ADD_WEDDING",
+});
+
+angular.module("app").value("SECURITY_ACTIONS", {
+    LOGIN: "LOGIN",
+});
+
+
+
+(function () {
+
+    "use strict";
+
+
+    function securityActions(dispatcher, formEncode, guid, securityService, SECURITY_ACTIONS) {
+
+        var self = this;
+        self.dispatcher = dispatcher;
+        self.SECURITY_ACTIONS = SECURITY_ACTIONS;
+
+        self.tryToLogin = function (options) {
+            var newGuid = guid();
+            
+            securityService.tryToLogin({
+                data: {
+                    username:options.username,
+                    password:options.password
+                }
+            }).then(function (results) {
+                self.dispatcher.emit({ actionType: self.SECURITY_ACTIONS.LOGIN, token: results.data.token });
+            });
+            return newGuid;
+        };
+
+
+
+        return self;
+    }
+
+    angular.module("app")
+        .service("securityActions", ["dispatcher", "formEncode", "guid", "securityService", "SECURITY_ACTIONS", securityActions])
+
+
+})();
+(function () {
+
+    "use strict";
+
+
+    function weddingActions(dispatcher, guid, weddingService, WEDDING_ACTIONS) {
+
+        var self = this;
+        self.dispatcher = dispatcher;
+        self.WEDDING_ACTIONS = WEDDING_ACTIONS;
+
+        self.add = function (options) {
+            var newGuid = guid();
+            weddingService.add({
+                data: {
+                    numberOfGuests: options.model.numberOfGuests
+                }
+            }).then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.WEDDING_ACTIONS.ADD_WEDDING,
+                    options: {
+                        data: results,
+                        id: newGuid
+                    }                    
+                })
+            });
+           
+            return newGuid;
+        };
+
+
+        return self;
+    }
+
+    angular.module("app")
+        .service("weddingActions", ["dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
+
+
+})();
 (function () {
 
     "use strict";
@@ -602,8 +688,11 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 
     ngX.Component({
         selector: "wb-login-form",
-        component: function LoginFormComponent() {
+        component: function LoginFormComponent($location, securityActions) {
             var self = this;
+            self.$location = $location;
+            self.securityActions = securityActions;
+
             self.username = null;
             self.password = null;
             
@@ -611,12 +700,23 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
             self.usernamePlaceholder = "Username";
             self.passwordPlaceholder = "Password";
 
+            self.tryToLogin = function () {
+
+            }
+
             return self;
         },
+        styles: [
+            " .wbLoginForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; } "
+        ],
+        providers: [
+            "$location","securityActions"
+        ],
         template: [
             "<form class='wbLoginForm' name='wbLoginForm'>",
-            "<text-form-control placeholder='vm.usernamePlaceholder' model='vm.username' ></text-form-control>",
-            "<text-form-control placeholder='vm.passwordPlaceholder' model='vm.password' ></text-form-control>",
+            "   <text-form-control placeholder='vm.usernamePlaceholder' model='vm.username' ></text-form-control>",
+            "   <text-form-control placeholder='vm.passwordPlaceholder' model='vm.password' ></text-form-control>",
+            "   <button data-ng-click='vm.tryToLogin()'>Login</button>",
             "</form>"
         ].join(" ")
     });
@@ -684,29 +784,34 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 
     ngX.Component({
         selector: "text-form-control",
-        component: function TextFormControlComponent() {
+        component: function TextFormControlComponent($attrs) {
             var self = this;
 
+            self.onInit = function () {
+                self.type = self.placeholder === 'Password' ? "password" : "text";
+            }
+            
             return self;
         },
         styles: [
             " .inputField { padding-left: 15px; } ",
 
             " .formControl input { ",
-            " line-height: 30px; ",
-            " height: 30px; ",
-            " border: 1px solid #575656 ",
-            " padding-left: 7px ",
-            " text-align: left; ",
-            " width: 200px; ",
+            "   line-height: 30px; ",
+            "   height: 30px; ",
+            "   border: 1px solid #575656 ",
+            "   padding-left: 7px ",
+            "   text-align: left; ",
+            "   width: 200px; ",
             " } ",
 
             " .formControl { margin-bottom: 15px; } ",
         ].join(" \n "),
         inputs: ["placeholder", "model"],
+        providers: ["$attrs"],
         template: [
             "<div class='formControl'>",
-            "<input class='inputField' type='text' placeholder='{{vm.placeholder}}' data-ng-model='vm.model'></input>",
+            "<input class='inputField' type='{{vm.type}}' placeholder='{{ ::vm.placeholder}}' data-ng-model='vm.model'></input>",
             "</div>"
         ].join(" ")
     });
@@ -761,49 +866,90 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 
 
 
-angular.module("app").value("WEDDING_ACTIONS", {
-    ADD_WEDDING: "ADD_WEDDING",
-});
-
-
-
 (function () {
 
     "use strict";
 
-
-    function weddingActions(dispatcher, guid, weddingService, WEDDING_ACTIONS) {
-
+    function caterer() {
         var self = this;
-        self.dispatcher = dispatcher;
-        self.WEDDING_ACTIONS = WEDDING_ACTIONS;
-
-        self.add = function (options) {
-            var newGuid = guid();
-            weddingService.add({
-                data: {
-                    numberOfGuests: options.model.numberOfGuests
-                }
-            }).then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.WEDDING_ACTIONS.ADD_WEDDING,
-                    options: {
-                        data: results,
-                        id: newGuid
-                    }                    
-                })
-            });
-           
-            return newGuid;
-        };
-
 
         return self;
     }
 
-    angular.module("app")
-        .service("weddingActions", ["dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
+    angular.module("app").service("caterer", [caterer]);
 
+})();
+(function () {
+
+    "use strict";
+
+    function customer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("customer", [customer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function wedding(dispatcher, weddingActions, weddingStore) {
+        var self = this;
+        self.id = null;
+        self.dispatcher = dispatcher;
+        self.numberOfGuests = null;
+        self.weddingActions = weddingActions;
+        self.weddingStore = weddingStore;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                if (self.addActionId === options.id) {
+                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
+                }
+            }
+        });
+
+        self.createInstance = function (options) {
+            var instance = new wedding(self.weddingActions, self.weddingStore);
+            if (options.data) {
+                instance.id = options.data.id;
+                instance.numberOfGuests = options.data.numberOfGuests;
+            }
+            return instance;
+        }
+        
+        self.add = function () {
+            self.addActionId = weddingActions.add({ model: self });
+        }
+
+        self.onStoreUpdate = function () {
+
+        }
+
+
+        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
+
+        return self;
+    }
+
+    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function weddingBid() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("weddingBid", [weddingBid]);
 
 })();
 (function () {
@@ -920,94 +1066,35 @@ angular.module("app").value("WEDDING_ACTIONS", {
     angular.module("app").service("fetch", ["$http","$q","localStorageManager",fetch]);
 
 })();
+
+
 (function () {
 
     "use strict";
 
-    function caterer() {
+    function securityService($q, apiEndpoint, fetch, formEncode) {
         var self = this;
+
+        self.tryToLogin = function (options) {
+            var newGuid = guid();
+            angular.extend(options.data, { grant_type: "password" });
+            var formEncodedData = formEncode(options.data);
+            var headers = { "Content-Type": "application/x-www-form-urlencoded" };
+
+            fetch.fromService({ method: "POST", url: self.baseUri + "/token", data: formEncodedData, headers: headers }).then(function (results) {
+                self.dispatcher.emit({ actionType: self.SECURITY_ACTIONS.LOGIN, token: results.data.token });
+            });
+            return newGuid;
+        };
+
+        self.baseUri = apiEndpoint.getBaseUrl() + "/security";
 
         return self;
     }
 
-    angular.module("app").service("caterer", [caterer]);
+    angular.module("app").service("securityService", ["$q", "apiEndpoint", "fetch", "formEncode", securityService]);
 
 })();
-(function () {
-
-    "use strict";
-
-    function customer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("customer", [customer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function wedding(dispatcher, weddingActions, weddingStore) {
-        var self = this;
-        self.id = null;
-        self.dispatcher = dispatcher;
-        self.numberOfGuests = null;
-        self.weddingActions = weddingActions;
-        self.weddingStore = weddingStore;
-
-        self.listenerId = self.dispatcher.addListener({
-            actionType: "CHANGE",
-            callback: function (options) {
-                if (self.addActionId === options.id) {
-                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
-                }
-            }
-        });
-
-        self.createInstance = function (options) {
-            var instance = new wedding(self.weddingActions, self.weddingStore);
-            if (options.data) {
-                instance.id = options.data.id;
-                instance.numberOfGuests = options.data.numberOfGuests;
-            }
-            return instance;
-        }
-        
-        self.add = function () {
-            self.addActionId = weddingActions.add({ model: self });
-        }
-
-        self.onStoreUpdate = function () {
-
-        }
-
-
-        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
-
-        return self;
-    }
-
-    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function weddingBid() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("weddingBid", [weddingBid]);
-
-})();
-
-
 
 (function () {
 
