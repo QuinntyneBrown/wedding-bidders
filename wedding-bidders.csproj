@@ -221,6 +221,8 @@
     <Content Include="src\app\components\wb-banner.js" />
     <Content Include="src\app\components\wb-caterer-registration-form.js" />
     <Content Include="src\app\components\wb-caterer-registration.js" />
+    <Content Include="src\app\components\wb-customer-registration-form.js" />
+    <Content Include="src\app\components\wb-customer-registration.js" />
     <Content Include="src\app\components\wb-edit-wedding-form.js" />
     <Content Include="src\app\components\wb-caterer.js" />
     <Content Include="src\app\components\wb-customer.js" />
@@ -229,6 +231,7 @@
     <Content Include="src\app\components\wb-hamburger-button.js" />
     <Content Include="src\app\components\wb-header.js" />
     <Content Include="src\app\components\wb-home.js" />
+    <Content Include="src\app\components\wb-login-form.js" />
     <Content Include="src\app\components\wb-login.js" />
     <Content Include="src\app\components\wb-navigation.js" />
     <Content Include="src\app\components\wb-registration.js" />

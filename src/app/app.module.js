@@ -4,6 +4,10 @@
         "componentName": "homeComponent"
     });
 
+    $routeProvider.when("/login", {
+        "componentName": "loginComponent"
+    });
+
     $routeProvider.when("/wedding/create", {
         "componentName": "editWeddingComponent"
     });

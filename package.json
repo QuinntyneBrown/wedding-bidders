@@ -21,7 +21,7 @@
     "angular-route": "^1.4.8",
     "jquery": "^2.1.4",
     "ng-x": "^0.3.70",
-    "ng-x-components": "0.0.7"
+    "ng-x-components": "0.0.8"
   },
   "devDependencies": {
     "gulp": "^3.9.0",

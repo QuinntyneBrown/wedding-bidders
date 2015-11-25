@@ -4,10 +4,10 @@
 
     ngX.Component({
         component: function LoginComponent() {
-
+            
         },
         template: [
-            "<div class='login'>",
+            "<div class='login viewComponent'>",
             "<wb-login-form></wb-login-form>",
             "</div>"
         ].join(" ")

@@ -4,13 +4,18 @@
 
     ngX.Component({
         selector: "wb-hamburger-button",
-        component: function HamburgerButtonComponent($q, appendToBodyAsync, extendCssAsync, removeElement, setOpacityAsync) {
+        component: function HamburgerButtonComponent($compile, $location, $q, $scope, appendToBodyAsync, extendCssAsync, removeElement, securityStore, setOpacityAsync) {
             var self = this;
+            self.$compile = $compile;
+            self.$location = $location;
             self.$q = $q;
+            self.$scope = $scope;
             self.appendToBodyAsync = appendToBodyAsync;
             self.extendCssAsync = extendCssAsync;
             self.removeElement = removeElement;
+            self.securityStore = securityStore;
             self.setOpacityAsync = setOpacityAsync;
+
 
             self.isOpen = false;
 
@@ -19,19 +24,21 @@
             }
 
             self.onClick = function () {
-                if (self.isMenuVisible) {
-                    self.closeAsync();
+                if (self.isOpen) {
+                    self.closeAsync()
                 } else {
-                    self.openAsync();
-                }
+                    self.openAsync().then(function () {
+                        self.isOpen = true;
+                    });
+                }                
             }
 
             self.openAsync = function () {
                 var deferred = self.$q.defer();
                 self.initializeAsync()
-                    .then(self.appendBackDropToBodyAsync)
+                    .then(self.appendMenuToBodyAsync)
                     .then(self.showAsync)
-                    .then(() => {
+                    .then(function()  {
                         self.isOpen = true;
                         deferred.resolve();
 
@@ -41,7 +48,7 @@
 
             self.closeAsync = function () {
                 var deferred = self.$q.defer();
-                self.hideAsync().then((results) => {
+                self.hideAsync().then(function (results) {
                     self.dispose();
                     self.isOpen = false;
                     deferred.resolve();
@@ -49,25 +56,61 @@
                 return deferred.promise;
             }
 
+            self.navigateToLogin = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/login");
+                });
+            }
+
+            self.navigateToCreateAccount = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/customer/register");
+                });
+            }
+
+            self.menuHTML = [
+                "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
+                "   <div class='wbHamburgerMenu-container'>",
+                "       <div class='wbHamburgerMenu-links'>",
+                "           <div><a data-ng-click='vm.navigateToLogin()'>Login</a><div>",
+                "           <div><a data-ng-click='vm.navigateToCreateAccount()'>Create Account</a><div>",
+                "       </div>",
+                "   </div>",
+                "</div>"
+            ].join(" ");
+
+            self.anonymousMenuHtml = [
+                "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
+                "   <div class='wbHamburgerMenu-container'>",
+                "       <div class='wbHamburgerMenu-links'>",
+                "           <div><a data-ng-click='vm.navigateToLogin()'>Login</a><div>",
+                "           <div><a data-ng-click='vm.navigateToCreateAccount()'>Create Account</a><div>",
+                "       </div>",
+                "   </div>",
+                "</div>"
+            ].join(" ");
+
             self.initializeAsync = function() {
                 var deferred = self.$q.defer();
 
-                self.augmentedJQuery = angular.element("<div></div>");
+                self.augmentedJQuery = self.$compile(angular.element(securityStore.token ? self.menuHTML : self.anonymousMenuHtml))(self.$scope);
+                self.nativeElement = self.augmentedJQuery[0];
 
                 self.extendCssAsync({
-                nativeHTMLElement: self.nativeHTMLElement,
+                    nativeHTMLElement: self.nativeElement,
                 cssObject: {
-                    "-webkit-transition": "opacity 300ms ease-in-out",
-                    "-o-transition": "opacity 300ms ease-in-out",
-                    "transition": "opacity 300ms ease-in-out",
+                    "-webkit-transition": "opacity 25ms ease-in-out",
+                    "-o-transition": "opacity 25ms ease-in-out",
+                    "transition": "opacity 25ms ease-in-out",
                     "opacity": "0",
                     "position": "fixed",
                     "top": "0",
                     "left": "0",
                     "height": "100%",
                     "width": "100%",
-                    "background-color":"rgba(0, 0, 0, .25)",
-                    "display": "block"
+                    "background-color":"rgba(0, 0, 0, .75)",
+                    "display": "block",
+                    "z-index":"999"
                 }
                 }).then(function () {
                     deferred.resolve();
@@ -77,23 +120,28 @@
             }
 
             self.showAsync = function() {
-                return this.setOpacityAsync({ nativeHtmlElement: this.nativeHTMLElement, opacity: 25 });
+                return self.setOpacityAsync({ nativeHtmlElement: self.nativeElement, opacity: 25 });
             }
     
-            self.appendBackDropToBodyAsync = function() {
-                return this.appendToBodyAsync({ nativeElement: this.nativeHTMLElement });
+            self.appendMenuToBodyAsync = function() {
+                return self.appendToBodyAsync({ nativeElement: self.nativeElement });
             }
 
             self.hideAsync = function() {
-                return this.setOpacityAsync({ nativeHtmlElement: this.nativeHTMLElement, opacity: 0 });
+                return self.setOpacityAsync({ nativeHtmlElement: self.nativeElement, opacity: 0 });
             }
 
-            self.dispose = function() {
-                this.removeElement({ nativeHTMLElement: this.nativeHTMLElement });
-                this.augmentedJQuery = null;
+            self.dispose = function () {
+                try {
+                    self.removeElement({ nativeHTMLElement: self.nativeElement });
+                    self.augmentedJQuery = null;
+                }
+                catch (error) {
+
+                }
             }
 
-            self.nativeHTMLElement; 
+            self.nativeElement; 
 
             self.augmentedJQuery;
 
@@ -113,16 +161,45 @@
             "     cursor:pointer; ",
             " } ",
 
+            " .wbHamburgerMenu { ",
+            "     width: 100%; ",
+            " } ",
+
             " .wbHamburgerButton div { ",
             "     width: 20px; ",
             "     height: 3px; ",
             "     background: #333; ",
             "     margin: 4px 0; ",
             "     border-radius: 2px; ",
+            " } ",
+
+            " .wbHamburgerMenu-container { ",
+            "     max-width: 1024px; ",
+            "     margin: 0 auto; ",
+            " } ",
+
+            " .wbHamburgerMenu a { ",
+            "     font-size: 1.75em; ",
+            "     line-height: 3.625em; ",
+            "     color: #FFF; ",
+            "     cursor: pointer; ",
+            " } ",
+
+            " .wbHamburgerMenu a:hover { ",
+            "     text-decoration: underline; ",
+            " } ",
+
+            " .wbHamburgerMenu-links { ",
+            "     position: relative; ",
+            "     text-align: right; ",
+            "     float: right; ",
+            "     padding-top: 20px; ",
+            "     margin-right: 70px; ",
             " } "
 
+
         ].join(" \n "),
-        providers: ["$q","appendToBodyAsync", "extendCssAsync", "removeElement", "setOpacityAsync"],
+        providers: ["$compile","$location","$q", "$scope", "appendToBodyAsync", "extendCssAsync", "removeElement", "securityStore", "setOpacityAsync"],
         template: [
             "<div class='wbHamburgerButton' data-ng-click='vm.onClick()'>",
             "<div></div>",

@@ -4,6 +4,10 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
         "componentName": "homeComponent"
     });
 
+    $routeProvider.when("/login", {
+        "componentName": "loginComponent"
+    });
+
     $routeProvider.when("/wedding/create", {
         "componentName": "editWeddingComponent"
     });
@@ -30,51 +34,6 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 
     apiEndpointProvider.configure("/api");
 }]);
-angular.module("app").value("WEDDING_ACTIONS", {
-    ADD_WEDDING: "ADD_WEDDING",
-});
-
-
-
-(function () {
-
-    "use strict";
-
-
-    function weddingActions(dispatcher, guid, weddingService, WEDDING_ACTIONS) {
-
-        var self = this;
-        self.dispatcher = dispatcher;
-        self.WEDDING_ACTIONS = WEDDING_ACTIONS;
-
-        self.add = function (options) {
-            var newGuid = guid();
-            weddingService.add({
-                data: {
-                    numberOfGuests: options.model.numberOfGuests
-                }
-            }).then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.WEDDING_ACTIONS.ADD_WEDDING,
-                    options: {
-                        data: results,
-                        id: newGuid
-                    }                    
-                })
-            });
-           
-            return newGuid;
-        };
-
-
-        return self;
-    }
-
-    angular.module("app")
-        .service("weddingActions", ["dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
-
-
-})();
 (function () {
 
     "use strict";
@@ -199,6 +158,54 @@ angular.module("app").value("WEDDING_ACTIONS", {
         },
         template: [
             "<div class='caterer'>",
+            "</div>"
+        ].join(" ")
+    });
+
+
+})();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
+        selector: "customer-registration-form",
+        component: function CustomerRegistrationFormComponent() {
+            var self = this;
+            self.firstname = null;
+            self.lastname = null;
+            self.email = null;
+            self.phoneNumber = null;
+
+            self.firstnamePlaceholder = "Firstname";
+            self.lastnamePlaceholder = "Lastname";
+            self.emailPlaceholder = "Email";
+            self.phoneNumberPlaceholder = "Phone Number";
+
+            return self;
+        },
+        template: [
+            "<form class='customerRegistrationForm' name='customerRegistrationForm'>",
+            "<text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
+            "<text-form-control placeholder='vm.lastnamePlaceholder' model='vm.lastname' ></text-form-control>",
+            "<text-form-control placeholder='vm.emailPlaceholder' model='vm.email' ></text-form-control>",
+            "<text-form-control placeholder='vm.phoneNumberPlaceholder' model='vm.phoneNumber' ></text-form-control>",
+            "</form>"
+        ].join(" ")
+    });
+
+})();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
+        component: function CustomerRegistrationComponent() {
+
+        },
+        template: [
+            "<div class='customerRegistration viewComponent'>",
+            "<customer-registration-form></customer-registration-form>",
             "</div>"
         ].join(" ")
     });
@@ -335,13 +342,18 @@ angular.module("app").value("WEDDING_ACTIONS", {
 
     ngX.Component({
         selector: "wb-hamburger-button",
-        component: function HamburgerButtonComponent($q, appendToBodyAsync, extendCssAsync, removeElement, setOpacityAsync) {
+        component: function HamburgerButtonComponent($compile, $location, $q, $scope, appendToBodyAsync, extendCssAsync, removeElement, securityStore, setOpacityAsync) {
             var self = this;
+            self.$compile = $compile;
+            self.$location = $location;
             self.$q = $q;
+            self.$scope = $scope;
             self.appendToBodyAsync = appendToBodyAsync;
             self.extendCssAsync = extendCssAsync;
             self.removeElement = removeElement;
+            self.securityStore = securityStore;
             self.setOpacityAsync = setOpacityAsync;
+
 
             self.isOpen = false;
 
@@ -350,19 +362,21 @@ angular.module("app").value("WEDDING_ACTIONS", {
             }
 
             self.onClick = function () {
-                if (self.isMenuVisible) {
-                    self.closeAsync();
+                if (self.isOpen) {
+                    self.closeAsync()
                 } else {
-                    self.openAsync();
-                }
+                    self.openAsync().then(function () {
+                        self.isOpen = true;
+                    });
+                }                
             }
 
             self.openAsync = function () {
                 var deferred = self.$q.defer();
                 self.initializeAsync()
-                    .then(self.appendBackDropToBodyAsync)
+                    .then(self.appendMenuToBodyAsync)
                     .then(self.showAsync)
-                    .then(() => {
+                    .then(function()  {
                         self.isOpen = true;
                         deferred.resolve();
 
@@ -372,7 +386,7 @@ angular.module("app").value("WEDDING_ACTIONS", {
 
             self.closeAsync = function () {
                 var deferred = self.$q.defer();
-                self.hideAsync().then((results) => {
+                self.hideAsync().then(function (results) {
                     self.dispose();
                     self.isOpen = false;
                     deferred.resolve();
@@ -380,25 +394,61 @@ angular.module("app").value("WEDDING_ACTIONS", {
                 return deferred.promise;
             }
 
+            self.navigateToLogin = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/login");
+                });
+            }
+
+            self.navigateToCreateAccount = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/customer/register");
+                });
+            }
+
+            self.menuHTML = [
+                "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
+                "   <div class='wbHamburgerMenu-container'>",
+                "       <div class='wbHamburgerMenu-links'>",
+                "           <div><a data-ng-click='vm.navigateToLogin()'>Login</a><div>",
+                "           <div><a data-ng-click='vm.navigateToCreateAccount()'>Create Account</a><div>",
+                "       </div>",
+                "   </div>",
+                "</div>"
+            ].join(" ");
+
+            self.anonymousMenuHtml = [
+                "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
+                "   <div class='wbHamburgerMenu-container'>",
+                "       <div class='wbHamburgerMenu-links'>",
+                "           <div><a data-ng-click='vm.navigateToLogin()'>Login</a><div>",
+                "           <div><a data-ng-click='vm.navigateToCreateAccount()'>Create Account</a><div>",
+                "       </div>",
+                "   </div>",
+                "</div>"
+            ].join(" ");
+
             self.initializeAsync = function() {
                 var deferred = self.$q.defer();
 
-                self.augmentedJQuery = angular.element("<div></div>");
+                self.augmentedJQuery = self.$compile(angular.element(securityStore.token ? self.menuHTML : self.anonymousMenuHtml))(self.$scope);
+                self.nativeElement = self.augmentedJQuery[0];
 
                 self.extendCssAsync({
-                nativeHTMLElement: self.nativeHTMLElement,
+                    nativeHTMLElement: self.nativeElement,
                 cssObject: {
-                    "-webkit-transition": "opacity 300ms ease-in-out",
-                    "-o-transition": "opacity 300ms ease-in-out",
-                    "transition": "opacity 300ms ease-in-out",
+                    "-webkit-transition": "opacity 25ms ease-in-out",
+                    "-o-transition": "opacity 25ms ease-in-out",
+                    "transition": "opacity 25ms ease-in-out",
                     "opacity": "0",
                     "position": "fixed",
                     "top": "0",
                     "left": "0",
                     "height": "100%",
                     "width": "100%",
-                    "background-color":"rgba(0, 0, 0, .25)",
-                    "display": "block"
+                    "background-color":"rgba(0, 0, 0, .75)",
+                    "display": "block",
+                    "z-index":"999"
                 }
                 }).then(function () {
                     deferred.resolve();
@@ -408,23 +458,28 @@ angular.module("app").value("WEDDING_ACTIONS", {
             }
 
             self.showAsync = function() {
-                return this.setOpacityAsync({ nativeHtmlElement: this.nativeHTMLElement, opacity: 25 });
+                return self.setOpacityAsync({ nativeHtmlElement: self.nativeElement, opacity: 25 });
             }
     
-            self.appendBackDropToBodyAsync = function() {
-                return this.appendToBodyAsync({ nativeElement: this.nativeHTMLElement });
+            self.appendMenuToBodyAsync = function() {
+                return self.appendToBodyAsync({ nativeElement: self.nativeElement });
             }
 
             self.hideAsync = function() {
-                return this.setOpacityAsync({ nativeHtmlElement: this.nativeHTMLElement, opacity: 0 });
+                return self.setOpacityAsync({ nativeHtmlElement: self.nativeElement, opacity: 0 });
             }
 
-            self.dispose = function() {
-                this.removeElement({ nativeHTMLElement: this.nativeHTMLElement });
-                this.augmentedJQuery = null;
+            self.dispose = function () {
+                try {
+                    self.removeElement({ nativeHTMLElement: self.nativeElement });
+                    self.augmentedJQuery = null;
+                }
+                catch (error) {
+
+                }
             }
 
-            self.nativeHTMLElement; 
+            self.nativeElement; 
 
             self.augmentedJQuery;
 
@@ -444,16 +499,45 @@ angular.module("app").value("WEDDING_ACTIONS", {
             "     cursor:pointer; ",
             " } ",
 
+            " .wbHamburgerMenu { ",
+            "     width: 100%; ",
+            " } ",
+
             " .wbHamburgerButton div { ",
             "     width: 20px; ",
             "     height: 3px; ",
             "     background: #333; ",
             "     margin: 4px 0; ",
             "     border-radius: 2px; ",
+            " } ",
+
+            " .wbHamburgerMenu-container { ",
+            "     max-width: 1024px; ",
+            "     margin: 0 auto; ",
+            " } ",
+
+            " .wbHamburgerMenu a { ",
+            "     font-size: 1.75em; ",
+            "     line-height: 3.625em; ",
+            "     color: #FFF; ",
+            "     cursor: pointer; ",
+            " } ",
+
+            " .wbHamburgerMenu a:hover { ",
+            "     text-decoration: underline; ",
+            " } ",
+
+            " .wbHamburgerMenu-links { ",
+            "     position: relative; ",
+            "     text-align: right; ",
+            "     float: right; ",
+            "     padding-top: 20px; ",
+            "     margin-right: 70px; ",
             " } "
 
+
         ].join(" \n "),
-        providers: ["$q","appendToBodyAsync", "extendCssAsync", "removeElement", "setOpacityAsync"],
+        providers: ["$compile","$location","$q", "$scope", "appendToBodyAsync", "extendCssAsync", "removeElement", "securityStore", "setOpacityAsync"],
         template: [
             "<div class='wbHamburgerButton' data-ng-click='vm.onClick()'>",
             "<div></div>",
@@ -517,11 +601,37 @@ angular.module("app").value("WEDDING_ACTIONS", {
     "use strict";
 
     ngX.Component({
-        component: function LoginComponent() {
+        selector: "wb-login-form",
+        component: function LoginFormComponent() {
+            var self = this;
+            self.username = null;
+            self.password = null;
+            
 
+            self.usernamePlaceholder = "Username";
+            self.passwordPlaceholder = "Password";
+
+            return self;
         },
         template: [
-            "<div class='login'>",
+            "<form class='wbLoginForm' name='wbLoginForm'>",
+            "<text-form-control placeholder='vm.usernamePlaceholder' model='vm.username' ></text-form-control>",
+            "<text-form-control placeholder='vm.passwordPlaceholder' model='vm.password' ></text-form-control>",
+            "</form>"
+        ].join(" ")
+    });
+
+})();
+(function () {
+
+    "use strict";
+
+    ngX.Component({
+        component: function LoginComponent() {
+            
+        },
+        template: [
+            "<div class='login viewComponent'>",
             "<wb-login-form></wb-login-form>",
             "</div>"
         ].join(" ")
@@ -651,90 +761,49 @@ angular.module("app").value("WEDDING_ACTIONS", {
 
 
 
+angular.module("app").value("WEDDING_ACTIONS", {
+    ADD_WEDDING: "ADD_WEDDING",
+});
+
+
+
 (function () {
 
     "use strict";
 
-    function caterer() {
+
+    function weddingActions(dispatcher, guid, weddingService, WEDDING_ACTIONS) {
+
         var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("caterer", [caterer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function customer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("customer", [customer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function wedding(dispatcher, weddingActions, weddingStore) {
-        var self = this;
-        self.id = null;
         self.dispatcher = dispatcher;
-        self.numberOfGuests = null;
-        self.weddingActions = weddingActions;
-        self.weddingStore = weddingStore;
+        self.WEDDING_ACTIONS = WEDDING_ACTIONS;
 
-        self.listenerId = self.dispatcher.addListener({
-            actionType: "CHANGE",
-            callback: function (options) {
-                if (self.addActionId === options.id) {
-                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
+        self.add = function (options) {
+            var newGuid = guid();
+            weddingService.add({
+                data: {
+                    numberOfGuests: options.model.numberOfGuests
                 }
-            }
-        });
+            }).then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.WEDDING_ACTIONS.ADD_WEDDING,
+                    options: {
+                        data: results,
+                        id: newGuid
+                    }                    
+                })
+            });
+           
+            return newGuid;
+        };
 
-        self.createInstance = function (options) {
-            var instance = new wedding(self.weddingActions, self.weddingStore);
-            if (options.data) {
-                instance.id = options.data.id;
-                instance.numberOfGuests = options.data.numberOfGuests;
-            }
-            return instance;
-        }
-        
-        self.add = function () {
-            self.addActionId = weddingActions.add({ model: self });
-        }
-
-        self.onStoreUpdate = function () {
-
-        }
-
-
-        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
 
         return self;
     }
 
-    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
+    angular.module("app")
+        .service("weddingActions", ["dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
 
-})();
-(function () {
-
-    "use strict";
-
-    function weddingBid() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("weddingBid", [weddingBid]);
 
 })();
 (function () {
@@ -849,6 +918,92 @@ angular.module("app").value("WEDDING_ACTIONS", {
     }
 
     angular.module("app").service("fetch", ["$http","$q","localStorageManager",fetch]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function caterer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("caterer", [caterer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function customer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("customer", [customer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function wedding(dispatcher, weddingActions, weddingStore) {
+        var self = this;
+        self.id = null;
+        self.dispatcher = dispatcher;
+        self.numberOfGuests = null;
+        self.weddingActions = weddingActions;
+        self.weddingStore = weddingStore;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                if (self.addActionId === options.id) {
+                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
+                }
+            }
+        });
+
+        self.createInstance = function (options) {
+            var instance = new wedding(self.weddingActions, self.weddingStore);
+            if (options.data) {
+                instance.id = options.data.id;
+                instance.numberOfGuests = options.data.numberOfGuests;
+            }
+            return instance;
+        }
+        
+        self.add = function () {
+            self.addActionId = weddingActions.add({ model: self });
+        }
+
+        self.onStoreUpdate = function () {
+
+        }
+
+
+        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
+
+        return self;
+    }
+
+    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function weddingBid() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("weddingBid", [weddingBid]);
 
 })();
 
