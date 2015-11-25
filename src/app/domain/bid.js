@@ -2,12 +2,12 @@
 
     "use strict";
 
-    function weddingBid() {
+    function bid() {
         var self = this;
 
         return self;
     }
 
-    angular.module("app").service("weddingBid", [weddingBid]);
+    angular.module("app").service("bid", [bid]);
 
 })();

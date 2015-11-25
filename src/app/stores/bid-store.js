@@ -2,25 +2,25 @@
 
     "use strict";
 
-    function customerStore(dispatcher, guid, CUSTOMER_ACTIONS) {
+    function bidStore(dispatcher, guid, BID_ACTIONS) {
 
         var self = this;
         self.dispatcher = dispatcher;
 
         self.dispatcher.addListener({
-            actionType: CUSTOMER_ACTIONS.ADD_CUSTOMER,
+            actionType: BID_ACTIONS.ADD_BID,
             callback: function (options) {
                 self.addItem(options.data);
-                self.currentCustomer = options.data;
+                self.currentBid = options.data;
                 self.emitChange({ id: options.id });
             }
         });
 
-        self.customers = [];
+        self.bids = [];
 
-        self.currentCustomer = null;
+        self.currentBid = null;
 
-        self.addItem = function (options) { self.customers.push(options.data); }
+        self.addItem = function (options) { self.bids.push(options.data); }
 
         self.emitChange = function (options) {
             self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
@@ -29,5 +29,5 @@
         return self;
     }
 
-    angular.module("app").service("customerStore", ["dispatcher", "guid", "CUSTOMER_ACTIONS", customerStore]);
+    angular.module("app").service("bidStore", ["dispatcher", "guid", "BID_ACTIONS", bidStore]);
 })();

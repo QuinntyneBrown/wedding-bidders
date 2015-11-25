@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function bidService($q, apiEndpoint, fetch) {
+    function catererService($q, apiEndpoint, fetch) {
         var self = this;
         self.add = function (options) {
             var deferred = $q.defer();
@@ -11,10 +11,10 @@
             });
             return deferred.promise;
         }
-        self.baseUri = apiEndpoint.getBaseUrl() + "/bid";
+        self.baseUri = apiEndpoint.getBaseUrl() + "/caterer";
         return self;
     }
 
-    angular.module("app").service("bidService", ["$q", "apiEndpoint", "fetch", bidService]);
+    angular.module("app").service("catererService", ["$q", "apiEndpoint", "fetch", catererService]);
 
 })();
