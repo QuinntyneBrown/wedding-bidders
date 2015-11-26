@@ -185,6 +185,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\images\icon_search_sm.png" />
     <Content Include="dist\app.js" />
     <Content Include="gulpfile.config.js" />
     <Content Include="gulpfile.js" />
@@ -221,6 +222,7 @@
     <Content Include="src\app\components\wb-about.js" />
     <Content Include="src\app\components\wb-app.js" />
     <Content Include="src\app\components\wb-banner.js" />
+    <Content Include="src\app\components\wb-bid-form.js" />
     <Content Include="src\app\components\wb-caterer-registration-form.js" />
     <Content Include="src\app\components\wb-caterer-registration.js" />
     <Content Include="src\app\components\wb-customer-registration-form.js" />
@@ -267,6 +269,7 @@
     <Compile Include="Server\Auth\OAuthOptions.cs" />
     <Compile Include="Server\Auth\OAuthProvider.cs" />
     <Compile Include="Server\Config\AppConfiguration.cs" />
+    <Compile Include="Server\Controllers\BidController.cs" />
     <Compile Include="Server\Controllers\CustomerController.cs" />
     <Compile Include="Server\Controllers\CatererController.cs" />
     <Compile Include="Server\Controllers\WeddingController.cs" />
@@ -274,7 +277,14 @@
     <Compile Include="Server\Data\Contracts\IWeddingBiddersUow.cs" />
     <Compile Include="Server\Data\WeddingBiddersContext.cs" />
     <Compile Include="Server\Data\WeddingBiddersUow.cs" />
+    <Compile Include="Server\Dtos\AccountDto.cs" />
+    <Compile Include="Server\Dtos\BidRequestDto.cs" />
+    <Compile Include="Server\Dtos\BidResponseDto.cs" />
+    <Compile Include="Server\Dtos\CatererRegistrationRequestDto.cs" />
+    <Compile Include="Server\Dtos\CatererRegistrationResponseDto.cs" />
     <Compile Include="Server\Dtos\ChangePasswordDto.cs" />
+    <Compile Include="Server\Dtos\CustomerRegistrationRequestDto.cs" />
+    <Compile Include="Server\Dtos\CustomerRegistrationResponseDto.cs" />
     <Compile Include="Server\Dtos\GroupDto.cs" />
     <Compile Include="Server\Dtos\RegistrationRequestDto.cs" />
     <Compile Include="Server\Dtos\RoleDto.cs" />
@@ -298,12 +308,18 @@
     <Compile Include="Server\Models\Wedding.cs" />
     <Compile Include="Server\Models\WeddingBid.cs" />
     <Compile Include="Server\Services\BaseService.cs" />
+    <Compile Include="Server\Services\BidService.cs" />
+    <Compile Include="Server\Services\CatererService.cs" />
+    <Compile Include="Server\Services\Contracts\IBidService.cs" />
+    <Compile Include="Server\Services\Contracts\ICatererService.cs" />
+    <Compile Include="Server\Services\Contracts\ICustomerService.cs" />
     <Compile Include="Server\Services\Contracts\IEncryptionService.cs" />
     <Compile Include="Server\Services\Contracts\IIdentityService.cs" />
     <Compile Include="Server\Services\Contracts\IMembershipService.cs" />
     <Compile Include="Server\Services\Contracts\ISecurityService.cs" />
     <Compile Include="Server\Services\Contracts\ISessionService.cs" />
     <Compile Include="Server\Services\Contracts\IWeddingService.cs" />
+    <Compile Include="Server\Services\CustomerService.cs" />
     <Compile Include="Server\Services\EncryptionService.cs" />
     <Compile Include="Server\Services\IdentityService.cs" />
     <Compile Include="Server\Services\MembershipService.cs" />

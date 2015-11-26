@@ -20,6 +20,8 @@ namespace WeddingBidders.Server
             container.RegisterType<IEncryptionService, EncryptionService>();
             container.RegisterType<ICacheProvider, CacheProvider>();
             container.RegisterType<ISecurityService, SecurityService>();
+            container.RegisterType<ICustomerService, CustomerService>();
+            container.RegisterType<IBidService, BidService>();
             return container;
         }
     }
