@@ -19,9 +19,11 @@
         };
 
         self.removeListener = function (options) {
-            for (var i = 0; i < self.listeners.length; i++) {
-                if (self.listeners[i].id === options.id) {
-                    self.listeners.slice(i,1);
+            var length = self.listeners.length
+            for (var i = 0; i < length; i++) {
+                if (self.listeners[i] &&  self.listeners[i].id === options.id) {
+                    self.listeners.splice(i, 1);
+                    i = length;
                 }
             }
         }

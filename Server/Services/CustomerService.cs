@@ -25,7 +25,7 @@ namespace WeddingBidders.Server.Services
                 Username = dto.Email,
                 Firstname = dto.Firstname,
                 Lastname = dto.Lastname,
-                Password = encryptionService.EncryptString(dto.Password)
+                Password = encryptionService.TransformPassword(dto.Password),
             };
 
             uow.Users.Add(user);

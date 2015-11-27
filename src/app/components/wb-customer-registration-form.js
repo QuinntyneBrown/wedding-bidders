@@ -22,11 +22,16 @@
             self.passwordPlaceholder = "Password";
             self.addActionId = null;
 
-            self.dispatcher.addListener({
+            self.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
                 callback: function (options) {
                     if (self.addActionId === options.id) {
-                        self.dispatcher.emit({ actionType: "CUSTOMER_ADDED" });
+                        self.dispatcher.emit({
+                            actionType: "CUSTOMER_ADDED", options: {
+                                username: self.email,
+                                password: self.password
+                            }
+                        });
                     }
                 }
             });
@@ -40,6 +45,10 @@
                     password: self.password
                 });
             };
+
+            self.dispose = function () {
+                self.dispatcher.removeListener({ id: self.listenerId });
+            }
 
             return self;
         },

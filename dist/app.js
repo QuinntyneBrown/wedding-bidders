@@ -137,27 +137,26 @@ angular.module("app").value("BID_ACTIONS", {
 
 
     function securityActions(dispatcher, formEncode, guid, securityService, SECURITY_ACTIONS) {
-
         var self = this;
         self.dispatcher = dispatcher;
         self.SECURITY_ACTIONS = SECURITY_ACTIONS;
-
         self.tryToLogin = function (options) {
-            var newGuid = guid();
-            
+            var newGuid = guid();            
             securityService.tryToLogin({
                 data: {
                     username:options.username,
                     password:options.password
                 }
             }).then(function (results) {
-                self.dispatcher.emit({ actionType: self.SECURITY_ACTIONS.LOGIN, token: results.data.token });
+                self.dispatcher.emit({
+                    actionType: self.SECURITY_ACTIONS.LOGIN, options: {
+                        token: results.access_token,
+                        id: newGuid
+                    }
+                });                
             });
             return newGuid;
         };
-
-
-
         return self;
     }
 
@@ -444,11 +443,16 @@ angular.module("app").value("BID_ACTIONS", {
             self.passwordPlaceholder = "Password";
             self.addActionId = null;
 
-            self.dispatcher.addListener({
+            self.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
                 callback: function (options) {
                     if (self.addActionId === options.id) {
-                        self.dispatcher.emit({ actionType: "CUSTOMER_ADDED" });
+                        self.dispatcher.emit({
+                            actionType: "CUSTOMER_ADDED", options: {
+                                username: self.email,
+                                password: self.password
+                            }
+                        });
                     }
                 }
             });
@@ -462,6 +466,10 @@ angular.module("app").value("BID_ACTIONS", {
                     password: self.password
                 });
             };
+
+            self.dispose = function () {
+                self.dispatcher.removeListener({ id: self.listenerId });
+            }
 
             return self;
         },
@@ -492,22 +500,43 @@ angular.module("app").value("BID_ACTIONS", {
     "use strict";
 
     ngX.Component({
-        component: function CustomerRegistrationComponent($location, dispatcher) {
+        component: function CustomerRegistrationComponent($location, dispatcher, securityActions) {
 
             var self = this;
             self.$location = $location;
             self.dispatcher = dispatcher;
+            self.securityActions = securityActions;
+            self.loginId = null;
+            self.listenerIds = [];
 
-            self.dispatcher.addListener({
+            self.listenerIds.push(self.dispatcher.addListener({
                 actionType: "CUSTOMER_ADDED",
                 callback: function (options) {
-                    self.$location.path("/");
+                    self.loginId = securityActions.tryToLogin({
+                        username: options.username,
+                        password: options.password
+                    });
                 }
-            });
+            }));
+
+            self.listenerIds.push(self.dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (self.loginId && self.loginId === options.id) {
+                        self.$location.path("/");
+                    }
+                }
+            }));
+
+            self.deactivate = function () {
+                for (var i = 0; i < self.listenerIds.length; i++) {
+                    self.dispatcher.removeListener({ id: self.listenerIds[i] });
+                }
+            }
 
 
         },
-        providers:["$location","dispatcher"],
+        providers:["$location","dispatcher","securityActions"],
         template: [
             "<div class='customerRegistration viewComponent'>",
             "<customer-registration-form></customer-registration-form>",
@@ -942,6 +971,8 @@ angular.module("app").value("BID_ACTIONS", {
     function HomeComponent() {
         var self = this;
 
+
+
         return self;
     }
 
@@ -1265,9 +1296,11 @@ angular.module("app").value("BID_ACTIONS", {
         };
 
         self.removeListener = function (options) {
-            for (var i = 0; i < self.listeners.length; i++) {
-                if (self.listeners[i].id === options.id) {
-                    self.listeners.slice(i,1);
+            var length = self.listeners.length
+            for (var i = 0; i < length; i++) {
+                if (self.listeners[i] &&  self.listeners[i].id === options.id) {
+                    self.listeners.splice(i, 1);
+                    i = length;
                 }
             }
         }
@@ -1424,17 +1457,16 @@ angular.module("app").value("BID_ACTIONS", {
 
     function securityService($q, apiEndpoint, fetch, formEncode) {
         var self = this;
-
+        self.$q = $q;
         self.tryToLogin = function (options) {
-            var newGuid = guid();
+            var deferred = self.$q.defer();
             angular.extend(options.data, { grant_type: "password" });
             var formEncodedData = formEncode(options.data);
             var headers = { "Content-Type": "application/x-www-form-urlencoded" };
-
             fetch.fromService({ method: "POST", url: self.baseUri + "/token", data: formEncodedData, headers: headers }).then(function (results) {
-                self.dispatcher.emit({ actionType: self.SECURITY_ACTIONS.LOGIN, token: results.data.token });
+                deferred.resolve(results.data);
             });
-            return newGuid;
+            return deferred.promise;            
         };
 
         self.baseUri = apiEndpoint.getBaseUrl() + "/security";
@@ -1442,7 +1474,7 @@ angular.module("app").value("BID_ACTIONS", {
         return self;
     }
 
-    angular.module("app").service("securityService", ["$q", "apiEndpoint", "fetch", "formEncode", securityService]);
+    angular.module("app").service("securityService", ["$q", "apiEndpoint", "fetch", "formEncode",securityService]);
 
 })();
 (function () {

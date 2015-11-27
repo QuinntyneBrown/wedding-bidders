@@ -5,6 +5,8 @@
     function HomeComponent() {
         var self = this;
 
+
+
         return self;
     }
 
