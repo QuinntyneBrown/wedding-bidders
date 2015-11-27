@@ -7,5 +7,13 @@ namespace WeddingBidders.Server.Dtos
 {
     public class CatererRegistrationResponseDto
     {
+        public CatererRegistrationResponseDto()
+        {
+
+        }
+
+        public int Id { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
     }
 }

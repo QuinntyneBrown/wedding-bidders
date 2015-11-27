@@ -61,8 +61,6 @@ namespace WeddingBidders.Server.Services
 
         public bool ValidateUser(string usermame, string password)
         {
-            var users = this.uow.Users.GetAll().ToList();
-
             return this.uow.Users.GetAll().Where(x => x.Username == usermame && x.Password == password).Count() > 0;
         }
 
