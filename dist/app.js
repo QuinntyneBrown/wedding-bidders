@@ -84,6 +84,25 @@ angular.module("app").value("BID_ACTIONS", {
         self.dispatcher = dispatcher;
         self.CATERER_ACTIONS = CATERER_ACTIONS;
 
+        self.add = function (options) {
+            var newGuid = guid();
+
+            catererService.add({
+                data: {
+                    firstname: options.firstname,
+                    lastname: options.lastname,
+                    email: options.email,
+                    confirmEmail: options.confirmEmail,
+                    password: options.password
+                }
+            }).then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.CATERER_ACTIONS.ADD_CATERER, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
 
         return self;
     }
@@ -202,6 +221,198 @@ angular.module("app").value("BID_ACTIONS", {
     angular.module("app")
         .service("weddingActions", ["dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
 
+
+})();
+(function () {
+
+    "use strict";
+
+    function bid() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("bid", [bid]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function caterer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("caterer", [caterer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function customer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("customer", [customer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function wedding(dispatcher, weddingActions, weddingStore) {
+        var self = this;
+        self.id = null;
+        self.dispatcher = dispatcher;
+        self.numberOfGuests = null;
+        self.weddingActions = weddingActions;
+        self.weddingStore = weddingStore;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                if (self.addActionId === options.id) {
+                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
+                }
+            }
+        });
+
+        self.createInstance = function (options) {
+            var instance = new wedding(self.weddingActions, self.weddingStore);
+            if (options.data) {
+                instance.id = options.data.id;
+                instance.numberOfGuests = options.data.numberOfGuests;
+            }
+            return instance;
+        }
+        
+        self.add = function () {
+            self.addActionId = weddingActions.add({ model: self });
+        }
+
+        self.onStoreUpdate = function () {
+
+        }
+
+
+        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
+
+        return self;
+    }
+
+    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function bidService($q, apiEndpoint, fetch) {
+        var self = this;
+        self.add = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "POST", url: self.baseUri + "/add", data: options.data }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        }
+        self.baseUri = apiEndpoint.getBaseUrl() + "/bid";
+        return self;
+    }
+
+    angular.module("app").service("bidService", ["$q", "apiEndpoint", "fetch", bidService]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function catererService($q, apiEndpoint, fetch) {
+        var self = this;
+        self.add = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "POST", url: self.baseUri + "/add", data: options.data }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        }
+        self.baseUri = apiEndpoint.getBaseUrl() + "/caterer";
+        return self;
+    }
+
+    angular.module("app").service("catererService", ["$q", "apiEndpoint", "fetch", catererService]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function customerService($q, apiEndpoint, fetch) {
+        var self = this;
+        self.add = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "POST", url: self.baseUri + "/add", data: options.data }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        }
+        self.baseUri = apiEndpoint.getBaseUrl() + "/customer";
+        return self;
+    }
+
+    angular.module("app").service("customerService", ["$q", "apiEndpoint", "fetch", customerService]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function securityService($q, apiEndpoint, fetch, formEncode) {
+        var self = this;
+        self.$q = $q;
+        self.tryToLogin = function (options) {
+            var deferred = self.$q.defer();
+            angular.extend(options.data, { grant_type: "password" });
+            var formEncodedData = formEncode(options.data);
+            var headers = { "Content-Type": "application/x-www-form-urlencoded" };
+            fetch.fromService({ method: "POST", url: self.baseUri + "/token", data: formEncodedData, headers: headers }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;            
+        };
+
+        self.baseUri = apiEndpoint.getBaseUrl() + "/security";
+
+        return self;
+    }
+
+    angular.module("app").service("securityService", ["$q", "apiEndpoint", "fetch", "formEncode",securityService]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function weddingService($q, apiEndpoint, fetch) {
+        var self = this;
+        self.add = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "POST", url: self.baseUri + "/add", data: options.data }).then(function(results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;            
+        }
+        self.baseUri = apiEndpoint.getBaseUrl() + "/wedding";
+        return self;
+    }
+
+    angular.module("app").service("weddingService", ["$q","apiEndpoint","fetch",weddingService]);
 
 })();
 (function () {
@@ -327,9 +538,10 @@ angular.module("app").value("BID_ACTIONS", {
 
     ngX.Component({
         selector: "caterer-registration-form",
-        component: function CatererRegistrationFormComponent(catererActions) {
+        component: function CatererRegistrationFormComponent(catererActions, dispatcher) {
             var self = this;
             self.catererActions = catererActions;
+            self.dispatcher = dispatcher;
 
             self.firstname = null;
             self.lastname = null;
@@ -339,11 +551,36 @@ angular.module("app").value("BID_ACTIONS", {
             self.firstnamePlaceholder = "Firstname";
             self.lastnamePlaceholder = "Lastname";
             self.emailPlaceholder = "Email";
+            self.confirmEmailPlaceholder = "Confirm Email";
             self.phoneNumberPlaceholder = "Phone Number";
 
-            self.tryToRegister = function () {
+            self.listenerId = self.dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (self.addActionId === options.id) {
+                        self.dispatcher.emit({
+                            actionType: "CATERER_ADDED", options: {
+                                username: self.email,
+                                password: self.password
+                            }
+                        });
+                    }
+                }
+            });
 
+            self.tryToRegister = function () {
+                self.addActionId = self.catererActions.add({
+                    firstname: self.firstname,
+                    lastname: self.lastname,
+                    email: self.email,
+                    confirmEmail: self.confirmEmail,
+                    password: self.password
+                });
             };
+
+            self.dispose = function () {
+                self.dispatcher.removeListener({ id: self.listenerId });
+            }
 
             return self;
         },
@@ -351,7 +588,7 @@ angular.module("app").value("BID_ACTIONS", {
             "  .catererRegistrationForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; }"
         ].join( " /n "),
         providers: [
-            "catererActions"
+            "catererActions","dispatcher"
         ],
         template: [
             "<form class='catererRegistrationForm' name='catererRegistrationForm'>",
@@ -370,9 +607,43 @@ angular.module("app").value("BID_ACTIONS", {
     "use strict";
 
     ngX.Component({
-        component: function CatererRegistrationComponent() {
+        component: function CatererRegistrationComponent($location, dispatcher, securityActions) {
 
+            var self = this;
+            self.$location = $location;
+            self.dispatcher = dispatcher;
+            self.securityActions = securityActions;
+            self.loginId = null;
+            self.listenerIds = [];
+
+            self.listenerIds.push(self.dispatcher.addListener({
+                actionType: "CATERER_ADDED",
+                callback: function (options) {
+                    self.loginId = securityActions.tryToLogin({
+                        username: options.username,
+                        password: options.password
+                    });
+                }
+            }));
+
+            self.listenerIds.push(self.dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (self.loginId && self.loginId === options.id) {
+                        self.$location.path("/");
+                    }
+                }
+            }));
+
+            self.deactivate = function () {
+                for (var i = 0; i < self.listenerIds.length; i++) {
+                    self.dispatcher.removeListener({ id: self.listenerIds[i] });
+                }
+            }
+
+            return self;
         },
+        providers: ["$location", "dispatcher", "securityActions"],
         template: [
             "<div class='catererRegistration viewComponent'>",
             "<caterer-registration-form></caterer-registration-form>",
@@ -1193,92 +1464,6 @@ angular.module("app").value("BID_ACTIONS", {
 
     "use strict";
 
-    function bid() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("bid", [bid]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function caterer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("caterer", [caterer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function customer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("customer", [customer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function wedding(dispatcher, weddingActions, weddingStore) {
-        var self = this;
-        self.id = null;
-        self.dispatcher = dispatcher;
-        self.numberOfGuests = null;
-        self.weddingActions = weddingActions;
-        self.weddingStore = weddingStore;
-
-        self.listenerId = self.dispatcher.addListener({
-            actionType: "CHANGE",
-            callback: function (options) {
-                if (self.addActionId === options.id) {
-                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
-                }
-            }
-        });
-
-        self.createInstance = function (options) {
-            var instance = new wedding(self.weddingActions, self.weddingStore);
-            if (options.data) {
-                instance.id = options.data.id;
-                instance.numberOfGuests = options.data.numberOfGuests;
-            }
-            return instance;
-        }
-        
-        self.add = function () {
-            self.addActionId = weddingActions.add({ model: self });
-        }
-
-        self.onStoreUpdate = function () {
-
-        }
-
-
-        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
-
-        return self;
-    }
-
-    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
-
-})();
-(function () {
-
-    "use strict";
-
     function eventEmitter(guid) {
 
         var self = this;
@@ -1389,112 +1574,6 @@ angular.module("app").value("BID_ACTIONS", {
     }
 
     angular.module("app").service("fetch", ["$http","$q","localStorageManager",fetch]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function bidService($q, apiEndpoint, fetch) {
-        var self = this;
-        self.add = function (options) {
-            var deferred = $q.defer();
-            fetch.fromService({ method: "POST", url: self.baseUri + "/add", data: options.data }).then(function (results) {
-                deferred.resolve(results.data);
-            });
-            return deferred.promise;
-        }
-        self.baseUri = apiEndpoint.getBaseUrl() + "/bid";
-        return self;
-    }
-
-    angular.module("app").service("bidService", ["$q", "apiEndpoint", "fetch", bidService]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function catererService($q, apiEndpoint, fetch) {
-        var self = this;
-        self.add = function (options) {
-            var deferred = $q.defer();
-            fetch.fromService({ method: "POST", url: self.baseUri + "/add", data: options.data }).then(function (results) {
-                deferred.resolve(results.data);
-            });
-            return deferred.promise;
-        }
-        self.baseUri = apiEndpoint.getBaseUrl() + "/caterer";
-        return self;
-    }
-
-    angular.module("app").service("catererService", ["$q", "apiEndpoint", "fetch", catererService]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function customerService($q, apiEndpoint, fetch) {
-        var self = this;
-        self.add = function (options) {
-            var deferred = $q.defer();
-            fetch.fromService({ method: "POST", url: self.baseUri + "/add", data: options.data }).then(function (results) {
-                deferred.resolve(results.data);
-            });
-            return deferred.promise;
-        }
-        self.baseUri = apiEndpoint.getBaseUrl() + "/customer";
-        return self;
-    }
-
-    angular.module("app").service("customerService", ["$q", "apiEndpoint", "fetch", customerService]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function securityService($q, apiEndpoint, fetch, formEncode) {
-        var self = this;
-        self.$q = $q;
-        self.tryToLogin = function (options) {
-            var deferred = self.$q.defer();
-            angular.extend(options.data, { grant_type: "password" });
-            var formEncodedData = formEncode(options.data);
-            var headers = { "Content-Type": "application/x-www-form-urlencoded" };
-            fetch.fromService({ method: "POST", url: self.baseUri + "/token", data: formEncodedData, headers: headers }).then(function (results) {
-                deferred.resolve(results.data);
-            });
-            return deferred.promise;            
-        };
-
-        self.baseUri = apiEndpoint.getBaseUrl() + "/security";
-
-        return self;
-    }
-
-    angular.module("app").service("securityService", ["$q", "apiEndpoint", "fetch", "formEncode",securityService]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function weddingService($q, apiEndpoint, fetch) {
-        var self = this;
-        self.add = function (options) {
-            var deferred = $q.defer();
-            fetch.fromService({ method: "POST", url: self.baseUri + "/add", data: options.data }).then(function(results) {
-                deferred.resolve(results.data);
-            });
-            return deferred.promise;            
-        }
-        self.baseUri = apiEndpoint.getBaseUrl() + "/wedding";
-        return self;
-    }
-
-    angular.module("app").service("weddingService", ["$q","apiEndpoint","fetch",weddingService]);
 
 })();
 (function () {

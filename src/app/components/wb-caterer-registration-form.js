@@ -4,9 +4,10 @@
 
     ngX.Component({
         selector: "caterer-registration-form",
-        component: function CatererRegistrationFormComponent(catererActions) {
+        component: function CatererRegistrationFormComponent(catererActions, dispatcher) {
             var self = this;
             self.catererActions = catererActions;
+            self.dispatcher = dispatcher;
 
             self.firstname = null;
             self.lastname = null;
@@ -16,11 +17,36 @@
             self.firstnamePlaceholder = "Firstname";
             self.lastnamePlaceholder = "Lastname";
             self.emailPlaceholder = "Email";
+            self.confirmEmailPlaceholder = "Confirm Email";
             self.phoneNumberPlaceholder = "Phone Number";
 
-            self.tryToRegister = function () {
+            self.listenerId = self.dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (self.addActionId === options.id) {
+                        self.dispatcher.emit({
+                            actionType: "CATERER_ADDED", options: {
+                                username: self.email,
+                                password: self.password
+                            }
+                        });
+                    }
+                }
+            });
 
+            self.tryToRegister = function () {
+                self.addActionId = self.catererActions.add({
+                    firstname: self.firstname,
+                    lastname: self.lastname,
+                    email: self.email,
+                    confirmEmail: self.confirmEmail,
+                    password: self.password
+                });
             };
+
+            self.dispose = function () {
+                self.dispatcher.removeListener({ id: self.listenerId });
+            }
 
             return self;
         },
@@ -28,7 +54,7 @@
             "  .catererRegistrationForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; }"
         ].join( " /n "),
         providers: [
-            "catererActions"
+            "catererActions","dispatcher"
         ],
         template: [
             "<form class='catererRegistrationForm' name='catererRegistrationForm'>",

@@ -8,6 +8,25 @@
         self.dispatcher = dispatcher;
         self.CATERER_ACTIONS = CATERER_ACTIONS;
 
+        self.add = function (options) {
+            var newGuid = guid();
+
+            catererService.add({
+                data: {
+                    firstname: options.firstname,
+                    lastname: options.lastname,
+                    email: options.email,
+                    confirmEmail: options.confirmEmail,
+                    password: options.password
+                }
+            }).then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.CATERER_ACTIONS.ADD_CATERER, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
 
         return self;
     }
