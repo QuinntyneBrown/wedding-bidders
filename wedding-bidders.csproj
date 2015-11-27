@@ -223,10 +223,13 @@
     <Content Include="src\app\components\wb-app.js" />
     <Content Include="src\app\components\wb-banner.js" />
     <Content Include="src\app\components\wb-bid-form.js" />
+    <Content Include="src\app\components\wb-caterer-bids.js" />
     <Content Include="src\app\components\wb-caterer-registration-form.js" />
     <Content Include="src\app\components\wb-caterer-registration.js" />
+    <Content Include="src\app\components\wb-customer-bids.js" />
     <Content Include="src\app\components\wb-customer-registration-form.js" />
     <Content Include="src\app\components\wb-customer-registration.js" />
+    <Content Include="src\app\components\wb-customer-weddings.js" />
     <Content Include="src\app\components\wb-edit-wedding-form.js" />
     <Content Include="src\app\components\wb-caterer.js" />
     <Content Include="src\app\components\wb-customer.js" />
@@ -242,6 +245,7 @@
     <Content Include="src\app\components\wb-text-form-control.js" />
     <Content Include="src\app\components\wb-top-banner.js" />
     <Content Include="src\app\components\wb-vendors.js" />
+    <Content Include="src\app\components\wb-weddings.js" />
     <Content Include="src\app\domain\caterer.js" />
     <Content Include="src\app\domain\customer.js" />
     <Content Include="src\app\domain\wedding.js" />

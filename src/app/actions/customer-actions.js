@@ -8,6 +8,22 @@
         self.dispatcher = dispatcher;
         self.CUSTOMER_ACTIONS = CUSTOMER_ACTIONS;
 
+        self.add = function (options) {
+            var newGuid = guid();
+
+            customerService.add({
+                data: {
+                    firstname: options.firstname,
+                    lastname: options.lastname,
+                    email: options.email,
+                    confirmEmail: options.confirmEmail,
+                    password: options.password
+                }
+            }).then(function (results) {
+                self.dispatcher.emit({ actionType: self.CUSTOMER_ACTIONS.ADD_CUSTOMER, data: results.data });
+            });
+            return newGuid;
+        }
 
         return self;
     }

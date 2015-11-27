@@ -11,19 +11,49 @@ namespace WeddingBidders.Server.Services
 {
     public class CustomerService : ICustomerService
     {
-        public CustomerService(IWeddingBiddersUow uow)
+        public CustomerService(IWeddingBiddersUow uow, IEncryptionService encryptionService)
         {
             this.uow = uow;
+            this.encryptionService = encryptionService;
         }
 
         public CustomerRegistrationResponseDto TryToRegister(CustomerRegistrationRequestDto dto)
         {
-            var response = new CustomerRegistrationResponseDto();
-            var user = new User();
+            
+            var user = new User()
+            {
+                Username = dto.Email,
+                Firstname = dto.Firstname,
+                Lastname = dto.Lastname,
+                Password = encryptionService.EncryptString(dto.Password)
+            };
+
+            uow.Users.Add(user);
+            uow.SaveChanges();
+
+            var customer = new Customer()
+            {
+                Firstname = dto.Firstname,
+                Lastname = dto.Lastname,
+                User = user,
+                UserId = user.Id
+            };
+            uow.Customers.Add(customer);
+            uow.SaveChanges();
+
+
+            var response = new CustomerRegistrationResponseDto()
+            {
+                Firstname = customer.Firstname,
+                Lastname = customer.Lastname,
+                UserId = user.Id
+            };
 
             return response;
         }
 
         protected readonly IWeddingBiddersUow uow;
+
+        protected readonly IEncryptionService encryptionService;
     }
 }

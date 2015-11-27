@@ -2,18 +2,18 @@
 
     "use strict";
 
-    function HomeComponent() {
+    function CatererBidsComponent() {
         var self = this;
 
         return self;
     }
 
     ngX.Component({
-        component: HomeComponent,
-        route: "/",
+        component: CatererBidsComponent,
+        route: "/caterer/bids",
         providers: [],
         template: [
-            "<div class='home'>",            
+            "<div class='catererBids'>",
             "</div>"
         ].join(" ")
     });
