@@ -20,7 +20,10 @@
                     password: options.password
                 }
             }).then(function (results) {
-                self.dispatcher.emit({ actionType: self.CUSTOMER_ACTIONS.ADD_CUSTOMER, data: results.data });
+                self.dispatcher.emit({
+                    actionType: self.CUSTOMER_ACTIONS.ADD_CUSTOMER, options:
+                        { data: results, id: newGuid }
+                });
             });
             return newGuid;
         }

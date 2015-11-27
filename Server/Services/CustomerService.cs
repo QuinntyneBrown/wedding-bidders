@@ -46,7 +46,7 @@ namespace WeddingBidders.Server.Services
             {
                 Firstname = customer.Firstname,
                 Lastname = customer.Lastname,
-                UserId = user.Id
+                Id = customer.Id
             };
 
             return response;

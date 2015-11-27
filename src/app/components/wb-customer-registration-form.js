@@ -4,9 +4,10 @@
 
     ngX.Component({
         selector: "customer-registration-form",
-        component: function CustomerRegistrationFormComponent(customerActions) {
+        component: function CustomerRegistrationFormComponent(customerActions, dispatcher) {
             var self = this;
             self.customerActions = customerActions;
+            self.dispatcher = dispatcher;
 
             self.firstname = null;
             self.lastname = null;
@@ -19,9 +20,19 @@
             self.emailPlaceholder = "Email";
             self.confirmEmailPlaceholder = "Confirm Email";
             self.passwordPlaceholder = "Password";
+            self.addActionId = null;
+
+            self.dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (self.addActionId === options.id) {
+                        self.dispatcher.emit({ actionType: "CUSTOMER_ADDED" });
+                    }
+                }
+            });
 
             self.tryToRegister = function () {
-                self.customerActions.add({
+                self.addActionId = self.customerActions.add({
                     firstname: self.firstname,
                     lastname: self.lastname,
                     email: self.email,
@@ -33,7 +44,7 @@
             return self;
         },
         providers: [
-            "customerActions"
+            "customerActions", "dispatcher"
         ],
         styles: [
             " .customerRegistrationForm { ",

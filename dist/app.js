@@ -115,7 +115,10 @@ angular.module("app").value("BID_ACTIONS", {
                     password: options.password
                 }
             }).then(function (results) {
-                self.dispatcher.emit({ actionType: self.CUSTOMER_ACTIONS.ADD_CUSTOMER, data: results.data });
+                self.dispatcher.emit({
+                    actionType: self.CUSTOMER_ACTIONS.ADD_CUSTOMER, options:
+                        { data: results, id: newGuid }
+                });
             });
             return newGuid;
         }
@@ -423,9 +426,10 @@ angular.module("app").value("BID_ACTIONS", {
 
     ngX.Component({
         selector: "customer-registration-form",
-        component: function CustomerRegistrationFormComponent(customerActions) {
+        component: function CustomerRegistrationFormComponent(customerActions, dispatcher) {
             var self = this;
             self.customerActions = customerActions;
+            self.dispatcher = dispatcher;
 
             self.firstname = null;
             self.lastname = null;
@@ -438,9 +442,19 @@ angular.module("app").value("BID_ACTIONS", {
             self.emailPlaceholder = "Email";
             self.confirmEmailPlaceholder = "Confirm Email";
             self.passwordPlaceholder = "Password";
+            self.addActionId = null;
+
+            self.dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (self.addActionId === options.id) {
+                        self.dispatcher.emit({ actionType: "CUSTOMER_ADDED" });
+                    }
+                }
+            });
 
             self.tryToRegister = function () {
-                self.customerActions.add({
+                self.addActionId = self.customerActions.add({
                     firstname: self.firstname,
                     lastname: self.lastname,
                     email: self.email,
@@ -452,7 +466,7 @@ angular.module("app").value("BID_ACTIONS", {
             return self;
         },
         providers: [
-            "customerActions"
+            "customerActions", "dispatcher"
         ],
         styles: [
             " .customerRegistrationForm { ",
@@ -478,9 +492,22 @@ angular.module("app").value("BID_ACTIONS", {
     "use strict";
 
     ngX.Component({
-        component: function CustomerRegistrationComponent() {
+        component: function CustomerRegistrationComponent($location, dispatcher) {
+
+            var self = this;
+            self.$location = $location;
+            self.dispatcher = dispatcher;
+
+            self.dispatcher.addListener({
+                actionType: "CUSTOMER_ADDED",
+                callback: function (options) {
+                    self.$location.path("/");
+                }
+            });
+
 
         },
+        providers:["$location","dispatcher"],
         template: [
             "<div class='customerRegistration viewComponent'>",
             "<customer-registration-form></customer-registration-form>",
@@ -1535,7 +1562,8 @@ angular.module("app").value("BID_ACTIONS", {
         return self;
     }
 
-    angular.module("app").service("customerStore", ["dispatcher", "guid", "CUSTOMER_ACTIONS", customerStore]);
+    angular.module("app").service("customerStore", ["dispatcher", "guid", "CUSTOMER_ACTIONS", customerStore])
+    .run(["customerStore", function (customerStore) { }]);
 })();
 (function () {
 

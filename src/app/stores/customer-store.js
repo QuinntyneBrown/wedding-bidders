@@ -29,5 +29,6 @@
         return self;
     }
 
-    angular.module("app").service("customerStore", ["dispatcher", "guid", "CUSTOMER_ACTIONS", customerStore]);
+    angular.module("app").service("customerStore", ["dispatcher", "guid", "CUSTOMER_ACTIONS", customerStore])
+    .run(["customerStore", function (customerStore) { }]);
 })();

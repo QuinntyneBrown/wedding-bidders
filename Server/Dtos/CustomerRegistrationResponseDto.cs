@@ -7,7 +7,7 @@ namespace WeddingBidders.Server.Dtos
 {
     public class CustomerRegistrationResponseDto
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
 
         public string Firstname { get; set; }
 
