@@ -9,6 +9,7 @@ using WeddingBidders.Server.Services.Contracts;
 
 namespace WeddingBidders.Server.Controllers
 {
+    [RoutePrefix("api/customer")]
     public class CustomerController : ApiController
     {
         public CustomerController(ICustomerService customerService)
@@ -16,6 +17,8 @@ namespace WeddingBidders.Server.Controllers
             this.service = customerService;
         }
 
+        [HttpPost]
+        [Route("add")]
         public IHttpActionResult TryToRegister(CustomerRegistrationRequestDto dto)
         {
             return Ok(this.service.TryToRegister(dto));

@@ -1,26 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using Common.Data.Contracts;
 using System.Web.Http;
+using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
-using WeddingBidders.Server.Services.Contracts;
+using WeddingBidders.Server.Models;
 
 namespace WeddingBidders.Server.Controllers
 {
+    [RoutePrefix("api/bid")]
     public class BidController : ApiController
     {
-        public BidController(IBidService service)
+        public BidController(IWeddingBiddersUow uow)
         {
-            this.service = service;
+            this.uow = uow;
+            this.repository = uow.Bids;
         }
 
-        public IHttpActionResult TryToBid(BidRequestDto dto)
+        [HttpPost]
+        [Route("add")]
+        public IHttpActionResult TryToAddBid(BidRequestDto dto)
         {
-            return Ok(this.service.TryToBid(dto));
+            var bid = new Bid() {
+                CatererId = dto.CatererId,
+                Description = dto.Description,
+                WeddingId = dto.WeddingId,
+                Price = dto.Price
+            };
+
+            this.repository.Add(bid);
+            this.uow.SaveChanges();
+            
+            var response = new BidResponseDto();
+
+            return Ok(response);
         }
 
-        protected readonly IBidService service;
+        protected readonly IWeddingBiddersUow uow;
+
+        protected readonly IRepository<Bid> repository;
     }
 }

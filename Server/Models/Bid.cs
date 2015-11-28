@@ -5,21 +5,21 @@ using System.Web;
 
 namespace WeddingBidders.Server.Models
 {
-    public class WeddingBid: BaseEntity
+    public class Bid: BaseEntity
     {
-        public WeddingBid()
+        public Bid()
         {
 
         }
-
-        public int? CustomerId { get; set; }
 
         public int? CatererId { get; set; }
 
         public int? WeddingId { get; set; }
 
-        public Customer Customer { get; set; }
+        public string Description { get; set; }
 
+        public float Price { get; set; }
+        
         public Caterer Caterer { get; set; }
 
         public Wedding Wedding { get; set; }

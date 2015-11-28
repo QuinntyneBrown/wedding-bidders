@@ -4,13 +4,41 @@
 
     ngX.Component({
         selector:"edit-wedding-form",
-        component: function EditWeddingFormComponent() {
+        component: function EditWeddingFormComponent(dispatcher, weddingActions) {
             var self = this;
+            self.dispatcher = dispatcher;
+            self.weddingActions = weddingActions;
 
-            self.onSubmit = self.model.add;
+            self.listenerId = self.dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (self.addActionId === options.id) {
+                        self.dispatcher.emit({
+                            actionType: "WEDDING_ADDED", options: {
+                                username: self.email,
+                                password: self.password
+                            }
+                        });
+                    }
+                }
+            });
 
+            self.add = function () {
+                self.addActionId = self.weddingActions.add({
+                    firstname: self.firstname,
+                    lastname: self.lastname,
+                    email: self.email,
+                    confirmEmail: self.confirmEmail,
+                    password: self.password
+                });
+            };
+
+            self.dispose = function () {
+                self.dispatcher.removeListener({ id: self.listenerId });
+            }
             return self;
         },
+        providers: ["dispatcher", "weddingActions"],
         styles: [
             " .editWeddingForm { } ",
             " .inputField { padding-left: 15px; } ",

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
@@ -27,6 +24,8 @@ namespace WeddingBidders.Server.Services
                 Lastname = dto.Lastname,
                 Password = encryptionService.TransformPassword(dto.Password),
             };
+
+            user.Roles.Add(uow.Roles.GetAll().Single(x => x.Name == "Customer"));
 
             uow.Users.Add(user);
             uow.SaveChanges();
