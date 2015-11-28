@@ -289,16 +289,20 @@
     <Compile Include="Server\Data\WeddingBiddersContext.cs" />
     <Compile Include="Server\Data\WeddingBiddersUow.cs" />
     <Compile Include="Server\Dtos\AccountDto.cs" />
+    <Compile Include="Server\Dtos\BidDto.cs" />
     <Compile Include="Server\Dtos\BidRequestDto.cs" />
     <Compile Include="Server\Dtos\BidResponseDto.cs" />
     <Compile Include="Server\Dtos\CatererDto.cs" />
+    <Compile Include="Server\Dtos\CatererProfileDto.cs" />
     <Compile Include="Server\Dtos\CatererRegistrationRequestDto.cs" />
     <Compile Include="Server\Dtos\CatererRegistrationResponseDto.cs" />
     <Compile Include="Server\Dtos\ChangePasswordDto.cs" />
     <Compile Include="Server\Dtos\CustomerDto.cs" />
+    <Compile Include="Server\Dtos\CustomerProfileDto.cs" />
     <Compile Include="Server\Dtos\CustomerRegistrationRequestDto.cs" />
     <Compile Include="Server\Dtos\CustomerRegistrationResponseDto.cs" />
     <Compile Include="Server\Dtos\GroupDto.cs" />
+    <Compile Include="Server\Dtos\ProfileDto.cs" />
     <Compile Include="Server\Dtos\RegistrationRequestDto.cs" />
     <Compile Include="Server\Dtos\RoleDto.cs" />
     <Compile Include="Server\Dtos\SignInDto.cs" />
@@ -331,6 +335,7 @@
     <Compile Include="Server\Services\Contracts\IEncryptionService.cs" />
     <Compile Include="Server\Services\Contracts\IIdentityService.cs" />
     <Compile Include="Server\Services\Contracts\IMembershipService.cs" />
+    <Compile Include="Server\Services\Contracts\IProfileService.cs" />
     <Compile Include="Server\Services\Contracts\ISecurityService.cs" />
     <Compile Include="Server\Services\Contracts\ISessionService.cs" />
     <Compile Include="Server\Services\Contracts\IWeddingService.cs" />
@@ -338,6 +343,7 @@
     <Compile Include="Server\Services\EncryptionService.cs" />
     <Compile Include="Server\Services\IdentityService.cs" />
     <Compile Include="Server\Services\MembershipService.cs" />
+    <Compile Include="Server\Services\ProfileService.cs" />
     <Compile Include="Server\Services\SecurityService.cs" />
     <Compile Include="Server\Services\SessionService.cs" />
     <Compile Include="Server\Services\WeddingService.cs" />
