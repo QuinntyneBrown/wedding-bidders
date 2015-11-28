@@ -7,6 +7,10 @@ namespace WeddingBidders.Server.Data.Contracts
     {
         IRepository<User> Users { get; }
 
+        IRepository<Account> Accounts { get; }
+
+        IRepository<Profile> Profiles { get; }
+
         IRepository<Role> Roles { get;}
         
         IRepository<Group> Groups { get; }

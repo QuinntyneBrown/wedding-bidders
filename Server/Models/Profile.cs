@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WeddingBidders.Server.Models
 {
@@ -13,6 +9,7 @@ namespace WeddingBidders.Server.Models
 
         }
 
+        [ForeignKey("Account")]
         public int? AccountId { get; set; }
 
         public string Name { get; set; }

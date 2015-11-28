@@ -299,6 +299,7 @@
     <Compile Include="Server\Dtos\UserDto.cs" />
     <Compile Include="Server\Dtos\WeddingDto.cs" />
     <Compile Include="Server\Models\Account.cs" />
+    <Compile Include="Server\Models\AccountType.cs" />
     <Compile Include="Server\Models\BaseEntity.cs" />
     <Compile Include="Server\Models\Caterer.cs" />
     <Compile Include="Server\Models\Customer.cs" />

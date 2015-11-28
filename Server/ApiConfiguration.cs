@@ -5,9 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using WeddingBidders.Server.Auth;
-using WeddingBidders.Server.Services.Contracts;
 using Microsoft.Practices.Unity;
-using System.Web.Http.Owin;
 
 namespace WeddingBidders.Server
 {

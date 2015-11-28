@@ -15,8 +15,10 @@ namespace WeddingBidders.Server.Data
 
         public IRepository<User> Users { get { return GetStandardRepo<User>(); } }
 
-        public IRepository<Account> Account { get { return GetStandardRepo<Account>(); } }
+        public IRepository<Account> Accounts { get { return GetStandardRepo<Account>(); } }
 
+        public IRepository<Profile> Profiles { get { return GetStandardRepo<Profile>(); } }
+        
         public IRepository<Role> Roles { get { return GetStandardRepo<Role>(); } }
 
         public IRepository<Group> Groups { get { return GetStandardRepo<Group>(); } }

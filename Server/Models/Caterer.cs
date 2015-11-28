@@ -17,10 +17,10 @@ namespace WeddingBidders.Server.Models
         public string Lastname { get; set; }
         public string Email { get; set; }
 
-        [ForeignKey("User")]
-        public int? UserId { get; set; }
+        [ForeignKey("Profile")]
+        public int? ProfileId { get; set; }
 
-        public User User { get; set; }
+        public Profile Profile { get; set; }
 
         public ICollection<Gallery> Galleries { get; set; }
     }

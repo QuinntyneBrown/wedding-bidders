@@ -16,6 +16,8 @@ namespace WeddingBidders.Server.Services
 
         public CatererRegistrationResponseDto TryToRegister(CatererRegistrationRequestDto dto)
         {
+            if (uow.Users.GetAll().Where(x => x.Username == dto.Email).FirstOrDefault() != null)
+                throw new System.Exception("Invalid Email Address");
 
             var user = new User()
             {
@@ -25,21 +27,35 @@ namespace WeddingBidders.Server.Services
                 Password = encryptionService.TransformPassword(dto.Password),
             };
 
-            user.Roles.Add(uow.Roles.GetAll().Single(x => x.Name == "Caterer"));
+            var account = new Account()
+            {
+                Firstname = dto.Firstname,
+                Lastname = dto.Lastname,
+                Email = dto.Email,
+                AccountType = AccountType.Vendor,
+                User = user
+            };
 
-            uow.Users.Add(user);
-            uow.SaveChanges();
+            var profile = new Profile()
+            {
+                Name = string.Format("{0} {1}", dto.Firstname, dto.Lastname),
+                Account = account
+            };
 
             var caterer = new Caterer()
             {
                 Firstname = dto.Firstname,
                 Lastname = dto.Lastname,
-                User = user,
-                UserId = user.Id
+                Profile = profile
             };
+
+            user.Accounts.Add(account);
+            account.Profiles.Add(profile);
+
+            uow.Users.Add(user);
+            uow.Accounts.Add(account);
             uow.Caterers.Add(caterer);
             uow.SaveChanges();
-
 
             var response = new CatererRegistrationResponseDto()
             {
