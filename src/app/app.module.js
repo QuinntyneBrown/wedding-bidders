@@ -46,11 +46,16 @@
         "componentName": "catererMyProfileComponent",
         "authorizationRequired": true,
         resolve: {
-            redirect: ["$q", "$location", function ($q, $location) {
+            redirect: ["$q", "$location", "profileService", function ($q, $location, profileService) {
                 var deferred = $q.defer();
-                //TODO: if customer, redirect to customer profile, else caterer profile
-                $location.path("/");
-                deferred.reject();
+                profileService.current().then(function (results) {
+                    if (results.profileType == 0) {
+                        $location.path("/customer/myprofile");
+                    } else {
+                        $location.path("/caterer/myprofile");
+                    }
+                    deferred.reject();
+                });
                 return deferred.promise;
             }]
         }

@@ -257,6 +257,7 @@
     <Content Include="src\app\metal\fetch.js" />
     <Content Include="src\app\services\bidService.js" />
     <Content Include="src\app\services\customerService.js" />
+    <Content Include="src\app\services\profileService.js" />
     <Content Include="src\app\services\securityService.js" />
     <Content Include="src\app\services\catererService.js" />
     <Content Include="src\app\services\weddingService.js" />
@@ -280,6 +281,7 @@
     <Compile Include="Server\Controllers\BidController.cs" />
     <Compile Include="Server\Controllers\CustomerController.cs" />
     <Compile Include="Server\Controllers\CatererController.cs" />
+    <Compile Include="Server\Controllers\ProfileController.cs" />
     <Compile Include="Server\Controllers\WeddingController.cs" />
     <Compile Include="Server\Data\Contracts\IWeddingBiddersUowContext.cs" />
     <Compile Include="Server\Data\Contracts\IWeddingBiddersUow.cs" />
@@ -312,6 +314,7 @@
     <Compile Include="Server\Models\ILoggable.cs" />
     <Compile Include="Server\Models\Photo.cs" />
     <Compile Include="Server\Models\Profile.cs" />
+    <Compile Include="Server\Models\ProfileType.cs" />
     <Compile Include="Server\Models\Role.cs" />
     <Compile Include="Server\Models\Session.cs" />
     <Compile Include="Server\Models\Tenant.cs" />

@@ -46,11 +46,16 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
         "componentName": "catererMyProfileComponent",
         "authorizationRequired": true,
         resolve: {
-            redirect: ["$q", "$location", function ($q, $location) {
+            redirect: ["$q", "$location", "profileService", function ($q, $location, profileService) {
                 var deferred = $q.defer();
-                //TODO: if customer, redirect to customer profile, else caterer profile
-                $location.path("/");
-                deferred.reject();
+                profileService.current().then(function (results) {
+                    if (results.profileType == 0) {
+                        $location.path("/customer/myprofile");
+                    } else {
+                        $location.path("/caterer/myprofile");
+                    }
+                    deferred.reject();
+                });
                 return deferred.promise;
             }]
         }
@@ -1725,6 +1730,29 @@ angular.module("app").value("BID_ACTIONS", {
     }
 
     angular.module("app").service("customerService", ["$q", "apiEndpoint", "fetch", customerService]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function profileService($q, apiEndpoint, fetch) {
+        var self = this;
+        self.$q = $q;
+        self.current = function (options) {
+            var deferred = self.$q.defer();
+            fetch.fromService({ method: "GET", url: self.baseUri + "/current" }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        };
+
+        self.baseUri = apiEndpoint.getBaseUrl() + "/profile";
+
+        return self;
+    }
+
+    angular.module("app").service("profileService", ["$q", "apiEndpoint", "fetch", profileService]);
 
 })();
 (function () {

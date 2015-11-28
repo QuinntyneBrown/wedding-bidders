@@ -47,7 +47,8 @@ namespace WeddingBidders.Server.Services
             {
                 Firstname = dto.Firstname,
                 Lastname = dto.Lastname,
-                Profile = profile
+                Profile = profile,
+                Email = dto.Email
             };
 
             user.Accounts.Add(account);
