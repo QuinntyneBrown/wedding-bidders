@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
@@ -65,6 +66,18 @@ namespace WeddingBidders.Server.Services
             };
 
             return response;
+        }
+
+        public CatererDto GetByEmail(string email)
+        {
+            var caterer = uow.Caterers.GetAll().Single(x => x.Email == email);
+
+            return new CatererDto()
+            {
+                Firstname = caterer.Firstname,
+                Lastname = caterer.Lastname,
+                Email = caterer.Email
+            };
         }
 
         protected readonly IWeddingBiddersUow uow;

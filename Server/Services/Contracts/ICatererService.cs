@@ -5,5 +5,7 @@ namespace WeddingBidders.Server.Services.Contracts
     public interface ICatererService
     {        
         CatererRegistrationResponseDto TryToRegister(CatererRegistrationRequestDto dto);
+
+        CatererDto GetByEmail(string email);
     }
 }

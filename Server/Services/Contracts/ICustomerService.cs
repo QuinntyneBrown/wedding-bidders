@@ -9,5 +9,7 @@ namespace WeddingBidders.Server.Services.Contracts
     public interface ICustomerService
     {
         CustomerRegistrationResponseDto TryToRegister(CustomerRegistrationRequestDto dto);
+
+        CustomerDto GetByEmail(string email);
     }
 }

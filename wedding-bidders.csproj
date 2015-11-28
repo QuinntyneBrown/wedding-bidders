@@ -224,9 +224,11 @@
     <Content Include="src\app\components\wb-banner.js" />
     <Content Include="src\app\components\wb-bid-form.js" />
     <Content Include="src\app\components\wb-caterer-bids.js" />
+    <Content Include="src\app\components\wb-caterer-my-profile.js" />
     <Content Include="src\app\components\wb-caterer-registration-form.js" />
     <Content Include="src\app\components\wb-caterer-registration.js" />
     <Content Include="src\app\components\wb-customer-bids.js" />
+    <Content Include="src\app\components\wb-customer-my-profile.js" />
     <Content Include="src\app\components\wb-customer-registration-form.js" />
     <Content Include="src\app\components\wb-customer-registration.js" />
     <Content Include="src\app\components\wb-customer-weddings.js" />
@@ -286,9 +288,11 @@
     <Compile Include="Server\Dtos\AccountDto.cs" />
     <Compile Include="Server\Dtos\BidRequestDto.cs" />
     <Compile Include="Server\Dtos\BidResponseDto.cs" />
+    <Compile Include="Server\Dtos\CatererDto.cs" />
     <Compile Include="Server\Dtos\CatererRegistrationRequestDto.cs" />
     <Compile Include="Server\Dtos\CatererRegistrationResponseDto.cs" />
     <Compile Include="Server\Dtos\ChangePasswordDto.cs" />
+    <Compile Include="Server\Dtos\CustomerDto.cs" />
     <Compile Include="Server\Dtos\CustomerRegistrationRequestDto.cs" />
     <Compile Include="Server\Dtos\CustomerRegistrationResponseDto.cs" />
     <Compile Include="Server\Dtos\GroupDto.cs" />

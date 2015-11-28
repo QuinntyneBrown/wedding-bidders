@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WeddingBidders.Server.Dtos
+﻿namespace WeddingBidders.Server.Dtos
 {
     public class WeddingDto
     {
@@ -13,6 +8,12 @@ namespace WeddingBidders.Server.Dtos
         }
 
         public int Id { get; set; }
+
         public int NumberOfGuests { get; set; }
+
+        public int NumberOfHours { get; set; }
+
+        public string Location { get; set; }
+
     }
 }
