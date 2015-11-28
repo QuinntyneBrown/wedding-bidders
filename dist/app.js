@@ -32,6 +32,17 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
         "componentName": "customerRegistrationComponent"
     });
 
+    $routeProvider.when("/customer/myprofile", {
+        "componentName": "customerMyProfileComponent",
+        "authorizationRequired": true
+    });
+
+    $routeProvider.when("/caterer/myprofile", {
+        "componentName": "catererMyProfileComponent",
+        "authorizationRequired": true
+    });
+
+
     apiEndpointProvider.configure("/api");
 }]).run([function () {
     FastClick.attach(document.body);
@@ -227,92 +238,6 @@ angular.module("app").value("BID_ACTIONS", {
 
     "use strict";
 
-    function bid() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("bid", [bid]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function caterer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("caterer", [caterer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function customer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("customer", [customer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function wedding(dispatcher, weddingActions, weddingStore) {
-        var self = this;
-        self.id = null;
-        self.dispatcher = dispatcher;
-        self.numberOfGuests = null;
-        self.weddingActions = weddingActions;
-        self.weddingStore = weddingStore;
-
-        self.listenerId = self.dispatcher.addListener({
-            actionType: "CHANGE",
-            callback: function (options) {
-                if (self.addActionId === options.id) {
-                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
-                }
-            }
-        });
-
-        self.createInstance = function (options) {
-            var instance = new wedding(self.weddingActions, self.weddingStore);
-            if (options.data) {
-                instance.id = options.data.id;
-                instance.numberOfGuests = options.data.numberOfGuests;
-            }
-            return instance;
-        }
-        
-        self.add = function () {
-            self.addActionId = weddingActions.add({ model: self });
-        }
-
-        self.onStoreUpdate = function () {
-
-        }
-
-
-        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
-
-        return self;
-    }
-
-    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
-
-})();
-(function () {
-
-    "use strict";
-
     ngX.Component({
         component: function AboutComponent() {
 
@@ -454,6 +379,27 @@ angular.module("app").value("BID_ACTIONS", {
         providers: [],
         template: [
             "<div class='catererBids'>",
+            "</div>"
+        ].join(" ")
+    });
+
+})();
+(function () {
+
+    "use strict";
+
+    function CatererMyProfileComponent() {
+        var self = this;
+
+        return self;
+    }
+
+    ngX.Component({
+        component: CatererMyProfileComponent,
+        route: "/caterer/myprofile",
+        providers: [],
+        template: [
+            "<div class='catererMyProfile viewComponent'>",
             "</div>"
         ].join(" ")
     });
@@ -612,6 +558,27 @@ angular.module("app").value("BID_ACTIONS", {
         providers: [],
         template: [
             "<div class='customerBids'>",
+            "</div>"
+        ].join(" ")
+    });
+
+})();
+(function () {
+
+    "use strict";
+
+    function CustomerMyProfileComponent() {
+        var self = this;
+
+        return self;
+    }
+
+    ngX.Component({
+        component: CustomerMyProfileComponent,
+        route: "/customer/myprofile",
+        providers: [],
+        template: [
+            "<div class='customerMyProfile viewComponent'>",
             "</div>"
         ].join(" ")
     });
@@ -1457,6 +1424,92 @@ angular.module("app").value("BID_ACTIONS", {
 
 
 
+(function () {
+
+    "use strict";
+
+    function bid() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("bid", [bid]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function caterer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("caterer", [caterer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function customer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("customer", [customer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function wedding(dispatcher, weddingActions, weddingStore) {
+        var self = this;
+        self.id = null;
+        self.dispatcher = dispatcher;
+        self.numberOfGuests = null;
+        self.weddingActions = weddingActions;
+        self.weddingStore = weddingStore;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                if (self.addActionId === options.id) {
+                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
+                }
+            }
+        });
+
+        self.createInstance = function (options) {
+            var instance = new wedding(self.weddingActions, self.weddingStore);
+            if (options.data) {
+                instance.id = options.data.id;
+                instance.numberOfGuests = options.data.numberOfGuests;
+            }
+            return instance;
+        }
+        
+        self.add = function () {
+            self.addActionId = weddingActions.add({ model: self });
+        }
+
+        self.onStoreUpdate = function () {
+
+        }
+
+
+        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
+
+        return self;
+    }
+
+    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
+
+})();
 (function () {
 
     "use strict";

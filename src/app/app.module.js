@@ -32,6 +32,17 @@
         "componentName": "customerRegistrationComponent"
     });
 
+    $routeProvider.when("/customer/myprofile", {
+        "componentName": "customerMyProfileComponent",
+        "authorizationRequired": true
+    });
+
+    $routeProvider.when("/caterer/myprofile", {
+        "componentName": "catererMyProfileComponent",
+        "authorizationRequired": true
+    });
+
+
     apiEndpointProvider.configure("/api");
 }]).run([function () {
     FastClick.attach(document.body);
