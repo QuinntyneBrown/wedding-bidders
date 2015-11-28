@@ -251,6 +251,7 @@
     <Content Include="src\app\components\wb-weddings.js" />
     <Content Include="src\app\domain\caterer.js" />
     <Content Include="src\app\domain\customer.js" />
+    <Content Include="src\app\domain\domain-constants.js" />
     <Content Include="src\app\domain\wedding.js" />
     <Content Include="src\app\domain\bid.js" />
     <Content Include="src\app\metal\dispatcher.js" />

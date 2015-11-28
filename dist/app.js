@@ -46,14 +46,15 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
         "componentName": "catererMyProfileComponent",
         "authorizationRequired": true,
         resolve: {
-            redirect: ["$q", "$location", "profileService", function ($q, $location, profileService) {
+            redirect: ["$q", "$location", "profileService", "PROFILE_TYPE", function ($q, $location, profileService, PROFILE_TYPE) {
                 var deferred = $q.defer();
                 profileService.current().then(function (results) {
-                    if (results.profileType == 0) {
+                    if (results.profileType == PROFILE_TYPE.CUSTOMER)
                         $location.path("/customer/myprofile");
-                    } else {
+                    
+                    if (results.profileType == PROFILE_TYPE.CATERER)
                         $location.path("/caterer/myprofile");
-                    }
+                    
                     deferred.reject();
                 });
                 return deferred.promise;
@@ -1509,6 +1510,10 @@ angular.module("app").value("BID_ACTIONS", {
     angular.module("app").service("customer", [customer]);
 
 })();
+angular.module("app").value("PROFILE_TYPE", {
+    CUSTOMER: 0,
+    CATERER: 1
+});
 (function () {
 
     "use strict";
