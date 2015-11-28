@@ -4,10 +4,12 @@
 
     ngX.Component({
         selector: "wb-login-form",
-        component: function LoginFormComponent($location, securityActions) {
+        component: function LoginFormComponent($location, dispatcher, securityActions) {
             var self = this;
             self.$location = $location;
+            self.dispatcher = dispatcher;
             self.securityActions = securityActions;
+            self.loginId = null;
 
             self.onInit = function () {
                 self.username = null;
@@ -19,10 +21,25 @@
             self.passwordPlaceholder = "Password";
 
             self.tryToLogin = function () {
-                var guid = securityActions.tryToLogin({
+                self.loginId = securityActions.tryToLogin({
                     username: self.username,
                     password: self.password
                 });
+            }
+
+            self.listenerId = self.dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (self.loginId === options.id) {
+                        self.dispatcher.emit({
+                            actionType: "LOGIN_SUCCESS"
+                        });
+                    }
+                }
+            });
+
+            self.dispose = function () {
+                self.dispatcher.removeListener({ id: self.listenerId });
             }
 
             return self;
@@ -31,7 +48,7 @@
             " .wbLoginForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; } "
         ],
         providers: [
-            "$location","securityActions"
+            "$location", "dispatcher", "securityActions"
         ],
         template: [
             "<form class='wbLoginForm' name='wbLoginForm'>",

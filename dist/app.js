@@ -1,4 +1,4 @@
-angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiEndpointProvider", function ($routeProvider, apiEndpointProvider) {
+angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiEndpointProvider", "loginRedirectProvider", function ($routeProvider, apiEndpointProvider, loginRedirectProvider) {
 
     $routeProvider.when("/", {
         "componentName": "homeComponent"
@@ -42,8 +42,26 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
         "authorizationRequired": true
     });
 
+    $routeProvider.when("/myprofile", {
+        "componentName": "catererMyProfileComponent",
+        "authorizationRequired": true,
+        resolve: {
+            redirect: ["$q", "$location", function ($q, $location) {
+                var deferred = $q.defer();
+                //TODO: if customer, redirect to customer profile, else caterer profile
+                $location.path("/");
+                deferred.reject();
+                return deferred.promise;
+            }]
+        }
+    });
+
 
     apiEndpointProvider.configure("/api");
+
+    loginRedirectProvider.setDefaultUrl("/myprofile");
+
+
 }]).run([function () {
     FastClick.attach(document.body);
 }]);
@@ -1186,10 +1204,12 @@ angular.module("app").value("BID_ACTIONS", {
 
     ngX.Component({
         selector: "wb-login-form",
-        component: function LoginFormComponent($location, securityActions) {
+        component: function LoginFormComponent($location, dispatcher, securityActions) {
             var self = this;
             self.$location = $location;
+            self.dispatcher = dispatcher;
             self.securityActions = securityActions;
+            self.loginId = null;
 
             self.onInit = function () {
                 self.username = null;
@@ -1201,10 +1221,25 @@ angular.module("app").value("BID_ACTIONS", {
             self.passwordPlaceholder = "Password";
 
             self.tryToLogin = function () {
-                var guid = securityActions.tryToLogin({
+                self.loginId = securityActions.tryToLogin({
                     username: self.username,
                     password: self.password
                 });
+            }
+
+            self.listenerId = self.dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (self.loginId === options.id) {
+                        self.dispatcher.emit({
+                            actionType: "LOGIN_SUCCESS"
+                        });
+                    }
+                }
+            });
+
+            self.dispose = function () {
+                self.dispatcher.removeListener({ id: self.listenerId });
             }
 
             return self;
@@ -1213,7 +1248,7 @@ angular.module("app").value("BID_ACTIONS", {
             " .wbLoginForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; } "
         ],
         providers: [
-            "$location","securityActions"
+            "$location", "dispatcher", "securityActions"
         ],
         template: [
             "<form class='wbLoginForm' name='wbLoginForm'>",
@@ -1230,20 +1265,26 @@ angular.module("app").value("BID_ACTIONS", {
     "use strict";
 
     ngX.Component({
-        component: function LoginComponent(loginRedirect, securityStore) {
+        component: function LoginComponent(dispatcher, loginRedirect) {
             var self = this;
+            self.dispatcher = dispatcher;
+            self.loginRedirect = loginRedirect;
 
-            self.onStoreUpdate = function () {
-                if (securityStore.token) {
+            self.listenerId = self.dispatcher.addListener({
+                actionType: "LOGIN_SUCCESS",
+                callback: function (options) {
                     loginRedirect.redirectPreLogin();
                 }
+            });
+
+            self.deactivate = function () {
+                self.dispatcher.removeListener({ id: self.listenerId });
             }
 
             return self;
         },
         providers: [
-            "loginRedirect",
-            "securityStore"
+            "dispatcher", "loginRedirect"
         ],
         template: [
             "<div class='login viewComponent'>",

@@ -15,5 +15,7 @@
 
         public string Location { get; set; }
 
+        public int CustomerId { get; set; }
+
     }
 }

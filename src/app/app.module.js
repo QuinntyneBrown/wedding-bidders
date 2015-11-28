@@ -1,4 +1,4 @@
-﻿angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiEndpointProvider", function ($routeProvider, apiEndpointProvider) {
+﻿angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiEndpointProvider", "loginRedirectProvider", function ($routeProvider, apiEndpointProvider, loginRedirectProvider) {
 
     $routeProvider.when("/", {
         "componentName": "homeComponent"
@@ -42,8 +42,26 @@
         "authorizationRequired": true
     });
 
+    $routeProvider.when("/myprofile", {
+        "componentName": "catererMyProfileComponent",
+        "authorizationRequired": true,
+        resolve: {
+            redirect: ["$q", "$location", function ($q, $location) {
+                var deferred = $q.defer();
+                //TODO: if customer, redirect to customer profile, else caterer profile
+                $location.path("/");
+                deferred.reject();
+                return deferred.promise;
+            }]
+        }
+    });
+
 
     apiEndpointProvider.configure("/api");
+
+    loginRedirectProvider.setDefaultUrl("/myprofile");
+
+
 }]).run([function () {
     FastClick.attach(document.body);
 }]);

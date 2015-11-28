@@ -3,20 +3,26 @@
     "use strict";
 
     ngX.Component({
-        component: function LoginComponent(loginRedirect, securityStore) {
+        component: function LoginComponent(dispatcher, loginRedirect) {
             var self = this;
+            self.dispatcher = dispatcher;
+            self.loginRedirect = loginRedirect;
 
-            self.onStoreUpdate = function () {
-                if (securityStore.token) {
+            self.listenerId = self.dispatcher.addListener({
+                actionType: "LOGIN_SUCCESS",
+                callback: function (options) {
                     loginRedirect.redirectPreLogin();
                 }
+            });
+
+            self.deactivate = function () {
+                self.dispatcher.removeListener({ id: self.listenerId });
             }
 
             return self;
         },
         providers: [
-            "loginRedirect",
-            "securityStore"
+            "dispatcher", "loginRedirect"
         ],
         template: [
             "<div class='login viewComponent'>",
