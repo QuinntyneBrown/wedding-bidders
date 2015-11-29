@@ -32,7 +32,10 @@ namespace WeddingBidders.Server.Services
             var account = user.Accounts.First();
             if (account.AccountType == AccountType.Customer)
             {
-                var customer = uow.Customers.GetAll().Single(x => x.Email == username);
+                var customer = uow.Customers.GetAll()
+                    .Include(x=>x.Weddings)                    
+                    .Single(x => x.Email == username);
+
                 var dto = new CustomerProfileDto()
                 {
                     Firstname = customer.Firstname,
@@ -40,6 +43,17 @@ namespace WeddingBidders.Server.Services
                     Email = customer.Email,
                     Id = customer.Id
                 };
+
+                foreach(var wedding in customer.Weddings)
+                {
+                    dto.Weddings.Add(new WeddingDto()
+                    {
+                        Id = wedding.Id,
+                        NumberOfGuests = wedding.NumberOfGuests,
+                        NumberOfHours = wedding.NumberOfHours,
+                        Location = wedding.Location
+                    });
+                }
 
                 return dto;
             }
@@ -53,6 +67,17 @@ namespace WeddingBidders.Server.Services
                     Email = caterer.Email,
                     Id = caterer.Id
                 };
+
+                foreach (var bid in caterer.Bids)
+                {
+                    dto.Bids.Add(new BidDto()
+                    {
+                        Id = bid.Id,
+                        Price = bid.Price,
+                        Description = bid.Description,
+                        WeddingId = bid.WeddingId
+                    });
+                }
 
                 return dto;
             }

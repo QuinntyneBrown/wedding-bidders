@@ -11,6 +11,7 @@ namespace WeddingBidders.Server.Models
         public Caterer()
         {
             this.Galleries = new HashSet<Gallery>();
+            this.Bids = new HashSet<Bid>();
         }
 
         public string Firstname { get; set; }
@@ -25,5 +26,7 @@ namespace WeddingBidders.Server.Models
         public Profile Profile { get; set; }
 
         public ICollection<Gallery> Galleries { get; set; }
+
+        public ICollection<Bid> Bids { get; set; }
     }
 }
