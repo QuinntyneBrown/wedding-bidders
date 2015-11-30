@@ -23,6 +23,7 @@ namespace WeddingBidders.Server
             container.RegisterType<ICustomerService, CustomerService>();
             container.RegisterType<IBidService, BidService>();
             container.RegisterType<IProfileService, ProfileService>();
+            container.RegisterType<ICatererService, CatererService>();
             return container;
         }
     }

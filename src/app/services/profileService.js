@@ -5,7 +5,7 @@
     function profileService($q, apiEndpoint, fetch) {
         var self = this;
         self.$q = $q;
-        self.current = function (options) {
+        self.getCurrentProfile = function (options) {
             var deferred = self.$q.defer();
             fetch.fromService({ method: "GET", url: self.baseUri + "/current" }).then(function (results) {
                 deferred.resolve(results.data);

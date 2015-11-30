@@ -523,13 +523,15 @@ angular.module("app").value("PROFILE_ACTIONS", {
             self.firstname = null;
             self.lastname = null;
             self.email = null;
-            self.phoneNumber = null;
+            self.confirmEmail = null;
+            self.password = null;
 
             self.firstnamePlaceholder = "Firstname";
             self.lastnamePlaceholder = "Lastname";
             self.emailPlaceholder = "Email";
             self.confirmEmailPlaceholder = "Confirm Email";
-            self.phoneNumberPlaceholder = "Phone Number";
+            self.passwordPlaceholder = "Password";
+            self.addActionId = null;
 
             self.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
@@ -572,7 +574,8 @@ angular.module("app").value("PROFILE_ACTIONS", {
             "   <text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
             "   <text-form-control placeholder='vm.lastnamePlaceholder' model='vm.lastname' ></text-form-control>",
             "   <text-form-control placeholder='vm.emailPlaceholder' model='vm.email' ></text-form-control>",
-            "   <text-form-control placeholder='vm.phoneNumberPlaceholder' model='vm.phoneNumber' ></text-form-control>",
+            "   <text-form-control placeholder='vm.confirmEmailPlaceholder' model='vm.confirmEmail'></text-form-control>",
+            "   <text-form-control placeholder='vm.passwordPlaceholder' model='vm.password'></text-form-control>",
             "   <button data-ng-click='vm.tryToRegister()'>Register</button>",
             "</form>"
         ].join(" ")
@@ -1824,7 +1827,7 @@ angular.module("app").value("PROFILE_TYPE", {
     function profileService($q, apiEndpoint, fetch) {
         var self = this;
         self.$q = $q;
-        self.current = function (options) {
+        self.getCurrentProfile = function (options) {
             var deferred = self.$q.defer();
             fetch.fromService({ method: "GET", url: self.baseUri + "/current" }).then(function (results) {
                 deferred.resolve(results.data);
