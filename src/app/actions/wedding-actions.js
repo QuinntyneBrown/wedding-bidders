@@ -28,6 +28,20 @@
             return newGuid;
         };
 
+        self.getAll = function () {
+            var newGuid = guid();
+            weddingService.getAll().then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.WEDDING_ACTIONS.GET_ALL_WEDDINGS,
+                    options: {
+                        data: results,
+                        id: newGuid
+                    }
+                });
+            });
+
+            return newGuid;
+        };
 
         return self;
     }

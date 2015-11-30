@@ -73,6 +73,7 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 }]);
 angular.module("app").value("WEDDING_ACTIONS", {
     ADD_WEDDING: "ADD_WEDDING",
+    GET_ALL_WEDDINGS: "GET_ALL_WEDDINGS"
 });
 
 angular.module("app").value("SECURITY_ACTIONS", {
@@ -89,6 +90,10 @@ angular.module("app").value("CUSTOMER_ACTIONS", {
 
 angular.module("app").value("BID_ACTIONS", {
     ADD_BID: "ADD_BID",
+});
+
+angular.module("app").value("PROFILE_ACTIONS", {
+    GET_CURRENT_PROFILE : "GET_CURRENT_PROFILE"
 });
 (function () {
 
@@ -190,6 +195,40 @@ angular.module("app").value("BID_ACTIONS", {
     "use strict";
 
 
+    function profileActions(dispatcher, guid, profileService, PROFILE_ACTIONS) {
+
+        var self = this;
+        self.dispatcher = dispatcher;
+        self.PROFILE_ACTIONS = PROFILE_ACTIONS;
+
+        self.getCurrentProfile = function () {
+            var newGuid = guid();
+            profileService.getCurrentProfile().then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.PROFILE_ACTIONS.GET_CURRENT_PROFILE,
+                    options: {
+                        data: results,
+                        id: newGuid
+                    }
+                });
+            });
+
+            return newGuid;
+        };
+
+        return self;
+    }
+
+    angular.module("app")
+        .service("profileActions", ["dispatcher", "guid", "profileService", "PROFILE_ACTIONS", profileActions])
+
+
+})();
+(function () {
+
+    "use strict";
+
+
     function securityActions(dispatcher, formEncode, guid, securityService, SECURITY_ACTIONS) {
         var self = this;
         self.dispatcher = dispatcher;
@@ -249,6 +288,20 @@ angular.module("app").value("BID_ACTIONS", {
             return newGuid;
         };
 
+        self.getAll = function () {
+            var newGuid = guid();
+            weddingService.getAll().then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.WEDDING_ACTIONS.GET_ALL_WEDDINGS,
+                    options: {
+                        data: results,
+                        id: newGuid
+                    }
+                });
+            });
+
+            return newGuid;
+        };
 
         return self;
     }
@@ -412,16 +465,43 @@ angular.module("app").value("BID_ACTIONS", {
 
     "use strict";
 
-    function CatererMyProfileComponent() {
+    function CatererMyProfileComponent(bidActions, dispatcher, profileStore) {
         var self = this;
 
         return self;
     }
 
+    CatererMyProfileComponent.prototype.canActivate = function () {
+        return ["$q", "dispatcher", "profileActions", "weddingActions", function ($q, dispatcher, profileActions, weddingActions) {
+
+            var deferred = $q.defer();
+            var actionIds = [];
+            actionIds.push(profileActions.getCurrentProfile());
+            actionIds.push(weddingActions.getAll());            
+            var listenerId = dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    for (var i = 0; i < actionIds.length; i++) {
+                        if (actionIds[i] === options.id) {
+                            actionIds.splice(i, 1);
+                        }
+                    }
+
+                    if (actionIds.length === 0) {
+                        dispatcher.removeListener({ id: listenerId });
+                        deferred.resolve();
+                    }
+                        
+                }
+            });
+            return deferred.promise;
+        }];
+    }
+
     ngX.Component({
         component: CatererMyProfileComponent,
         route: "/caterer/myprofile",
-        providers: [],
+        providers: ["bidActions", "dispatcher", "profileStore"],
         template: [
             "<div class='catererMyProfile viewComponent'>",
             "</div>"
@@ -1799,6 +1879,15 @@ angular.module("app").value("PROFILE_TYPE", {
             });
             return deferred.promise;            
         }
+
+        self.getAll = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "GET", url: self.baseUri + "/getAll", data: options.data }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        }
+
         self.baseUri = apiEndpoint.getBaseUrl() + "/wedding";
         return self;
     }
@@ -1905,6 +1994,38 @@ angular.module("app").value("PROFILE_TYPE", {
 
     angular.module("app").service("customerStore", ["dispatcher", "guid", "CUSTOMER_ACTIONS", customerStore])
     .run(["customerStore", function (customerStore) { }]);
+})();
+(function () {
+
+    "use strict";
+
+    function profileStore(dispatcher, guid, PROFILE_ACTIONS) {
+
+        var self = this;
+
+        self.dispatcher = dispatcher;
+
+        self.currentProfile = null;
+
+        self.dispatcher = dispatcher;
+
+        self.dispatcher.addListener({
+            actionType: PROFILE_ACTIONS.UPDATE_CURRENT_PROFILE,
+            callback: function (options) {                
+                self.currentProfile = options.data;
+                self.emitChange({ id: options.id });
+            }
+        });
+
+        self.emitChange = function (options) {
+            self.dispatcher.emit({ actionType: "CHANGE" });
+        }
+
+        return self;
+    }
+
+    angular.module("app").service("profileStore", ["dispatcher", "guid", "PROFILE_ACTIONS", profileStore])
+    .run(["profileStore", function (profileStore) { }]);
 })();
 (function () {
 

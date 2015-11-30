@@ -1,5 +1,6 @@
 ﻿angular.module("app").value("WEDDING_ACTIONS", {
     ADD_WEDDING: "ADD_WEDDING",
+    GET_ALL_WEDDINGS: "GET_ALL_WEDDINGS"
 });
 
 angular.module("app").value("SECURITY_ACTIONS", {
@@ -16,4 +17,8 @@ angular.module("app").value("CUSTOMER_ACTIONS", {
 
 angular.module("app").value("BID_ACTIONS", {
     ADD_BID: "ADD_BID",
+});
+
+angular.module("app").value("PROFILE_ACTIONS", {
+    GET_CURRENT_PROFILE : "GET_CURRENT_PROFILE"
 });

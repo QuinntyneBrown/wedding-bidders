@@ -216,6 +216,7 @@
     <Content Include="src\app\actions\bid-actions.js" />
     <Content Include="src\app\actions\caterer-actions.js" />
     <Content Include="src\app\actions\customer-actions.js" />
+    <Content Include="src\app\actions\profileActions.js" />
     <Content Include="src\app\actions\security-actions.js" />
     <Content Include="src\app\actions\wedding-actions.js" />
     <Content Include="src\app\app.module.js" />
@@ -265,6 +266,7 @@
     <Content Include="src\app\stores\bid-store.js" />
     <Content Include="src\app\stores\caterer-store.js" />
     <Content Include="src\app\stores\customer-store.js" />
+    <Content Include="src\app\stores\profile-store.js" />
     <Content Include="src\app\stores\security-store.js" />
     <Content Include="src\app\stores\wedding-store.js" />
     <Content Include="Web.config" />
