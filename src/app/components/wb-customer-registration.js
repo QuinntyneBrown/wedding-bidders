@@ -26,7 +26,7 @@
                 actionType: "CHANGE",
                 callback: function (options) {
                     if (self.loginId && self.loginId === options.id) {
-                        self.$location.path("/");
+                        self.$location.path("/customer/myprofile");
                     }
                 }
             }));

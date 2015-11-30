@@ -11,12 +11,14 @@
 
             self.firstname = null;
             self.lastname = null;
+            self.companyName = null;
             self.email = null;
             self.confirmEmail = null;
             self.password = null;
 
             self.firstnamePlaceholder = "Firstname";
             self.lastnamePlaceholder = "Lastname";
+            self.companyNamePlaceholder = "Company Name";
             self.emailPlaceholder = "Email";
             self.confirmEmailPlaceholder = "Confirm Email";
             self.passwordPlaceholder = "Password";
@@ -40,6 +42,7 @@
                 self.addActionId = self.catererActions.add({
                     firstname: self.firstname,
                     lastname: self.lastname,
+                    companyName: self.companyName,
                     email: self.email,
                     confirmEmail: self.confirmEmail,
                     password: self.password
@@ -56,12 +59,14 @@
             "  .catererRegistrationForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; }"
         ].join( " /n "),
         providers: [
-            "catererActions","dispatcher"
+            "catererActions",
+            "dispatcher"
         ],
         template: [
             "<form class='catererRegistrationForm' name='catererRegistrationForm'>",
             "   <text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
             "   <text-form-control placeholder='vm.lastnamePlaceholder' model='vm.lastname' ></text-form-control>",
+            "   <text-form-control placeholder='vm.companyNamePlaceholder' model='vm.companyName' ></text-form-control>",
             "   <text-form-control placeholder='vm.emailPlaceholder' model='vm.email' ></text-form-control>",
             "   <text-form-control placeholder='vm.confirmEmailPlaceholder' model='vm.confirmEmail'></text-form-control>",
             "   <text-form-control placeholder='vm.passwordPlaceholder' model='vm.password'></text-form-control>",

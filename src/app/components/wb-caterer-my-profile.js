@@ -2,8 +2,22 @@
 
     "use strict";
 
-    function CatererMyProfileComponent(bidActions, dispatcher, profileStore) {
+    function CatererMyProfileComponent(bidActions, dispatcher, profileStore, weddingStore) {
         var self = this;
+        self.profile = profileStore.currentProfile;
+        self.weddings = weddingStore.weddings;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                self.profile = profileStore.currentProfile;
+                self.weddings = weddingStore.weddings;
+            }
+        });
+
+        self.dispose = function () {
+            self.dispatcher.removeListener({ id: self.listenerId });
+        }
 
         return self;
     }
@@ -38,7 +52,11 @@
     ngX.Component({
         component: CatererMyProfileComponent,
         route: "/caterer/myprofile",
-        providers: ["bidActions", "dispatcher", "profileStore"],
+        providers: [
+            "bidActions",
+            "dispatcher",
+            "profileStore",
+            "weddingStore"],
         template: [
             "<div class='catererMyProfile viewComponent'>",
             "</div>"

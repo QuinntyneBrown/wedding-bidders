@@ -20,6 +20,8 @@ namespace WeddingBidders.Server.Models
 
         public string Email { get; set; }
 
+        public string CompanyName { get; set; }
+
         [ForeignKey("Profile")]
         public int? ProfileId { get; set; }
 

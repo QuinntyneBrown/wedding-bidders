@@ -26,7 +26,7 @@
                 actionType: "CHANGE",
                 callback: function (options) {
                     if (self.loginId && self.loginId === options.id) {
-                        self.$location.path("/");
+                        self.$location.path("/caterer/myprofile");
                     }
                 }
             }));
@@ -39,7 +39,10 @@
 
             return self;
         },
-        providers: ["$location", "dispatcher", "securityActions"],
+        providers: [
+            "$location",
+            "dispatcher",
+            "securityActions"],
         template: [
             "<div class='catererRegistration viewComponent'>",
             "<caterer-registration-form></caterer-registration-form>",

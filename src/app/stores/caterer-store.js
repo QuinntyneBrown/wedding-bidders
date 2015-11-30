@@ -29,5 +29,6 @@
         return self;
     }
 
-    angular.module("app").service("catererStore", ["dispatcher", "guid", "CATERER_ACTIONS", catererStore]);
+    angular.module("app").service("catererStore", ["dispatcher", "guid", "CATERER_ACTIONS", catererStore])
+    .run(["catererStore", function (catererStore) { }]);
 })();
