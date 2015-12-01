@@ -20,5 +20,5 @@ angular.module("app").value("BID_ACTIONS", {
 });
 
 angular.module("app").value("PROFILE_ACTIONS", {
-    GET_CURRENT_PROFILE : "GET_CURRENT_PROFILE"
+    UPDATE_CURRENT_PROFILE: "UPDATE_CURRENT_PROFILE"
 });
