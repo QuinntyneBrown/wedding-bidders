@@ -13,7 +13,9 @@
             var newGuid = guid();
             weddingService.add({
                 data: {
-                    numberOfGuests: options.model.numberOfGuests
+                    numberOfGuests: options.numberOfGuests,
+                    numberOfHours: options.numberOfHours,
+                    location: options.location
                 }
             }).then(function (results) {
                 self.dispatcher.emit({

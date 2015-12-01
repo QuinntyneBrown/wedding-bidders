@@ -14,8 +14,6 @@
         public int NumberOfHours { get; set; }
 
         public string Location { get; set; }
-
-        public int CustomerId { get; set; }
-
+        
     }
 }

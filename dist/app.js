@@ -9,7 +9,8 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
     });
 
     $routeProvider.when("/wedding/create", {
-        "componentName": "editWeddingComponent"
+        "componentName": "editWeddingComponent",
+        "authorizationRequired": true
     });
 
     $routeProvider.when("/wedding/edit/:id", {
@@ -273,7 +274,9 @@ angular.module("app").value("PROFILE_ACTIONS", {
             var newGuid = guid();
             weddingService.add({
                 data: {
-                    numberOfGuests: options.model.numberOfGuests
+                    numberOfGuests: options.numberOfGuests,
+                    numberOfHours: options.numberOfHours,
+                    location: options.location
                 }
             }).then(function (results) {
                 self.dispatcher.emit({
@@ -465,8 +468,22 @@ angular.module("app").value("PROFILE_ACTIONS", {
 
     "use strict";
 
-    function CatererMyProfileComponent(bidActions, dispatcher, profileStore) {
+    function CatererMyProfileComponent(bidActions, dispatcher, profileStore, weddingStore) {
         var self = this;
+        self.profile = profileStore.currentProfile;
+        self.weddings = weddingStore.weddings;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                self.profile = profileStore.currentProfile;
+                self.weddings = weddingStore.weddings;
+            }
+        });
+
+        self.dispose = function () {
+            self.dispatcher.removeListener({ id: self.listenerId });
+        }
 
         return self;
     }
@@ -501,7 +518,11 @@ angular.module("app").value("PROFILE_ACTIONS", {
     ngX.Component({
         component: CatererMyProfileComponent,
         route: "/caterer/myprofile",
-        providers: ["bidActions", "dispatcher", "profileStore"],
+        providers: [
+            "bidActions",
+            "dispatcher",
+            "profileStore",
+            "weddingStore"],
         template: [
             "<div class='catererMyProfile viewComponent'>",
             "</div>"
@@ -522,12 +543,14 @@ angular.module("app").value("PROFILE_ACTIONS", {
 
             self.firstname = null;
             self.lastname = null;
+            self.companyName = null;
             self.email = null;
             self.confirmEmail = null;
             self.password = null;
 
             self.firstnamePlaceholder = "Firstname";
             self.lastnamePlaceholder = "Lastname";
+            self.companyNamePlaceholder = "Company Name";
             self.emailPlaceholder = "Email";
             self.confirmEmailPlaceholder = "Confirm Email";
             self.passwordPlaceholder = "Password";
@@ -551,6 +574,7 @@ angular.module("app").value("PROFILE_ACTIONS", {
                 self.addActionId = self.catererActions.add({
                     firstname: self.firstname,
                     lastname: self.lastname,
+                    companyName: self.companyName,
                     email: self.email,
                     confirmEmail: self.confirmEmail,
                     password: self.password
@@ -567,12 +591,14 @@ angular.module("app").value("PROFILE_ACTIONS", {
             "  .catererRegistrationForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; }"
         ].join( " /n "),
         providers: [
-            "catererActions","dispatcher"
+            "catererActions",
+            "dispatcher"
         ],
         template: [
             "<form class='catererRegistrationForm' name='catererRegistrationForm'>",
             "   <text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
             "   <text-form-control placeholder='vm.lastnamePlaceholder' model='vm.lastname' ></text-form-control>",
+            "   <text-form-control placeholder='vm.companyNamePlaceholder' model='vm.companyName' ></text-form-control>",
             "   <text-form-control placeholder='vm.emailPlaceholder' model='vm.email' ></text-form-control>",
             "   <text-form-control placeholder='vm.confirmEmailPlaceholder' model='vm.confirmEmail'></text-form-control>",
             "   <text-form-control placeholder='vm.passwordPlaceholder' model='vm.password'></text-form-control>",
@@ -610,7 +636,7 @@ angular.module("app").value("PROFILE_ACTIONS", {
                 actionType: "CHANGE",
                 callback: function (options) {
                     if (self.loginId && self.loginId === options.id) {
-                        self.$location.path("/");
+                        self.$location.path("/caterer/myprofile");
                     }
                 }
             }));
@@ -623,7 +649,10 @@ angular.module("app").value("PROFILE_ACTIONS", {
 
             return self;
         },
-        providers: ["$location", "dispatcher", "securityActions"],
+        providers: [
+            "$location",
+            "dispatcher",
+            "securityActions"],
         template: [
             "<div class='catererRegistration viewComponent'>",
             "<caterer-registration-form></caterer-registration-form>",
@@ -674,16 +703,57 @@ angular.module("app").value("PROFILE_ACTIONS", {
 
     "use strict";
 
-    function CustomerMyProfileComponent() {
+    function CustomerMyProfileComponent(dispatcher, profileStore) {
         var self = this;
+        self.profile = profileStore.currentProfile;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                self.profile = profileStore.currentProfile;
+            }
+        });
+
+        self.dispose = function () {
+            self.dispatcher.removeListener({ id: self.listenerId });
+        }
 
         return self;
+    }
+
+    CustomerMyProfileComponent.prototype.canActivate = function () {
+        return ["$q", "dispatcher", "profileActions", function ($q, dispatcher, profileActions) {
+
+            var deferred = $q.defer();
+            var actionIds = [];
+            actionIds.push(profileActions.getCurrentProfile());
+            
+            var listenerId = dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    for (var i = 0; i < actionIds.length; i++) {
+                        if (actionIds[i] === options.id) {
+                            actionIds.splice(i, 1);
+                        }
+                    }
+
+                    if (actionIds.length === 0) {
+                        dispatcher.removeListener({ id: listenerId });
+                        deferred.resolve();
+                    }
+
+                }
+            });
+            return deferred.promise;
+        }];
     }
 
     ngX.Component({
         component: CustomerMyProfileComponent,
         route: "/customer/myprofile",
-        providers: [],
+        providers: [
+            "dispatcher",
+            "profileStore"],
         template: [
             "<div class='customerMyProfile viewComponent'>",
             "</div>"
@@ -795,7 +865,7 @@ angular.module("app").value("PROFILE_ACTIONS", {
                 actionType: "CHANGE",
                 callback: function (options) {
                     if (self.loginId && self.loginId === options.id) {
-                        self.$location.path("/");
+                        self.$location.path("/customer/myprofile");
                     }
                 }
             }));
@@ -895,15 +965,16 @@ angular.module("app").value("PROFILE_ACTIONS", {
             self.dispatcher = dispatcher;
             self.weddingActions = weddingActions;
 
+            self.numberOfGuests = null;
+            self.location = null;
+            self.numberOfHours = null;
+
             self.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
                 callback: function (options) {
                     if (self.addActionId === options.id) {
                         self.dispatcher.emit({
-                            actionType: "WEDDING_ADDED", options: {
-                                username: self.email,
-                                password: self.password
-                            }
+                            actionType: "WEDDING_ADDED"
                         });
                     }
                 }
@@ -911,11 +982,9 @@ angular.module("app").value("PROFILE_ACTIONS", {
 
             self.add = function () {
                 self.addActionId = self.weddingActions.add({
-                    firstname: self.firstname,
-                    lastname: self.lastname,
-                    email: self.email,
-                    confirmEmail: self.confirmEmail,
-                    password: self.password
+                    numberOfGuests: self.numberOfGuests,
+                    location: self.location,
+                    numberOfHours: self.numberOfHours
                 });
             };
 
@@ -947,18 +1016,18 @@ angular.module("app").value("PROFILE_ACTIONS", {
             "<form class='editWeddingForm' name='editWeddingForm'>",
 
             "<div class='formControl'>",
-            "<input class='inputField' type='text' data-ng-model='vm.model.numberOfGuests' placeholder='Number Of Guests'></input>",
+            "<input class='inputField' type='text' data-ng-model='vm.numberOfGuests' placeholder='Number Of Guests'></input>",
             "</div>",
 
             "<div class='formControl'>",
-            "<input class='inputField' type='text' data-ng-model='vm.model.location'  placeholder='Location'></input>",
+            "<input class='inputField' type='text' data-ng-model='vm.location'  placeholder='Location'></input>",
             "</div>",
 
             "<div class='formControl'>",
-            "<input class='inputField' type='text'  data-ng-model='vm.model.numberOfHours'  placeholder='Number Of Hours'></input>",
+            "<input class='inputField' type='text'  data-ng-model='vm.numberOfHours'  placeholder='Number Of Hours'></input>",
             "</div>",
 
-            "<button data-ng-click='vm.onSubmit()'>Submit</button>",
+            "<button data-ng-click='vm.add()'>Create</button>",
             "</form>"
         ].join(" ")
     });
@@ -1962,7 +2031,8 @@ angular.module("app").value("PROFILE_TYPE", {
         return self;
     }
 
-    angular.module("app").service("catererStore", ["dispatcher", "guid", "CATERER_ACTIONS", catererStore]);
+    angular.module("app").service("catererStore", ["dispatcher", "guid", "CATERER_ACTIONS", catererStore])
+    .run(["catererStore", function (catererStore) { }]);
 })();
 (function () {
 

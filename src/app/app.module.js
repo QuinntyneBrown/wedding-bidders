@@ -9,7 +9,8 @@
     });
 
     $routeProvider.when("/wedding/create", {
-        "componentName": "editWeddingComponent"
+        "componentName": "editWeddingComponent",
+        "authorizationRequired": true
     });
 
     $routeProvider.when("/wedding/edit/:id", {

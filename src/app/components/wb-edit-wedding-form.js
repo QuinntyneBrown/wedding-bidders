@@ -9,15 +9,16 @@
             self.dispatcher = dispatcher;
             self.weddingActions = weddingActions;
 
+            self.numberOfGuests = null;
+            self.location = null;
+            self.numberOfHours = null;
+
             self.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
                 callback: function (options) {
                     if (self.addActionId === options.id) {
                         self.dispatcher.emit({
-                            actionType: "WEDDING_ADDED", options: {
-                                username: self.email,
-                                password: self.password
-                            }
+                            actionType: "WEDDING_ADDED"
                         });
                     }
                 }
@@ -25,11 +26,9 @@
 
             self.add = function () {
                 self.addActionId = self.weddingActions.add({
-                    firstname: self.firstname,
-                    lastname: self.lastname,
-                    email: self.email,
-                    confirmEmail: self.confirmEmail,
-                    password: self.password
+                    numberOfGuests: self.numberOfGuests,
+                    location: self.location,
+                    numberOfHours: self.numberOfHours
                 });
             };
 
@@ -61,18 +60,18 @@
             "<form class='editWeddingForm' name='editWeddingForm'>",
 
             "<div class='formControl'>",
-            "<input class='inputField' type='text' data-ng-model='vm.model.numberOfGuests' placeholder='Number Of Guests'></input>",
+            "<input class='inputField' type='text' data-ng-model='vm.numberOfGuests' placeholder='Number Of Guests'></input>",
             "</div>",
 
             "<div class='formControl'>",
-            "<input class='inputField' type='text' data-ng-model='vm.model.location'  placeholder='Location'></input>",
+            "<input class='inputField' type='text' data-ng-model='vm.location'  placeholder='Location'></input>",
             "</div>",
 
             "<div class='formControl'>",
-            "<input class='inputField' type='text'  data-ng-model='vm.model.numberOfHours'  placeholder='Number Of Hours'></input>",
+            "<input class='inputField' type='text'  data-ng-model='vm.numberOfHours'  placeholder='Number Of Hours'></input>",
             "</div>",
 
-            "<button data-ng-click='vm.onSubmit()'>Submit</button>",
+            "<button data-ng-click='vm.add()'>Create</button>",
             "</form>"
         ].join(" ")
     });
