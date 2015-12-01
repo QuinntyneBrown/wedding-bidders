@@ -9,6 +9,7 @@ using WeddingBidders.Server.Models;
 
 namespace WeddingBidders.Server.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/wedding")]
     public class WeddingController : EFController<Wedding>
     {
@@ -37,16 +38,13 @@ namespace WeddingBidders.Server.Controllers
         public IHttpActionResult add(WeddingDto dto)
         {
             var username = Request.GetRequestContext().Principal.Identity.Name;
-
             var customerId = uow.Customers.GetAll().Single(x => x.Email == username).Id;
-
             var wedding = new Wedding() {
                 NumberOfGuests = dto.NumberOfGuests,
                 Location = dto.Location,
                 NumberOfHours = dto.NumberOfHours,
                 CustomerId = customerId
             };
-
             this.repository.Add(wedding);
             this.uow.SaveChanges();
             return Ok(wedding);

@@ -226,6 +226,7 @@
     <Content Include="src\app\components\wb-bid-form.js" />
     <Content Include="src\app\components\wb-caterer-bids.js" />
     <Content Include="src\app\components\wb-caterer-my-profile.js" />
+    <Content Include="src\app\components\wb-caterer-profile.js" />
     <Content Include="src\app\components\wb-caterer-registration-form.js" />
     <Content Include="src\app\components\wb-caterer-registration.js" />
     <Content Include="src\app\components\wb-customer-bids.js" />
