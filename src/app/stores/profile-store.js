@@ -21,7 +21,7 @@
         });
 
         self.emitChange = function (options) {
-            self.dispatcher.emit({ actionType: "CHANGE" });
+            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
         }
 
         return self;

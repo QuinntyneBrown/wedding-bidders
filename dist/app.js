@@ -206,7 +206,7 @@ angular.module("app").value("PROFILE_ACTIONS", {
             var newGuid = guid();
             profileService.getCurrentProfile().then(function (results) {
                 self.dispatcher.emit({
-                    actionType: self.PROFILE_ACTIONS.GET_CURRENT_PROFILE,
+                    actionType: self.PROFILE_ACTIONS.UPDATE_CURRENT_PROFILE,
                     options: {
                         data: results,
                         id: newGuid
@@ -2262,7 +2262,7 @@ angular.module("app").value("PROFILE_TYPE", {
         });
 
         self.emitChange = function (options) {
-            self.dispatcher.emit({ actionType: "CHANGE" });
+            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
         }
 
         return self;

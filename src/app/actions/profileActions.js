@@ -13,7 +13,7 @@
             var newGuid = guid();
             profileService.getCurrentProfile().then(function (results) {
                 self.dispatcher.emit({
-                    actionType: self.PROFILE_ACTIONS.GET_CURRENT_PROFILE,
+                    actionType: self.PROFILE_ACTIONS.UPDATE_CURRENT_PROFILE,
                     options: {
                         data: results,
                         id: newGuid
