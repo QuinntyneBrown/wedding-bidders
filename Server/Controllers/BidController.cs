@@ -1,8 +1,10 @@
 ﻿using Common.Data.Contracts;
 using System.Web.Http;
+using System.Linq;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
+using System.Collections.Generic;
 
 namespace WeddingBidders.Server.Controllers
 {
@@ -32,6 +34,25 @@ namespace WeddingBidders.Server.Controllers
             var response = new BidResponseDto();
 
             return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("getAllByWeddingId")]
+        public IHttpActionResult getAllByWeddingId(int id)
+        {
+            var bidDtos = new List<BidDto>();
+            foreach(var bid in uow.Bids.GetAll().Where(x => x.WeddingId == id).ToList())
+            {
+                bidDtos.Add(new BidDto()
+                {
+                    Id = bid.Id,
+                    Price = bid.Price,
+                    Description = bid.Description,
+                    WeddingId = bid.WeddingId
+                });
+            }
+            return Ok(bidDtos);
         }
 
         protected readonly IWeddingBiddersUow uow;

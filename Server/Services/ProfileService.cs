@@ -46,13 +46,26 @@ namespace WeddingBidders.Server.Services
 
                 foreach(var wedding in customer.Weddings)
                 {
-                    dto.Weddings.Add(new WeddingDto()
+                    var weddingDto = new WeddingDto()
                     {
                         Id = wedding.Id,
                         NumberOfGuests = wedding.NumberOfGuests,
                         NumberOfHours = wedding.NumberOfHours,
                         Location = wedding.Location
-                    });
+                    };
+
+                    foreach(var bid in uow.Bids.GetAll().Where(x=> x.WeddingId  == wedding.Id))
+                    {
+                        weddingDto.Bids.Add(new BidDto()
+                        {
+                            Id = bid.Id,
+                            Price = bid.Price,
+                            Description = bid.Description,
+                            WeddingId = bid.WeddingId
+                        });
+                    }
+
+                    dto.Weddings.Add(weddingDto);
                 }
 
                 return dto;
