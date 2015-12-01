@@ -786,7 +786,6 @@ angular.module("app").value("PROFILE_ACTIONS", {
 
     CustomerMyProfileComponent.prototype.canActivate = function () {
         return ["$q", "dispatcher", "profileActions", function ($q, dispatcher, profileActions) {
-
             var deferred = $q.defer();
             var actionIds = [];
             actionIds.push(profileActions.getCurrentProfile());
@@ -1664,16 +1663,57 @@ angular.module("app").value("PROFILE_ACTIONS", {
 
     "use strict";
 
-    function VendorsComponent() {
+    function VendorsComponent(dispatcher, venderStore) {
         var self = this;
+
+        self.vendors = venderStore.vendors;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                self.vendors = venderStore.vendors;
+            }
+        });
+
+
+        self.deactivate = function () {
+            self.dispatcher.removeListener({ id: self.listenerId });
+        }
 
         return self;
     }
 
+
+    VendorsComponent.prototype.canActivate = function () {
+        return ["$q", "dispatcher", "vendorActions", function ($q, dispatcher, vendorActions) {
+            var deferred = $q.defer();
+            var actionIds = [];
+            actionIds.push(vendorActions.getAll());
+
+            var listenerId = dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    for (var i = 0; i < actionIds.length; i++) {
+                        if (actionIds[i] === options.id) {
+                            actionIds.splice(i, 1);
+                        }
+                    }
+
+                    if (actionIds.length === 0) {
+                        dispatcher.removeListener({ id: listenerId });
+                        deferred.resolve();
+                    }
+
+                }
+            });
+            return deferred.promise;
+        }];
+    };
+
     ngX.Component({
         component: VendorsComponent,
         route: "/vendors",
-        providers: [],
+        providers: ["dispatcher", "venderStore"],
         template: [
             "<div class='vendors'>",
             "<h1>Vendors</h1>",
@@ -1683,6 +1723,71 @@ angular.module("app").value("PROFILE_ACTIONS", {
 
 })();
 
+
+
+(function () {
+
+    "use strict";
+
+    function WeddingsComponent(dispatcher, weddingStore) {
+        var self = this;
+
+        self.weddings = weddingStore.weddings;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                self.weddings = weddingStore.weddings;
+            }
+        });
+
+
+        self.deactivate = function () {
+            self.dispatcher.removeListener({ id: self.listenerId });
+        }
+
+        return self;
+    }
+
+
+    WeddingsComponent.prototype.canActivate = function () {
+        return ["$q","dispatcher","weddingActions", function ($q,dispatcher,weddingActions) {
+            var deferred = $q.defer();
+            var actionIds = [];
+            actionIds.push(weddingActions.getAll());
+
+            var listenerId = dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    for (var i = 0; i < actionIds.length; i++) {
+                        if (actionIds[i] === options.id) {
+                            actionIds.splice(i, 1);
+                        }
+                    }
+
+                    if (actionIds.length === 0) {
+                        dispatcher.removeListener({ id: listenerId });
+                        deferred.resolve();
+                    }
+
+                }
+            });
+            return deferred.promise;
+        }];
+    };
+
+    ngX.Component({
+        component: WeddingsComponent,
+        route: "/weddings",
+        providers: ["dispatcher", "weddingStore"],
+        template: [
+            "<div class='weddings'>",
+            "<h1>Weddings</h1>",
+            "</div>"
+        ].join(" ")
+    });
+
+})();
 
 
 

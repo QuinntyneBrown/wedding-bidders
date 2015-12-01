@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
+using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Services.Contracts;
 
@@ -9,9 +10,10 @@ namespace WeddingBidders.Server.Controllers
     [RoutePrefix("api/caterer")]
     public class CatererController : ApiController
     {
-        public CatererController(ICatererService service)
+        public CatererController(IWeddingBiddersUow uow, ICatererService service)
         {
             this.service = service;
+            this.uow = uow;
         }
        
         [HttpGet]
@@ -20,6 +22,13 @@ namespace WeddingBidders.Server.Controllers
         {
             var username = Request.GetRequestContext().Principal.Identity.Name;
             return Ok(service.GetByEmail(username));
+        }
+
+        [HttpGet]
+        [Route("getAll")]
+        public IHttpActionResult getAll()
+        {
+            return Ok(this.uow.Caterers.GetAll());
         }
 
         [HttpPost]
@@ -31,5 +40,6 @@ namespace WeddingBidders.Server.Controllers
         }
 
         protected readonly ICatererService service;
+        protected readonly IWeddingBiddersUow uow;
     }
 }

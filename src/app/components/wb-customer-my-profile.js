@@ -22,7 +22,6 @@
 
     CustomerMyProfileComponent.prototype.canActivate = function () {
         return ["$q", "dispatcher", "profileActions", function ($q, dispatcher, profileActions) {
-
             var deferred = $q.defer();
             var actionIds = [];
             actionIds.push(profileActions.getCurrentProfile());
