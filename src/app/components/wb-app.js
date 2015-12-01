@@ -5,7 +5,9 @@
     ngX.Component({
         selector: "wb-app",
         component: function AppComponent() {
+            var self = this;
 
+            return self;
         },
         template: [
             "<div class='wbApp'>",

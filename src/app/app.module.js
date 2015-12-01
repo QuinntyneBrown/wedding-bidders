@@ -49,7 +49,7 @@
         resolve: {
             redirect: ["$q", "$location", "profileService", "PROFILE_TYPE", function ($q, $location, profileService, PROFILE_TYPE) {
                 var deferred = $q.defer();
-                profileService.current().then(function (results) {
+                profileService.getCurrentProfile().then(function (results) {
                     if (results.profileType == PROFILE_TYPE.CUSTOMER)
                         $location.path("/customer/myprofile");
                     

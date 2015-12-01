@@ -49,7 +49,7 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
         resolve: {
             redirect: ["$q", "$location", "profileService", "PROFILE_TYPE", function ($q, $location, profileService, PROFILE_TYPE) {
                 var deferred = $q.defer();
-                profileService.current().then(function (results) {
+                profileService.getCurrentProfile().then(function (results) {
                     if (results.profileType == PROFILE_TYPE.CUSTOMER)
                         $location.path("/customer/myprofile");
                     
@@ -337,7 +337,9 @@ angular.module("app").value("PROFILE_ACTIONS", {
     ngX.Component({
         selector: "wb-app",
         component: function AppComponent() {
+            var self = this;
 
+            return self;
         },
         template: [
             "<div class='wbApp'>",
@@ -769,6 +771,7 @@ angular.module("app").value("PROFILE_ACTIONS", {
     function CustomerMyProfileComponent(dispatcher, profileStore) {
         var self = this;
         self.profile = profileStore.currentProfile;
+        self.dispatcher = dispatcher;
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
@@ -784,7 +787,7 @@ angular.module("app").value("PROFILE_ACTIONS", {
         return self;
     }
 
-    CustomerMyProfileComponent.prototype.canActivate = function () {
+    CustomerMyProfileComponent.canActivate = function () {
         return ["$q", "dispatcher", "profileActions", function ($q, dispatcher, profileActions) {
             var deferred = $q.defer();
             var actionIds = [];

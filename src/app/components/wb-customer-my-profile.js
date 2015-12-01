@@ -5,6 +5,7 @@
     function CustomerMyProfileComponent(dispatcher, profileStore) {
         var self = this;
         self.profile = profileStore.currentProfile;
+        self.dispatcher = dispatcher;
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
@@ -20,7 +21,7 @@
         return self;
     }
 
-    CustomerMyProfileComponent.prototype.canActivate = function () {
+    CustomerMyProfileComponent.canActivate = function () {
         return ["$q", "dispatcher", "profileActions", function ($q, dispatcher, profileActions) {
             var deferred = $q.defer();
             var actionIds = [];
