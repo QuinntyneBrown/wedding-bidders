@@ -2,9 +2,10 @@
 
     "use strict";
 
-    function wedding($q, dispatcher, weddingActions, weddingStore) {
+    function wedding($q, bidActions, dispatcher, weddingActions, weddingStore) {
         var self = this;
         self.$q = $q;
+        self.bidActions = bidActions;
         self.dispatcher = dispatcher;        
         self.weddingActions = weddingActions;
         self.weddingStore = weddingStore;
@@ -23,14 +24,42 @@
             }
         });
 
-        self.createInstanceAysnc = function (options) {
+        self.createInstanceAsync = function (options) {
             var deferred = self.$q.defer();
-            deferred.resolve(self.createInstance({ data: options.data }));
+
+            var instance = self.createInstance({ data: options.data, includeBids: options.includeBids });
+
+            if (options.includeBids) {
+                instance.getAllByWeddingIdActionId = instance.bidActions.getAllByWeddingId({ id: instance.id });
+
+                instance.listenerId = self.dispatcher.addListener({
+                    actionType: "CHANGE",
+                    callback: function (options) {
+                        if (instance.getAllByWeddingIdActionId === options.id) {
+                            var promises = [];
+                            for (var i = 0; i < options.bids.length; i++) {
+                                promises.push(instance.bid.createInstanceAysnc({ data: options.bids[i], includeWedding: false }));
+                            }
+                            instance.$q.all(promises).then(function (bidInstances) {
+                                instance.bids = bidInstances;
+                                deferred.resolve(instance);
+                            })
+                            instance.dispatcher.removeListener({ id: instance.listenerId });
+                        }
+                        
+                    }
+                });
+
+            } else {
+                deferred.resolve(instance);
+            }
+
+            
             return deferred.promise;
         }
 
         self.createInstance = function (options) {
-            var instance = new wedding(self.$q, self.dispatcher, self.weddingActions, self.weddingStore);
+            var instance = new wedding(self.$q, self.bidActions, self.dispatcher, self.weddingActions, self.weddingStore);
             if (options.data) {
                 instance.id = options.data.id;
                 instance.numberOfGuests = options.data.numberOfGuests;
@@ -54,6 +83,6 @@
         return self;
     }
 
-    angular.module("app").service("wedding", ["$q","dispatcher","weddingActions","weddingStore",wedding]);
+    angular.module("app").service("wedding", ["$q","bidActions","dispatcher","weddingActions","weddingStore",wedding]);
 
 })();

@@ -2,8 +2,9 @@
 
     "use strict";
 
-    function currentProfile($q, bidActions, dispatcher, profileActions, profileStore, PROFILE_TYPE, weddingActions) {
+    function currentProfile($injector, $q, bidActions, dispatcher, profileActions, profileStore, PROFILE_TYPE, weddingActions, weddingService) {
         var self = this;
+        self.$injector = $injector;
         self.$q = $q;
         self.bidActions = bidActions;
         self.dispatcher = dispatcher;
@@ -11,29 +12,31 @@
         self.profileStore = profileStore;
         self.PROFILE_TYPE = PROFILE_TYPE;
         self.weddingActions = weddingActions;
-
+        self.weddingService = weddingService;
 
         self.profileType = null;
 
         self.createInstanceAsync = function () {
             var deferred = self.$q.defer();
-            var instance = new currentProfile(self.$q, self.bidActions, self.dispatcher, self.profileActions, self.profileStore, self.PROFILE_TYPE, self.weddingActions);
+            var instance = new currentProfile(self.$injector, self.$q, self.bidActions, self.dispatcher, self.profileActions, self.profileStore, self.PROFILE_TYPE, self.weddingActions, self.weddingService);
             instance.currentProfileActionId = self.profileActions.getCurrentProfile();
 
             instance.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
                 callback: function (options) {
+                    instance.dispatcher.removeListener({ id: instance.listenerId });
                     if (instance.currentProfileActionId === options.id) {
                         instance.profileType = instance.profileStore.currentProfile.profileType;
-
-                        if (instance.profileType == self.PROFILE_TYPE.CUSTOMER) {
-                            self.weddingService.getAllByCustomerId({ id: self.id }).then(function (results) {
+                        instance.id = instance.profileStore.currentProfile.id;
+                        if (instance.profileType == instance.PROFILE_TYPE.CUSTOMER) {
+                            instance.weddingService.getAllByCustomerId({ id: instance.id }).then(function (results) {
                                 if (results.length > 0) {
                                     var promises = [];
+                                    var wedding = instance.$injector.get("wedding");
                                     for (var i = 0; i < results.length; i++) {
-                                        promises.push(self.wedding.createInstanceAsync({ data: results[i] }));
-                                        self.$q.all(promises).then(function (weddings) {
-                                            instance.weddings = weddings;
+                                        promises.push(wedding.createInstanceAsync({ data: results[i] }));
+                                        self.$q.all(promises).then(function (weddingInstances) {
+                                            instance.weddings = weddingInstances;
                                             deferred.resolve(instance);
                                         });
                                     }
@@ -54,14 +57,13 @@
             return deferred.promise;
         }
 
-        self.onDestroy = function () {
-            self.dispatcher.removeListener({ id: self.listenerId });
-        }
+
 
         return self;
     }
 
     angular.module("app").service("currentProfile", [
+        "$injector",
         "$q",
         "bidActions",
         "dispatcher",
@@ -69,6 +71,7 @@
         "profileStore",
         "PROFILE_TYPE",
         "weddingActions",
+        "weddingService",
         currentProfile]);
 
 })();

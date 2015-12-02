@@ -6,6 +6,7 @@ using System.Net.Http;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
+using System.Collections.Generic;
 
 namespace WeddingBidders.Server.Controllers
 {
@@ -21,10 +22,31 @@ namespace WeddingBidders.Server.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public IHttpActionResult getAll()
+        public IHttpActionResult GetAll()
         {
             return Ok(this.repository.GetAll());
         }
+
+        [HttpGet]
+        [Route("getAllByCustomerId")]
+        public IHttpActionResult GetAllByCustomerId(int id)
+        {
+            var weddings = this.repository.GetAll().Where(x => x.CustomerId == id).ToList();
+            var dtos = new HashSet<WeddingDto>();
+            foreach(var wedding in weddings)
+            {
+                dtos.Add(new WeddingDto()
+                {
+                    Id = wedding.Id,
+                    NumberOfGuests = wedding.NumberOfGuests,
+                    NumberOfHours = wedding.NumberOfHours,
+                    Location = wedding.Location
+                });
+            }
+            return Ok(dtos);
+        }
+
+        //getAllByCustomerId
 
         [HttpGet]
         [Route("getById")]
