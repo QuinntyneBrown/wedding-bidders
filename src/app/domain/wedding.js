@@ -2,13 +2,17 @@
 
     "use strict";
 
-    function wedding(dispatcher, weddingActions, weddingStore) {
+    function wedding($q, dispatcher, weddingActions, weddingStore) {
         var self = this;
-        self.id = null;
-        self.dispatcher = dispatcher;
-        self.numberOfGuests = null;
+        self.$q = $q;
+        self.dispatcher = dispatcher;        
         self.weddingActions = weddingActions;
         self.weddingStore = weddingStore;
+
+        self.id = null;
+        self.numberOfGuests = null;
+        self.numberOfHours = null;
+        self.location = null;
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
@@ -19,11 +23,19 @@
             }
         });
 
+        self.createInstanceAysnc = function (options) {
+            var deferred = self.$q.defer();
+            deferred.resolve(self.createInstance({ data: options.data }));
+            return deferred.promise;
+        }
+
         self.createInstance = function (options) {
-            var instance = new wedding(self.weddingActions, self.weddingStore);
+            var instance = new wedding(self.$q, self.dispatcher, self.weddingActions, self.weddingStore);
             if (options.data) {
                 instance.id = options.data.id;
                 instance.numberOfGuests = options.data.numberOfGuests;
+                instance.numberOfHours = options.data.numberOfHours;
+                instance.location = options.data.location;
             }
             return instance;
         }
@@ -42,6 +54,6 @@
         return self;
     }
 
-    angular.module("app").service("wedding", ["dispatcher","weddingActions","weddingStore",wedding]);
+    angular.module("app").service("wedding", ["$q","dispatcher","weddingActions","weddingStore",wedding]);
 
 })();

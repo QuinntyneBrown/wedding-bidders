@@ -22,9 +22,14 @@
     }
 
     CustomerMyProfileComponent.canActivate = function () {
-        return ["$q", "dispatcher", "profileActions", function ($q, dispatcher, profileActions) {
+        return ["$q", "currentProfile", "dispatcher", "profileActions", function ($q, currentProfile, dispatcher, profileActions) {
             var deferred = $q.defer();
             var actionIds = [];
+
+            currentProfile.createInstanceAsync().then(function (results) {
+                var s = results;
+            });
+
             actionIds.push(profileActions.getCurrentProfile());
             
             var listenerId = dispatcher.addListener({
