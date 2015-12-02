@@ -28,13 +28,16 @@
                     if (instance.currentProfileActionId === options.id) {
                         instance.profileType = instance.profileStore.currentProfile.profileType;
                         instance.id = instance.profileStore.currentProfile.id;
+                        instance.firstname = instance.profileStore.currentProfile.firstname;
+                        instance.lastname = instance.profileStore.currentProfile.lastname;
+                        instance.email = instance.profileStore.currentProfile.email;
                         if (instance.profileType == instance.PROFILE_TYPE.CUSTOMER) {
                             instance.weddingService.getAllByCustomerId({ id: instance.id }).then(function (results) {
                                 if (results.length > 0) {
                                     var promises = [];
                                     var wedding = instance.$injector.get("wedding");
                                     for (var i = 0; i < results.length; i++) {
-                                        promises.push(wedding.createInstanceAsync({ data: results[i] }));
+                                        promises.push(wedding.createInstanceAsync({ data: results[i], includeBids: true }));
                                         self.$q.all(promises).then(function (weddingInstances) {
                                             instance.weddings = weddingInstances;
                                             deferred.resolve(instance);

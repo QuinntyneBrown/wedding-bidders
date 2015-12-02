@@ -2,51 +2,29 @@
 
     "use strict";
 
-    function CustomerMyProfileComponent(dispatcher, profileStore) {
+    function CustomerMyProfileComponent(appManager, dispatcher) {
         var self = this;
-        self.profile = profileStore.currentProfile;
+        self.profile = appManager.currentProfile;
         self.dispatcher = dispatcher;
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
             callback: function (options) {
-                self.profile = profileStore.currentProfile;
+                self.profile = appManager.currentProfile;
             }
         });
 
-        self.dispose = function () {
-            self.dispatcher.removeListener({ id: self.listenerId });
-        }
+        self.dispose = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
 
         return self;
     }
 
     CustomerMyProfileComponent.canActivate = function () {
-        return ["$q", "currentProfile", "dispatcher", "profileActions", function ($q, currentProfile, dispatcher, profileActions) {
+        return ["$q", "appManager", "currentProfile", function ($q, appManager, currentProfile) {
             var deferred = $q.defer();
-            var actionIds = [];
-
-            currentProfile.createInstanceAsync().then(function (results) {
-                var s = results;
-            });
-
-            actionIds.push(profileActions.getCurrentProfile());
-            
-            var listenerId = dispatcher.addListener({
-                actionType: "CHANGE",
-                callback: function (options) {
-                    for (var i = 0; i < actionIds.length; i++) {
-                        if (actionIds[i] === options.id) {
-                            actionIds.splice(i, 1);
-                        }
-                    }
-
-                    if (actionIds.length === 0) {
-                        dispatcher.removeListener({ id: listenerId });
-                        deferred.resolve();
-                    }
-
-                }
+            currentProfile.createInstanceAsync().then(function (currentProfile) {
+                appManager.currentProfile = currentProfile;
+                deferred.resolve(true);
             });
             return deferred.promise;
         }];
@@ -56,10 +34,12 @@
         component: CustomerMyProfileComponent,
         route: "/customer/myprofile",
         providers: [
-            "dispatcher",
-            "profileStore"],
+            "appManager",
+            "dispatcher"
+        ],
         template: [
             "<div class='customerMyProfile viewComponent'>",
+            "<h1>{{ vm.profile.firstname }}  {{ vm.profile.lastname }}</h1>",
             "</div>"
         ].join(" ")
     });

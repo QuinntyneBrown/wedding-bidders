@@ -2,10 +2,12 @@
 
     "use strict";
 
-    function wedding($q, bidActions, dispatcher, weddingActions, weddingStore) {
+    function wedding($injector, $q, bidActions, bidService, dispatcher, weddingActions, weddingStore) {
         var self = this;
+        self.$injector = $injector;
         self.$q = $q;
         self.bidActions = bidActions;
+        self.bidService = bidService;
         self.dispatcher = dispatcher;        
         self.weddingActions = weddingActions;
         self.weddingStore = weddingStore;
@@ -26,40 +28,25 @@
 
         self.createInstanceAsync = function (options) {
             var deferred = self.$q.defer();
-
             var instance = self.createInstance({ data: options.data, includeBids: options.includeBids });
-
             if (options.includeBids) {
-                instance.getAllByWeddingIdActionId = instance.bidActions.getAllByWeddingId({ id: instance.id });
-
-                instance.listenerId = self.dispatcher.addListener({
-                    actionType: "CHANGE",
-                    callback: function (options) {
-                        if (instance.getAllByWeddingIdActionId === options.id) {
-                            var promises = [];
-                            for (var i = 0; i < options.bids.length; i++) {
-                                promises.push(instance.bid.createInstanceAysnc({ data: options.bids[i], includeWedding: false }));
-                            }
-                            instance.$q.all(promises).then(function (bidInstances) {
-                                instance.bids = bidInstances;
-                                deferred.resolve(instance);
-                            })
-                            instance.dispatcher.removeListener({ id: instance.listenerId });
-                        }
-                        
-                    }
+                instance.bidService.getAllByWeddingId({ id: instance.id }).then(function (results) {
+                    var bid = instance.$injector.get("bid");
+                    var promises = [];
+                    for (var i = 0; i < results.length; i++) { promises.push(bid.createInstanceAsync({ data: results[i] })); }                    
+                    instance.$q.all(promises).then(function (bidInstances) {
+                        instance.bids = bidInstances;
+                        deferred.resolve(instance);
+                    });                    
                 });
-
             } else {
                 deferred.resolve(instance);
             }
-
-            
             return deferred.promise;
         }
 
         self.createInstance = function (options) {
-            var instance = new wedding(self.$q, self.bidActions, self.dispatcher, self.weddingActions, self.weddingStore);
+            var instance = new wedding(self.$injector, self.$q, self.bidActions, self.bidService, self.dispatcher, self.weddingActions, self.weddingStore);
             if (options.data) {
                 instance.id = options.data.id;
                 instance.numberOfGuests = options.data.numberOfGuests;
@@ -83,6 +70,6 @@
         return self;
     }
 
-    angular.module("app").service("wedding", ["$q","bidActions","dispatcher","weddingActions","weddingStore",wedding]);
+    angular.module("app").service("wedding", ["$injector", "$q", "bidActions", "bidService", "dispatcher", "weddingActions", "weddingStore", wedding]);
 
 })();

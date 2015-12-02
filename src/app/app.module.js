@@ -66,7 +66,7 @@
 
     apiEndpointProvider.configure("/api");
 
-    loginRedirectProvider.setDefaultUrl("/myprofile");
+    loginRedirectProvider.setDefaultUrl("/");
 
 
 }]).run([function () {

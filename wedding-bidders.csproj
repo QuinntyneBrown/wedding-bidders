@@ -219,6 +219,7 @@
     <Content Include="src\app\actions\profileActions.js" />
     <Content Include="src\app\actions\security-actions.js" />
     <Content Include="src\app\actions\wedding-actions.js" />
+    <Content Include="src\app\components\wb-app-manager.js" />
     <Content Include="src\app\app.module.js" />
     <Content Include="src\app\components\wb-about.js" />
     <Content Include="src\app\components\wb-app.js" />

@@ -11,6 +11,15 @@
             });
             return deferred.promise;
         }
+
+        self.getAllByWeddingId = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "GET", url: self.baseUri + "/getAllByWeddingId", params: { id: options.id} }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        }
+
         self.baseUri = apiEndpoint.getBaseUrl() + "/bid";
         return self;
     }
