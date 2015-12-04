@@ -36,13 +36,13 @@
                                 if (results.length > 0) {
                                     var promises = [];
                                     var wedding = instance.$injector.get("wedding");
-                                    for (var i = 0; i < results.length; i++) {
+                                    for (var i = 0; i < results.length; i++)
                                         promises.push(wedding.createInstanceAsync({ data: results[i], includeBids: true }));
-                                        self.$q.all(promises).then(function (weddingInstances) {
-                                            instance.weddings = weddingInstances;
-                                            deferred.resolve(instance);
-                                        });
-                                    }
+
+                                    self.$q.all(promises).then(function (weddingInstances) {
+                                        instance.weddings = weddingInstances;
+                                        deferred.resolve(instance);
+                                    });
                                 } else {
                                     deferred.resolve(instance);
                                 }
@@ -50,7 +50,21 @@
                         }
 
                         if (self.PROFILE_TYPE = self.PROFILE_TYPE.CATERER) {
-                            //get bids by profile id
+                            instance.bidService.getAllByCustomerId({ id: instance.id }).then(function (results) {
+                                if (results.length > 0) {
+                                    var promises = [];
+                                    var bid = instance.$injector.get("bid");
+                                    for (var i = 0; i < results.length; i++)
+                                        promises.push(bid.createInstanceAsync({ data: results[i], includeWedding: true }));
+
+                                    self.$q.all(promises).then(function (bidInstances) {
+                                        instance.bids = bidInstances;
+                                        deferred.resolve(instance);
+                                    });
+                                } else {
+                                    deferred.resolve(instance);
+                                }
+                            });
                         }
                     }
                 }
