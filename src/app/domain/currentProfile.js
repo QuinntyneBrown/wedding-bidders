@@ -49,7 +49,7 @@
                             });
                         }
 
-                        if (self.PROFILE_TYPE = self.PROFILE_TYPE.CATERER) {
+                        if (instance.profileType == instance.PROFILE_TYPE.CATERER) {
                             instance.bidService.getAllByCustomerId({ id: instance.id }).then(function (results) {
                                 if (results.length > 0) {
                                     var promises = [];

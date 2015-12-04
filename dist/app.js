@@ -66,7 +66,7 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
 
     apiEndpointProvider.configure("/api");
 
-    loginRedirectProvider.setDefaultUrl("/");
+    loginRedirectProvider.setDefaultUrl("/myprofile");
 
 
 }]).run([function () {
@@ -1852,21 +1852,35 @@ angular.module("app").value("PROFILE_ACTIONS", {
                                 if (results.length > 0) {
                                     var promises = [];
                                     var wedding = instance.$injector.get("wedding");
-                                    for (var i = 0; i < results.length; i++) {
+                                    for (var i = 0; i < results.length; i++)
                                         promises.push(wedding.createInstanceAsync({ data: results[i], includeBids: true }));
-                                        self.$q.all(promises).then(function (weddingInstances) {
-                                            instance.weddings = weddingInstances;
-                                            deferred.resolve(instance);
-                                        });
-                                    }
+
+                                    self.$q.all(promises).then(function (weddingInstances) {
+                                        instance.weddings = weddingInstances;
+                                        deferred.resolve(instance);
+                                    });
                                 } else {
                                     deferred.resolve(instance);
                                 }
                             });
                         }
 
-                        if (self.PROFILE_TYPE = self.PROFILE_TYPE.CATERER) {
-                            //get bids by profile id
+                        if (instance.profileType == instance.PROFILE_TYPE.CATERER) {
+                            instance.bidService.getAllByCustomerId({ id: instance.id }).then(function (results) {
+                                if (results.length > 0) {
+                                    var promises = [];
+                                    var bid = instance.$injector.get("bid");
+                                    for (var i = 0; i < results.length; i++)
+                                        promises.push(bid.createInstanceAsync({ data: results[i], includeWedding: true }));
+
+                                    self.$q.all(promises).then(function (bidInstances) {
+                                        instance.bids = bidInstances;
+                                        deferred.resolve(instance);
+                                    });
+                                } else {
+                                    deferred.resolve(instance);
+                                }
+                            });
                         }
                     }
                 }
