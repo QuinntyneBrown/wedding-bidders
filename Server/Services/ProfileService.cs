@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
-using System.Web;
-using System.Web.Http;
 using System.Data.Entity;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Services.Contracts;
