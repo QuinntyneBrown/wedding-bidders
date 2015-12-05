@@ -18,7 +18,10 @@
                 callback: function (options) {
                     if (self.addActionId === options.id) {
                         self.dispatcher.emit({
-                            actionType: "WEDDING_ADDED"
+                            actionType: "MODEL_ADDED",
+                            options: {
+                                id: options.data.id
+                            }
                         });
                     }
                 }

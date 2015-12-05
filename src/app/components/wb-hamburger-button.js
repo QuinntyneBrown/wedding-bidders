@@ -62,6 +62,12 @@
                 });
             }
 
+            self.navigateToMyProfile = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/myprofile");
+                });
+            }
+
             self.navigateToCreateAccount = function () {
                 self.closeAsync().then(function () {
                     self.$location.path("/customer/register");
@@ -78,9 +84,8 @@
                 "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
                 "   <div class='wbHamburgerMenu-container'>",
                 "       <div class='wbHamburgerMenu-links'>",
-                "           <div><a data-ng-click='vm.navigateToLogin()'>Login</a><div>",
-                "           <div><a data-ng-click='vm.navigateToCreateAccount()'>Create Account</a><div>",
-                "           <div><a data-ng-click='vm.navigateToCreateVendorAccount()'>Create Vendor Account</a><div>",
+                "           <div><a data-ng-click='vm.navigateToMyProfile()'>My Profile</a><div>",
+                "           <div><a data-ng-click='vm.navigateToLogin()'>Logout</a><div>",                
                 "       </div>",
                 "   </div>",
                 "</div>"

@@ -814,7 +814,19 @@ angular.module("app").value("PROFILE_ACTIONS", {
         ],
         template: [
             "<div class='customerMyProfile viewComponent'>",
-            "<h1>{{ vm.profile.firstname }}  {{ vm.profile.lastname }}</h1>",
+            "<h1>{{ vm.profile.firstname }}  {{ vm.profile.lastname }}</h1><br/><br/>",
+
+            "<div> ",
+            "<h1>Weddings</h1>",
+            "   <div data-ng-repeat='wedding in vm.profile.weddings'> ",
+            "       <h3>Number of Guests:  {{ ::wedding.numberOfGuests }}</h3>",
+            "       <h3>Hours:  {{ ::wedding.numberOfHours }}</h3>",
+            "       <h3>Location:  {{ ::wedding.location }}</h3>",
+            "       <h3>Bids:  {{ ::wedding.bids.length }}</h3>",
+            "       <br/><br/> ",
+            "   </div> ",
+            "</div> ",
+
             "</div>"
         ].join(" ")
     });
@@ -1033,7 +1045,10 @@ angular.module("app").value("PROFILE_ACTIONS", {
                 callback: function (options) {
                     if (self.addActionId === options.id) {
                         self.dispatcher.emit({
-                            actionType: "WEDDING_ADDED"
+                            actionType: "MODEL_ADDED",
+                            options: {
+                                id: options.data.id
+                            }
                         });
                     }
                 }
@@ -1100,9 +1115,12 @@ angular.module("app").value("PROFILE_ACTIONS", {
     function EditWeddingComponent($location,dispatcher,wedding) {
         var self = this;
         self.wedding = wedding;
+        self.$location = $location;
+
         self.listenerId = dispatcher.addListener({
             actionType: "MODEL_ADDED", callback: function (options) {
-                $location.path("/wedding/edit/" + options.id)
+                //$location.path("/wedding/edit/" + options.id)
+                self.$location.path("/myprofile");
             }
         });
 
@@ -1212,6 +1230,12 @@ angular.module("app").value("PROFILE_ACTIONS", {
                 });
             }
 
+            self.navigateToMyProfile = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/myprofile");
+                });
+            }
+
             self.navigateToCreateAccount = function () {
                 self.closeAsync().then(function () {
                     self.$location.path("/customer/register");
@@ -1228,9 +1252,8 @@ angular.module("app").value("PROFILE_ACTIONS", {
                 "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
                 "   <div class='wbHamburgerMenu-container'>",
                 "       <div class='wbHamburgerMenu-links'>",
-                "           <div><a data-ng-click='vm.navigateToLogin()'>Login</a><div>",
-                "           <div><a data-ng-click='vm.navigateToCreateAccount()'>Create Account</a><div>",
-                "           <div><a data-ng-click='vm.navigateToCreateVendorAccount()'>Create Vendor Account</a><div>",
+                "           <div><a data-ng-click='vm.navigateToMyProfile()'>My Profile</a><div>",
+                "           <div><a data-ng-click='vm.navigateToLogin()'>Logout</a><div>",                
                 "       </div>",
                 "   </div>",
                 "</div>"
@@ -2454,7 +2477,7 @@ angular.module("app").value("PROFILE_TYPE", {
             callback: function (options) {
                 self.addItem(options.data);
                 self.currentWedding = options.data;
-                self.emitChange({ id: options.id });
+                self.emitChange({ id: options.id, data: options.data });
             }
         });
 
@@ -2465,7 +2488,7 @@ angular.module("app").value("PROFILE_TYPE", {
         self.addItem = function (options) { self.weddings.push(options.data); }
 
         self.emitChange = function (options) {
-            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
+            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id, data: options.data } });
         }
 
         return self;

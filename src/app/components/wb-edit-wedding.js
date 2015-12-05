@@ -5,9 +5,12 @@
     function EditWeddingComponent($location,dispatcher,wedding) {
         var self = this;
         self.wedding = wedding;
+        self.$location = $location;
+
         self.listenerId = dispatcher.addListener({
             actionType: "MODEL_ADDED", callback: function (options) {
-                $location.path("/wedding/edit/" + options.id)
+                //$location.path("/wedding/edit/" + options.id)
+                self.$location.path("/myprofile");
             }
         });
 

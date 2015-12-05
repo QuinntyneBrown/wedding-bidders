@@ -69,7 +69,8 @@ namespace WeddingBidders.Server.Controllers
             };
             this.repository.Add(wedding);
             this.uow.SaveChanges();
-            return Ok(wedding);
+            dto.Id = wedding.Id;
+            return Ok(dto);
         }
 
         [HttpPut]
