@@ -1,6 +1,7 @@
 ﻿angular.module("app").value("WEDDING_ACTIONS", {
     ADD_WEDDING: "ADD_WEDDING",
-    UPDATE_ALL_WEDDINGS: "UPDATE_ALL_WEDDINGS"
+    UPDATE_ALL_WEDDINGS: "UPDATE_ALL_WEDDINGS",
+    UPDATE_BY_ID: "UPDATE_WEDDING_BY_ID"
 });
 
 angular.module("app").value("SECURITY_ACTIONS", {

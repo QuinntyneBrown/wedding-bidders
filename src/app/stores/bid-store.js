@@ -10,11 +10,33 @@
         self.dispatcher.addListener({
             actionType: BID_ACTIONS.ADD_BID,
             callback: function (options) {
-                self.addItem(options.data);
+                self.addOrUpdate({ data: options.data });
                 self.currentBid = options.data;
                 self.emitChange({ id: options.id });
             }
         });
+
+        self.getById = function (id) {
+            var item = null;
+            for (var i = 0; i < self.bids.length; i++) {
+                if (self.bids[i].id === id) {
+                    item = self.bids[i];
+                }
+            }
+            return item;
+        }
+
+        self.addOrUpdate = function (options) {
+            var exists = false;
+            for (var i = 0; i < self.bids.length; i++) {
+                if (self.bids[i].id === options.data.id) {
+                    exists = true;
+                    self.bids[i] = options.data;
+                }
+            }
+            if (!exists)
+                self.bids.push(options.data);
+        }
 
         self.bids = [];
 

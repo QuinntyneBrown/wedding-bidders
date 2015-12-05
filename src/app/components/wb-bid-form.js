@@ -9,15 +9,16 @@
             self.bidActions = bidActions;
             self.dispatcher = dispatcher;
 
+            self.onInit = function () {
+
+            }
+
             self.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
                 callback: function (options) {
                     if (self.addActionId === options.id) {
                         self.dispatcher.emit({
-                            actionType: "BID_ADDED", options: {
-                                username: self.email,
-                                password: self.password
-                            }
+                            actionType: "MODEL_ADDED"
                         });
                     }
                 }
@@ -25,11 +26,9 @@
 
             self.tryToAdd = function () {
                 self.addActionId = self.bidActions.add({
-                    firstname: self.firstname,
-                    lastname: self.lastname,
-                    email: self.email,
-                    confirmEmail: self.confirmEmail,
-                    password: self.password
+                    weddingId: self.weddingId,
+                    price: self.price,
+                    description: self.description
                 });
             };
 
@@ -50,6 +49,9 @@
         ],
         styles: [
             ".bidForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; } "
+        ],
+        inputs: [
+            "weddingId"
         ],
         template: [
             "<form class='bidForm' name='bidForm'>",

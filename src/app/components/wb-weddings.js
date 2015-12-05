@@ -74,7 +74,7 @@
             "       <h3>Number of Guests:  {{ ::wedding.numberOfGuests }}</h3>",
             "       <h3>Hours:  {{ ::wedding.numberOfHours }}</h3>",
             "       <h3>Location:  {{ ::wedding.location }}</h3>",
-            "       <h3>Bids:  {{ ::wedding.bids.length }}</h3>",
+            "       <a href='#/bid/create/{{ ::wedding.id }}'>Bid</a>",
             "       <br/><br/> ",
             "   </div> ",
             "</div>"

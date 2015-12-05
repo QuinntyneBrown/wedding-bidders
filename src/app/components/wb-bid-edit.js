@@ -2,12 +2,11 @@
 
     "use strict";
 
-    function EditBidComponent($routeParams, $location, dispatcher, bid) {
+    function EditBidComponent($location, $routeParams, appManager, dispatcher, weddingStore) {
         var self = this;
-        self.bid = bid;
-        self.wedding = wedding;
-
+        self.weddingStore = weddingStore;
         self.$location = $location;
+        self.wedding = self.weddingStore.getById(Number($routeParams.weddingId));
 
         self.listenerId = dispatcher.addListener({
             actionType: "MODEL_ADDED", callback: function (options) {                
@@ -16,20 +15,20 @@
         });
 
         self.onDestroy = function () {
-
+            self.dispatcher.removeListener({ id: self.listenerId });
         };
         return self;
     }
 
     EditBidComponent.canActivate = function () {
         return [
-            "$q", "$route", "appManager", "currentProfile", "weddingActions", function ($q, $route, appManager, currentProfile, weddingActions) {
+            "$q", "$route", "appManager", "currentProfile", "dispatcher", "weddingActions", function ($q, $route, appManager, currentProfile, dispatcher, weddingActions) {
 
                 var deferred = $q.defer();
 
                 $q.all([
                     currentProfile.createInstanceAsync(),
-                    getWeddingByIdAsync({ id: Number($route.current.params.id) })
+                    getWeddingByIdAsync({ id: Number($route.current.params.weddingId) })
                 ]).then(function (resultsArray) {
                     appManager.currentProfile = resultsArray[0];
                     deferred.resolve(true);
@@ -70,7 +69,7 @@
         styles: [" .editWeddingComponent { padding-left:15px; } "].join(" /n "),
         template: [
             "<div class='editWeddingComponent viewComponent'>",
-            "<edit-wedding-form model='vm.wedding'></edit-wedding-form>",
+            "<bid-form wedding-id='vm.wedding.id'></bid-form>",
             "</div>"
         ].join(" ")
     });

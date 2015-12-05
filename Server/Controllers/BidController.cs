@@ -1,5 +1,6 @@
 ﻿using Common.Data.Contracts;
 using System.Web.Http;
+using System.Net.Http;
 using System.Linq;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
@@ -21,8 +22,11 @@ namespace WeddingBidders.Server.Controllers
         [Route("add")]
         public IHttpActionResult TryToAddBid(BidRequestDto dto)
         {
+            var username = Request.GetRequestContext().Principal.Identity.Name;
+            var caterer = this.uow.Caterers.GetAll().Where(x => x.Email == username).Single();
+
             var bid = new Bid() {
-                CatererId = dto.CatererId,
+                CatererId = caterer.Id,
                 Description = dto.Description,
                 WeddingId = dto.WeddingId,
                 Price = dto.Price
