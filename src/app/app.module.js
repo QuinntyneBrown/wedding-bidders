@@ -4,6 +4,14 @@
         "componentName": "homeComponent"
     });
 
+    $routeProvider.when("/bids", {
+        "componentName": "bidsComponent"
+    });
+
+    $routeProvider.when("/weddings", {
+        "componentName": "weddingsComponent"
+    });
+
     $routeProvider.when("/login", {
         "componentName": "loginComponent"
     });
