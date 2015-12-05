@@ -60,13 +60,21 @@ namespace WeddingBidders.Server.Controllers
             return Ok(dtos);
         }
 
-        //getAllByCustomerId
-
+        
         [HttpGet]
         [Route("getById")]
         public IHttpActionResult getById(int id)
         {
-            return Ok(this.repository.GetById(id));
+            var wedding = this.repository.GetAll().Where(x => x.Id == id).Single();
+            var dto = new WeddingDto()
+            {
+                Id = wedding.Id,
+                NumberOfGuests = wedding.NumberOfGuests,
+                NumberOfHours = wedding.NumberOfHours,
+                Location = wedding.Location
+            };
+            
+            return Ok(dto);
         }
 
         [HttpPost]

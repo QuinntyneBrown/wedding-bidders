@@ -8,8 +8,8 @@
         "componentName": "bidsComponent"
     });
 
-    $routeProvider.when("/caterer/:id", {
-        "componentName": "catererComponent"
+    $routeProvider.when("/bid/create/:weddingId", {
+        "componentName": "editBidComponent"
     });
 
     $routeProvider.when("/weddings", {
@@ -62,10 +62,10 @@
             redirect: ["$q", "$location", "profileService", "PROFILE_TYPE", function ($q, $location, profileService, PROFILE_TYPE) {
                 var deferred = $q.defer();
                 profileService.getCurrentProfile().then(function (results) {
-                    if (results.profileType == PROFILE_TYPE.CUSTOMER)
+                    if (results.profileType === PROFILE_TYPE.CUSTOMER)
                         $location.path("/customer/myprofile");
                     
-                    if (results.profileType == PROFILE_TYPE.CATERER)
+                    if (results.profileType === PROFILE_TYPE.CATERER)
                         $location.path("/caterer/myprofile");
                     
                     deferred.reject();
@@ -75,6 +75,9 @@
         }
     });
 
+    $routeProvider.when("/caterer/:id", {
+        "componentName": "catererComponent"
+    });
 
     apiEndpointProvider.configure("/api");
 
