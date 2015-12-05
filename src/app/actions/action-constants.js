@@ -1,6 +1,6 @@
 ﻿angular.module("app").value("WEDDING_ACTIONS", {
     ADD_WEDDING: "ADD_WEDDING",
-    GET_ALL_WEDDINGS: "GET_ALL_WEDDINGS"
+    UPDATE_ALL_WEDDINGS: "UPDATE_ALL_WEDDINGS"
 });
 
 angular.module("app").value("SECURITY_ACTIONS", {

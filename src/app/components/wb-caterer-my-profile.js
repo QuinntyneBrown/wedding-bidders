@@ -5,7 +5,8 @@
     function CatererMyProfileComponent(bidActions, dispatcher, profileStore, weddingStore) {
         var self = this;
         self.profile = profileStore.currentProfile;
-        self.weddings = weddingStore.weddings;
+        self.weddings = weddingStore.allWeddings;
+        self.dispatcher = dispatcher;
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
@@ -22,30 +23,44 @@
         return self;
     }
 
-    CatererMyProfileComponent.prototype.canActivate = function () {
-        return ["$q", "dispatcher", "profileActions", "weddingActions", function ($q, dispatcher, profileActions, weddingActions) {
+    CatererMyProfileComponent.canActivate = function () {
+        return ["$q", "appManager","currentProfile", "dispatcher", "profileActions", "weddingActions", function ($q, appManager, currentProfile, dispatcher, profileActions, weddingActions) {
 
             var deferred = $q.defer();
-            var actionIds = [];
-            actionIds.push(profileActions.getCurrentProfile());
-            actionIds.push(weddingActions.getAll());            
-            var listenerId = dispatcher.addListener({
-                actionType: "CHANGE",
-                callback: function (options) {
-                    for (var i = 0; i < actionIds.length; i++) {
-                        if (actionIds[i] === options.id) {
-                            actionIds.splice(i, 1);
-                        }
-                    }
 
-                    if (actionIds.length === 0) {
-                        dispatcher.removeListener({ id: listenerId });
-                        deferred.resolve();
-                    }
-                        
-                }
+            $q.all([
+                currentProfile.createInstanceAsync(),
+                getAllWeddingsAsync()
+            ]).then(function (resultsArray) {
+                appManager.currentProfile = resultsArray[0];
+                deferred.resolve(true);
             });
+
+            function getAllWeddingsAsync() {
+                var deferred = $q.defer();
+                var actionIds = [];
+                actionIds.push(weddingActions.getAll());
+                var listenerId = dispatcher.addListener({
+                    actionType: "CHANGE",
+                    callback: function (options) {
+                        for (var i = 0; i < actionIds.length; i++) {
+                            if (actionIds[i] === options.id) {
+                                actionIds.splice(i, 1);
+                            }
+                        }
+
+                        if (actionIds.length === 0) {
+                            dispatcher.removeListener({ id: listenerId });
+                            deferred.resolve();
+                        }
+
+                    }
+                });
+                return deferred.promise;
+            }
+
             return deferred.promise;
+
         }];
     }
 
@@ -59,6 +74,7 @@
             "weddingStore"],
         template: [
             "<div class='catererMyProfile viewComponent'>",
+            "<h1>{{ vm.profile.firstname }}  {{ vm.profile.lastname }}</h1><br/><br/>",
             "</div>"
         ].join(" ")
     });

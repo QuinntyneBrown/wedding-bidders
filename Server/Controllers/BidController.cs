@@ -36,6 +36,23 @@ namespace WeddingBidders.Server.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("getAllByCatererId")]
+        public IHttpActionResult GetAllByCatererId(int id)
+        {
+            var bidDtos = new List<BidDto>();
+            foreach (var bid in uow.Bids.GetAll().Where(x => x.CatererId == id).ToList())
+            {
+                bidDtos.Add(new BidDto()
+                {
+                    Id = bid.Id,
+                    Price = bid.Price,
+                    Description = bid.Description,
+                    WeddingId = bid.WeddingId
+                });
+            }
+            return Ok(bidDtos);
+        }
 
         [HttpGet]
         [Route("getAllByWeddingId")]

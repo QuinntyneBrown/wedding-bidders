@@ -16,7 +16,18 @@
             }
         });
 
+        self.dispatcher.addListener({
+            actionType: WEDDING_ACTIONS.UPDATE_ALL_WEDDINGS,
+            callback: function (options) {
+                self.allWeddings = options.data;
+                self.emitChange({ id: options.id, data: options.data });
+            }
+        });
+
+
         self.weddings = [];
+
+        self.allWeddings = [];
 
         self.currentWedding = null;
 
@@ -29,5 +40,7 @@
         return self;
     }
 
-    angular.module("app").service("weddingStore", ["dispatcher","guid","WEDDING_ACTIONS",weddingStore]);
+    angular.module("app").service("weddingStore", ["dispatcher", "guid", "WEDDING_ACTIONS", weddingStore])
+    .run(["weddingStore", function (weddingStore) { }]);
+
 })();

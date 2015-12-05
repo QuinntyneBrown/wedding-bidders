@@ -2,11 +2,12 @@
 
     "use strict";
 
-    function currentProfile($injector, $q, bidActions, dispatcher, profileActions, profileStore, PROFILE_TYPE, weddingActions, weddingService) {
+    function currentProfile($injector, $q, bidActions, bidService, dispatcher, profileActions, profileStore, PROFILE_TYPE, weddingActions, weddingService) {
         var self = this;
         self.$injector = $injector;
         self.$q = $q;
         self.bidActions = bidActions;
+        self.bidService = bidService;
         self.dispatcher = dispatcher;
         self.profileActions = profileActions;
         self.profileStore = profileStore;
@@ -18,14 +19,14 @@
 
         self.createInstanceAsync = function () {
             var deferred = self.$q.defer();
-            var instance = new currentProfile(self.$injector, self.$q, self.bidActions, self.dispatcher, self.profileActions, self.profileStore, self.PROFILE_TYPE, self.weddingActions, self.weddingService);
+            var instance = new currentProfile(self.$injector, self.$q, self.bidActions, self.bidService, self.dispatcher, self.profileActions, self.profileStore, self.PROFILE_TYPE, self.weddingActions, self.weddingService);
             instance.currentProfileActionId = self.profileActions.getCurrentProfile();
 
             instance.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
                 callback: function (options) {
-                    instance.dispatcher.removeListener({ id: instance.listenerId });
                     if (instance.currentProfileActionId === options.id) {
+                        instance.dispatcher.removeListener({ id: instance.listenerId });                        
                         instance.profileType = instance.profileStore.currentProfile.profileType;
                         instance.id = instance.profileStore.currentProfile.id;
                         instance.firstname = instance.profileStore.currentProfile.firstname;
@@ -50,7 +51,7 @@
                         }
 
                         if (instance.profileType == instance.PROFILE_TYPE.CATERER) {
-                            instance.bidService.getAllByCustomerId({ id: instance.id }).then(function (results) {
+                            instance.bidService.getAllByCatererId({ id: instance.id }).then(function (results) {
                                 if (results.length > 0) {
                                     var promises = [];
                                     var bid = instance.$injector.get("bid");
@@ -65,9 +66,10 @@
                                     deferred.resolve(instance);
                                 }
                             });
+                            
                         }
                     }
-                }
+                }                    
             });
 
 
@@ -83,6 +85,7 @@
         "$injector",
         "$q",
         "bidActions",
+        "bidService",
         "dispatcher",
         "profileActions",
         "profileStore",

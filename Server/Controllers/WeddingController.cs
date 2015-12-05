@@ -24,7 +24,21 @@ namespace WeddingBidders.Server.Controllers
         [Route("getAll")]
         public IHttpActionResult GetAll()
         {
-            return Ok(this.repository.GetAll());
+            var weddings = this.repository.GetAll();
+            var dtos = new List<WeddingDto>();
+
+            foreach(var wedding in weddings)
+            {
+                dtos.Add(new WeddingDto()
+                {
+                    Id = wedding.Id,
+                    NumberOfGuests = wedding.NumberOfGuests,
+                    NumberOfHours = wedding.NumberOfHours,
+                    Location = wedding.Location
+                });
+            }
+
+            return Ok(dtos);
         }
 
         [HttpGet]
