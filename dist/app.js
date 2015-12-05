@@ -83,6 +83,7 @@ angular.module("app").value("SECURITY_ACTIONS", {
 
 angular.module("app").value("CATERER_ACTIONS", {
     ADD_CATERER: "ADD_CATERER",
+    UPDATE_ALL_CATERERS: "UPDATE_ALL_CATERERS"
 });
 
 angular.module("app").value("CUSTOMER_ACTIONS", {
@@ -139,6 +140,18 @@ angular.module("app").value("PROFILE_ACTIONS", {
             }).then(function (results) {
                 self.dispatcher.emit({
                     actionType: self.CATERER_ACTIONS.ADD_CATERER, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
+
+        self.getAll = function (options) {
+            var newGuid = guid();
+
+            catererService.getAll().then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.CATERER_ACTIONS.UPDATE_ALL_CATERERS, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -1683,15 +1696,16 @@ angular.module("app").value("PROFILE_ACTIONS", {
 
     "use strict";
 
-    function VendorsComponent(dispatcher, venderStore) {
+    function VendorsComponent(dispatcher, catererStore) {
         var self = this;
 
-        self.vendors = venderStore.vendors;
+        self.allCaterers = catererStore.allCaterers;
+        self.dispatcher = dispatcher;
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
             callback: function (options) {
-                self.vendors = venderStore.vendors;
+                self.allCaterers = catererStore.allCaterers;
             }
         });
 
@@ -1704,11 +1718,11 @@ angular.module("app").value("PROFILE_ACTIONS", {
     }
 
 
-    VendorsComponent.prototype.canActivate = function () {
-        return ["$q", "dispatcher", "vendorActions", function ($q, dispatcher, vendorActions) {
+    VendorsComponent.canActivate = function () {
+        return ["$q", "dispatcher", "catererActions", function ($q, dispatcher, catererActions) {
             var deferred = $q.defer();
             var actionIds = [];
-            actionIds.push(vendorActions.getAll());
+            actionIds.push(catererActions.getAll());
 
             var listenerId = dispatcher.addListener({
                 actionType: "CHANGE",
@@ -1733,10 +1747,18 @@ angular.module("app").value("PROFILE_ACTIONS", {
     ngX.Component({
         component: VendorsComponent,
         route: "/vendors",
-        providers: ["dispatcher", "venderStore"],
+        providers: ["dispatcher", "catererStore"],
         template: [
-            "<div class='vendors'>",
-            "<h1>Vendors</h1>",
+            "<div class='vendors viewComponent'>",
+            "<h1>Vendors</h1> <br/><br/>",
+
+            "   <div data-ng-repeat='caterer in vm.allCaterers'> ",
+            "       <h3>Company Name:  {{ ::caterer.companyName }}</h3>",
+            "       <h3>Firstname:  {{ ::caterer.firstname }}</h3>",
+            "       <h3>Lastname:  {{ ::caterer.lastname }}</h3>",
+            "       <br/><br/> ",
+            "   </div> ",
+
             "</div>"
         ].join(" ")
     });
@@ -2181,6 +2203,15 @@ angular.module("app").value("PROFILE_TYPE", {
             });
             return deferred.promise;
         }
+
+        self.getAll = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "GET", url: self.baseUri + "/getAll" }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        }
+
         self.baseUri = apiEndpoint.getBaseUrl() + "/caterer";
         return self;
     }
@@ -2345,7 +2376,17 @@ angular.module("app").value("PROFILE_TYPE", {
             }
         });
 
+        self.dispatcher.addListener({
+            actionType: CATERER_ACTIONS.UPDATE_ALL_CATERERS,
+            callback: function (options) {
+                self.allCaterers = options.data;
+                self.emitChange({ id: options.id });
+            }
+        });
+
         self.caterers = [];
+
+        self.allCaterers = [];
 
         self.currentCaterer = null;
 

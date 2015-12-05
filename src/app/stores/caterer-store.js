@@ -16,7 +16,17 @@
             }
         });
 
+        self.dispatcher.addListener({
+            actionType: CATERER_ACTIONS.UPDATE_ALL_CATERERS,
+            callback: function (options) {
+                self.allCaterers = options.data;
+                self.emitChange({ id: options.id });
+            }
+        });
+
         self.caterers = [];
+
+        self.allCaterers = [];
 
         self.currentCaterer = null;
 

@@ -28,6 +28,18 @@
             return newGuid;
         }
 
+        self.getAll = function (options) {
+            var newGuid = guid();
+
+            catererService.getAll().then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.CATERER_ACTIONS.UPDATE_ALL_CATERERS, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
+
         return self;
     }
 

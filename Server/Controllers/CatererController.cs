@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Web.Http;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
@@ -28,7 +29,22 @@ namespace WeddingBidders.Server.Controllers
         [Route("getAll")]
         public IHttpActionResult getAll()
         {
-            return Ok(this.uow.Caterers.GetAll());
+            var caterers = this.uow.Caterers.GetAll();
+            var dtos = new List<CatererDto>();
+
+            foreach(var caterer in caterers)
+            {
+                dtos.Add(new CatererDto()
+                {
+                    Id = caterer.Id,
+                    Email = caterer.Email,
+                    Firstname = caterer.Firstname,
+                    Lastname = caterer.Lastname,
+                    CompanyName = caterer.CompanyName
+                });
+            }
+
+            return Ok(dtos);
         }
 
         [HttpPost]
