@@ -7,6 +7,6 @@ namespace WeddingBidders.Server.Models
 {
     public class Photo: BaseEntity
     {
-        public int MyProperty { get; set; }
+        public string Url { get; set; }
     }
 }

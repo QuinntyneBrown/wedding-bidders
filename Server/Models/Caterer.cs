@@ -22,6 +22,8 @@ namespace WeddingBidders.Server.Models
 
         public string CompanyName { get; set; }
 
+        public string Description { get; set; }
+
         [ForeignKey("Profile")]
         public int? ProfileId { get; set; }
 

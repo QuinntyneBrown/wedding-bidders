@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using WeddingBidders.Server.Data.Contracts;
@@ -47,6 +48,22 @@ namespace WeddingBidders.Server.Controllers
             return Ok(dtos);
         }
 
+        [HttpGet]
+        [Route("getById")]
+        public IHttpActionResult GetById(int id)
+        {
+            var caterer = this.uow.Caterers.GetAll().Where(x=>x.Id == id).Single();
+            var dto = new CatererDto()
+            {
+                Id = caterer.Id,
+                Email = caterer.Email,
+                Firstname = caterer.Firstname,
+                Lastname = caterer.Lastname,
+                CompanyName = caterer.CompanyName,
+                Description = caterer.Description
+            };
+            return Ok(dto);
+        }
         [HttpPost]
         [Route("add")]
         [AllowAnonymous]

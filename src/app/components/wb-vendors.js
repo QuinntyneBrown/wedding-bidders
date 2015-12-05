@@ -62,6 +62,7 @@
             "       <h3>Company Name:  {{ ::caterer.companyName }}</h3>",
             "       <h3>Firstname:  {{ ::caterer.firstname }}</h3>",
             "       <h3>Lastname:  {{ ::caterer.lastname }}</h3>",
+            "       <a href='#/caterer/{{ ::caterer.id }}'>Profile Page</h3>",
             "       <br/><br/> ",
             "   </div> ",
 

@@ -9,7 +9,8 @@ angular.module("app").value("SECURITY_ACTIONS", {
 
 angular.module("app").value("CATERER_ACTIONS", {
     ADD_CATERER: "ADD_CATERER",
-    UPDATE_ALL_CATERERS: "UPDATE_ALL_CATERERS"
+    UPDATE_ALL_CATERERS: "UPDATE_ALL_CATERERS",
+    UPDATE_BY_ID: "UPDATE_BY_ID"
 });
 
 angular.module("app").value("CUSTOMER_ACTIONS", {

@@ -40,6 +40,17 @@
             return newGuid;
         }
 
+        self.getById = function (options) {
+            var newGuid = guid();
+            catererService.getById({ id: options.id }).then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.CATERER_ACTIONS.UPDATE_BY_ID, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
+
         return self;
     }
 

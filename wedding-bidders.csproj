@@ -307,6 +307,7 @@
     <Compile Include="Server\Dtos\CustomerProfileDto.cs" />
     <Compile Include="Server\Dtos\CustomerRegistrationRequestDto.cs" />
     <Compile Include="Server\Dtos\CustomerRegistrationResponseDto.cs" />
+    <Compile Include="Server\Dtos\GalleryDto.cs" />
     <Compile Include="Server\Dtos\GroupDto.cs" />
     <Compile Include="Server\Dtos\ProfileDto.cs" />
     <Compile Include="Server\Dtos\RegistrationRequestDto.cs" />
@@ -315,6 +316,7 @@
     <Compile Include="Server\Dtos\TokenDto.cs" />
     <Compile Include="Server\Dtos\UserDto.cs" />
     <Compile Include="Server\Dtos\WeddingDto.cs" />
+    <Compile Include="Server\Hubs\BidHub.cs" />
     <Compile Include="Server\Models\Account.cs" />
     <Compile Include="Server\Models\AccountType.cs" />
     <Compile Include="Server\Models\BaseEntity.cs" />

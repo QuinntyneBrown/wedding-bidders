@@ -8,6 +8,10 @@ namespace WeddingBidders.Server.Dtos
 {
     public class CatererDto
     {
+        public CatererDto()
+        {
+            this.Galleries = new HashSet<GalleryDto>();
+        }
 
         public int? Id { get; set; }
 
@@ -18,6 +22,10 @@ namespace WeddingBidders.Server.Dtos
         public string Lastname { get; set; }
 
         public string Email { get; set; }
+
+        public string Description { get; set; }
+
+        public ICollection<GalleryDto> Galleries { get; set; }
 
         public ProfileType ProfileType { get { return ProfileType.Caterer; } }
     }

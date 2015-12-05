@@ -8,6 +8,10 @@
         "componentName": "bidsComponent"
     });
 
+    $routeProvider.when("/caterer/:id", {
+        "componentName": "catererComponent"
+    });
+
     $routeProvider.when("/weddings", {
         "componentName": "weddingsComponent"
     });

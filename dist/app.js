@@ -8,6 +8,10 @@ angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiE
         "componentName": "bidsComponent"
     });
 
+    $routeProvider.when("/caterer/:id", {
+        "componentName": "catererComponent"
+    });
+
     $routeProvider.when("/weddings", {
         "componentName": "weddingsComponent"
     });
@@ -91,7 +95,8 @@ angular.module("app").value("SECURITY_ACTIONS", {
 
 angular.module("app").value("CATERER_ACTIONS", {
     ADD_CATERER: "ADD_CATERER",
-    UPDATE_ALL_CATERERS: "UPDATE_ALL_CATERERS"
+    UPDATE_ALL_CATERERS: "UPDATE_ALL_CATERERS",
+    UPDATE_BY_ID: "UPDATE_BY_ID"
 });
 
 angular.module("app").value("CUSTOMER_ACTIONS", {
@@ -160,6 +165,17 @@ angular.module("app").value("PROFILE_ACTIONS", {
             catererService.getAll().then(function (results) {
                 self.dispatcher.emit({
                     actionType: self.CATERER_ACTIONS.UPDATE_ALL_CATERERS, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
+
+        self.getById = function (options) {
+            var newGuid = guid();
+            catererService.getById({ id: options.id }).then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.CATERER_ACTIONS.UPDATE_BY_ID, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -333,221 +349,6 @@ angular.module("app").value("PROFILE_ACTIONS", {
     angular.module("app")
         .service("weddingActions", ["dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
 
-
-})();
-(function () {
-
-    "use strict";
-
-    function bid() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("bid", [bid]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function caterer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("caterer", [caterer]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function currentProfile($injector, $q, bidActions, bidService, dispatcher, profileActions, profileStore, PROFILE_TYPE, weddingActions, weddingService) {
-        var self = this;
-        self.$injector = $injector;
-        self.$q = $q;
-        self.bidActions = bidActions;
-        self.bidService = bidService;
-        self.dispatcher = dispatcher;
-        self.profileActions = profileActions;
-        self.profileStore = profileStore;
-        self.PROFILE_TYPE = PROFILE_TYPE;
-        self.weddingActions = weddingActions;
-        self.weddingService = weddingService;
-
-        self.profileType = null;
-
-        self.createInstanceAsync = function () {
-            var deferred = self.$q.defer();
-            var instance = new currentProfile(self.$injector, self.$q, self.bidActions, self.bidService, self.dispatcher, self.profileActions, self.profileStore, self.PROFILE_TYPE, self.weddingActions, self.weddingService);
-            instance.currentProfileActionId = self.profileActions.getCurrentProfile();
-
-            instance.listenerId = self.dispatcher.addListener({
-                actionType: "CHANGE",
-                callback: function (options) {
-                    if (instance.currentProfileActionId === options.id) {
-                        instance.dispatcher.removeListener({ id: instance.listenerId });                        
-                        instance.profileType = instance.profileStore.currentProfile.profileType;
-                        instance.id = instance.profileStore.currentProfile.id;
-                        instance.firstname = instance.profileStore.currentProfile.firstname;
-                        instance.lastname = instance.profileStore.currentProfile.lastname;
-                        instance.email = instance.profileStore.currentProfile.email;
-                        if (instance.profileType == instance.PROFILE_TYPE.CUSTOMER) {
-                            instance.weddingService.getAllByCustomerId({ id: instance.id }).then(function (results) {
-                                if (results.length > 0) {
-                                    var promises = [];
-                                    var wedding = instance.$injector.get("wedding");
-                                    for (var i = 0; i < results.length; i++)
-                                        promises.push(wedding.createInstanceAsync({ data: results[i], includeBids: true }));
-
-                                    self.$q.all(promises).then(function (weddingInstances) {
-                                        instance.weddings = weddingInstances;
-                                        deferred.resolve(instance);
-                                    });
-                                } else {
-                                    deferred.resolve(instance);
-                                }
-                            });
-                        }
-
-                        if (instance.profileType == instance.PROFILE_TYPE.CATERER) {
-                            instance.bidService.getAllByCatererId({ id: instance.id }).then(function (results) {
-                                if (results.length > 0) {
-                                    var promises = [];
-                                    var bid = instance.$injector.get("bid");
-                                    for (var i = 0; i < results.length; i++)
-                                        promises.push(bid.createInstanceAsync({ data: results[i], includeWedding: true }));
-
-                                    self.$q.all(promises).then(function (bidInstances) {
-                                        instance.bids = bidInstances;
-                                        deferred.resolve(instance);
-                                    });
-                                } else {
-                                    deferred.resolve(instance);
-                                }
-                            });
-                            
-                        }
-                    }
-                }                    
-            });
-
-
-            return deferred.promise;
-        }
-
-
-
-        return self;
-    }
-
-    angular.module("app").service("currentProfile", [
-        "$injector",
-        "$q",
-        "bidActions",
-        "bidService",
-        "dispatcher",
-        "profileActions",
-        "profileStore",
-        "PROFILE_TYPE",
-        "weddingActions",
-        "weddingService",
-        currentProfile]);
-
-})();
-(function () {
-
-    "use strict";
-
-    function customer() {
-        var self = this;
-
-        return self;
-    }
-
-    angular.module("app").service("customer", [customer]);
-
-})();
-angular.module("app").value("PROFILE_TYPE", {
-    CUSTOMER: 0,
-    CATERER: 1
-});
-(function () {
-
-    "use strict";
-
-    function wedding($injector, $q, bidActions, bidService, dispatcher, weddingActions, weddingStore) {
-        var self = this;
-        self.$injector = $injector;
-        self.$q = $q;
-        self.bidActions = bidActions;
-        self.bidService = bidService;
-        self.dispatcher = dispatcher;        
-        self.weddingActions = weddingActions;
-        self.weddingStore = weddingStore;
-
-        self.id = null;
-        self.numberOfGuests = null;
-        self.numberOfHours = null;
-        self.location = null;
-
-        self.listenerId = self.dispatcher.addListener({
-            actionType: "CHANGE",
-            callback: function (options) {
-                if (self.addActionId === options.id) {
-                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
-                }
-            }
-        });
-
-        self.createInstanceAsync = function (options) {
-            var deferred = self.$q.defer();
-            var instance = self.createInstance({ data: options.data, includeBids: options.includeBids });
-            if (options.includeBids) {
-                instance.bidService.getAllByWeddingId({ id: instance.id }).then(function (results) {
-                    var bid = instance.$injector.get("bid");
-                    var promises = [];
-                    for (var i = 0; i < results.length; i++) { promises.push(bid.createInstanceAsync({ data: results[i] })); }                    
-                    instance.$q.all(promises).then(function (bidInstances) {
-                        instance.bids = bidInstances;
-                        deferred.resolve(instance);
-                    });                    
-                });
-            } else {
-                deferred.resolve(instance);
-            }
-            return deferred.promise;
-        }
-
-        self.createInstance = function (options) {
-            var instance = new wedding(self.$injector, self.$q, self.bidActions, self.bidService, self.dispatcher, self.weddingActions, self.weddingStore);
-            if (options.data) {
-                instance.id = options.data.id;
-                instance.numberOfGuests = options.data.numberOfGuests;
-                instance.numberOfHours = options.data.numberOfHours;
-                instance.location = options.data.location;
-            }
-            return instance;
-        }
-        
-        self.add = function () {
-            self.addActionId = weddingActions.add({ model: self });
-        }
-
-        self.onStoreUpdate = function () {
-
-        }
-
-
-        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
-
-        return self;
-    }
-
-    angular.module("app").service("wedding", ["$injector", "$q", "bidActions", "bidService", "dispatcher", "weddingActions", "weddingStore", wedding]);
 
 })();
 (function () {
@@ -1031,12 +832,50 @@ angular.module("app").value("PROFILE_TYPE", {
 
     "use strict";
 
-    ngX.Component({
-        component: function CatererComponent() {
+    function CatererComponent($routeParams, dispatcher, catererStore) {
 
-        },
+        var self = this;
+
+        self.caterer = catererStore.getById(Number($routeParams.id));
+
+        return self;
+    }
+
+    CatererComponent.canActivate = function () {
+        return [
+            "$q", "$route", "catererActions", "dispatcher", function ($q, $route, catererActions, dispatcher) {
+
+                var deferred = $q.defer();
+                var actionIds = [];
+                actionIds.push(catererActions.getById({ id: Number($route.current.params.id) }));
+                var listenerId = dispatcher.addListener({
+                    actionType: "CHANGE",
+                    callback: function (options) {
+                        for (var i = 0; i < actionIds.length; i++) {
+                            if (actionIds[i] === options.id) {
+                                actionIds.splice(i, 1);
+                            }
+                        }
+
+                        if (actionIds.length === 0) {
+                            dispatcher.removeListener({ id: listenerId });
+                            deferred.resolve();
+                        }
+
+                    }
+                });
+                return deferred.promise;
+            }
+        ]
+    }
+
+    ngX.Component({
+        component: CatererComponent,
+        route:"/caterer/:id",
+        providers: ["$routeParams", "dispatcher", "catererStore"],
         template: [
-            "<div class='caterer'>",
+            "<div class='caterer viewComponent'>",
+            "<h1>{{ vm.caterer.firstname }}  {{ vm.caterer.lastname }}</h1><br/><br/>",
             "</div>"
         ].join(" ")
     });
@@ -2065,6 +1904,7 @@ angular.module("app").value("PROFILE_TYPE", {
             "       <h3>Company Name:  {{ ::caterer.companyName }}</h3>",
             "       <h3>Firstname:  {{ ::caterer.firstname }}</h3>",
             "       <h3>Lastname:  {{ ::caterer.lastname }}</h3>",
+            "       <a href='#/caterer/{{ ::caterer.id }}'>Profile Page</h3>",
             "       <br/><br/> ",
             "   </div> ",
 
@@ -2163,6 +2003,221 @@ angular.module("app").value("PROFILE_TYPE", {
 
 
 
+(function () {
+
+    "use strict";
+
+    function bid() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("bid", [bid]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function caterer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("caterer", [caterer]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function currentProfile($injector, $q, bidActions, bidService, dispatcher, profileActions, profileStore, PROFILE_TYPE, weddingActions, weddingService) {
+        var self = this;
+        self.$injector = $injector;
+        self.$q = $q;
+        self.bidActions = bidActions;
+        self.bidService = bidService;
+        self.dispatcher = dispatcher;
+        self.profileActions = profileActions;
+        self.profileStore = profileStore;
+        self.PROFILE_TYPE = PROFILE_TYPE;
+        self.weddingActions = weddingActions;
+        self.weddingService = weddingService;
+
+        self.profileType = null;
+
+        self.createInstanceAsync = function () {
+            var deferred = self.$q.defer();
+            var instance = new currentProfile(self.$injector, self.$q, self.bidActions, self.bidService, self.dispatcher, self.profileActions, self.profileStore, self.PROFILE_TYPE, self.weddingActions, self.weddingService);
+            instance.currentProfileActionId = self.profileActions.getCurrentProfile();
+
+            instance.listenerId = self.dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (instance.currentProfileActionId === options.id) {
+                        instance.dispatcher.removeListener({ id: instance.listenerId });                        
+                        instance.profileType = instance.profileStore.currentProfile.profileType;
+                        instance.id = instance.profileStore.currentProfile.id;
+                        instance.firstname = instance.profileStore.currentProfile.firstname;
+                        instance.lastname = instance.profileStore.currentProfile.lastname;
+                        instance.email = instance.profileStore.currentProfile.email;
+                        if (instance.profileType == instance.PROFILE_TYPE.CUSTOMER) {
+                            instance.weddingService.getAllByCustomerId({ id: instance.id }).then(function (results) {
+                                if (results.length > 0) {
+                                    var promises = [];
+                                    var wedding = instance.$injector.get("wedding");
+                                    for (var i = 0; i < results.length; i++)
+                                        promises.push(wedding.createInstanceAsync({ data: results[i], includeBids: true }));
+
+                                    self.$q.all(promises).then(function (weddingInstances) {
+                                        instance.weddings = weddingInstances;
+                                        deferred.resolve(instance);
+                                    });
+                                } else {
+                                    deferred.resolve(instance);
+                                }
+                            });
+                        }
+
+                        if (instance.profileType == instance.PROFILE_TYPE.CATERER) {
+                            instance.bidService.getAllByCatererId({ id: instance.id }).then(function (results) {
+                                if (results.length > 0) {
+                                    var promises = [];
+                                    var bid = instance.$injector.get("bid");
+                                    for (var i = 0; i < results.length; i++)
+                                        promises.push(bid.createInstanceAsync({ data: results[i], includeWedding: true }));
+
+                                    self.$q.all(promises).then(function (bidInstances) {
+                                        instance.bids = bidInstances;
+                                        deferred.resolve(instance);
+                                    });
+                                } else {
+                                    deferred.resolve(instance);
+                                }
+                            });
+                            
+                        }
+                    }
+                }                    
+            });
+
+
+            return deferred.promise;
+        }
+
+
+
+        return self;
+    }
+
+    angular.module("app").service("currentProfile", [
+        "$injector",
+        "$q",
+        "bidActions",
+        "bidService",
+        "dispatcher",
+        "profileActions",
+        "profileStore",
+        "PROFILE_TYPE",
+        "weddingActions",
+        "weddingService",
+        currentProfile]);
+
+})();
+(function () {
+
+    "use strict";
+
+    function customer() {
+        var self = this;
+
+        return self;
+    }
+
+    angular.module("app").service("customer", [customer]);
+
+})();
+angular.module("app").value("PROFILE_TYPE", {
+    CUSTOMER: 0,
+    CATERER: 1
+});
+(function () {
+
+    "use strict";
+
+    function wedding($injector, $q, bidActions, bidService, dispatcher, weddingActions, weddingStore) {
+        var self = this;
+        self.$injector = $injector;
+        self.$q = $q;
+        self.bidActions = bidActions;
+        self.bidService = bidService;
+        self.dispatcher = dispatcher;        
+        self.weddingActions = weddingActions;
+        self.weddingStore = weddingStore;
+
+        self.id = null;
+        self.numberOfGuests = null;
+        self.numberOfHours = null;
+        self.location = null;
+
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                if (self.addActionId === options.id) {
+                    self.dispatcher.emit({ actionType: "MODEL_ADDED", options: { id: self.weddingStore.currentWedding.id } });
+                }
+            }
+        });
+
+        self.createInstanceAsync = function (options) {
+            var deferred = self.$q.defer();
+            var instance = self.createInstance({ data: options.data, includeBids: options.includeBids });
+            if (options.includeBids) {
+                instance.bidService.getAllByWeddingId({ id: instance.id }).then(function (results) {
+                    var bid = instance.$injector.get("bid");
+                    var promises = [];
+                    for (var i = 0; i < results.length; i++) { promises.push(bid.createInstanceAsync({ data: results[i] })); }                    
+                    instance.$q.all(promises).then(function (bidInstances) {
+                        instance.bids = bidInstances;
+                        deferred.resolve(instance);
+                    });                    
+                });
+            } else {
+                deferred.resolve(instance);
+            }
+            return deferred.promise;
+        }
+
+        self.createInstance = function (options) {
+            var instance = new wedding(self.$injector, self.$q, self.bidActions, self.bidService, self.dispatcher, self.weddingActions, self.weddingStore);
+            if (options.data) {
+                instance.id = options.data.id;
+                instance.numberOfGuests = options.data.numberOfGuests;
+                instance.numberOfHours = options.data.numberOfHours;
+                instance.location = options.data.location;
+            }
+            return instance;
+        }
+        
+        self.add = function () {
+            self.addActionId = weddingActions.add({ model: self });
+        }
+
+        self.onStoreUpdate = function () {
+
+        }
+
+
+        self.onDestroy = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
+
+        return self;
+    }
+
+    angular.module("app").service("wedding", ["$injector", "$q", "bidActions", "bidService", "dispatcher", "weddingActions", "weddingStore", wedding]);
+
+})();
 (function () {
 
     "use strict";
@@ -2338,6 +2393,14 @@ angular.module("app").value("PROFILE_TYPE", {
             return deferred.promise;
         }
 
+        self.getById = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "GET", url: self.baseUri + "/getById", params: { id: options.id } }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        }
+
         self.baseUri = apiEndpoint.getBaseUrl() + "/caterer";
         return self;
     }
@@ -2496,7 +2559,7 @@ angular.module("app").value("PROFILE_TYPE", {
         self.dispatcher.addListener({
             actionType: CATERER_ACTIONS.ADD_CATERER,
             callback: function (options) {
-                self.addItem(options.data);
+                self.addOrUpdate({ data: options.data });
                 self.currentCaterer = options.data;
                 self.emitChange({ id: options.id });
             }
@@ -2510,13 +2573,43 @@ angular.module("app").value("PROFILE_TYPE", {
             }
         });
 
+        self.dispatcher.addListener({
+            actionType: CATERER_ACTIONS.UPDATE_BY_ID,
+            callback: function (options) {
+                self.addOrUpdate({ data: options.data });
+                self.emitChange({ id: options.id });
+            }
+        });
+
+        
+
         self.caterers = [];
 
         self.allCaterers = [];
 
         self.currentCaterer = null;
 
-        self.addItem = function (options) { self.caterers.push(options.data); }
+        self.getById = function (id) {
+            var item = null;
+            for (var i = 0; i < self.caterers.length; i++) {
+                if (self.caterers[i].id === id) {
+                    item = self.caterers[i];
+                }
+            }
+            return item;
+        }
+
+        self.addOrUpdate = function (options) {
+            var exists = false;
+            for (var i = 0; i < self.caterers.length; i++) {
+                if (self.caterers[i].id === options.data.id) {
+                    exists = true;
+                    self.caterers[i] = options.data;
+                }
+            }
+            if(!exists)
+                self.caterers.push(options.data);
+        }
 
         self.emitChange = function (options) {
             self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
