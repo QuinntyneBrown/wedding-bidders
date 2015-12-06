@@ -260,6 +260,8 @@
     <Content Include="src\app\domain\domain-constants.js" />
     <Content Include="src\app\domain\wedding.js" />
     <Content Include="src\app\domain\bid.js" />
+    <Content Include="src\app\hubs\bidHub.js" />
+    <Content Include="src\app\hubs\messageHub.js" />
     <Content Include="src\app\metal\dispatcher.js" />
     <Content Include="src\app\metal\fetch.js" />
     <Content Include="src\app\services\bidService.js" />
@@ -355,6 +357,7 @@
     <Compile Include="Server\Services\Contracts\IEncryptionService.cs" />
     <Compile Include="Server\Services\Contracts\IIdentityService.cs" />
     <Compile Include="Server\Services\Contracts\IMembershipService.cs" />
+    <Compile Include="Server\Services\Contracts\IMessageService.cs" />
     <Compile Include="Server\Services\Contracts\IProfileService.cs" />
     <Compile Include="Server\Services\Contracts\ISecurityService.cs" />
     <Compile Include="Server\Services\Contracts\ISessionService.cs" />
@@ -363,6 +366,7 @@
     <Compile Include="Server\Services\EncryptionService.cs" />
     <Compile Include="Server\Services\IdentityService.cs" />
     <Compile Include="Server\Services\MembershipService.cs" />
+    <Compile Include="Server\Services\MessageService.cs" />
     <Compile Include="Server\Services\ProfileService.cs" />
     <Compile Include="Server\Services\SecurityService.cs" />
     <Compile Include="Server\Services\SessionService.cs" />

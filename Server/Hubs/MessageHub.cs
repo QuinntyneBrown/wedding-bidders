@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using WeddingBidders.Server.Services.Contracts;
 
 namespace WeddingBidders.Server.Hubs
 {
@@ -31,5 +32,7 @@ namespace WeddingBidders.Server.Hubs
         {
             return base.OnDisconnected(stopCalled);
         }
+
+        private IMessageService messageService;
     }
 }

@@ -22,6 +22,7 @@ namespace WeddingBidders.Server
             container.RegisterType<ISecurityService, SecurityService>();
             container.RegisterType<ICustomerService, CustomerService>();
             container.RegisterType<IBidService, BidService>();
+            container.RegisterType<IMessageService, MessageService>();
             container.RegisterType<IProfileService, ProfileService>();
             container.RegisterType<ICatererService, CatererService>();
             return container;

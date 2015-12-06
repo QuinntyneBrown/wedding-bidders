@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using WeddingBidders.Server.Services.Contracts;
 
 namespace WeddingBidders.Server.Hubs
 {
@@ -13,9 +14,6 @@ namespace WeddingBidders.Server.Hubs
     [HubName("bid")]
     public class BidHub: Hub
     {
-        private static readonly ConcurrentDictionary<string, object> _connections =
-            new ConcurrentDictionary<string, object>();
-
         public override Task OnConnected()
         {
             _connections.TryAdd(Context.ConnectionId, null);
@@ -32,5 +30,10 @@ namespace WeddingBidders.Server.Hubs
         {
             return base.OnDisconnected(stopCalled);
         }
+
+        private static readonly ConcurrentDictionary<string, object> _connections =
+            new ConcurrentDictionary<string, object>();
+
+        private IBidService bidService;
     }
 }

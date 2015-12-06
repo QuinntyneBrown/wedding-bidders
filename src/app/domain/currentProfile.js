@@ -32,7 +32,7 @@
                         instance.firstname = instance.profileStore.currentProfile.firstname;
                         instance.lastname = instance.profileStore.currentProfile.lastname;
                         instance.email = instance.profileStore.currentProfile.email;
-                        if (instance.profileType == instance.PROFILE_TYPE.CUSTOMER) {
+                        if (instance.profileType === instance.PROFILE_TYPE.CUSTOMER) {
                             instance.weddingService.getAllByCustomerId({ id: instance.id }).then(function (results) {
                                 if (results.length > 0) {
                                     var promises = [];
@@ -50,7 +50,7 @@
                             });
                         }
 
-                        if (instance.profileType == instance.PROFILE_TYPE.CATERER) {
+                        if (instance.profileType === instance.PROFILE_TYPE.CATERER) {
                             instance.bidService.getAllByCatererId({ id: instance.id }).then(function (results) {
                                 if (results.length > 0) {
                                     var promises = [];
