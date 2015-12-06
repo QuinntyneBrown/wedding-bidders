@@ -274,7 +274,7 @@
     <Content Include="src\app\stores\message-store.js" />
     <Content Include="src\app\stores\profile-store.js" />
     <Content Include="src\app\stores\security-store.js" />
-    <Content Include="src\app\stores\store.js" />
+    <Content Include="src\app\metal\store.js" />
     <Content Include="src\app\stores\wedding-store.js" />
     <Content Include="Web.config" />
   </ItemGroup>
