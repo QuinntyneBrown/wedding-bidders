@@ -51,5 +51,8 @@
         return self;
     }
 
-    angular.module("app").service("bidStore", ["dispatcher", "guid", "BID_ACTIONS", bidStore]);
+    angular.module("app").service("bidStore", ["dispatcher", "guid", "BID_ACTIONS", bidStore])
+    .run(["bidStore", function (bidStore) {
+
+    }]);
 })();
