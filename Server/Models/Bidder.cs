@@ -11,6 +11,8 @@ namespace WeddingBidders.Server.Models
             this.Bids = new HashSet<Bid>();
         }
 
+        public string Description { get; set; }
+
         [ForeignKey("Profile")]
         public int? ProfileId { get; set; }
 

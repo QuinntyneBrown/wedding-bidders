@@ -271,8 +271,10 @@
     <Content Include="src\app\stores\bid-store.js" />
     <Content Include="src\app\stores\caterer-store.js" />
     <Content Include="src\app\stores\customer-store.js" />
+    <Content Include="src\app\stores\message-store.js" />
     <Content Include="src\app\stores\profile-store.js" />
     <Content Include="src\app\stores\security-store.js" />
+    <Content Include="src\app\stores\store.js" />
     <Content Include="src\app\stores\wedding-store.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -291,6 +293,7 @@
     <Compile Include="Server\Controllers\CustomerController.cs" />
     <Compile Include="Server\Controllers\CatererController.cs" />
     <Compile Include="Server\Controllers\ProfileController.cs" />
+    <Compile Include="Server\Controllers\ProfileTypeController.cs" />
     <Compile Include="Server\Controllers\WeddingController.cs" />
     <Compile Include="Server\Data\Contracts\IWeddingBiddersUowContext.cs" />
     <Compile Include="Server\Data\Contracts\IWeddingBiddersUow.cs" />
@@ -319,17 +322,22 @@
     <Compile Include="Server\Dtos\UserDto.cs" />
     <Compile Include="Server\Dtos\WeddingDto.cs" />
     <Compile Include="Server\Hubs\BidHub.cs" />
+    <Compile Include="Server\Hubs\MessageHub.cs" />
     <Compile Include="Server\Models\Account.cs" />
     <Compile Include="Server\Models\AccountType.cs" />
     <Compile Include="Server\Models\BaseEntity.cs" />
     <Compile Include="Server\Models\Bidder.cs" />
     <Compile Include="Server\Models\Caterer.cs" />
     <Compile Include="Server\Models\Customer.cs" />
+    <Compile Include="Server\Models\EventPlanner.cs" />
     <Compile Include="Server\Models\Gallery.cs" />
     <Compile Include="Server\Models\Group.cs" />
     <Compile Include="Server\Models\ILoggable.cs" />
+    <Compile Include="Server\Models\MakeUpArtist.cs" />
+    <Compile Include="Server\Models\Message.cs" />
     <Compile Include="Server\Models\Person.cs" />
     <Compile Include="Server\Models\Photo.cs" />
+    <Compile Include="Server\Models\Photographer.cs" />
     <Compile Include="Server\Models\Profile.cs" />
     <Compile Include="Server\Models\ProfileType.cs" />
     <Compile Include="Server\Models\Role.cs" />

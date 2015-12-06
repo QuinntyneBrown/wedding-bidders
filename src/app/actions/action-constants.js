@@ -4,6 +4,10 @@
     UPDATE_BY_ID: "UPDATE_WEDDING_BY_ID"
 });
 
+angular.module("app").value("MESSAGE_ACTIONS", {
+    ADD: "ADD_MESSAGE",
+});
+
 angular.module("app").value("SECURITY_ACTIONS", {
     LOGIN: "LOGIN",
 });

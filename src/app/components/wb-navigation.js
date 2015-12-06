@@ -12,7 +12,7 @@
             self.PROFILE_TYPE = PROFILE_TYPE;
 
             self.isLoggedIn = function () {
-                return self.securityStore.token != null;
+                return self.securityStore.token !== null;
             }
 
             self.getProfileType = function () {
@@ -42,8 +42,7 @@
             "<div class='wbNavigation'>",
             "<a data-ng-if='!vm.isLoggedIn()' href='#/'>HOME</a>",
             "<a data-ng-if='!vm.isLoggedIn()' href='#/about'>ABOUT</a>",
-            "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() == vm.PROFILE_TYPE.CUSTOMER' href='#/wedding/create'>SUBMIT WEDDING</a>",
-            "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() == vm.PROFILE_TYPE.CUSTOMER' href='#/vendors'>VENDORS</a>",
+            "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() == vm.PROFILE_TYPE.CUSTOMER' href='#/wedding/create'>SUBMIT WEDDING</a>",            
             "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() == vm.PROFILE_TYPE.CATERER' href='#/bids'>BIDS</a>",
             "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() == vm.PROFILE_TYPE.CATERER' href='#/weddings'>WEDDINGS</a>",
             "</div>"

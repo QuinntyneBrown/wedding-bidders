@@ -20,7 +20,7 @@
         providers:["$location"],
         template: [
             "<div class='wbBanner'>",
-            "<h1 data-ng-click='vm.goHome()'>Wedding Bidders</h1>",
+            "<h1 data-ng-click='vm.goHome()'>Wedding Bidder</h1>",
             "</div>"
         ].join(" ")
     });
