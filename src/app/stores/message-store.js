@@ -9,9 +9,12 @@
         self.$ = $;
         self.connection = self.$.hubConnection();
         self.hub = self.connection.createHubProxy("messageHub");
-        self.hub.on(MESSAGE_ACTIONS.ADD_MESSAGE, function (options) {
+        self.hub.on(MESSAGE_ACTIONS.ADD, function (options) {
             self.storeInstance.addOrUpdate({ data: options });
             self.storeInstance.emitChange();
+        });
+        self.connection.start(function () {
+
         });
         
         Object.defineProperty(self, "storeInstance", {
@@ -41,7 +44,7 @@
         return self;
     }
 
-    angular.module("app").service("messageStore", ["$","dispatcher", "guid", "MESSAGE_ACTIONS", messageStore])
+    angular.module("app").service("messageStore", ["$","dispatcher", "MESSAGE_ACTIONS", "store", messageStore])
     .run(["messageStore", function (messageStore) {
 
     }]);
