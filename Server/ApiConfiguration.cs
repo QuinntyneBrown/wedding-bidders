@@ -6,6 +6,7 @@ using Newtonsoft.Json.Serialization;
 using Owin;
 using WeddingBidders.Server.Auth;
 using Microsoft.Practices.Unity;
+using Microsoft.AspNet.SignalR;
 
 namespace WeddingBidders.Server
 {
@@ -29,9 +30,13 @@ namespace WeddingBidders.Server
 
             var jSettings = new JsonSerializerSettings();
 
+            jSettings.ContractResolver = new SignalRContractResolver();
+
             jSettings.Formatting = Formatting.Indented;
 
-            jSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            var serializer = JsonSerializer.Create(jSettings);
+
+            GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => serializer);
 
             config.Formatters.Remove(config.Formatters.XmlFormatter);
 

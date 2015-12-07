@@ -38,5 +38,6 @@ namespace WeddingBidders.Server.Data
 
         public DbSet<Gallery> Galleries { get; set; }
 
+        public DbSet<Bidder> Bidders { get; set; }
     }
 }

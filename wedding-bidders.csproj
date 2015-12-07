@@ -297,7 +297,7 @@
     <Compile Include="Server\Controllers\ProfileController.cs" />
     <Compile Include="Server\Controllers\ProfileTypeController.cs" />
     <Compile Include="Server\Controllers\WeddingController.cs" />
-    <Compile Include="Server\Data\Contracts\IWeddingBiddersUowContext.cs" />
+    <Compile Include="Server\Data\Contracts\IWeddingBiddersContext.cs" />
     <Compile Include="Server\Data\Contracts\IWeddingBiddersUow.cs" />
     <Compile Include="Server\Data\WeddingBiddersContext.cs" />
     <Compile Include="Server\Data\WeddingBiddersUow.cs" />
@@ -354,8 +354,10 @@
     <Compile Include="Server\Models\Wedding.cs" />
     <Compile Include="Server\Models\Bid.cs" />
     <Compile Include="Server\Services\BaseService.cs" />
+    <Compile Include="Server\Services\BidderService.cs" />
     <Compile Include="Server\Services\BidService.cs" />
     <Compile Include="Server\Services\CatererService.cs" />
+    <Compile Include="Server\Services\Contracts\IBidderService.cs" />
     <Compile Include="Server\Services\Contracts\IBidService.cs" />
     <Compile Include="Server\Services\Contracts\ICatererService.cs" />
     <Compile Include="Server\Services\Contracts\ICustomerService.cs" />
@@ -376,6 +378,7 @@
     <Compile Include="Server\Services\SecurityService.cs" />
     <Compile Include="Server\Services\SessionService.cs" />
     <Compile Include="Server\Services\WeddingService.cs" />
+    <Compile Include="Server\SignalRContractResolver.cs" />
     <Compile Include="Server\UnityConfiguration.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

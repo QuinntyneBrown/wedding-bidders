@@ -37,6 +37,8 @@ namespace WeddingBidders.Server.Data
 
         public IRepository<Bid> Bids { get { return GetStandardRepo<Bid>(); } }
 
+        public IRepository<Bidder> Bidders { get { return GetStandardRepo<Bidder>(); } }
+
         public void SaveChanges()
         {
             base.dbContext.SaveChanges();

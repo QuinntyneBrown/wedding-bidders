@@ -7,10 +7,13 @@ using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
 using System.Collections.Generic;
+using WeddingBidders.Server.Hubs.contracts;
+using Microsoft.AspNet.SignalR;
+using WeddingBidders.Server.Hubs;
 
 namespace WeddingBidders.Server.Controllers
 {
-    [Authorize]
+    [System.Web.Http.Authorize]
     [RoutePrefix("api/wedding")]
     public class WeddingController : EFController<Wedding>
     {
@@ -18,6 +21,7 @@ namespace WeddingBidders.Server.Controllers
         {
             this.repository = uow.Weddings;
             this.uow = uow;
+            
         }
 
         [HttpGet]
@@ -92,6 +96,9 @@ namespace WeddingBidders.Server.Controllers
             this.repository.Add(wedding);
             this.uow.SaveChanges();
             dto.Id = wedding.Id;
+
+            var context = GlobalHost.ConnectionManager.GetHubContext<WeddingHub>();
+            context.Clients.All.onWeddingAdded(new { Data =  dto });
             return Ok(dto);
         }
 

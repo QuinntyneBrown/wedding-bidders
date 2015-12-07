@@ -40,7 +40,8 @@ namespace WeddingBidders.Server.Services
             var profile = new Profile()
             {
                 Name = string.Format("{0} {1}",dto.Firstname, dto.Lastname),
-                Account = account
+                Account = account,
+                ProfileType = ProfileType.Customer
             };
 
             var customer = new Customer()

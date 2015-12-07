@@ -34,7 +34,12 @@
         self.items = [];
 
         self.emitChange = function (options) {
-            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options ? options.id : null } });
+            self.dispatcher.emit({
+                actionType: "CHANGE", options: {
+                    id: options ? options.id : null,
+                    data: options ? options.data : null
+                }
+            });
         }
 
         return self;

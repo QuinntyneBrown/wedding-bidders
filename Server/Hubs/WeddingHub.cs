@@ -19,7 +19,7 @@ namespace WeddingBidders.Server.Hubs
 
         public void OnWeddingAdded(Wedding wedding)
         {
-            throw new NotImplementedException();
+            Clients.Others.onWeddingAdded(wedding);
         }
     }
 }

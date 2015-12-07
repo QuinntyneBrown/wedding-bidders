@@ -33,14 +33,15 @@ namespace WeddingBidders.Server.Services
                 Firstname = dto.Firstname,
                 Lastname = dto.Lastname,
                 Email = dto.Email,
-                AccountType = AccountType.Vendor,
+                AccountType = AccountType.Bidder,
                 User = user
             };
 
             var profile = new Profile()
             {
                 Name = string.Format("{0} {1}", dto.Firstname, dto.Lastname),
-                Account = account
+                Account = account,
+                ProfileType = ProfileType.Caterer
             };
 
             var caterer = new Caterer()

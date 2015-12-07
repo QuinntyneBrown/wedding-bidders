@@ -2,8 +2,8 @@
 {
     public enum AccountType
     {
+        Bidder,
         Customer,
-        Vendor,
         Internal
     }
 }

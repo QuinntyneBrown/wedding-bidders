@@ -68,6 +68,8 @@ namespace WeddingBidders.Server.Services
             }
             else
             {
+                var caterers = uow.Caterers.GetAll();
+
                 var caterer = uow.Caterers.GetAll().Single(x => x.Email == username);
                 var dto = new CatererProfileDto()
                 {

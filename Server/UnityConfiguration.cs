@@ -17,6 +17,7 @@ namespace WeddingBidders.Server
             var container = new UnityContainer();
             container.RegisterType<IWeddingBiddersUow, WeddingBiddersUow>();
             container.RegisterType<IWeddingBiddersContext, WeddingBiddersContext>();
+            container.RegisterType<IBidderService, BidderService>();
             container.RegisterType<ISessionService, SessionService>();
             container.RegisterType<IIdentityService, IdentityService>();
             container.RegisterType<IEncryptionService, EncryptionService>();

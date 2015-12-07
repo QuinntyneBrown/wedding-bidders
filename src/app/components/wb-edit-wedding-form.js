@@ -16,7 +16,7 @@
             self.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
                 callback: function (options) {
-                    if (self.addActionId === options.id) {
+                    if (options && self.addActionId === options.id) {
                         self.dispatcher.emit({
                             actionType: "MODEL_ADDED",
                             options: {
