@@ -6,14 +6,16 @@ using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
 using System.Collections.Generic;
+using WeddingBidders.Server.Hubs.contracts;
 
 namespace WeddingBidders.Server.Controllers
 {
     [RoutePrefix("api/bid")]
     public class BidController : ApiController
     {
-        public BidController(IWeddingBiddersUow uow)
+        public BidController(IBidHub bidHub, IWeddingBiddersUow uow)
         {
+            this.bidHub = bidHub;
             this.uow = uow;
             this.repository = uow.Bids;
         }
@@ -26,7 +28,7 @@ namespace WeddingBidders.Server.Controllers
             var caterer = this.uow.Caterers.GetAll().Where(x => x.Email == username).Single();
 
             var bid = new Bid() {
-                CatererId = caterer.Id,
+                BidderId = caterer.Id,
                 Description = dto.Description,
                 WeddingId = dto.WeddingId,
                 Price = dto.Price
@@ -34,9 +36,9 @@ namespace WeddingBidders.Server.Controllers
 
             this.repository.Add(bid);
             this.uow.SaveChanges();
-            
-            var response = new BidResponseDto();
 
+            var response = new BidResponseDto(bid);
+            this.bidHub.OnBidAdded(bid);
             return Ok(response);
         }
 
@@ -45,7 +47,7 @@ namespace WeddingBidders.Server.Controllers
         public IHttpActionResult GetAllByCatererId(int id)
         {
             var bidDtos = new List<BidDto>();
-            foreach (var bid in uow.Bids.GetAll().Where(x => x.CatererId == id).ToList())
+            foreach (var bid in uow.Bids.GetAll().Where(x => x.BidderId == id).ToList())
             {
                 bidDtos.Add(new BidDto()
                 {
@@ -79,5 +81,7 @@ namespace WeddingBidders.Server.Controllers
         protected readonly IWeddingBiddersUow uow;
 
         protected readonly IRepository<Bid> repository;
+
+        protected readonly IBidHub bidHub;
     }
 }

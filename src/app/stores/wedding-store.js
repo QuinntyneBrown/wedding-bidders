@@ -2,10 +2,20 @@
 
     "use strict";
 
-    function weddingStore(dispatcher, guid, WEDDING_ACTIONS) {
+    function weddingStore($, dispatcher, guid, WEDDING_ACTIONS) {
 
         var self = this;
         self.dispatcher = dispatcher;
+        self.$ = $;
+        self.connection = self.$.hubConnection();
+        self.hub = self.connection.createHubProxy("weddingHub");
+        self.hub.on("onWeddingAdded", function (options) {
+            self.addOrUpdate({ data: options });
+            self.emitChange();
+        });
+        self.connection.start(function () {
+
+        });
 
         self.dispatcher.addListener({
             actionType: WEDDING_ACTIONS.ADD_WEDDING,
@@ -68,7 +78,7 @@
         return self;
     }
 
-    angular.module("app").service("weddingStore", ["dispatcher", "guid", "WEDDING_ACTIONS", weddingStore])
+    angular.module("app").service("weddingStore", ["$","dispatcher", "guid", "WEDDING_ACTIONS", weddingStore])
     .run(["weddingStore", function (weddingStore) { }]);
 
 })();

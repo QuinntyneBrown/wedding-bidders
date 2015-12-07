@@ -3,6 +3,8 @@ using Common.Caching.Contracts;
 using Microsoft.Practices.Unity;
 using WeddingBidders.Server.Data;
 using WeddingBidders.Server.Data.Contracts;
+using WeddingBidders.Server.Hubs;
+using WeddingBidders.Server.Hubs.contracts;
 using WeddingBidders.Server.Services;
 using WeddingBidders.Server.Services.Contracts;
 
@@ -25,6 +27,9 @@ namespace WeddingBidders.Server
             container.RegisterType<IMessageService, MessageService>();
             container.RegisterType<IProfileService, ProfileService>();
             container.RegisterType<ICatererService, CatererService>();
+            container.RegisterType<IBidHub, BidHub>();
+            container.RegisterType<IMessageHub, IMessageHub>();
+            container.RegisterType<IWeddingHub, WeddingHub>();
             return container;
         }
     }

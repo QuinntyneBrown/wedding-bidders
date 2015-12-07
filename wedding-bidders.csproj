@@ -324,11 +324,16 @@
     <Compile Include="Server\Dtos\UserDto.cs" />
     <Compile Include="Server\Dtos\WeddingDto.cs" />
     <Compile Include="Server\Hubs\BidHub.cs" />
+    <Compile Include="Server\Hubs\contracts\IBidHub.cs" />
+    <Compile Include="Server\Hubs\contracts\IMessageHub.cs" />
+    <Compile Include="Server\Hubs\contracts\IWeddingHub.cs" />
     <Compile Include="Server\Hubs\MessageHub.cs" />
+    <Compile Include="Server\Hubs\WeddingHub.cs" />
     <Compile Include="Server\Models\Account.cs" />
     <Compile Include="Server\Models\AccountType.cs" />
     <Compile Include="Server\Models\BaseEntity.cs" />
     <Compile Include="Server\Models\Bidder.cs" />
+    <Compile Include="Server\Models\BidderType.cs" />
     <Compile Include="Server\Models\Caterer.cs" />
     <Compile Include="Server\Models\Customer.cs" />
     <Compile Include="Server\Models\EventPlanner.cs" />

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace WeddingBidders.Server.Models
 {
@@ -13,17 +10,17 @@ namespace WeddingBidders.Server.Models
 
         }
 
-        [ForeignKey("Caterer")]
-        public int? CatererId { get; set; }
-
         [ForeignKey("Wedding")]
         public int? WeddingId { get; set; }
+
+        [ForeignKey("Bidder")]
+        public int? BidderId { get; set; }
 
         public string Description { get; set; }
 
         public float Price { get; set; }
         
-        public Caterer Caterer { get; set; }
+        public Bidder Bidder { get; set; }
 
         public Wedding Wedding { get; set; }
     }

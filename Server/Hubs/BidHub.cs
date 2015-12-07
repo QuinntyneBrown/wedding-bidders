@@ -6,14 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using WeddingBidders.Server.Hubs.contracts;
+using WeddingBidders.Server.Models;
 using WeddingBidders.Server.Services.Contracts;
 
 namespace WeddingBidders.Server.Hubs
 {
 
-    [HubName("bid")]
-    public class BidHub: Hub
+    [HubName("bidHub")]
+    public class BidHub: Hub, IBidHub
     {
+
+        public void OnBidAdded (Bid bid)
+        {
+            Clients.Others.onBidAdded(bid);
+        }
+
         public override Task OnConnected()
         {
             _connections.TryAdd(Context.ConnectionId, null);

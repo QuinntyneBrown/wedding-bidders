@@ -8,13 +8,12 @@
         self.$ = $;
         self.connection = self.$.hubConnection();
         self.hub = self.connection.createHubProxy("bidHub");
-        alert(BID_ACTIONS.ADD_BID);
-        self.hub.on(BID_ACTIONS.ADD_BID, function (options) {
+        self.hub.on("onBidAdded", function (options) {
             self.addOrUpdate({ data: options });
             self.emitChange();
         });
         self.connection.start(function () {
-
+            
         });
 
         self.dispatcher.addListener({

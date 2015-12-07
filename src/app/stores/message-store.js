@@ -9,7 +9,7 @@
         self.$ = $;
         self.connection = self.$.hubConnection();
         self.hub = self.connection.createHubProxy("messageHub");
-        self.hub.on(MESSAGE_ACTIONS.ADD, function (options) {
+        self.hub.on("onMessageAdded", function (options) {
             self.storeInstance.addOrUpdate({ data: options });
             self.storeInstance.emitChange();
         });
