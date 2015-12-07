@@ -2,19 +2,20 @@
 
     "use strict";
 
-    function WeddingsComponent(appManager, dispatcher, weddingStore) {
+    function WeddingsComponent($scope, appManager, dispatcher, weddingStore) {
         var self = this;
         self.appManager = appManager;
-        self.weddings = weddingStore.allWeddings;
+        self.weddings = weddingStore.items;
         self.dispatcher = dispatcher;
+        self.weddingStore = weddingStore;
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
             callback: function (options) {
-                self.weddings = weddingStore.allWeddings;
+                self.weddings = self.weddingStore.items;
+                $scope.$digest();
             }
         });
-
 
         self.deactivate = function () {
             self.dispatcher.removeListener({ id: self.listenerId });
@@ -66,7 +67,7 @@
     ngX.Component({
         component: WeddingsComponent,
         route: "/weddings",
-        providers: ["appManager","dispatcher", "weddingStore"],
+        providers: ["$scope","appManager", "dispatcher", "weddingStore"],
         template: [
             "<div class='weddings viewComponent'>",
             "<h1>Weddings</h1>",
@@ -82,5 +83,3 @@
     });
 
 })();
-
-

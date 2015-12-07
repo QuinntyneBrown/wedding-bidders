@@ -30,6 +30,14 @@
             }
         });
 
+        Object.defineProperty(self, "items", {
+            "get": function () {
+                if (!self._storeInstance)
+                    self._storeInstance = self.store.createInstance();                    
+                return self._storeInstance.items;               
+            }
+        });
+
         self.dispatcher.addListener({
             actionType: WEDDING_ACTIONS.ADD_WEDDING,
             callback: function (options) {
@@ -42,7 +50,7 @@
         self.dispatcher.addListener({
             actionType: WEDDING_ACTIONS.UPDATE_ALL_WEDDINGS,
             callback: function (options) {
-                self.allWeddings = options.data;
+                self.storeInstance.items = options.data;
                 self.storeInstance.emitChange({ id: options.id, data: options.data });
             }
         });
@@ -55,13 +63,7 @@
             }
         });
 
-        self.getById = function (id) {
-            return self.storeInstance.getById(id);
-        }
-
-        self.allWeddings = [];
-
-        self.currentWedding = null;
+        self.getById = function (id) { return self.storeInstance.getById(id); }
 
         return self;
     }
