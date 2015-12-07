@@ -7,9 +7,7 @@
         var self = this;
         self.dispatcher = dispatcher;
 
-        self.createInstance = function () {
-            return new store(self.dispatcher);
-        }
+        self.createInstance = function () { return new store(self.dispatcher); }
 
         self.getById = function (id) {
             var item = null;
@@ -36,7 +34,7 @@
         self.items = [];
 
         self.emitChange = function (options) {
-            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
+            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options ? options.id : null } });
         }
 
         return self;

@@ -2,12 +2,18 @@
 
     "use strict";
 
-    function messageStore(dispatcher, MESSAGE_ACTIONS, store) {
-
+    function messageStore($, dispatcher, MESSAGE_ACTIONS, store) {
         var self = this;
-        self.dispatcher = dispatcher;
         self._storeInstance = null;
-
+        self.dispatcher = dispatcher;
+        self.$ = $;
+        self.connection = self.$.hubConnection();
+        self.hub = self.connection.createHubProxy("messageHub");
+        self.hub.on(MESSAGE_ACTIONS.ADD_MESSAGE, function (options) {
+            self.storeInstance.addOrUpdate({ data: options });
+            self.storeInstance.emitChange();
+        });
+        
         Object.defineProperty(self, "storeInstance", {
             "get": function () {
                 if (!self._storeInstance) {
@@ -35,8 +41,8 @@
         return self;
     }
 
-    angular.module("app").service("messageStore", ["dispatcher", "guid", "MESSAGE_ACTIONS", messageStore])
-    .run(["messageStore", function (bidStore) {
+    angular.module("app").service("messageStore", ["$","dispatcher", "guid", "MESSAGE_ACTIONS", messageStore])
+    .run(["messageStore", function (messageStore) {
 
     }]);
 })();
