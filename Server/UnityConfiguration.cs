@@ -31,6 +31,8 @@ namespace WeddingBidders.Server
             container.RegisterType<IBidHub, BidHub>();
             container.RegisterType<IMessageHub, IMessageHub>();
             container.RegisterType<IWeddingHub, WeddingHub>();
+            container.RegisterType<IEmailService, EmailService>();
+            container.RegisterType<IEmailBuilder, EmailBuilder>();
             return container;
         }
     }

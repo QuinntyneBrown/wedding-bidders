@@ -31,6 +31,8 @@ namespace WeddingBidders.Server.Data.Contracts
 
         IRepository<Bidder> Bidders { get; }
 
+        IRepository<Message> Messages { get; }
+
         void SaveChanges();
     }
 }

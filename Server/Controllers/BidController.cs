@@ -7,6 +7,8 @@ using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
 using System.Collections.Generic;
 using WeddingBidders.Server.Hubs.contracts;
+using WeddingBidders.Server.Hubs;
+using Microsoft.AspNet.SignalR;
 
 namespace WeddingBidders.Server.Controllers
 {
@@ -15,7 +17,6 @@ namespace WeddingBidders.Server.Controllers
     {
         public BidController(IBidHub bidHub, IWeddingBiddersUow uow)
         {
-            this.bidHub = bidHub;
             this.uow = uow;
             this.repository = uow.Bids;
         }
@@ -38,7 +39,8 @@ namespace WeddingBidders.Server.Controllers
             this.uow.SaveChanges();
 
             var response = new BidResponseDto(bid);
-            this.bidHub.OnBidAdded(bid);
+            var context = GlobalHost.ConnectionManager.GetHubContext<BidHub>();
+            context.Clients.All.onBiddAdded(new { Data = response });
             return Ok(response);
         }
 
@@ -81,7 +83,6 @@ namespace WeddingBidders.Server.Controllers
         protected readonly IWeddingBiddersUow uow;
 
         protected readonly IRepository<Bid> repository;
-
-        protected readonly IBidHub bidHub;
+        
     }
 }
