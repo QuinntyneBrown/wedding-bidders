@@ -13,7 +13,7 @@
             self.addOrUpdate({ data: options });
             self.emitChange();
         });
-        self.connection.start(function () {
+        self.connection.start({ transport: 'longPolling' }, function () {
             
         });
 

@@ -14,7 +14,7 @@
             self.storeInstance.addOrUpdate({ data: options.data });
             self.storeInstance.emitChange();
         });
-        self.connection.start(function () {
+        self.connection.start({ transport: 'longPolling' },function () {
 
         });
 
