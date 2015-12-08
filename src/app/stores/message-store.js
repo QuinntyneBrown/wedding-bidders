@@ -6,6 +6,7 @@
         var self = this;
         self._storeInstance = null;
         self.dispatcher = dispatcher;
+        self.store = store;
         self.$ = $;
         self.connection = self.$.hubConnection();
         self.hub = self.connection.createHubProxy("messageHub");

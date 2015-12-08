@@ -5,6 +5,7 @@
     function bidStore($, dispatcher, BID_ACTIONS, store) {
         var self = this;
         self.dispatcher = dispatcher;
+        self.store = store;
         self.$ = $;
         self.connection = self.$.hubConnection();
         self.hub = self.connection.createHubProxy("bidHub");

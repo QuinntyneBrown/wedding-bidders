@@ -16,6 +16,7 @@ namespace WeddingBidders.Migrations
         protected override void Seed(WeddingBidders.Server.Data.WeddingBiddersContext context)
         {
             RoleConfiguration.Seed(context);
+            UserConfiguration.Seed(context);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace WeddingBidders.Server.Models
         Caterer = 1,
         Photographer = 2,
         MakeUpArtist = 3,
-        EventPlanner = 4
+        EventPlanner = 4,
+        Internal = 5
     }
 }

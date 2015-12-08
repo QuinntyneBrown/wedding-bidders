@@ -3,7 +3,8 @@
     CATERER: 1,
     PHOTOGRAPHER: 2,
     MAKE_UP_ARTIST: 3,
-    EVENT_PLANNER: 4
+    EVENT_PLANNER: 4,
+    INTERNAL: 5
 });
 
 angular.module("app").value("MESSAGE_TYPE", {
