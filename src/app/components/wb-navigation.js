@@ -4,20 +4,18 @@
 
     ngX.Component({
         selector: "wb-navigation",
-        component: function NavigationComponent(appManager, PROFILE_TYPE, securityStore) {
+        component: function NavigationComponent(profileStore, PROFILE_TYPE, securityStore) {
 
             var self = this;
             self.securityStore = securityStore;
-            self.appManager = appManager;
+            self.profileStore = profileStore;
             self.PROFILE_TYPE = PROFILE_TYPE;
 
-            self.isLoggedIn = function () {
-                return self.securityStore.token !== null;
-            }
+            self.isLoggedIn = function () { return self.securityStore.token !== null; }
 
             self.getProfileType = function () {
-                if (self.securityStore.token && self.appManager.currentProfile)
-                    return self.appManager.currentProfile.profileType;
+                if (self.securityStore.token && self.profileStore.currentProfile)
+                    return self.profileStore.currentProfile.profileType;
 
                 return -1;
             }
@@ -37,7 +35,7 @@
             " } "
 
         ].join(" \n "),
-        providers: ["appManager", "PROFILE_TYPE", "securityStore"],
+        providers: ["profileStore", "PROFILE_TYPE", "securityStore"],
         template: [
             "<div class='wbNavigation'>",
             "<a data-ng-if='!vm.isLoggedIn()' href='#/'>HOME</a>",

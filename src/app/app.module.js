@@ -4,6 +4,11 @@
         "componentName": "homeComponent"
     });
 
+    $routeProvider.when("/mymessages", {
+        "componentName": "myMessagesComponent",
+        "authorizationRequired": true
+    });
+
     $routeProvider.when("/bids", {
         "componentName": "bidsComponent"
     });

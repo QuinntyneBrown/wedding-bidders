@@ -5,17 +5,15 @@
     function ManageProfilesComponent() {
         var self = this;
 
-
-
         return self;
     }
 
     ngX.Component({
         component: ManageProfilesComponent,
-        route: "/",
+        route: "/manageProfiles",
         providers: [],
         template: [
-            "<div class='home'>",
+            "<div class='manageProfiles'>",
             "</div>"
         ].join(" ")
     });
