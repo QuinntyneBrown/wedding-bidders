@@ -2,12 +2,19 @@
 
     "use strict";
 
-    function CustomerWeddingsComponent(customerStore, weddingStore) {
+    function CustomerWeddingsComponent($scope, bidStore, customerStore, dispatcher, weddingStore) {
         var self = this;
-
         self.customerStore = customerStore;
         self.weddingStore = weddingStore;
+        self.bidStore = bidStore;
 
+        self.listenerId = self.dispatcher.addListener({
+            actionType: "CHANGE",
+            callback: function (options) {
+                self.bids = self.bidStore.items;
+                $scope.$digest();
+            }
+        });
         self.onInit = function () {
             self.customer = self.customerStore.getCurrentCustomer();
         }
@@ -16,7 +23,8 @@
             self.customer = self.customerStore.getCurrentCustomer();
         }
 
-        self.dispose = function () {
+        self.deactivate = function () {
+            self.dispatcher.removeListener({ id: self.listenerId });
             self.customer = null;
             self.customerStore = null;
             delete self.customer;
@@ -38,11 +46,13 @@
         component: CustomerWeddingsComponent,
         route: "/myWeddings",
         providers: [
+            "$scope",
+            "bidStore",
             "customerStore",
             "weddingStore"
         ],
         template: [
-            "<div class='customerWeddings'>",
+            "<div class='customerWeddings viewComponent'>",
             "</div>"
         ].join(" ")
     });
