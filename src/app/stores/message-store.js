@@ -46,6 +46,10 @@
             }             
         });
 
+        Object.defineProperty(self, "items", {
+            "get": function () { return self.storeInstance.items; }
+        });
+
         self.getById = function (id) {
             return self.storeInstance.getById(int);
         }

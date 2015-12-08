@@ -54,7 +54,6 @@
                             dispatcher.removeListener({ id: listenerId });
                             deferred.resolve();
                         }
-
                     }
                 });
 
