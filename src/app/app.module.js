@@ -45,6 +45,10 @@
         "componentName": "customerRegistrationComponent"
     });
 
+    $routeProvider.when("/reportanissue", {
+        "componentName": "reportAnIssueComponent",
+        "authorizationRequired": true
+    });
     $routeProvider.when("/customer/myprofile", {
         "componentName": "customerMyProfileComponent",
         "authorizationRequired": true
@@ -52,6 +56,11 @@
 
     $routeProvider.when("/caterer/myprofile", {
         "componentName": "catererMyProfileComponent",
+        "authorizationRequired": true
+    });
+
+    $routeProvider.when("/myaccount", {
+        "componentName": "myAccountComponent",
         "authorizationRequired": true
     });
 

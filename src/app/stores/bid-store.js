@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function bidStore($,dispatcher, guid, BID_ACTIONS) {
+    function bidStore($, dispatcher, BID_ACTIONS, store) {
         var self = this;
         self.dispatcher = dispatcher;
         self.$ = $;
@@ -60,7 +60,7 @@
         return self;
     }
 
-    angular.module("app").service("bidStore", ["$","dispatcher", "guid", "BID_ACTIONS", bidStore])
+    angular.module("app").service("bidStore", ["$","dispatcher", "BID_ACTIONS", "store", bidStore])
     .run(["bidStore", function (bidStore) {
 
     }]);

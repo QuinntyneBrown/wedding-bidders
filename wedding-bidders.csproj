@@ -232,6 +232,8 @@
     <Content Include="src\app\actions\profileActions.js" />
     <Content Include="src\app\actions\security-actions.js" />
     <Content Include="src\app\actions\wedding-actions.js" />
+    <Content Include="src\app\components\wb-manage-profiles.js" />
+    <Content Include="src\app\components\wb-my-billing.js" />
     <Content Include="src\app\components\wb-app-manager.js" />
     <Content Include="src\app\app.module.js" />
     <Content Include="src\app\components\wb-about.js" />
@@ -260,8 +262,10 @@
     <Content Include="src\app\components\wb-home.js" />
     <Content Include="src\app\components\wb-login-form.js" />
     <Content Include="src\app\components\wb-login.js" />
+    <Content Include="src\app\components\wb-my-account.js" />
     <Content Include="src\app\components\wb-navigation.js" />
     <Content Include="src\app\components\wb-registration.js" />
+    <Content Include="src\app\components\wb-report-an-issue.js" />
     <Content Include="src\app\components\wb-text-area-control.js" />
     <Content Include="src\app\components\wb-text-form-control.js" />
     <Content Include="src\app\components\wb-top-banner.js" />

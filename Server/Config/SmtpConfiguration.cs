@@ -18,7 +18,6 @@ namespace WeddingBidders.Server.Config
             set { this["username"] = value; }
         }
 
-
         [ConfigurationProperty("password", IsRequired = true)]
         public string Password
         {
@@ -30,7 +29,5 @@ namespace WeddingBidders.Server.Config
         {
             get { return ConfigurationManager.GetSection("smtpConfiguration") as SmtpConfiguration; }
         }
-
-
     }
 }

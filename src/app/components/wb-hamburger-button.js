@@ -68,9 +68,21 @@
                 });
             }
 
-            self.navigateToCreateAccount = function () {
+            self.navigateToMyAccount = function () {
                 self.closeAsync().then(function () {
-                    self.$location.path("/customer/register");
+                    self.$location.path("/myaccount");
+                });
+            }
+
+            self.navigateToMyAccount = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/myaccount");
+                });
+            }
+
+            self.navigateToReportAnIssue = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/reportanissue");
                 });
             }
 
@@ -85,6 +97,8 @@
                 "   <div class='wbHamburgerMenu-container'>",
                 "       <div class='wbHamburgerMenu-links'>",
                 "           <div><a data-ng-click='vm.navigateToMyProfile()'>My Profile</a><div>",
+                "           <div><a data-ng-click='vm.navigateToMyAccount()'>My Account</a><div>",
+                "           <div><a data-ng-click='vm.navigateToReportAnIssue()'>Report an Issue</a><div>",
                 "           <div><a data-ng-click='vm.navigateToLogin()'>Logout</a><div>",                
                 "       </div>",
                 "   </div>",
