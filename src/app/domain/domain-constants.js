@@ -5,3 +5,8 @@
     MAKE_UP_ARTIST: 3,
     EVENT_PLANNER: 4
 });
+
+angular.module("app").value("MESSAGE_TYPE", {
+    NORMAL: 0,
+    ISSUE: 1
+});

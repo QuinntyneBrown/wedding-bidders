@@ -6,6 +6,7 @@
 
 angular.module("app").value("MESSAGE_ACTIONS", {
     ADD: "ADD_MESSAGE",
+    UPDATE_ALL_CURRENT_PROFILE_MESSAGES: "UPDATE_ALL_CURRENT_PROFILE_MESSAGES"
 });
 
 angular.module("app").value("SECURITY_ACTIONS", {

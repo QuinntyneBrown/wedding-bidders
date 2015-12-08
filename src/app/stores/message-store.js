@@ -17,6 +17,22 @@
 
         });
         
+        self.dispatcher.addListener({
+            actionType: MESSAGE_ACTIONS.ADD_MESSAGE,
+            callback: function (options) {
+                self.storeInstance.addOrUpdate({ data: options.data });
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
+        self.dispatcher.addListener({
+            actionType: MESSAGE_ACTIONS.UPDATE_ALL_CURRENT_PROFILE_MESSAGES,
+            callback: function (options) {
+                self.storeInstance.items = options.data;
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
         Object.defineProperty(self, "storeInstance", {
             "get": function () {
                 if (!self._storeInstance) {
@@ -27,14 +43,6 @@
                     return self._storeInstance;
                 }
             }             
-        });
-
-        self.dispatcher.addListener({
-            actionType: MESSAGE_ACTIONS.ADD,
-            callback: function (options) {
-                self.storeInstance.addOrUpdate({ data: options.data });
-                self.storeInstance.emitChange({ id: options.id });
-            }
         });
 
         self.getById = function (id) {

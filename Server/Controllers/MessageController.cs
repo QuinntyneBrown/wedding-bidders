@@ -2,6 +2,7 @@
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,16 +23,50 @@ namespace WeddingBidders.Server.Controllers
             this.repository = uow.Messages;
         }
 
+        [HttpGet]
+        [Route("getAllForCurrentProfile")]
+        public IHttpActionResult GetAllForCurrentProfile()
+        {
+            var username = Request.GetRequestContext().Principal.Identity.Name;
+            var profileId = uow.Accounts.GetAll()
+                .Include(x => x.Profiles).Single(x => x.Email == username)
+                .Profiles
+                .First().Id;
+            var dtos = new List<MessageDto>();
+            var messages = this.uow.Messages
+                .GetAll()
+                .Where(x => x.ToProfileId == profileId || x.FromProfileId == profileId)
+                .ToList();
+            foreach(var message in messages)
+            {
+                dtos.Add(new MessageDto(message));
+            }
+            return Ok(dtos);
+        }
+
         [HttpPost]
         [Route("add")]
         public IHttpActionResult add(MessageDto dto)
         {
             var username = Request.GetRequestContext().Principal.Identity.Name;
-            var customerId = uow.Customers.GetAll().Single(x => x.Email == username).Id;
+            var profileId = uow.Accounts.GetAll()
+                .Include(x=>x.Profiles).Single(x => x.Email == username)
+                .Profiles
+                .First().Id;
+
             var message = new Message()
             {
-
+                FromProfileId = profileId,
+                ToProfileId = dto.ToProfileId,
+                Subject = dto.Subject,
+                Content = dto.Content,
+                CreatedDate = DateTime.Now
             };
+            uow.Messages.Add(message);
+            uow.SaveChanges();
+
+            dto.FromProfileId = message.FromProfileId;
+            dto.Id = message.Id;
 
             var context = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
             context.Clients.All.onMessageAdded(new { Data = dto });

@@ -12,11 +12,11 @@ namespace WeddingBidders.Server.Models
         public int? ToProfileId { get; set; }
 
         public int? FromProfileId { get; set; }
-
-        public DateTime CreatedDateTime { get; set; }
+        
+        public string Subject { get; set; }
 
         public string Content { get; set; }
-
-        public bool Read { get; set; }
+        
+        public bool IsRead { get; set; }
     }
 }

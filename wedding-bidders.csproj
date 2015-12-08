@@ -229,6 +229,7 @@
     <Content Include="src\app\actions\bid-actions.js" />
     <Content Include="src\app\actions\caterer-actions.js" />
     <Content Include="src\app\actions\customer-actions.js" />
+    <Content Include="src\app\actions\message-actions.js" />
     <Content Include="src\app\actions\profileActions.js" />
     <Content Include="src\app\actions\security-actions.js" />
     <Content Include="src\app\actions\wedding-actions.js" />
@@ -282,6 +283,7 @@
     <Content Include="src\app\metal\jQuery.js" />
     <Content Include="src\app\services\bidService.js" />
     <Content Include="src\app\services\customerService.js" />
+    <Content Include="src\app\services\messageService.js" />
     <Content Include="src\app\services\profileService.js" />
     <Content Include="src\app\services\securityService.js" />
     <Content Include="src\app\services\catererService.js" />
@@ -361,6 +363,7 @@
     <Compile Include="Server\Models\ILoggable.cs" />
     <Compile Include="Server\Models\MakeUpArtist.cs" />
     <Compile Include="Server\Models\Message.cs" />
+    <Compile Include="Server\Models\MessageType.cs" />
     <Compile Include="Server\Models\Person.cs" />
     <Compile Include="Server\Models\Photo.cs" />
     <Compile Include="Server\Models\Photographer.cs" />
