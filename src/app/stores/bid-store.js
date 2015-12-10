@@ -7,11 +7,12 @@
         self.dispatcher = dispatcher;
         self.store = store;
         self.$ = $;
+        self.storeInstance = self.store.createInstance();
         self.connection = self.$.hubConnection();
         self.hub = self.connection.createHubProxy("bidHub");
         self.hub.on("onBidAdded", function (options) {
-            self.addOrUpdate({ data: options });
-            self.emitChange();
+            self.storeInstance.addOrUpdate({ data: options });
+            self.storeInstance.emitChange();
         });
         self.connection.start({ transport: 'longPolling' }, function () {
             
@@ -20,44 +21,21 @@
         self.dispatcher.addListener({
             actionType: BID_ACTIONS.ADD_BID,
             callback: function (options) {
-                self.addOrUpdate({ data: options.data });
+                self.storeInstance.addOrUpdate({ data: options.data });
                 self.currentBid = options.data;
-                self.emitChange({ id: options.id });
+                self.storeInstance.emitChange({ id: options.id });
             }
         });
 
         self.getById = function (id) {
-            var item = null;
-            for (var i = 0; i < self.bids.length; i++) {
-                if (self.bids[i].id === id) {
-                    item = self.bids[i];
-                }
-            }
-            return item;
+            return self.storeInstance.getById(id);
         }
 
-        self.addOrUpdate = function (options) {
-            var exists = false;
-            for (var i = 0; i < self.bids.length; i++) {
-                if (self.bids[i].id === options.data.id) {
-                    exists = true;
-                    self.bids[i] = options.data;
-                }
-            }
-            if (!exists)
-                self.bids.push(options.data);
-        }
-
-        self.bids = [];
+        Object.defineProperty(self, "items", {
+            "get": function () { return self.storeInstance.items; }
+        });
 
         self.currentBid = null;
-
-        self.addItem = function (options) { self.bids.push(options.data); }
-
-        self.emitChange = function (options) {
-            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options ? options.id : null } });
-        }
-
         return self;
     }
 

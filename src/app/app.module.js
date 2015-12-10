@@ -73,17 +73,13 @@
         "componentName": "catererMyProfileComponent",
         "authorizationRequired": true,
         resolve: {
-            redirect: ["$q", "$location", "profileService", "PROFILE_TYPE", function ($q, $location, profileService, PROFILE_TYPE) {
+            redirect: ["$q", "$location", "profileService", "profileStore","PROFILE_TYPE", function ($q, $location, profileService, profileStore, PROFILE_TYPE) {
                 var deferred = $q.defer();
-                profileService.getCurrentProfile().then(function (results) {
-                    if (results.profileType === PROFILE_TYPE.CUSTOMER)
-                        $location.path("/customer/myprofile");
-                    
-                    if (results.profileType === PROFILE_TYPE.CATERER)
-                        $location.path("/caterer/myprofile");
-                    
-                    deferred.reject();
-                });
+                if (profileStore.currentProfile.profileType === PROFILE_TYPE.CUSTOMER)
+                    $location.path("/customer/myprofile");
+
+                if (profileStore.currentProfile.profileType === PROFILE_TYPE.CATERER)
+                    $location.path("/caterer/myprofile");
                 return deferred.promise;
             }]
         }

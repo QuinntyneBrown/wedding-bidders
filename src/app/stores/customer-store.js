@@ -2,33 +2,30 @@
 
     "use strict";
 
-    function customerStore(dispatcher, guid, CUSTOMER_ACTIONS) {
-
+    function customerStore(dispatcher, guid, CUSTOMER_ACTIONS, store) {
         var self = this;
         self.dispatcher = dispatcher;
+        self.store = store;
+        self.storeInstance = self.store.createInstance();
 
         self.dispatcher.addListener({
             actionType: CUSTOMER_ACTIONS.ADD_CUSTOMER,
             callback: function (options) {
-                self.addItem(options.data);
-                self.currentCustomer = options.data;
-                self.emitChange({ id: options.id });
+                self.storeInstance.addItem(options.data);
+                self.storeInstance.currentCustomer = options.data;
+                self.storeInstance.emitChange({ id: options.id });
             }
         });
 
-        self.customers = [];
-
         self.currentCustomer = null;
 
-        self.addItem = function (options) { self.customers.push(options.data); }
-
-        self.emitChange = function (options) {
-            self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
-        }
+        Object.defineProperty(self, "items", {
+            "get": function () { return self.storeInstance.items; }
+        });
 
         return self;
     }
 
-    angular.module("app").service("customerStore", ["dispatcher", "guid", "CUSTOMER_ACTIONS", customerStore])
+    angular.module("app").service("customerStore", ["dispatcher", "guid", "CUSTOMER_ACTIONS", "store", customerStore])
     .run(["customerStore", function (customerStore) { }]);
 })();

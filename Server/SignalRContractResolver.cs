@@ -24,9 +24,7 @@ namespace WeddingBidders.Server
             if (type.Assembly.Equals(assembly))
             {
                 return defaultContractSerializer.ResolveContract(type);
-
             }
-
             return camelCaseContractResolver.ResolveContract(type);
         }
 

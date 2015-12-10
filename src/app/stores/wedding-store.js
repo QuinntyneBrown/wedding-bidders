@@ -5,7 +5,7 @@
     function weddingStore($, dispatcher, WEDDING_ACTIONS, store) {
         var self = this;
         self.store = store;
-        self._storeInstance = null;
+        self.storeInstance = self.store.createInstance();
         self.dispatcher = dispatcher;
         self.$ = $;
         self.connection = self.$.hubConnection();
@@ -16,18 +16,6 @@
         });
         self.connection.start({ transport: 'longPolling' },function () {
 
-        });
-
-        Object.defineProperty(self, "storeInstance", {
-            "get": function () {
-                if (!self._storeInstance) {
-                    self._storeInstance = self.store.createInstance();
-                    return self._storeInstance;
-                }
-                else {
-                    return self._storeInstance;
-                }
-            }
         });
 
         Object.defineProperty(self, "items", {

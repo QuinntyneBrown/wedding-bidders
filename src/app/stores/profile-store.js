@@ -2,16 +2,13 @@
 
     "use strict";
 
-    function profileStore(dispatcher, guid, PROFILE_ACTIONS) {
+    function profileStore(dispatcher, guid, PROFILE_ACTIONS, store) {
 
         var self = this;
-
+        self.store = store;
+        self.storeInstance = self.store.createInstance();
         self.dispatcher = dispatcher;
-
         self.currentProfile = null;
-
-        self.dispatcher = dispatcher;
-
         self.dispatcher.addListener({
             actionType: PROFILE_ACTIONS.UPDATE_CURRENT_PROFILE,
             callback: function (options) {                
@@ -24,9 +21,13 @@
             self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
         }
 
+        Object.defineProperty(self, "items", {
+            "get": function () { return self.storeInstance.items; }
+        });
+
         return self;
     }
 
-    angular.module("app").service("profileStore", ["dispatcher", "guid", "PROFILE_ACTIONS", profileStore])
+    angular.module("app").service("profileStore", ["dispatcher", "guid", "PROFILE_ACTIONS", "store", profileStore])
     .run(["profileStore", function (profileStore) { }]);
 })();

@@ -4,10 +4,10 @@
 
     function messageStore($, dispatcher, MESSAGE_ACTIONS, store) {
         var self = this;
-        self._storeInstance = null;
         self.dispatcher = dispatcher;
         self.store = store;
         self.$ = $;
+        self.storeInstance = self.store.createInstance();
         self.connection = self.$.hubConnection();
         self.hub = self.connection.createHubProxy("messageHub");
         self.hub.on("onMessageAdded", function (options) {
@@ -32,18 +32,6 @@
                 self.storeInstance.items = options.data;
                 self.storeInstance.emitChange({ id: options.id });
             }
-        });
-
-        Object.defineProperty(self, "storeInstance", {
-            "get": function () {
-                if (!self._storeInstance) {
-                    self._storeInstance = self.store.createInstance();
-                    return self._storeInstance;
-                }
-                else {
-                    return self._storeInstance;
-                }
-            }             
         });
 
         Object.defineProperty(self, "items", {
