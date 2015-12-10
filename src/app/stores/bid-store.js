@@ -27,6 +27,16 @@
             }
         });
 
+        self.dispatcher.addListener({
+            actionType: BID_ACTIONS.GET_ALL_BY_CURRENT_PROFILE,
+            callback: function (options) {
+                for (var i = 0; i < options.data.length; i++) {
+                    self.storeInstance.addOrUpdate({ data: options.data[i] });
+                }                
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
         self.getById = function (id) {
             return self.storeInstance.getById(id);
         }

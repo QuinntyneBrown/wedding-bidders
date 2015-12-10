@@ -1,4 +1,5 @@
 ﻿using Common.Data.Contracts;
+using System.Data.Entity;
 using System.Web.Http;
 using System.Net.Http;
 using System.Linq;
@@ -79,6 +80,43 @@ namespace WeddingBidders.Server.Controllers
             }
             return Ok(bidDtos);
         }
+
+        [HttpGet]
+        [Route("getAllByCurrentProfile")]
+        public IHttpActionResult GetAllByCurrentProfile()
+        {
+            var username = Request.GetRequestContext().Principal.Identity.Name;
+            var profile = uow.Accounts.GetAll().Where(x => x.Email == username).First().Profiles.First();
+            if(profile.ProfileType == ProfileType.Customer)
+            {
+                var customer = uow.Customers.GetAll()
+                    .Where(x => x.ProfileId == profile.Id)
+                    .Include(x => x.Weddings)
+                    .Include("Weddings.Bids")
+                    .First();
+
+                var dtos = new List<BidDto>();
+
+                foreach (var wedding in customer.Weddings)
+                {
+                    foreach(var bid in wedding.Bids)
+                    {
+                        dtos.Add(new BidDto()
+                        {
+                            Id = bid.Id,
+                            Price = bid.Price,
+                            Description = bid.Description,
+                            WeddingId = bid.WeddingId
+                        });
+                    }
+                }
+
+                return Ok(dtos);
+            }
+           
+            return Ok();
+        }
+
 
         protected readonly IWeddingBiddersUow uow;
 

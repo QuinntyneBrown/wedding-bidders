@@ -26,6 +26,21 @@
             return newGuid;
         }
 
+        self.getAllByProfileId = function (options) {
+            var newGuid = guid();
+            bidService.getAllByProfileId({
+                params: {
+                    id: options.id
+                }
+            }).then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.BID_ACTIONS.GET_ALL_BY_CURRENT_PROFILE, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
+
         return self;
     }
 

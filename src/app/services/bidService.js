@@ -28,7 +28,16 @@
             return deferred.promise;
         }
 
+        self.getAllByCurrentProfile = function () {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "GET", url: self.baseUri + "/getAllByCurrentProfile" }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        }
+
         self.baseUri = apiEndpoint.getBaseUrl() + "/bid";
+
         return self;
     }
 
