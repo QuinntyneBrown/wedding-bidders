@@ -20,7 +20,7 @@
         return self;
     }
 
-    CatererProfileComponent.prototype.canActivate = function () {
+    BidderProfileComponent.prototype.canActivate = function () {
         return ["$q", "$routeParams", "dispatcher", "bidderActions", "bidderStore", function ($q, $routeParams, dispatcher, bidderActions, bidderStore) {
 
             var deferred = $q.defer();

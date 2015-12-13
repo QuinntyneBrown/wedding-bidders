@@ -23,7 +23,7 @@
         return self;
     }
 
-    CatererMyProfileComponent.canActivate = function () {
+    BidderMyProfileComponent.canActivate = function () {
         return ["$q", "dispatcher","weddingActions", function ($q, dispatcher, weddingActions) {
 
             var deferred = $q.defer();
@@ -63,8 +63,8 @@
     }
 
     ngX.Component({
-        component: CatererMyProfileComponent,
-        route: "/caterer/myprofile",
+        component: BidderMyProfileComponent,
+        route: "/bidder/myprofile",
         providers: [
             "bidActions",
             "dispatcher",
