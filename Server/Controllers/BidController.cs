@@ -86,7 +86,12 @@ namespace WeddingBidders.Server.Controllers
         public IHttpActionResult GetAllByCurrentProfile()
         {
             var username = Request.GetRequestContext().Principal.Identity.Name;
-            var profile = uow.Accounts.GetAll().Where(x => x.Email == username).First().Profiles.First();
+            var profile = uow.Accounts
+                .GetAll()
+                .Include(x=>x.Profiles)
+                .Where(x => x.Email == username)
+                .First()
+                .Profiles.First();
             if(profile.ProfileType == ProfileType.Customer)
             {
                 var customer = uow.Customers.GetAll()

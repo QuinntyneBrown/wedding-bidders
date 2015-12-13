@@ -60,7 +60,6 @@ namespace WeddingBidders.Server.Services
             uow.Customers.Add(customer);
             uow.SaveChanges();
 
-
             var response = new CustomerRegistrationResponseDto()
             {
                 Firstname = customer.Firstname,

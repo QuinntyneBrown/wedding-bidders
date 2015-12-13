@@ -2,16 +2,16 @@
 
     "use strict";
 
-    function catererActions(dispatcher, guid, catererService, CATERER_ACTIONS) {
+    function bidderActions(dispatcher, guid, bidderService, BIDDER_ACTIONS) {
 
         var self = this;
         self.dispatcher = dispatcher;
-        self.CATERER_ACTIONS = CATERER_ACTIONS;
+        self.CATERER_ACTIONS = BIDDER_ACTIONS;
 
         self.add = function (options) {
             var newGuid = guid();
 
-            catererService.add({
+            bidderService.add({
                 data: {
                     firstname: options.firstname,
                     lastname: options.lastname,
@@ -21,7 +21,7 @@
                 }
             }).then(function (results) {
                 self.dispatcher.emit({
-                    actionType: self.CATERER_ACTIONS.ADD_CATERER, options:
+                    actionType: self.BIDDER_ACTIONS.ADD, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -31,9 +31,9 @@
         self.getAll = function (options) {
             var newGuid = guid();
 
-            catererService.getAll().then(function (results) {
+            bidderService.getAll().then(function (results) {
                 self.dispatcher.emit({
-                    actionType: self.CATERER_ACTIONS.UPDATE_ALL_CATERERS, options:
+                    actionType: self.BIDDER_ACTIONS.UPDATE_ALL, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -42,7 +42,7 @@
 
         self.getById = function (options) {
             var newGuid = guid();
-            catererService.getById({ id: options.id }).then(function (results) {
+            bidderService.getById({ id: options.id }).then(function (results) {
                 self.dispatcher.emit({
                     actionType: self.CATERER_ACTIONS.UPDATE_BY_ID, options:
                         { data: results, id: newGuid }
@@ -55,7 +55,7 @@
     }
 
     angular.module("app")
-        .service("catererActions", ["dispatcher", "guid", "catererService", "CATERER_ACTIONS", catererActions])
+        .service("bidderActions", ["dispatcher", "guid", "bidderService", "BIDDER_ACTIONS", bidderActions])
 
 
 })();

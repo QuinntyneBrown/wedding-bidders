@@ -28,16 +28,32 @@
         return self;
     }
 
-    //CustomerMyProfileComponent.canActivate = function () {
-    //    return ["$q", "appManager", "currentProfile", function ($q, appManager, currentProfile) {
-    //        var deferred = $q.defer();
-    //        currentProfile.createInstanceAsync().then(function (currentProfile) {
-    //            appManager.currentProfile = currentProfile;
-    //            deferred.resolve(true);
-    //        });
-    //        return deferred.promise;
-    //    }];
-    //}
+    CustomerMyProfileComponent.canActivate = function () {
+        return ["$q", "bidActions", "dispatcher", function ($q, bidActions, dispatcher) {
+            var deferred = $q.defer();
+            var actionIds = [];
+
+            actionIds.push(bidActions.getAllByCurrentProfile());
+
+            var listenerId = dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    for (var i = 0; i < actionIds.length; i++) {
+                        if (actionIds[i] === options.id) {
+                            actionIds.splice(i, 1);
+                        }
+                    }
+
+                    if (actionIds.length === 0) {
+                        dispatcher.removeListener({ id: listenerId });
+                        deferred.resolve();
+                    }
+
+                }
+            });
+            return deferred.promise;
+        }];
+    }
 
     ngX.Component({
         component: CustomerMyProfileComponent,

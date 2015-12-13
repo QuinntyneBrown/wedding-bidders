@@ -2,14 +2,14 @@
 
     "use strict";
 
-    function CatererProfileComponent($routeParams, catererStore) {
+    function BidderProfileComponent($routeParams, bidderStore) {
         var self = this;
-        self.caterer = catererStore.getByName({ name: $routeParams.name});
+        self.bidder = bidderStore.getByName({ name: $routeParams.name });
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
             callback: function (options) {
-                self.caterer = catererStore.getByName({ name: $routeParams.name });
+                self.caterer = bidderStore.getByName({ name: $routeParams.name });
             }
         });
 
@@ -21,13 +21,13 @@
     }
 
     CatererProfileComponent.prototype.canActivate = function () {
-        return ["$q", "$routeParams", "dispatcher", "catererActions", "catererStore", function ($q, $routeParams, dispatcher, catererActions, catererStore) {
+        return ["$q", "$routeParams", "dispatcher", "bidderActions", "bidderStore", function ($q, $routeParams, dispatcher, bidderActions, bidderStore) {
 
             var deferred = $q.defer();
             var actionIds = [];
-            var catererName = $routeParams.name;
+            var name = $routeParams.name;
 
-            actionIds.push(catererActions.getCatererByName({ name: catererName }));
+            actionIds.push(bidderActions.getByName({ name: name }));
 
             var listenerId = dispatcher.addListener({
                 actionType: "CHANGE",
@@ -50,12 +50,12 @@
     }
 
     ngX.Component({
-        component: CatererProfileComponent,
-        route: "/caterer/profile/:name",
+        component: BidderProfileComponent,
+        route: "/bidder/profile/:name",
         providers: [
-            "catererStore"],
+            "bidderStore"],
         template: [
-            "<div class='catererProfile viewComponent'>",
+            "<div class='bidderProfile viewComponent'>",
             "</div>"
         ].join(" ")
     });

@@ -13,10 +13,10 @@ angular.module("app").value("SECURITY_ACTIONS", {
     LOGIN: "LOGIN",
 });
 
-angular.module("app").value("CATERER_ACTIONS", {
-    ADD_CATERER: "ADD_CATERER",
-    UPDATE_ALL_CATERERS: "UPDATE_ALL_CATERERS",
-    UPDATE_BY_ID: "UPDATE_BY_ID"
+angular.module("app").value("BIDDER_ACTIONS", {
+    ADD: "ADD_BIDDER",
+    UPDATE_ALL: "UPDATE_ALL_BIDDERS",
+    UPDATE_BY_ID: "UPDATE_BIDDER_BY_ID"
 });
 
 angular.module("app").value("CUSTOMER_ACTIONS", {

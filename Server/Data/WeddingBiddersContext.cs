@@ -41,5 +41,9 @@ namespace WeddingBidders.Server.Data
         public DbSet<Bidder> Bidders { get; set; }
 
         public DbSet<Message> Messages { get; set; }
+
+        public DbSet<Page> Pages { get; set; }
+
+        public DbSet<HtmlContent> HtmlContents { get; set; }
     }
 }

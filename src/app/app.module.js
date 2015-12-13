@@ -42,8 +42,8 @@
         "componentName": "aboutComponent"
     });
 
-    $routeProvider.when("/caterer/register", {
-        "componentName": "catererRegistrationComponent"
+    $routeProvider.when("/bidder/register", {
+        "componentName": "bidderRegistrationComponent"
     });
 
     $routeProvider.when("/customer/register", {
@@ -70,16 +70,37 @@
     });
 
     $routeProvider.when("/myprofile", {
-        "componentName": "catererMyProfileComponent",
         "authorizationRequired": true,
         resolve: {
-            redirect: ["$q", "$location", "profileService", "profileStore","PROFILE_TYPE", function ($q, $location, profileService, profileStore, PROFILE_TYPE) {
+            redirect: ["$q", "$location", "dispatcher", "profileActions", "profileService", "profileStore", "PROFILE_TYPE", function ($q, $location, dispatcher, profileActions, profileService, profileStore, PROFILE_TYPE) {
                 var deferred = $q.defer();
-                if (profileStore.currentProfile.profileType === PROFILE_TYPE.CUSTOMER)
-                    $location.path("/customer/myprofile");
 
-                if (profileStore.currentProfile.profileType === PROFILE_TYPE.CATERER)
-                    $location.path("/caterer/myprofile");
+                if (!profileStore.currentProfile) {
+                    var actionId = profileActions.getCurrentProfile();
+
+                    var listenerId = dispatcher.addListener({
+                        actionType: "CHANGE",
+                        callback: function (options) {
+                            if (actionId === options.id) {
+                                dispatcher.removeListener({ id: listenerId });
+                                deferred.reject();
+                                redirectToProfile();                                
+                            }
+                        }
+                    });
+                }
+                else {
+                    deferred.reject();
+                    redirectToProfile()
+                }
+
+                function redirectToProfile() {
+                    if (profileStore.currentProfile.profileType === PROFILE_TYPE.CUSTOMER)
+                        $location.path("/customer/myprofile");
+
+                    if (profileStore.currentProfile.profileType === PROFILE_TYPE.CATERER)
+                        $location.path("/caterer/myprofile");
+                }
                 return deferred.promise;
             }]
         }

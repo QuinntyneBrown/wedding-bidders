@@ -33,6 +33,10 @@ namespace WeddingBidders.Server.Data.Contracts
 
         IRepository<Message> Messages { get; }
 
+        IRepository<HtmlContent> HtmlContents { get; }
+        
+        IRepository<Page> Pages { get; }
+
         void SaveChanges();
     }
 }

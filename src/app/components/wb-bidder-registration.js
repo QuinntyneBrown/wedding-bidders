@@ -3,7 +3,7 @@
     "use strict";
 
     ngX.Component({
-        component: function CatererRegistrationComponent($location, dispatcher, securityActions) {
+        component: function BidderRegistrationComponent($location, dispatcher, securityActions) {
 
             var self = this;
             self.$location = $location;
@@ -13,7 +13,7 @@
             self.listenerIds = [];
 
             self.listenerIds.push(self.dispatcher.addListener({
-                actionType: "CATERER_ADDED",
+                actionType: "BIDDER_ADDED",
                 callback: function (options) {
                     self.loginId = securityActions.tryToLogin({
                         username: options.username,
@@ -26,7 +26,7 @@
                 actionType: "CHANGE",
                 callback: function (options) {
                     if (self.loginId && self.loginId === options.id) {
-                        self.$location.path("/caterer/myprofile");
+                        self.$location.path("/myprofile");
                     }
                 }
             }));
@@ -44,9 +44,9 @@
             "dispatcher",
             "securityActions"],
         template: [
-            "<div class='catererRegistration viewComponent'>",
-            "<caterer-registration-form></caterer-registration-form>",
-            "</div>"
+            "<div class='bidderRegistrationComponent viewComponent'> ",
+            "   <bidder-registration-form></bidder-registration-form> ",
+            "</div> "
         ].join(" ")
     });
 

@@ -3,10 +3,10 @@
     "use strict";
 
     ngX.Component({
-        selector: "caterer-registration-form",
-        component: function CatererRegistrationFormComponent(catererActions, dispatcher) {
+        selector: "bidder-registration-form",
+        component: function BidderRegistrationFormComponent(bidderActions, dispatcher) {
             var self = this;
-            self.catererActions = catererActions;
+            self.bidderActions = bidderActions;
             self.dispatcher = dispatcher;
 
             self.firstname = null;
@@ -29,7 +29,7 @@
                 callback: function (options) {
                     if (self.addActionId === options.id) {
                         self.dispatcher.emit({
-                            actionType: "CATERER_ADDED", options: {
+                            actionType: "BIDDER_ADDED", options: {
                                 username: self.email,
                                 password: self.password
                             }
@@ -39,7 +39,7 @@
             });
 
             self.tryToRegister = function () {
-                self.addActionId = self.catererActions.add({
+                self.addActionId = self.bidderActions.add({
                     firstname: self.firstname,
                     lastname: self.lastname,
                     companyName: self.companyName,
@@ -56,14 +56,14 @@
             return self;
         },
         styles: [
-            "  .catererRegistrationForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; }"
+            "  .bidderRegistrationForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; }"
         ].join( " /n "),
         providers: [
-            "catererActions",
+            "bidderActions",
             "dispatcher"
         ],
         template: [
-            "<form class='catererRegistrationForm' name='catererRegistrationForm'>",
+            "<form class='bidderRegistrationForm' name='bidderRegistrationForm'>",
             "   <text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
             "   <text-form-control placeholder='vm.lastnamePlaceholder' model='vm.lastname' ></text-form-control>",
             "   <text-form-control placeholder='vm.companyNamePlaceholder' model='vm.companyName' ></text-form-control>",

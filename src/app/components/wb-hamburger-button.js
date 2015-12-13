@@ -92,9 +92,15 @@
                 });
             }
 
-            self.navigateToCreateVendorAccount = function () {
+            self.navigateToCreateAccount = function () {
                 self.closeAsync().then(function () {
-                    self.$location.path("/caterer/register");
+                    self.$location.path("/customer/register");
+                });
+            }
+
+            self.navigateToCreateBidderAccount = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/bidder/register");
                 });
             }
 
@@ -118,7 +124,7 @@
                 "       <div class='wbHamburgerMenu-links'>",
                 "           <div><a data-ng-click='vm.navigateToLogin()'>Login</a><div>",
                 "           <div><a data-ng-click='vm.navigateToCreateAccount()'>Create Account</a><div>",
-                "           <div><a data-ng-click='vm.navigateToCreateVendorAccount()'>Create Bidder Account</a><div>",
+                "           <div><a data-ng-click='vm.navigateToCreateBidderAccount()'>Create Bidder Account</a><div>",
                 "       </div>",
                 "   </div>",
                 "</div>"

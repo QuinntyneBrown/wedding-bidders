@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function CatererMyProfileComponent(bidActions, dispatcher, profileStore, weddingStore) {
+    function BidderMyProfileComponent(bidActions, dispatcher, profileStore, weddingStore) {
         var self = this;
         self.profile = profileStore.currentProfile;
         self.weddings = weddingStore.allWeddings;
@@ -24,15 +24,13 @@
     }
 
     CatererMyProfileComponent.canActivate = function () {
-        return ["$q", "appManager","currentProfile", "dispatcher", "profileActions", "weddingActions", function ($q, appManager, currentProfile, dispatcher, profileActions, weddingActions) {
+        return ["$q", "dispatcher","weddingActions", function ($q, dispatcher, weddingActions) {
 
             var deferred = $q.defer();
 
             $q.all([
-                currentProfile.createInstanceAsync(),
                 getAllWeddingsAsync()
             ]).then(function (resultsArray) {
-                appManager.currentProfile = resultsArray[0];
                 deferred.resolve(true);
             });
 
@@ -73,7 +71,7 @@
             "profileStore",
             "weddingStore"],
         template: [
-            "<div class='catererMyProfile viewComponent'>",
+            "<div class='bidderMyProfile viewComponent'>",
             "<h1>{{ vm.profile.firstname }}  {{ vm.profile.lastname }}</h1><br/><br/>",
             "</div>"
         ].join(" ")
