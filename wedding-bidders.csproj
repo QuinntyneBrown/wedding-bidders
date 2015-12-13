@@ -266,6 +266,7 @@
     <Content Include="src\app\components\wb-login.js" />
     <Content Include="src\app\components\wb-my-account.js" />
     <Content Include="src\app\components\wb-navigation.js" />
+    <Content Include="src\app\components\wb-promotion.js" />
     <Content Include="src\app\components\wb-registration.js" />
     <Content Include="src\app\components\wb-report-an-issue.js" />
     <Content Include="src\app\components\wb-text-area-control.js" />

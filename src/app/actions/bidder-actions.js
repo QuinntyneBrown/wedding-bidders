@@ -6,7 +6,7 @@
 
         var self = this;
         self.dispatcher = dispatcher;
-        self.CATERER_ACTIONS = BIDDER_ACTIONS;
+        self.BIDDER_ACTIONS = BIDDER_ACTIONS;
 
         self.add = function (options) {
             var newGuid = guid();
@@ -44,7 +44,7 @@
             var newGuid = guid();
             bidderService.getById({ id: options.id }).then(function (results) {
                 self.dispatcher.emit({
-                    actionType: self.CATERER_ACTIONS.UPDATE_BY_ID, options:
+                    actionType: self.BIDDER_ACTIONS.UPDATE_BY_ID, options:
                         { data: results, id: newGuid }
                 });
             });

@@ -2,7 +2,6 @@
 {
     public enum BidderType
     {
-        Customer = 0,
         Caterer = 0,
         Photographer = 1,
         MakeUpArtist = 2,

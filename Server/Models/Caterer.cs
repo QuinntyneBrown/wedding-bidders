@@ -7,7 +7,7 @@ namespace WeddingBidders.Server.Models
     {
         public Caterer()
         {
-
+            this.BidderType = BidderType.Caterer;
         }
 
         public string CompanyName { get; set; }

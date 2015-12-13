@@ -22,6 +22,8 @@ namespace WeddingBidders.Server.Models
 
         public ICollection<Bid> Bids { get; set; }
 
+        public BidderType BidderType { get; set; }
+
         public bool IsApproved { get; set; }
     }
 }
