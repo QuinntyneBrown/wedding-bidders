@@ -34,6 +34,8 @@ namespace WeddingBidders.Server.Services
                 Password = encryptionService.TransformPassword(dto.Password),
             };
 
+            uow.Users.Add(user);
+
             var account = new Account()
             {
                 Firstname = dto.Firstname,
@@ -43,17 +45,11 @@ namespace WeddingBidders.Server.Services
                 User = user
             };
 
-            Profile profile = null;
+            user.Accounts.Add(account);
 
-            if (dto.BidderType == BidderType.Caterer)
-            {
-                profile = new Profile()
-                {
-                    Name = string.Format("{0} {1}", dto.Firstname, dto.Lastname),
-                    Account = account,
-                    ProfileType = ProfileType.Caterer
-                };
-            }
+            Profile profile = Map(dto.Firstname, dto.Lastname,account,dto.BidderType);
+
+            account.Profiles.Add(profile);
 
             Bidder bidder = null;
 
@@ -70,12 +66,6 @@ namespace WeddingBidders.Server.Services
                 uow.Caterers.Add(bidder as Caterer);
             }
 
-            user.Accounts.Add(account);
-            account.Profiles.Add(profile);
-
-            uow.Users.Add(user);
-            uow.Accounts.Add(account);
-            
             uow.SaveChanges();
 
             var response = new BidderRegistrationResponseDto()
@@ -87,6 +77,23 @@ namespace WeddingBidders.Server.Services
 
             return response;
         }
+
+        public Profile Map(string firstname, string lastname, Account account, BidderType bidderType)
+        {
+            var profile = new Profile();
+
+            if (bidderType == BidderType.Caterer)
+            {
+                profile = new Profile()
+                {
+                    Name = string.Format("{0} {1}", firstname, lastname),
+                    Account = account,
+                    ProfileType = ProfileType.Caterer
+                };
+            }
+            return profile;
+        }
+
 
         protected readonly IWeddingBiddersUow uow;
         protected readonly IEncryptionService encryptionService;

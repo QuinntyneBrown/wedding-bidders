@@ -12,7 +12,7 @@
             actionType: BIDDER_ACTIONS.ADD,
             callback: function (options) {
                 self.storeInstance.addOrUpdate({ data: options.data });
-                self.currentCaterer = options.data;
+                self.current = options.data;
                 self.storeInstance.emitChange({ id: options.id });
             }
         });
@@ -33,7 +33,7 @@
             }
         });
 
-        self.currentCaterer = null;
+        self.current = null;
 
         self.getById = function (id) {
             return self.storeInstance.getById(id);

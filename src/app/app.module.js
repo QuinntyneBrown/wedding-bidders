@@ -63,8 +63,8 @@
         "authorizationRequired": true
     });
 
-    $routeProvider.when("/caterer/myprofile", {
-        "componentName": "catererMyProfileComponent",
+    $routeProvider.when("/bidder/myprofile", {
+        "componentName": "bidderMyProfileComponent",
         "authorizationRequired": true
     });
 
@@ -103,7 +103,7 @@
                         $location.path("/customer/myprofile");
 
                     if (profileStore.currentProfile.profileType === PROFILE_TYPE.CATERER)
-                        $location.path("/caterer/myprofile");
+                        $location.path("/bidder/myprofile");
                 }
                 return deferred.promise;
             }]
