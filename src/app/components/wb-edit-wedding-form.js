@@ -4,11 +4,16 @@
 
     ngX.Component({
         selector:"edit-wedding-form",
-        component: function EditWeddingFormComponent(dispatcher, weddingActions) {
+        component: function EditWeddingFormComponent(bidderStore, dispatcher, weddingActions) {
             var self = this;
             self.dispatcher = dispatcher;
             self.weddingActions = weddingActions;
-
+            self.bidderStore = bidderStore;
+            self.bidderTypes = [];
+            for (var i = 0; i < bidderStore.types.length; i++) {
+                self.bidderTypes.push(angular.extend(bidderStore.types[i], { checked: false }))
+            }
+            
             self.numberOfGuests = null;
             self.location = null;
             self.numberOfHours = null;
@@ -40,7 +45,7 @@
             }
             return self;
         },
-        providers: ["dispatcher", "weddingActions"],
+        providers: ["bidderStore", "dispatcher", "weddingActions"],
         styles: [
             " .editWeddingForm { } ",
             " .inputField { padding-left: 15px; } ",
@@ -73,6 +78,16 @@
             "<div class='formControl'>",
             "<input class='inputField' type='text'  data-ng-model='vm.numberOfHours'  placeholder='Number Of Hours'></input>",
             "</div>",
+
+            "<div class='formControl'>",
+            "<input class='inputField' type='text'  data-ng-model='vm.date'  placeholder='Date'></input>",
+            "</div>",
+
+            "<div style='padding-bottom:15px;'> ",
+            "<label ng-repeat='bidderType in vm.bidderTypes'> ",
+            "<input type='checkbox' data-ng-model='bidderType.checked'> {{ bidderType.displayName }} </input> ",
+            "</label> ",
+            "</div> ",
 
             "<button data-ng-click='vm.add()'>Create</button>",
             "</form>"
