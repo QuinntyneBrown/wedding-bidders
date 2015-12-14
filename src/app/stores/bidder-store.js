@@ -33,6 +33,17 @@
             }
         });
 
+        self.dispatcher.addListener({
+            actionType: BIDDER_ACTIONS.UPDATE_TYPES,
+            callback: function (options) {
+                self.types = options.data;
+                for (var i = 0; i < self.types.length; i++) {
+                    self.types[i].displayName = self.types[i].name.replace(/([a-z])([A-Z])/g, '$1 $2');
+                }
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
         self.current = null;
 
         self.getById = function (id) {

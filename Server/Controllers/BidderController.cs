@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
+using WeddingBidders.Server.Models;
 using WeddingBidders.Server.Services.Contracts;
 
 namespace WeddingBidders.Server.Controllers
@@ -64,7 +65,24 @@ namespace WeddingBidders.Server.Controllers
             return Ok(this.service.TryToRegister(dto));
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("gettypes")]
+        public IHttpActionResult GetTypes()
+        {
+            ICollection<Dictionary<string, string>> results = new HashSet<Dictionary<string, string>>();
+            foreach (var item in Enum.GetValues(typeof(BidderType)))
+            {                
+                var dictionary = new Dictionary<string, string>();
+                dictionary.Add("name", item.ToString());
+                dictionary.Add("value", Convert.ToString((int)item));
+                results.Add(dictionary);
+            }
+            return Ok(results);
+        }
+
         protected readonly IBidderService service;
+
         protected readonly IWeddingBiddersUow uow;
     }
 }

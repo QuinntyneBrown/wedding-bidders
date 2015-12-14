@@ -28,11 +28,10 @@
         });
 
         self.dispatcher.addListener({
-            actionType: BID_ACTIONS.GET_ALL_BY_CURRENT_PROFILE,
+            actionType: BID_ACTIONS.ADD_BID,
             callback: function (options) {
-                for (var i = 0; i < options.data.length; i++) {
-                    self.storeInstance.addOrUpdate({ data: options.data[i] });
-                }                
+                self.storeInstance.addOrUpdate({ data: options.data });
+                self.currentBid = options.data;
                 self.storeInstance.emitChange({ id: options.id });
             }
         });
@@ -46,6 +45,7 @@
         });
 
         self.currentBid = null;
+        self.types = null;
         return self;
     }
 

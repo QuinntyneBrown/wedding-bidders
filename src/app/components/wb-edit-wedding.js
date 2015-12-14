@@ -9,7 +9,6 @@
 
         self.listenerId = dispatcher.addListener({
             actionType: "MODEL_ADDED", callback: function (options) {
-                //$location.path("/wedding/edit/" + options.id)
                 self.$location.path("/myprofile");
             }
         });
@@ -18,6 +17,12 @@
 
         };
         return self;
+    }
+
+    EditWeddingComponent.canActivate = function () {
+        return ["bidderActions", function (bidderActions) {
+            return bidderActions.getTypesAsync();
+        }]
     }
 
     ngX.Component({

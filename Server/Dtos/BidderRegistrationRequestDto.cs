@@ -10,7 +10,7 @@ namespace WeddingBidders.Server.Dtos
     {
         public BidderRegistrationRequestDto()
         {
-            this.BidderType = BidderType.Caterer;
+
         }
 
         public string Firstname { get; set; }
