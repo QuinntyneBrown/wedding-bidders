@@ -13,19 +13,32 @@
         self._year = null;
         self._day = null;
 
+        self.updateModel = function () {
+            self.model = new Date(self.year, self.month, self.day);
+        }
+
         Object.defineProperty(self, "month", {
             "get": function () { return self._month; },
-            "set": function (value) { self._month = value; }
+            "set": function (value) {
+                self._month = value;
+                self.updateModel();
+            }
         });
 
         Object.defineProperty(self, "year", {
             "get": function () { return self._year; },
-            "set": function (value) { self._year = value; }
+            "set": function (value) {
+                self._year = value;
+                self.updateModel();
+            }
         });
 
         Object.defineProperty(self, "day", {
             "get": function () { return self._day; },
-            "set": function (value) { self._day = value; }
+            "set": function (value) {
+                self._day = value;
+                self.updateModel();
+            }
         });
         return self;
     }
@@ -35,14 +48,40 @@
         component: DatePickerComponent,
         providers: [],
         styles: [
-            " .datePicker { } "
+            " .datePicker p { ",
+            "   font-size: .6em; ",
+            " } ",
+
+            " .datePicker-heading { ",
+            "   padding-bottom:7px;",
+            " } ",
+
+            " .datePicker select { ",
+            "   line-height: 30px; ",
+            "   height: 30px; ",
+            "   border: 1px solid #575656 ",
+            "   padding-left: 7px ",
+            "   text-align: left; ",
+            " } ",
         ].join(" \n "),
         inputs: ["model"],
         template: [
             "<div class='datePicker'>",
-            "   <input type='text' data-ng-model='vm.month'></input>",
-            "   <input type='text' data-ng-model='vm.day'></input>",
-            "   <input type='text' data-ng-model='vm.year'></input>",
+            "   <div class='datePicker-heading'> ",
+            "       <h2>Select A Date:</h2> ",
+            "       <p>(DD/MM/YYYY)</p> ",
+            "   </div> ",
+            "   <div class='datePicker'>",
+            "       <select data-ng-model='vm.day' data-ng-init='vm.day = vm.days[0]'",
+            "           data-ng-options='d for d in vm.days'> ",
+            "       </select>",
+            "       <select data-ng-model='vm.month' data-ng-init='vm.month = vm.months[10]'",
+            "           data-ng-options='m for m in vm.months'> ",
+            "       </select>",
+            "       <select data-ng-model='vm.year' data-ng-init='vm.year = vm.years[0]'",
+            "           data-ng-options='y for y in vm.years'> ",
+            "       </select>",
+            "   </div>",
             "</div>"
         ].join(" ")
     });
