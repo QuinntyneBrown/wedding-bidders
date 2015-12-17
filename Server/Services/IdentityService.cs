@@ -48,7 +48,7 @@ namespace WeddingBidders.Server.Services
 
         public bool AuthenticateUser(string username, string password)
         {
-            if (uow.Users.GetAll().FirstOrDefault(x => x.Username == username && !x.IsDeleted) != null)
+            if (uow.Users.GetAll().FirstOrDefault(x => x.Username.ToLower() == username.ToLower() && !x.IsDeleted) != null)
             {
                 var transformedPassword = encryptionService.TransformPassword(password);
 
