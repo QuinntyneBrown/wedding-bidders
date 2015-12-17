@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WeddingBidders.Server.Dtos
 {
@@ -17,6 +18,10 @@ namespace WeddingBidders.Server.Dtos
         public int NumberOfHours { get; set; }
 
         public string Location { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public ICollection<string> Categories { get; set; }
 
         public ICollection<BidDto> Bids { get; set; }
         

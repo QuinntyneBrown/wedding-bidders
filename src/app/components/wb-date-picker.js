@@ -7,14 +7,14 @@
 
         self.months = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         self.days = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 ];
-        self.years = [ 2016, 2017, 2018]
+        self.years = [2015, 2016, 2017, 2018]
 
-        self._month = null;
-        self._year = null;
-        self._day = null;
-
+        self._month = self.model ? new Date(self.model).getMonth() + 1 : null;
+        self._year = self.model ? new Date(self.model).getYear() + 1900 : null;
+        self._day = self.model ? new Date(self.model).getDate() : null;
+        
         self.updateModel = function () {
-            self.model = new Date(self.year, self.month, self.day);
+            self.model = new Date(self.year, self.month - 1, self.day);
         }
 
         Object.defineProperty(self, "month", {
@@ -72,13 +72,13 @@
             "       <p>(DD/MM/YYYY)</p> ",
             "   </div> ",
             "   <div class='datePicker'>",
-            "       <select data-ng-model='vm.day' data-ng-init='vm.day = vm.days[0]'",
+            "       <select data-ng-model='vm.day' data-ng-init='vm.day = vm.days[vm.days.indexOf(vm._day)]'",
             "           data-ng-options='d for d in vm.days'> ",
             "       </select>",
-            "       <select data-ng-model='vm.month' data-ng-init='vm.month = vm.months[10]'",
+            "       <select data-ng-model='vm.month' data-ng-init='vm.month = vm.months[vm.months.indexOf(vm._month)]'",
             "           data-ng-options='m for m in vm.months'> ",
             "       </select>",
-            "       <select data-ng-model='vm.year' data-ng-init='vm.year = vm.years[0]'",
+            "       <select data-ng-model='vm.year' data-ng-init='vm.year = vm.years[vm.years.indexOf(vm._year)]'",
             "           data-ng-options='y for y in vm.years'> ",
             "       </select>",
             "   </div>",

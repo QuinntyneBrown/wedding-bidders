@@ -13,6 +13,8 @@
             for (var i = 0; i < bidderStore.types.length; i++) {
                 self.bidderTypes.push(angular.extend(bidderStore.types[i], { checked: false }))
             }
+            self.date = Date();
+            self.categories = [];
             
             self.numberOfGuests = null;
             self.location = null;
@@ -36,7 +38,9 @@
                 self.addActionId = self.weddingActions.add({
                     numberOfGuests: self.numberOfGuests,
                     location: self.location,
-                    numberOfHours: self.numberOfHours
+                    numberOfHours: self.numberOfHours,
+                    date: self.date,
+                    categories: self.categories
                 });
             };
 
@@ -80,7 +84,7 @@
             "</div>",
 
             "<div class='formControl'>",
-            "<input class='inputField' type='text'  data-ng-model='vm.date'  placeholder='Date'></input>",
+            "<date-picker  model='vm.date'></date-picker>",
             "</div>",
 
             "<div style='padding-bottom:15px;'> ",

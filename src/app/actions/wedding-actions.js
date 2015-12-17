@@ -15,7 +15,9 @@
                 data: {
                     numberOfGuests: options.numberOfGuests,
                     numberOfHours: options.numberOfHours,
-                    location: options.location
+                    location: options.location,
+                    date: options.date,
+                    categories: options.categories
                 }
             }).then(function (results) {
                 self.dispatcher.emit({

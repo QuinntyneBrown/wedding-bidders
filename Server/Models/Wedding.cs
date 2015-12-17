@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WeddingBidders.Server.Models
 {
@@ -7,6 +8,7 @@ namespace WeddingBidders.Server.Models
         public Wedding()
         {
             this.Bids = new HashSet<Bid>();
+            this.Categories = new HashSet<string>();
         }
 
         public int NumberOfGuests { get; set; }
@@ -20,5 +22,9 @@ namespace WeddingBidders.Server.Models
         public int? CustomerId { get; set; }
 
         public Customer Customer { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public ICollection<string> Categories { get; set; }
     }
 }
