@@ -68,7 +68,7 @@ namespace WeddingBidders.Server.Controllers
         
         [HttpGet]
         [Route("getById")]
-        public IHttpActionResult getById(int id)
+        public IHttpActionResult GetById(int id)
         {
             var wedding = this.repository.GetAll().Where(x => x.Id == id).Single();
             var dto = new WeddingDto()
@@ -80,6 +80,27 @@ namespace WeddingBidders.Server.Controllers
             };
             
             return Ok(dto);
+        }
+
+        [HttpGet]
+        [Route("getByCurrentProfile")]
+        public IHttpActionResult GetByCurrentProfile()
+        {
+            var weddings = this.repository.GetAll();
+            var dtos = new List<WeddingDto>();
+
+            foreach(var wedding in weddings) {
+                dtos.Add(new WeddingDto()
+                {
+                    Id = wedding.Id,
+                    NumberOfGuests = wedding.NumberOfGuests,
+                    NumberOfHours = wedding.NumberOfHours,
+                    Location = wedding.Location,
+                    Date = wedding.Date
+                });
+            }
+
+            return Ok(dtos);
         }
 
         [HttpPost]

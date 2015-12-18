@@ -34,6 +34,14 @@
         });
 
         self.dispatcher.addListener({
+            actionType: WEDDING_ACTIONS.UPDATE_BY_PROFILE,
+            callback: function (options) {
+                self.weddingsByProfile = options.data;
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
+        self.dispatcher.addListener({
             actionType: WEDDING_ACTIONS.UPDATE_ALL_WEDDINGS,
             callback: function (options) {
                 self.storeInstance.items = options.data;

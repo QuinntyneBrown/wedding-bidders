@@ -2,9 +2,10 @@
 
     "use strict";
 
-    function bidActions(dispatcher, guid, bidService, BID_ACTIONS) {
+    function bidActions($q, dispatcher, guid, bidService, BID_ACTIONS) {
 
         var self = this;
+        self.$q = $q;
         self.dispatcher = dispatcher;
         self.BID_ACTIONS = BID_ACTIONS;
 
@@ -37,11 +38,26 @@
             return newGuid;
         }
 
+        self.getAllByCurrentProfileAsync = function () {
+            var deferred = self.$q.defer();
+            var actionId = self.getAllByCurrentProfile();
+            var listenerId = dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (actionId === options.id) {
+                        dispatcher.removeListener({ id: listenerId });
+                        deferred.resolve();
+                    }
+                }
+            })
+            return deferred.promise;
+        }
+
         return self;
     }
 
     angular.module("app")
-        .service("bidActions", ["dispatcher", "guid", "bidService", "BID_ACTIONS", bidActions])
+        .service("bidActions", ["$q", "dispatcher", "guid", "bidService", "BID_ACTIONS", bidActions])
 
 
 })();

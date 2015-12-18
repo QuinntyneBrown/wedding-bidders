@@ -2,28 +2,30 @@
 
     "use strict";
 
-    function CustomerMyProfileComponent($scope, bidStore, dispatcher, moment, profileStore, weddingStore) {
+    function CustomerMyProfileComponent($scope, bidStore, dispatcher, moment, profileStore, weddingCollection, weddingStore) {
         var self = this;
         self.profileStore = profileStore;
         self.bidStore = bidStore;
+        self.weddingCollection = weddingCollection;
         self.weddingStore = weddingStore;
         self.dispatcher = dispatcher;
         self.moment = moment;
 
         self.profile = self.profileStore.currentProfile;
-        self.weddings = self.weddingStore.items;
-        self.bids = self.bidStore.items;
 
-        for (var i = 0; i < self.profile.weddings.length; i++) {
-            self.profile.weddings[i].date = self.moment(self.profile.weddings[i].date).format("MMMM Do YYYY");
-        }
+        self.weddings = self.weddingCollection.createInstance({
+            data: self.weddingStore.weddingsByProfile,
+            bids: self.bidStore.items
+        }).items;
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
             callback: function (options) {
                 self.profile = self.profileStore.currentProfile;
-                self.weddings = self.weddingStore.items;
-                self.bids = self.bidStore.items;
+                self.weddings = self.weddingCollection.createInstance({
+                    data: self.weddingStore.weddingsByProfile,
+                    bids: self.bidStore.items
+                }).items;
                 $scope.$digest();
             }
         });
@@ -34,29 +36,11 @@
     }
 
     CustomerMyProfileComponent.canActivate = function () {
-        return ["$q", "bidActions", "dispatcher", function ($q, bidActions, dispatcher) {
-            var deferred = $q.defer();
-            var actionIds = [];
-
-            actionIds.push(bidActions.getAllByCurrentProfile());
-
-            var listenerId = dispatcher.addListener({
-                actionType: "CHANGE",
-                callback: function (options) {
-                    for (var i = 0; i < actionIds.length; i++) {
-                        if (actionIds[i] === options.id) {
-                            actionIds.splice(i, 1);
-                        }
-                    }
-
-                    if (actionIds.length === 0) {
-                        dispatcher.removeListener({ id: listenerId });
-                        deferred.resolve();
-                    }
-
-                }
-            });
-            return deferred.promise;
+        return ["$q", "bidActions", "weddingActions", function ($q, bidActions, weddingActions) {
+            return $q.all([
+                bidActions.getAllByCurrentProfileAsync(),
+                weddingActions.getByCurrentProfile()
+            ]);
         }];
     }
 
@@ -69,6 +53,7 @@
             "dispatcher",
             "moment",
             "profileStore",
+            "weddingCollection",
             "weddingStore"
         ],
         template: [
@@ -77,7 +62,7 @@
 
             "<div> ",
             "<h1>Weddings</h1>",
-            "   <div data-ng-repeat='wedding in vm.profile.weddings'> ",
+            "   <div data-ng-repeat='wedding in vm.weddings'> ",
             "       <h3>Number of Guests:  {{ ::wedding.numberOfGuests }}</h3>",
             "       <h3>Hours:  {{ ::wedding.numberOfHours }}</h3>",
             "       <h3>Location:  {{ ::wedding.location }}</h3>",            

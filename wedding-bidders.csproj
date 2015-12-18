@@ -227,6 +227,7 @@
     <Content Include="index.html" />
     <Content Include="reset.css" />
     <Content Include="site.css" />
+    <Content Include="src\app\actions\action-async.js" />
     <Content Include="src\app\actions\action-constants.js" />
     <Content Include="src\app\actions\bid-actions.js" />
     <Content Include="src\app\actions\bidder-actions.js" />
@@ -283,6 +284,7 @@
     <Content Include="src\app\domain\domain-constants.js" />
     <Content Include="src\app\domain\wedding.js" />
     <Content Include="src\app\domain\bid.js" />
+    <Content Include="src\app\domain\weddingCollection.js" />
     <Content Include="src\app\metal\convertCamelCaseToTitleCase.js" />
     <Content Include="src\app\metal\dispatcher.js" />
     <Content Include="src\app\metal\fetch.js" />
