@@ -40,14 +40,15 @@ namespace WeddingBidders.Server.Services
                     Id = customer.Id
                 };
 
-                foreach(var wedding in customer.Weddings)
+                foreach(var wedding in customer.Weddings.OrderBy(x=>x.Date))
                 {
                     var weddingDto = new WeddingDto()
                     {
                         Id = wedding.Id,
                         NumberOfGuests = wedding.NumberOfGuests,
                         NumberOfHours = wedding.NumberOfHours,
-                        Location = wedding.Location
+                        Location = wedding.Location,
+                        Date = wedding.Date
                     };
 
                     foreach(var bid in uow.Bids.GetAll().Where(x=> x.WeddingId  == wedding.Id))

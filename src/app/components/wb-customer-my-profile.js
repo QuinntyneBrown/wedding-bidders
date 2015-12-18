@@ -2,16 +2,21 @@
 
     "use strict";
 
-    function CustomerMyProfileComponent($scope, bidStore, dispatcher, profileStore, weddingStore) {
+    function CustomerMyProfileComponent($scope, bidStore, dispatcher, moment, profileStore, weddingStore) {
         var self = this;
         self.profileStore = profileStore;
         self.bidStore = bidStore;
         self.weddingStore = weddingStore;
         self.dispatcher = dispatcher;
+        self.moment = moment;
 
         self.profile = self.profileStore.currentProfile;
         self.weddings = self.weddingStore.items;
         self.bids = self.bidStore.items;
+
+        for (var i = 0; i < self.profile.weddings.length; i++) {
+            self.profile.weddings[i].date = self.moment(self.profile.weddings[i].date).format("MMMM Do YYYY");
+        }
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
@@ -62,6 +67,7 @@
             "$scope",
             "bidStore",
             "dispatcher",
+            "moment",
             "profileStore",
             "weddingStore"
         ],
@@ -74,7 +80,8 @@
             "   <div data-ng-repeat='wedding in vm.profile.weddings'> ",
             "       <h3>Number of Guests:  {{ ::wedding.numberOfGuests }}</h3>",
             "       <h3>Hours:  {{ ::wedding.numberOfHours }}</h3>",
-            "       <h3>Location:  {{ ::wedding.location }}</h3>",
+            "       <h3>Location:  {{ ::wedding.location }}</h3>",            
+            "       <h3>Date:  {{ ::wedding.date }}</h3>",
             "       <h3>Bids:  {{ ::wedding.bids.length }}</h3>",
             "       <br/><br/> ",
             "   </div> ",

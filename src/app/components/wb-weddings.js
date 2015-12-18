@@ -7,6 +7,7 @@
         self.appManager = appManager;
         self.weddings = weddingStore.items;
         self.dispatcher = dispatcher;
+        self.moment = moment;
         self.weddingStore = weddingStore;
 
         self.listenerId = self.dispatcher.addListener({
@@ -17,6 +18,10 @@
             }
         });
 
+        for (var i = 0; i < self.weddings.length; i++) {
+            self.weddings[i].date = self.moment(self.weddings[i].date).format("MMMM Do YYYY");
+        }
+
         self.deactivate = function () {
             self.dispatcher.removeListener({ id: self.listenerId });
         }
@@ -26,40 +31,8 @@
 
 
     WeddingsComponent.canActivate = function () {
-        return ["$q", "appManager", "currentProfile", "dispatcher", "weddingActions", function ($q, appManager, currentProfile, dispatcher, weddingActions) {
-            var deferred = $q.defer();
-
-            $q.all([
-                currentProfile.createInstanceAsync(),
-                getAllWeddingsAsync()
-            ]).then(function (resultsArray) {
-                appManager.currentProfile = resultsArray[0];
-                deferred.resolve(true);
-            });
-
-            function getAllWeddingsAsync() {
-                var deferred = $q.defer();
-                var actionIds = [];
-                actionIds.push(weddingActions.getAll());
-                var listenerId = dispatcher.addListener({
-                    actionType: "CHANGE",
-                    callback: function (options) {
-                        for (var i = 0; i < actionIds.length; i++) {
-                            if (actionIds[i] === options.id) {
-                                actionIds.splice(i, 1);
-                            }
-                        }
-
-                        if (actionIds.length === 0) {
-                            dispatcher.removeListener({ id: listenerId });
-                            deferred.resolve();
-                        }
-                    }
-                });
-
-                return deferred.promise;
-            }
-            return deferred.promise;
+        return ["weddingActions", function (weddingActions) {
+            return weddingActions.getAllAsync();
         }];
     };
 
@@ -74,6 +47,7 @@
             "       <h3>Number of Guests:  {{ ::wedding.numberOfGuests }}</h3>",
             "       <h3>Hours:  {{ ::wedding.numberOfHours }}</h3>",
             "       <h3>Location:  {{ ::wedding.location }}</h3>",
+            "       <h3>Date:  {{ ::wedding.date }}</h3>",
             "       <a href='#/bid/create/{{ ::wedding.id }}'>Bid</a>",
             "       <br/><br/> ",
             "   </div> ",

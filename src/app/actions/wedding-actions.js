@@ -3,9 +3,10 @@
     "use strict";
 
 
-    function weddingActions(dispatcher, guid, weddingService, WEDDING_ACTIONS) {
+    function weddingActions($q, dispatcher, guid, weddingService, WEDDING_ACTIONS) {
 
         var self = this;
+        self.$q = $q;
         self.dispatcher = dispatcher;
         self.WEDDING_ACTIONS = WEDDING_ACTIONS;
 
@@ -62,11 +63,26 @@
             return newGuid;
         };
 
+        self.getAllAsync = function () {
+            var deferred = self.$q.defer();
+            var actionId = self.getAll();
+            var listenerId = dispatcher.addListener({
+                actionType: "CHANGE",
+                callback: function (options) {
+                    if (actionId === options.id) {
+                        dispatcher.removeListener({ id: listenerId });
+                        deferred.resolve();
+                    }
+                }
+            })
+            return deferred.promise;
+        }
+
         return self;
     }
 
     angular.module("app")
-        .service("weddingActions", ["dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
+        .service("weddingActions", ["$q","dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
 
 
 })();

@@ -19,10 +19,8 @@
         });
 
         Object.defineProperty(self, "items", {
-            "get": function () {
-                if (!self._storeInstance)
-                    self._storeInstance = self.store.createInstance();                    
-                return self._storeInstance.items;               
+            "get": function () {                    
+                return self.storeInstance.items;               
             }
         });
 

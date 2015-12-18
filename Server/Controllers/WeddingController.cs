@@ -31,14 +31,15 @@ namespace WeddingBidders.Server.Controllers
             var weddings = this.repository.GetAll();
             var dtos = new List<WeddingDto>();
 
-            foreach(var wedding in weddings)
+            foreach(var wedding in weddings.OrderBy(x=>x.Date))
             {
                 dtos.Add(new WeddingDto()
                 {
                     Id = wedding.Id,
                     NumberOfGuests = wedding.NumberOfGuests,
                     NumberOfHours = wedding.NumberOfHours,
-                    Location = wedding.Location
+                    Location = wedding.Location,
+                    Date = wedding.Date
                 });
             }
 
@@ -91,8 +92,10 @@ namespace WeddingBidders.Server.Controllers
                 NumberOfGuests = dto.NumberOfGuests,
                 Location = dto.Location,
                 NumberOfHours = dto.NumberOfHours,
-                CustomerId = customerId
+                CustomerId = customerId,
+                Date  = dto.Date
             };
+
             this.repository.Add(wedding);
             this.uow.SaveChanges();
             dto.Id = wedding.Id;
