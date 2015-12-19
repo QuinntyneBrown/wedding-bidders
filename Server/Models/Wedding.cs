@@ -8,7 +8,7 @@ namespace WeddingBidders.Server.Models
         public Wedding()
         {
             this.Bids = new HashSet<Bid>();
-            this.Categories = new HashSet<string>();
+            this.Categories = new HashSet<Category>();
         }
 
         public int NumberOfGuests { get; set; }
@@ -25,6 +25,6 @@ namespace WeddingBidders.Server.Models
 
         public DateTime Date { get; set; }
 
-        public ICollection<string> Categories { get; set; }
+        public ICollection<Category> Categories { get; set; }
     }
 }

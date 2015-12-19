@@ -9,6 +9,7 @@ namespace WeddingBidders.Server.Dtos
         {
             this.Id = 0;
             this.Bids = new HashSet<BidDto>();
+            this.Categories = new HashSet<CategoryDto>();
         }
 
         public int Id { get; set; }
@@ -21,7 +22,7 @@ namespace WeddingBidders.Server.Dtos
 
         public DateTime Date { get; set; }
 
-        public ICollection<string> Categories { get; set; }
+        public ICollection<CategoryDto> Categories { get; set; }
 
         public ICollection<BidDto> Bids { get; set; }
         

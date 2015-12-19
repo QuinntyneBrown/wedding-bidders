@@ -2,25 +2,28 @@
 
     "use strict";
 
-    function WeddingsComponent($scope, appManager, dispatcher, weddingStore) {
+    function WeddingsComponent($scope, appManager, dispatcher, safeDigest, weddingCollection, weddingStore) {
         var self = this;
         self.appManager = appManager;
-        self.weddings = weddingStore.items;
+        self.weddingCollection = weddingCollection;
         self.dispatcher = dispatcher;
         self.moment = moment;
+        self.safeDigest = safeDigest;
         self.weddingStore = weddingStore;
+
+        self.weddings = self.weddingCollection.createInstance({
+            data: self.weddingStore.weddingsByProfile
+        }).items;
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
             callback: function (options) {
-                self.weddings = self.weddingStore.items;
-                $scope.$digest();
+                self.weddings = self.weddingCollection.createInstance({
+                    data: self.weddingStore.weddingsByProfile
+                }).items;
+                self.safeDigest($scope);
             }
         });
-
-        for (var i = 0; i < self.weddings.length; i++) {
-            self.weddings[i].date = self.moment(self.weddings[i].date).format("MMMM Do YYYY");
-        }
 
         self.deactivate = function () {
             self.dispatcher.removeListener({ id: self.listenerId });
@@ -32,14 +35,14 @@
 
     WeddingsComponent.canActivate = function () {
         return ["weddingActions", function (weddingActions) {
-            return weddingActions.getAllAsync();
+            return weddingActions.getByCurrentProfile();
         }];
     };
 
     ngX.Component({
         component: WeddingsComponent,
         route: "/weddings",
-        providers: ["$scope","appManager", "dispatcher", "weddingStore"],
+        providers: ["$scope", "appManager", "dispatcher", "safeDigest", "weddingCollection", "weddingStore"],
         template: [
             "<div class='weddings viewComponent'>",
             "<h1>Weddings</h1>",

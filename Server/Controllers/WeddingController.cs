@@ -100,10 +100,17 @@ namespace WeddingBidders.Server.Controllers
 
             if (profile.ProfileType == ProfileType.Customer) {
                 var customer = uow.Customers.GetAll().Where(x => x.Email == username).First();
-                weddings = uow.Weddings.GetAll().Where(x => x.CustomerId == customer.Id).ToList();
+                weddings = uow.Weddings.GetAll().Include(x=>x.Categories).Where(x => x.CustomerId == customer.Id).ToList();
             } else {
                 var bidder = uow.Bidders.GetAll().Where(x => x.Email == username).First();
-                weddings = this.repository.GetAll().ToList();
+                foreach(var wedding in this.repository.GetAll().Include(x => x.Categories).ToList())
+                {                    
+                    foreach(var category in wedding.Categories)
+                    {
+                        if(category.Name.ToLower() == bidder.BidderType.ToString().ToLower())
+                            weddings.Add(wedding);                        
+                    }
+                }                
             }
             
             foreach(var wedding in weddings) {
@@ -131,7 +138,8 @@ namespace WeddingBidders.Server.Controllers
                 Location = dto.Location,
                 NumberOfHours = dto.NumberOfHours,
                 CustomerId = customerId,
-                Date  = dto.Date
+                Date  = dto.Date,
+                Categories = dto.Categories.Select(x => new Category() {  Name = x.Name }).ToList()
             };
 
             this.repository.Add(wedding);

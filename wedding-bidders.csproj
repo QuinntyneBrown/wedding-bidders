@@ -290,6 +290,7 @@
     <Content Include="src\app\metal\fetch.js" />
     <Content Include="src\app\metal\jQuery.js" />
     <Content Include="src\app\metal\moment.js" />
+    <Content Include="src\app\metal\safeDigest.js" />
     <Content Include="src\app\services\bidService.js" />
     <Content Include="src\app\services\customerService.js" />
     <Content Include="src\app\services\messageService.js" />
@@ -339,6 +340,7 @@
     <Compile Include="Server\Dtos\BidDto.cs" />
     <Compile Include="Server\Dtos\BidRequestDto.cs" />
     <Compile Include="Server\Dtos\BidResponseDto.cs" />
+    <Compile Include="Server\Dtos\CategoryDto.cs" />
     <Compile Include="Server\Dtos\CatererDto.cs" />
     <Compile Include="Server\Dtos\CatererProfileDto.cs" />
     <Compile Include="Server\Dtos\CatererRegistrationRequestDto.cs" />
@@ -369,6 +371,7 @@
     <Compile Include="Server\Models\BaseEntity.cs" />
     <Compile Include="Server\Models\Bidder.cs" />
     <Compile Include="Server\Models\BidderType.cs" />
+    <Compile Include="Server\Models\Category.cs" />
     <Compile Include="Server\Models\Caterer.cs" />
     <Compile Include="Server\Models\Customer.cs" />
     <Compile Include="Server\Models\EventPlanner.cs" />

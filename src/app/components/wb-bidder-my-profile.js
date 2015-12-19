@@ -5,14 +5,14 @@
     function BidderMyProfileComponent(bidActions, dispatcher, profileStore, weddingStore) {
         var self = this;
         self.profile = profileStore.currentProfile;
-        self.weddings = weddingStore.allWeddings;
+        self.weddings = weddingStore.weddingsByProfile;
         self.dispatcher = dispatcher;
 
         self.listenerId = self.dispatcher.addListener({
             actionType: "CHANGE",
             callback: function (options) {
                 self.profile = profileStore.currentProfile;
-                self.weddings = weddingStore.weddings;
+                self.weddings = weddingStore.weddingsByProfile;
             }
         });
 
@@ -24,41 +24,8 @@
     }
 
     BidderMyProfileComponent.canActivate = function () {
-        return ["$q", "dispatcher","weddingActions", function ($q, dispatcher, weddingActions) {
-
-            var deferred = $q.defer();
-
-            $q.all([
-                getAllWeddingsAsync()
-            ]).then(function (resultsArray) {
-                deferred.resolve(true);
-            });
-
-            function getAllWeddingsAsync() {
-                var deferred = $q.defer();
-                var actionIds = [];
-                actionIds.push(weddingActions.getAll());
-                var listenerId = dispatcher.addListener({
-                    actionType: "CHANGE",
-                    callback: function (options) {
-                        for (var i = 0; i < actionIds.length; i++) {
-                            if (actionIds[i] === options.id) {
-                                actionIds.splice(i, 1);
-                            }
-                        }
-
-                        if (actionIds.length === 0) {
-                            dispatcher.removeListener({ id: listenerId });
-                            deferred.resolve();
-                        }
-
-                    }
-                });
-                return deferred.promise;
-            }
-
-            return deferred.promise;
-
+        return ["$q","weddingActions", function ($q, weddingActions) {
+            return weddingActions.getByCurrentProfileAsync();
         }];
     }
 

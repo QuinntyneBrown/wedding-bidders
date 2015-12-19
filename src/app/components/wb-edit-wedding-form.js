@@ -19,6 +19,19 @@
             self.numberOfGuests = null;
             self.location = null;
             self.numberOfHours = null;
+            
+            self.getCategories = function () {
+                var categories = [];
+
+                self.bidderTypes.forEach(function (bidderType) {
+                    if (bidderType.checked) {
+                        categories.push({
+                            name: bidderType.displayName
+                        });
+                    }
+                });
+                return categories;
+            }
 
             self.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
@@ -40,7 +53,7 @@
                     location: self.location,
                     numberOfHours: self.numberOfHours,
                     date: self.date,
-                    categories: self.categories
+                    categories: self.getCategories()
                 });
             };
 
@@ -94,6 +107,7 @@
             "</div> ",
 
             "<button data-ng-click='vm.add()'>Create</button>",
+
             "</form>"
         ].join(" ")
     });

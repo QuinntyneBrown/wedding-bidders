@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function CustomerMyProfileComponent($scope, bidStore, dispatcher, moment, profileStore, weddingCollection, weddingStore) {
+    function CustomerMyProfileComponent(safeDigest, $scope, bidStore, dispatcher, moment, profileStore, weddingCollection, weddingStore) {
         var self = this;
         self.profileStore = profileStore;
         self.bidStore = bidStore;
@@ -10,6 +10,7 @@
         self.weddingStore = weddingStore;
         self.dispatcher = dispatcher;
         self.moment = moment;
+        self.safeDigest = safeDigest;
 
         self.profile = self.profileStore.currentProfile;
 
@@ -26,7 +27,7 @@
                     data: self.weddingStore.weddingsByProfile,
                     bids: self.bidStore.items
                 }).items;
-                $scope.$digest();
+                self.safeDigest($scope);
             }
         });
 
@@ -48,6 +49,7 @@
         component: CustomerMyProfileComponent,
         route: "/customer/myprofile",
         providers: [
+            "safeDigest",
             "$scope",
             "bidStore",
             "dispatcher",
