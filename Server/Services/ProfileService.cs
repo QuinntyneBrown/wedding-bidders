@@ -23,6 +23,7 @@ namespace WeddingBidders.Server.Services
 
             var user = uow.Users.GetAll()
                 .Include(x => x.Accounts)
+                .Include("Accounts.Profiles")
                 .Single(x => x.Username == username);
 
             var account = user.Accounts.First();
@@ -69,29 +70,16 @@ namespace WeddingBidders.Server.Services
             }
             else
             {
-                var caterers = uow.Caterers.GetAll();
-
-                var caterer = uow.Caterers.GetAll().Single(x => x.Email == username);
-                var dto = new CatererProfileDto()
+                var profile = account.Profiles.First();
+                return new
                 {
-                    Firstname = caterer.Firstname,
-                    Lastname = caterer.Lastname,
-                    Email = caterer.Email,
-                    Id = caterer.Id
+                    Firstname = account.Firstname,
+                    Lastname = account.Lastname,
+                    Email = account.Email,
+                    ProfileType = profile.ProfileType,
+                    Id = profile.Id
                 };
 
-                foreach (var bid in caterer.Bids)
-                {
-                    dto.Bids.Add(new BidDto()
-                    {
-                        Id = bid.Id,
-                        Price = bid.Price,
-                        Description = bid.Description,
-                        WeddingId = bid.WeddingId
-                    });
-                }
-
-                return dto;
             }
         }
 

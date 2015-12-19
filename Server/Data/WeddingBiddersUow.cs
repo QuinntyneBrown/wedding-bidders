@@ -29,6 +29,12 @@ namespace WeddingBidders.Server.Data
 
         public IRepository<Caterer> Caterers { get { return GetStandardRepo<Caterer>(); } }
 
+        public IRepository<EventPlanner> EventPlanners { get { return GetStandardRepo<EventPlanner>(); } }
+
+        public IRepository<MakeUpArtist> MakeUpArtists { get { return GetStandardRepo<MakeUpArtist>(); } }
+
+        public IRepository<Photographer> Photographers { get { return GetStandardRepo<Photographer>(); } }
+
         public IRepository<Photo> Photos { get { return GetStandardRepo<Photo>(); } }
 
         public IRepository<Gallery> Galleries { get { return GetStandardRepo<Gallery>(); } }

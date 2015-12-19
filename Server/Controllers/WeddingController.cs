@@ -107,7 +107,7 @@ namespace WeddingBidders.Server.Controllers
                 {                    
                     foreach(var category in wedding.Categories)
                     {
-                        if(category.Name.ToLower() == bidder.BidderType.ToString().ToLower())
+                        if(category.Name.Replace(" ",string.Empty).ToLower() == bidder.BidderType.ToString().ToLower())
                             weddings.Add(wedding);                        
                     }
                 }                

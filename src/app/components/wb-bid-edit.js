@@ -27,10 +27,8 @@
                 var deferred = $q.defer();
 
                 $q.all([
-                    currentProfile.createInstanceAsync(),
                     getWeddingByIdAsync({ id: Number($route.current.params.weddingId) })
                 ]).then(function (resultsArray) {
-                    appManager.currentProfile = resultsArray[0];
                     deferred.resolve(true);
                 });
 

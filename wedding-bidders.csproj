@@ -319,6 +319,10 @@
     <Compile Include="Server\Auth\OAuthOptions.cs" />
     <Compile Include="Server\Auth\OAuthProvider.cs" />
     <Compile Include="Server\Config\AppConfiguration.cs" />
+    <Compile Include="Server\Config\ConfigurationProvider.cs" />
+    <Compile Include="Server\Config\Contracts\IAppConfiguration.cs" />
+    <Compile Include="Server\Config\Contracts\IConfigurationProvider.cs" />
+    <Compile Include="Server\Config\Contracts\ISmptConfiguration.cs" />
     <Compile Include="Server\Config\SmtpConfiguration.cs" />
     <Compile Include="Server\Controllers\BidController.cs" />
     <Compile Include="Server\Controllers\BidderController.cs" />

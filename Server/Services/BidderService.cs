@@ -50,7 +50,23 @@ namespace WeddingBidders.Server.Services
             Profile profile = Map(dto.Firstname, dto.Lastname,account,dto.BidderType);
 
             account.Profiles.Add(profile);
+            
+            Bidder bidder = CreateBidder(dto, profile, uow);
 
+            uow.SaveChanges();
+
+            var response = new BidderRegistrationResponseDto()
+            {
+                Firstname = bidder.Firstname,
+                Lastname = bidder.Lastname,
+                Id = bidder.Id
+            };
+
+            return response;
+        }
+
+        public Bidder CreateBidder(BidderRegistrationRequestDto dto, Profile profile, IWeddingBiddersUow uow)
+        {
             Bidder bidder = null;
 
             if (dto.BidderType == BidderType.Caterer)
@@ -66,16 +82,46 @@ namespace WeddingBidders.Server.Services
                 uow.Caterers.Add(bidder as Caterer);
             }
 
-            uow.SaveChanges();
-
-            var response = new BidderRegistrationResponseDto()
+            if (dto.BidderType == BidderType.EventPlanner)
             {
-                Firstname = bidder.Firstname,
-                Lastname = bidder.Lastname,
-                Id = bidder.Id
-            };
+                bidder = new EventPlanner()
+                {
+                    Firstname = dto.Firstname,
+                    Lastname = dto.Lastname,
+                    Profile = profile,
+                    Email = dto.Email
+                };
 
-            return response;
+                uow.EventPlanners.Add(bidder as EventPlanner);
+            }
+
+            if (dto.BidderType == BidderType.MakeUpArtist)
+            {
+                bidder = new MakeUpArtist()
+                {
+                    Firstname = dto.Firstname,
+                    Lastname = dto.Lastname,
+                    Profile = profile,
+                    Email = dto.Email
+                };
+
+                uow.MakeUpArtists.Add(bidder as MakeUpArtist);
+            }
+
+            if (dto.BidderType == BidderType.Photographer)
+            {
+                bidder = new Photographer()
+                {
+                    Firstname = dto.Firstname,
+                    Lastname = dto.Lastname,
+                    Profile = profile,
+                    Email = dto.Email
+                };
+
+                uow.Photographers.Add(bidder as Photographer);
+            }
+
+            return bidder;
         }
 
         public Profile Map(string firstname, string lastname, Account account, BidderType bidderType)
@@ -91,6 +137,37 @@ namespace WeddingBidders.Server.Services
                     ProfileType = ProfileType.Caterer
                 };
             }
+
+            if (bidderType == BidderType.Photographer)
+            {
+                profile = new Profile()
+                {
+                    Name = string.Format("{0} {1}", firstname, lastname),
+                    Account = account,
+                    ProfileType = ProfileType.Photographer
+                };
+            }
+
+            if (bidderType == BidderType.MakeUpArtist)
+            {
+                profile = new Profile()
+                {
+                    Name = string.Format("{0} {1}", firstname, lastname),
+                    Account = account,
+                    ProfileType = ProfileType.MakeUpArtist
+                };
+            }
+
+            if (bidderType == BidderType.EventPlanner)
+            {
+                profile = new Profile()
+                {
+                    Name = string.Format("{0} {1}", firstname, lastname),
+                    Account = account,
+                    ProfileType = ProfileType.EventPlanner
+                };
+            }
+
             return profile;
         }
 

@@ -79,32 +79,26 @@
             redirect: ["$q", "$location", "dispatcher", "profileActions", "profileService", "profileStore", "PROFILE_TYPE", function ($q, $location, dispatcher, profileActions, profileService, profileStore, PROFILE_TYPE) {
                 var deferred = $q.defer();
 
-                if (!profileStore.currentProfile) {
-                    var actionId = profileActions.getCurrentProfile();
+                var actionId = profileActions.getCurrentProfile();
 
-                    var listenerId = dispatcher.addListener({
-                        actionType: "CHANGE",
-                        callback: function (options) {
-                            if (actionId === options.id) {
-                                dispatcher.removeListener({ id: listenerId });
-                                deferred.reject();
-                                redirectToProfile();                                
+                var listenerId = dispatcher.addListener({
+                    actionType: "CHANGE",
+                    callback: function (options) {
+                        if (actionId === options.id) {
+                            dispatcher.removeListener({ id: listenerId });
+
+                            if (profileStore.currentProfile.profileType === PROFILE_TYPE.CUSTOMER) {
+                                $location.path("/customer/myprofile");
                             }
+                            else {
+                                $location.path("/bidder/myprofile");
+                            }
+
+                            deferred.reject();
                         }
-                    });
-                }
-                else {
-                    deferred.reject();
-                    redirectToProfile()
-                }
+                    }
+                });
 
-                function redirectToProfile() {
-                    if (profileStore.currentProfile.profileType === PROFILE_TYPE.CUSTOMER)
-                        $location.path("/customer/myprofile");
-
-                    if (profileStore.currentProfile.profileType === PROFILE_TYPE.CATERER)
-                        $location.path("/bidder/myprofile");
-                }
                 return deferred.promise;
             }]
         }

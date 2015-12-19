@@ -1,6 +1,8 @@
 ﻿using Common.Caching;
 using Common.Caching.Contracts;
 using Microsoft.Practices.Unity;
+using WeddingBidders.Server.Config;
+using WeddingBidders.Server.Config.Contracts;
 using WeddingBidders.Server.Data;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Hubs;
@@ -33,6 +35,7 @@ namespace WeddingBidders.Server
             container.RegisterType<IWeddingHub, WeddingHub>();
             container.RegisterType<IEmailService, EmailService>();
             container.RegisterType<IEmailBuilder, EmailBuilder>();
+            container.RegisterType<IConfigurationProvider, ConfigurationProvider>();
             return container;
         }
     }

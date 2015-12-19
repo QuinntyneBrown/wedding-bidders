@@ -7,6 +7,7 @@ using Owin;
 using WeddingBidders.Server.Auth;
 using Microsoft.Practices.Unity;
 using Microsoft.AspNet.SignalR;
+using WeddingBidders.Server.Config.Contracts;
 
 namespace WeddingBidders.Server
 {
@@ -18,9 +19,11 @@ namespace WeddingBidders.Server
 
             WeddingBidders.Server.Services.Contracts.IIdentityService identityService = UnityConfiguration.GetContainer().Resolve<WeddingBidders.Server.Services.Contracts.IIdentityService>();
 
+            WeddingBidders.Server.Config.Contracts.IConfigurationProvider configurationProvider = UnityConfiguration.GetContainer().Resolve<IConfigurationProvider>();
+            
             app.UseOAuthAuthorizationServer(new OAuthOptions(identityService));
 
-            app.UseJwtBearerAuthentication(new WeddingBidders.Server.Auth.JwtOptions());
+            app.UseJwtBearerAuthentication(new WeddingBidders.Server.Auth.JwtOptions(configurationProvider));
 
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 

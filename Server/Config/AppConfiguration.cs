@@ -1,8 +1,9 @@
 ﻿using System.Configuration;
+using WeddingBidders.Server.Config.Contracts;
 
 namespace WeddingBidders.Server.Config
 {
-    public class AppConfiguration : ConfigurationSection
+    public class AppConfiguration : ConfigurationSection, IAppConfiguration
     {
         [ConfigurationProperty("tokenPath", IsRequired = true)]
         public string TokenPath

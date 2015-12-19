@@ -41,8 +41,8 @@
             "<a data-ng-if='!vm.isLoggedIn()' href='#/'>HOME</a>",
             "<a data-ng-if='!vm.isLoggedIn()' href='#/about'>ABOUT</a>",
             "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() == vm.PROFILE_TYPE.CUSTOMER' href='#/wedding/create'>SUBMIT WEDDING</a>",            
-            "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() == vm.PROFILE_TYPE.CATERER' href='#/bids'>BIDS</a>",
-            "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() == vm.PROFILE_TYPE.CATERER' href='#/weddings'>WEDDINGS</a>",
+            "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() !== vm.PROFILE_TYPE.CUSTOMER' href='#/bids'>BIDS</a>",
+            "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() !== vm.PROFILE_TYPE.CUSTOMER' href='#/weddings'>WEDDINGS</a>",
             "</div>"
         ].join(" ")
     });

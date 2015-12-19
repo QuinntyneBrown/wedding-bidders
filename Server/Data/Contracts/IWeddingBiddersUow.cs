@@ -37,6 +37,12 @@ namespace WeddingBidders.Server.Data.Contracts
         
         IRepository<Page> Pages { get; }
 
+        IRepository<MakeUpArtist> MakeUpArtists { get; }
+
+        IRepository<EventPlanner> EventPlanners { get; }
+
+        IRepository<Photographer> Photographers { get; }
+
         void SaveChanges();
     }
 }

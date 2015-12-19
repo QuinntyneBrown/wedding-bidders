@@ -9,7 +9,7 @@ namespace WeddingBidders.Server.Models
     {
         public Photographer()
         {
-
+            this.BidderType = BidderType.Photographer;
         }
 
     }
