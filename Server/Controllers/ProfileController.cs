@@ -1,11 +1,4 @@
-﻿using System.Net.Http;
-using System.Web.Http;
-using System.Data.Entity;
-using System.Linq;
-
-using WeddingBidders.Server.Data.Contracts;
-using WeddingBidders.Server.Models;
-using WeddingBidders.Server.Dtos;
+﻿using System.Web.Http;
 using WeddingBidders.Server.Services.Contracts;
 
 namespace WeddingBidders.Server.Controllers

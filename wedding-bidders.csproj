@@ -236,6 +236,7 @@
     <Content Include="src\app\actions\profileActions.js" />
     <Content Include="src\app\actions\security-actions.js" />
     <Content Include="src\app\actions\wedding-actions.js" />
+    <Content Include="src\app\components\wb-admin.js" />
     <Content Include="src\app\components\wb-date-picker.js" />
     <Content Include="src\app\components\wb-manage-profiles.js" />
     <Content Include="src\app\components\wb-my-messages.js" />

@@ -73,6 +73,11 @@
         "authorizationRequired": true
     });
 
+    $routeProvider.when("/admin", {
+        "componentName": "adminComponent",
+        "authorizationRequired": true
+    });
+
     $routeProvider.when("/myprofile", {
         "authorizationRequired": true,
         resolve: {
@@ -89,6 +94,9 @@
 
                             if (profileStore.currentProfile.profileType === PROFILE_TYPE.CUSTOMER) {
                                 $location.path("/customer/myprofile");
+                            }
+                            else if (profileStore.currentProfile.profileType === PROFILE_TYPE.INTERNAL) {
+                                $location.path("/admin");
                             }
                             else {
                                 $location.path("/bidder/myprofile");

@@ -100,9 +100,7 @@ namespace WeddingBidders.Server.Controllers
                     .Include(x => x.Weddings)
                     .Include("Weddings.Bids")
                     .First();
-
                 
-
                 foreach (var wedding in customer.Weddings)
                 {
                     foreach(var bid in wedding.Bids)

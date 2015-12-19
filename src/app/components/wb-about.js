@@ -7,7 +7,7 @@
 
         },
         template: [
-            "<div class='about'>",
+            "<div class='about viewComponent'>",
             "</div>"
         ].join(" ")
     });
