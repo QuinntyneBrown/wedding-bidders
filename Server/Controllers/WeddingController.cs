@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using WeddingBidders.Server.Hubs.contracts;
 using Microsoft.AspNet.SignalR;
 using WeddingBidders.Server.Hubs;
+using System.Data.Entity;
 
 namespace WeddingBidders.Server.Controllers
 {
@@ -86,9 +87,25 @@ namespace WeddingBidders.Server.Controllers
         [Route("getByCurrentProfile")]
         public IHttpActionResult GetByCurrentProfile()
         {
-            var weddings = this.repository.GetAll();
+            var username = Request.GetRequestContext().Principal.Identity.Name;
+
+            var profile = uow.Accounts.GetAll()
+                .Include(x=>x.Profiles)
+                .Where(x => x.Email.ToLower() == username.ToLower())
+                .First()
+                .Profiles.First();
+
+            var weddings = new List<Wedding>();
             var dtos = new List<WeddingDto>();
 
+            if (profile.ProfileType == ProfileType.Customer) {
+                var customer = uow.Customers.GetAll().Where(x => x.Email == username).First();
+                weddings = uow.Weddings.GetAll().Where(x => x.CustomerId == customer.Id).ToList();
+            } else {
+                var bidder = uow.Bidders.GetAll().Where(x => x.Email == username).First();
+                weddings = this.repository.GetAll().ToList();
+            }
+            
             foreach(var wedding in weddings) {
                 dtos.Add(new WeddingDto()
                 {
