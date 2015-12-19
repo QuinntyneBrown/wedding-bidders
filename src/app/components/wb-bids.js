@@ -2,30 +2,25 @@
 
     "use strict";
 
-    function BidsComponent(appManager) {
+    function BidsComponent(bidStore) {
         var self = this;
 
-        self.bids = appManager.currentProfile.bids;
+        self.bids = bidStore.byProfile;
 
         return self;
     }
 
 
     BidsComponent.canActivate = function () {
-        return ["$q", "appManager", "currentProfile", function ($q, appManager, currentProfile) {
-            var deferred = $q.defer();
-            currentProfile.createInstanceAsync().then(function (results) {
-                appManager.currentProfile = results;
-                deferred.resolve(true);
-            });
-            return deferred.promise;
+        return ["bidActions", function (bidActions) {
+            return bidActions.getAllByCurrentProfileAsync();
         }];
     };
 
     ngX.Component({
         component: BidsComponent,
         route: "/bids",
-        providers: ["appManager"],
+        providers: ["bidStore"],
         template: [
             "<div class='bids viewComponent'>",
             "<h1>Bids</h1>",

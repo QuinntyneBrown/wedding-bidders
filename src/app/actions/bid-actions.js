@@ -31,7 +31,7 @@
             var newGuid = guid();
             bidService.getAllByCurrentProfile().then(function (results) {
                 self.dispatcher.emit({
-                    actionType: self.BID_ACTIONS.GET_ALL_BY_CURRENT_PROFILE, options:
+                    actionType: self.BID_ACTIONS.UPDATE_BY_PROFILE, options:
                         { data: results, id: newGuid }
                 });
             });

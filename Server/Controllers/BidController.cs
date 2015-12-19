@@ -27,10 +27,9 @@ namespace WeddingBidders.Server.Controllers
         public IHttpActionResult TryToAddBid(BidRequestDto dto)
         {
             var username = Request.GetRequestContext().Principal.Identity.Name;
-            var caterer = this.uow.Caterers.GetAll().Where(x => x.Email == username).Single();
-
+            var bidder = this.uow.Bidders.GetAll().Where(x => x.Email.ToLower() == username.ToLower()).Single();
             var bid = new Bid() {
-                BidderId = caterer.Id,
+                BidderId = bidder.Id,
                 Description = dto.Description,
                 WeddingId = dto.WeddingId,
                 Price = dto.Price
@@ -88,11 +87,13 @@ namespace WeddingBidders.Server.Controllers
             var username = Request.GetRequestContext().Principal.Identity.Name;
             var profile = uow.Accounts
                 .GetAll()
-                .Include(x=>x.Profiles)
+                .Include(x => x.Profiles)
                 .Where(x => x.Email == username)
                 .First()
                 .Profiles.First();
-            if(profile.ProfileType == ProfileType.Customer)
+            var dtos = new List<BidDto>();
+
+            if (profile.ProfileType == ProfileType.Customer)
             {
                 var customer = uow.Customers.GetAll()
                     .Where(x => x.ProfileId == profile.Id)
@@ -100,7 +101,7 @@ namespace WeddingBidders.Server.Controllers
                     .Include("Weddings.Bids")
                     .First();
 
-                var dtos = new List<BidDto>();
+                
 
                 foreach (var wedding in customer.Weddings)
                 {
@@ -114,12 +115,25 @@ namespace WeddingBidders.Server.Controllers
                             WeddingId = bid.WeddingId
                         });
                     }
+                }               
+            } else
+            {
+                var bidder = uow.Bidders.GetAll().Where(x => x.Email.ToLower() == username.ToLower()).First();
+                var bids = uow.Bids.GetAll().Where(x => x.BidderId == bidder.Id);
+                foreach (var bid in bids)
+                {
+                    dtos.Add(new BidDto()
+                    {
+                        Id = bid.Id,
+                        Price = bid.Price,
+                        Description = bid.Description,
+                        WeddingId = bid.WeddingId
+                    });
                 }
 
-                return Ok(dtos);
             }
            
-            return Ok();
+            return Ok(dtos);
         }
 
 

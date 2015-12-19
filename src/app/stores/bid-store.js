@@ -36,6 +36,14 @@
             }
         });
 
+        self.dispatcher.addListener({
+            actionType: BID_ACTIONS.UPDATE_BY_PROFILE,
+            callback: function (options) {
+                self.byProfile = options.data;
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
         self.getById = function (id) {
             return self.storeInstance.getById(id);
         }

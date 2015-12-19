@@ -27,7 +27,8 @@ angular.module("app").value("CUSTOMER_ACTIONS", {
 
 angular.module("app").value("BID_ACTIONS", {
     ADD_BID: "ADD_BID",
-    GET_ALL_BY_PROFILE_ID: "GET_ALL_BY_CURRENT_PROFILE"
+    GET_ALL_BY_PROFILE_ID: "GET_ALL_BY_CURRENT_PROFILE",
+    UPDATE_BY_PROFILE: "UPDATE_BIDS_BY_PROFILE"
 });
 
 angular.module("app").value("PROFILE_ACTIONS", {
