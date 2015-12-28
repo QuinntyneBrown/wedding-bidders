@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function HomeComponent() {
+    function HomeComponent($scope) {
         var self = this;
 
         self.photos = [
@@ -17,11 +17,8 @@
     ngX.Component({
         component: HomeComponent,
         route: "/",
-        providers: [],
-        template: [
-            "<div class='home'>",            
-            "</div>"
-        ].join(" ")
+        templateUrl:"/src/app/components/wb-home.html",
+        providers: ["$scope"]
     });
 
 })();

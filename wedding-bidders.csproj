@@ -197,7 +197,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\images\carousel_1.jpg" />
+    <Content Include="assets\images\carousel_2.jpg" />
+    <Content Include="assets\images\carousel_3.jpg" />
+    <Content Include="assets\images\carousel_button_next.png" />
+    <Content Include="assets\images\carousel_button_prev.png" />
     <Content Include="assets\images\icon_search_sm.png" />
+    <Content Include="assets\images\rotator_button_next.png" />
+    <Content Include="assets\images\rotator_button_prev.png" />
     <Content Include="dist\app.js" />
     <Content Include="gulpfile.config.js" />
     <Content Include="gulpfile.js" />
@@ -236,8 +243,18 @@
     <Content Include="src\app\actions\profileActions.js" />
     <Content Include="src\app\actions\security-actions.js" />
     <Content Include="src\app\actions\wedding-actions.js" />
+    <Content Include="src\app\components\slide.html">
+      <DependentUpon>wb-home.html</DependentUpon>
+    </Content>
     <Content Include="src\app\components\wb-admin.js" />
     <Content Include="src\app\components\wb-date-picker.js" />
+    <Content Include="src\app\components\wb-home-slide.js">
+      <DependentUpon>wb-home.html</DependentUpon>
+    </Content>
+    <Content Include="src\app\components\wb-home.html" />
+    <Content Include="src\app\components\wb-home.js">
+      <DependentUpon>wb-home.html</DependentUpon>
+    </Content>
     <Content Include="src\app\components\wb-manage-profiles.js" />
     <Content Include="src\app\components\wb-my-messages.js" />
     <Content Include="src\app\components\wb-my-billing.js" />
@@ -266,7 +283,6 @@
     <Content Include="src\app\components\wb-footer.js" />
     <Content Include="src\app\components\wb-hamburger-button.js" />
     <Content Include="src\app\components\wb-header.js" />
-    <Content Include="src\app\components\wb-home.js" />
     <Content Include="src\app\components\wb-login-form.js" />
     <Content Include="src\app\components\wb-login.js" />
     <Content Include="src\app\components\wb-my-account.js" />
