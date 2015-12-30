@@ -23,7 +23,7 @@
     "jquery": "^2.1.4",
     "moment": "^2.10.6",
     "ng-x": "^0.3.70",
-    "ng-x-components": "0.0.8"
+    "ng-x-components": "0.0.9"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
