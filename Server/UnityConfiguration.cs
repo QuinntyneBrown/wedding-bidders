@@ -17,6 +17,7 @@ namespace WeddingBidders.Server
         public static IUnityContainer GetContainer(bool useMock = false)
         {
             var container = new UnityContainer();
+            container.RegisterType<IAccountService, AccountService>();
             container.RegisterType<IWeddingBiddersUow, WeddingBiddersUow>();
             container.RegisterType<IWeddingBiddersContext, WeddingBiddersContext>();
             container.RegisterType<IBidderService, BidderService>();

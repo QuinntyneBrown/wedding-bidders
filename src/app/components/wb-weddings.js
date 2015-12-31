@@ -2,9 +2,8 @@
 
     "use strict";
 
-    function WeddingsComponent($scope, appManager, dispatcher, safeDigest, weddingCollection, weddingStore) {
+    function WeddingsComponent($scope, dispatcher, safeDigest, weddingCollection, weddingStore) {
         var self = this;
-        self.appManager = appManager;
         self.weddingCollection = weddingCollection;
         self.dispatcher = dispatcher;
         self.moment = moment;
@@ -42,7 +41,7 @@
     ngX.Component({
         component: WeddingsComponent,
         route: "/weddings",
-        providers: ["$scope", "appManager", "dispatcher", "safeDigest", "weddingCollection", "weddingStore"],
+        providers: ["$scope", "dispatcher", "safeDigest", "weddingCollection", "weddingStore"],
         template: [
             "<div class='weddings viewComponent'>",
             "   <h1>Weddings</h1>",

@@ -24,6 +24,7 @@ namespace WeddingBidders.Server.Models
 
         public BidderType BidderType { get; set; }
 
-        public bool IsApproved { get; set; }
+        public bool IsApproved { get; set; }        
+
     }
 }

@@ -137,6 +137,10 @@
       <HintPath>..\packages\Sendgrid.6.3.0\lib\SendGridMail.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Stripe.net, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stripe.net.5.1.2\lib\Stripe.net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
@@ -224,6 +228,7 @@
     <Content Include="package.json" />
     <Content Include="commonConfiguration.config" />
     <Content Include="connectionStrings.config" />
+    <Content Include="StripeConfiguration.config" />
     <None Include="Properties\PublishProfiles\weddingbidders - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\weddingbidders - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
@@ -237,13 +242,14 @@
     <Content Include="index.html" />
     <Content Include="reset.css" />
     <Content Include="site.css" />
+    <Content Include="src\app\actions\account-actions.js" />
     <Content Include="src\app\actions\action-async.js" />
     <Content Include="src\app\actions\action-constants.js" />
     <Content Include="src\app\actions\bid-actions.js" />
     <Content Include="src\app\actions\bidder-actions.js" />
     <Content Include="src\app\actions\customer-actions.js" />
     <Content Include="src\app\actions\message-actions.js" />
-    <Content Include="src\app\actions\profileActions.js" />
+    <Content Include="src\app\actions\profile-actions.js" />
     <Content Include="src\app\actions\security-actions.js" />
     <Content Include="src\app\actions\wedding-actions.js" />
     <Content Include="src\app\components\slide.html">
@@ -309,6 +315,7 @@
     <Content Include="src\app\metal\jQuery.js" />
     <Content Include="src\app\metal\moment.js" />
     <Content Include="src\app\metal\safeDigest.js" />
+    <Content Include="src\app\services\accountService.js" />
     <Content Include="src\app\services\bidService.js" />
     <Content Include="src\app\services\customerService.js" />
     <Content Include="src\app\services\messageService.js" />
@@ -316,6 +323,7 @@
     <Content Include="src\app\services\securityService.js" />
     <Content Include="src\app\services\bidderService.js" />
     <Content Include="src\app\services\weddingService.js" />
+    <Content Include="src\app\stores\account-store.js" />
     <Content Include="src\app\stores\bid-store.js" />
     <Content Include="src\app\stores\bidder-store.js" />
     <Content Include="src\app\stores\customer-store.js" />
@@ -343,7 +351,10 @@
     <Compile Include="Server\Config\Contracts\IAppConfiguration.cs" />
     <Compile Include="Server\Config\Contracts\IConfigurationProvider.cs" />
     <Compile Include="Server\Config\Contracts\ISmptConfiguration.cs" />
+    <Compile Include="Server\Config\Contracts\IStripeConfiguration.cs" />
     <Compile Include="Server\Config\SmtpConfiguration.cs" />
+    <Compile Include="Server\Config\StripeConfiguration.cs" />
+    <Compile Include="Server\Controllers\AccountController.cs" />
     <Compile Include="Server\Controllers\BidController.cs" />
     <Compile Include="Server\Controllers\BidderController.cs" />
     <Compile Include="Server\Controllers\CustomerController.cs" />
@@ -391,6 +402,7 @@
     <Compile Include="Server\Hubs\MessageHub.cs" />
     <Compile Include="Server\Hubs\WeddingHub.cs" />
     <Compile Include="Server\Models\Account.cs" />
+    <Compile Include="Server\Models\AccountStatus.cs" />
     <Compile Include="Server\Models\AccountType.cs" />
     <Compile Include="Server\Models\BaseEntity.cs" />
     <Compile Include="Server\Models\Bidder.cs" />
@@ -418,10 +430,12 @@
     <Compile Include="Server\Models\User.cs" />
     <Compile Include="Server\Models\Wedding.cs" />
     <Compile Include="Server\Models\Bid.cs" />
+    <Compile Include="Server\Services\AccountService.cs" />
     <Compile Include="Server\Services\BaseService.cs" />
     <Compile Include="Server\Services\BidderService.cs" />
     <Compile Include="Server\Services\BidService.cs" />
     <Compile Include="Server\Services\CatererService.cs" />
+    <Compile Include="Server\Services\Contracts\IAccountService.cs" />
     <Compile Include="Server\Services\Contracts\IBidderService.cs" />
     <Compile Include="Server\Services\Contracts\IBidService.cs" />
     <Compile Include="Server\Services\Contracts\ICatererService.cs" />

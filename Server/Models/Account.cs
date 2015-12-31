@@ -27,5 +27,7 @@ namespace WeddingBidders.Server.Models
         
         public User User { get; set; }
 
+        public AccountStatus AccountStatus { get; set; }
+
     }
 }

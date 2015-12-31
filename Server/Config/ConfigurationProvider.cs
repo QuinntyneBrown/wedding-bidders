@@ -13,6 +13,9 @@ namespace WeddingBidders.Server.Config
             if (typeof(T) == typeof(ISmptConfiguration))
                 return SmtpConfiguration.Config as T;
 
+            if (typeof(T) == typeof(IStripeConfiguration))
+                return StripeConfiguration.Config as T;
+
             throw new InvalidOperationException();
         }
     }

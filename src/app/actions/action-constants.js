@@ -10,6 +10,11 @@ angular.module("app").value("MESSAGE_ACTIONS", {
     UPDATE_ALL_CURRENT_PROFILE_MESSAGES: "UPDATE_ALL_CURRENT_PROFILE_MESSAGES"
 });
 
+angular.module("app").value("ACCOUNT_ACTIONS", {
+    UPDATE_CURRENT_ACCOUNT: "UPDATE_CURRENT_ACCOUNT",
+});
+
+
 angular.module("app").value("SECURITY_ACTIONS", {
     LOGIN: "LOGIN",
 });

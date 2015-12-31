@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function EditBidComponent($location, $routeParams, appManager, dispatcher, weddingStore) {
+    function EditBidComponent($location, $routeParams, dispatcher, weddingStore) {
         var self = this;
         self.weddingStore = weddingStore;
         self.$location = $location;
@@ -23,7 +23,7 @@
 
     EditBidComponent.canActivate = function () {
         return [
-            "$q", "$route", "appManager", "currentProfile", "dispatcher", "weddingActions", function ($q, $route, appManager, currentProfile, dispatcher, weddingActions) {
+            "$q", "$route", "currentProfile", "dispatcher", "weddingActions", function ($q, $route, currentProfile, dispatcher, weddingActions) {
 
                 var deferred = $q.defer();
 
@@ -64,7 +64,7 @@
     ngX.Component({
         component: EditBidComponent,
         routes: ["/bid/create/:weddingId"],
-        providers: ["$location", "$routeParams", "appManager","dispatcher","weddingStore"],
+        providers: ["$location", "$routeParams","dispatcher","weddingStore"],
         styles: [" .editWeddingComponent { padding-left:15px; } "],
         template: [
             "<div class='editWeddingComponent viewComponent'>",
