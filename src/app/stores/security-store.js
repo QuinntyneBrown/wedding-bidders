@@ -24,7 +24,6 @@
         return self;
     }
 
-    angular.module("app")
-        .service("securityStore", ["dispatcher", "localStorageManager", "SECURITY_ACTIONS","store", securityStore])
-        .run(["securityStore", function (securityStore) { }]);
+    ngX.Store({ store: securityStore, providers: ["dispatcher", "localStorageManager", "SECURITY_ACTIONS", "store"] });
+
 })();

@@ -57,8 +57,6 @@
         return self;
     }
 
-    angular.module("app").service("bidStore", ["$","dispatcher", "BID_ACTIONS", "store", bidStore])
-    .run(["bidStore", function (bidStore) {
+    ngX.Store({ store: bidStore, providers: ["$", "dispatcher", "BID_ACTIONS", "store"] });
 
-    }]);
 })();

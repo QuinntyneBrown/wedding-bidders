@@ -25,7 +25,6 @@
 
         return self;
     }
+    ngX.Store({ store: customerStore, providers: ["dispatcher", "guid", "CUSTOMER_ACTIONS", "store"] });
 
-    angular.module("app").service("customerStore", ["dispatcher", "guid", "CUSTOMER_ACTIONS", "store", customerStore])
-    .run(["customerStore", function (customerStore) { }]);
 })();

@@ -57,6 +57,6 @@
         return self;
     }
 
-    angular.module("app").service("bidderStore", ["dispatcher", "guid", "BIDDER_ACTIONS", "store", bidderStore])
-    .run(["bidderStore", function (bidderStore) { }]);
+    ngX.Store({ store: bidderStore, providers: ["dispatcher", "guid", "BIDDER_ACTIONS", "store"] });
+
 })();

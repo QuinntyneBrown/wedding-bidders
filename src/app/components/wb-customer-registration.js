@@ -39,7 +39,7 @@
         providers:["$location","dispatcher","securityActions"],
         template: [
             "<div class='customerRegistration viewComponent'>",
-            "<customer-registration-form></customer-registration-form>",
+            "   <customer-registration-form></customer-registration-form>",
             "</div>"
         ]
     });

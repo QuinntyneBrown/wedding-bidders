@@ -45,8 +45,6 @@
         return self;
     }
 
-    angular.module("app").service("messageStore", ["$","dispatcher", "MESSAGE_ACTIONS", "store", messageStore])
-    .run(["messageStore", function (messageStore) {
+    ngX.Store({ store: messageStore, providers: ["$", "dispatcher", "MESSAGE_ACTIONS", "store"] });
 
-    }]);
 })();

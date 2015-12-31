@@ -28,6 +28,6 @@
         return self;
     }
 
-    angular.module("app").service("profileStore", ["dispatcher", "guid", "PROFILE_ACTIONS", "store", profileStore])
-    .run(["profileStore", function (profileStore) { }]);
+    ngX.Store({ store: profileStore, providers: ["dispatcher", "guid", "PROFILE_ACTIONS", "store"] });
+
 })();

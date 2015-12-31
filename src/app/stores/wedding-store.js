@@ -62,7 +62,6 @@
         return self;
     }
 
-    angular.module("app").service("weddingStore", ["$","dispatcher","WEDDING_ACTIONS", "store", weddingStore])
-    .run(["weddingStore", function (weddingStore) { }]);
+    ngX.Store({ store: weddingStore, providers: ["$", "dispatcher", "WEDDING_ACTIONS", "store"] });
 
 })();
