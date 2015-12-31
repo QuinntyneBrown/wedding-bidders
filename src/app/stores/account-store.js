@@ -8,9 +8,9 @@
         self.store = store;
         self.storeInstance = self.store.createInstance();
         self.dispatcher = dispatcher;
-        self.currentProfile = null;
+        self.currentAccount = null;
         self.dispatcher.addListener({
-            actionType: PROFILE_ACTIONS.UPDATE_CURRENT_ACCOUNT,
+            actionType: ACCOUNT_ACTIONS.UPDATE_CURRENT_ACCOUNT,
             callback: function (options) {
                 self.currentAccount = options.data;
                 self.emitChange({ id: options.id });
