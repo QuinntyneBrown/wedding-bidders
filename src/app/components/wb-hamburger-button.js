@@ -16,12 +16,9 @@
             self.securityStore = securityStore;
             self.setOpacityAsync = setOpacityAsync;
 
-
             self.isOpen = false;
 
-            self.onInit = function () {
-
-            }
+            self.onInit = function () { }
 
             self.onClick = function () {
                 if (self.isOpen) {
@@ -190,7 +187,6 @@
             return self;
         },
         styles: [
-
             " .wbHamburgerButton { ",
             "     width:20px; ",
             "     height:24px; ",
@@ -236,9 +232,7 @@
             "     padding-top: 20px; ",
             "     margin-right: 70px; ",
             " } "
-
-
-        ].join(" \n "),
+        ],
         providers: ["$compile","$location","$q", "$scope", "appendToBodyAsync", "extendCssAsync", "removeElement", "securityStore", "setOpacityAsync"],
         template: [
             "<div class='wbHamburgerButton' data-ng-click='vm.onClick()'>",
@@ -246,8 +240,6 @@
             "<div></div>",
             "<div></div>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
-
 })();

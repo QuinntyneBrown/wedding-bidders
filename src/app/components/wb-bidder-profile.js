@@ -53,11 +53,11 @@
         component: BidderProfileComponent,
         route: "/bidder/profile/:name",
         providers: [
-            "bidderStore"],
+            "bidderStore"
+        ],
         template: [
             "<div class='bidderProfile viewComponent'>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
 })();

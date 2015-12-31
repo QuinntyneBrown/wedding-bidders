@@ -5,8 +5,6 @@
     function MyBillingComponent() {
         var self = this;
 
-
-
         return self;
     }
 
@@ -17,7 +15,6 @@
         template: [
             "<div class='myBilling'>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
 })();

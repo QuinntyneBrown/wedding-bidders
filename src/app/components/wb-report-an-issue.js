@@ -28,7 +28,6 @@
             actionType: "CHANGE",
             callback: function (options) {
                 if (self.actionId === options.id) {
-                    alert("Issue Reported!");
                     self.$location.path("/myprofile");
                 }
             }
@@ -37,7 +36,6 @@
         self.deactivate = function () {
             self.dispatcher.removeListener({ id: self.listenerId });
         }
-
         return self;
     }
 
@@ -51,7 +49,6 @@
             "   <text-area-form-control placeholder='vm.contentPlaceholder' model='vm.content' ></text-area-form-control>",
             "   <button data-ng-click='vm.tryToReport()'>Report</button>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
 })();

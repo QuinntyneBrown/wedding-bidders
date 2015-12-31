@@ -2,18 +2,11 @@
 
     "use strict";
 
-    function AdminComponent() {
-        var self = this;
-
-        return self;
-    }
-
     ngX.Component({
-        component: AdminComponent,
+        component: function AdminComponent() { },
         template: [
             "<div class='admin viewComponent'>",
             "</div>"
         ].join(" ")
-    });
-    
+    });    
 })();

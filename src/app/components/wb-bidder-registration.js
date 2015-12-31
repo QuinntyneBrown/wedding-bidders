@@ -56,8 +56,6 @@
             "<div class='bidderRegistrationComponent viewComponent'> ",
             "   <bidder-registration-form></bidder-registration-form> ",
             "</div> "
-        ].join(" ")
+        ]
     });
-
-
 })();

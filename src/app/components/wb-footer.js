@@ -4,17 +4,13 @@
 
     ngX.Component({
         selector: "wb-footer",
-        component: function FooterComponent() {
-
-        },
+        component: function FooterComponent() { },
         styles:[
             " .wbFooter { height: 300px; background-color: #222; } "
-        ].join(" /n "),
+        ],
         template: [
             "<div class='wbFooter'>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
-
 })();

@@ -3,14 +3,10 @@
     "use strict";
 
     ngX.Component({
-        component: function AboutComponent() {
-
-        },
+        component: function AboutComponent() { },
         template: [
             "<div class='about viewComponent'>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
-
 })();

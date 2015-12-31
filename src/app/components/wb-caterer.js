@@ -3,11 +3,8 @@
     "use strict";
 
     function CatererComponent($routeParams, dispatcher, catererStore) {
-
         var self = this;
-
         self.caterer = catererStore.getById(Number($routeParams.id));
-
         return self;
     }
 
@@ -47,8 +44,6 @@
             "<div class='caterer viewComponent'>",
             "<h1>{{ vm.caterer.firstname }}  {{ vm.caterer.lastname }}</h1><br/><br/>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
-
 })();

@@ -45,7 +45,7 @@
         providers: ["$scope", "appManager", "dispatcher", "safeDigest", "weddingCollection", "weddingStore"],
         template: [
             "<div class='weddings viewComponent'>",
-            "<h1>Weddings</h1>",
+            "   <h1>Weddings</h1>",
             "   <div data-ng-repeat='wedding in vm.weddings'> ",
             "       <h3>Number of Guests:  {{ ::wedding.numberOfGuests }}</h3>",
             "       <h3>Hours:  {{ ::wedding.numberOfHours }}</h3>",
@@ -55,7 +55,6 @@
             "       <br/><br/> ",
             "   </div> ",
             "</div>"
-        ].join(" ")
+        ]
     });
-
 })();

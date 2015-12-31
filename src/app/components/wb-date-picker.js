@@ -63,7 +63,7 @@
             "   padding-left: 7px ",
             "   text-align: left; ",
             " } ",
-        ].join(" \n "),
+        ],
         inputs: ["model"],
         template: [
             "<div class='datePicker'>",
@@ -83,7 +83,7 @@
             "       </select>",
             "   </div>",
             "</div>"
-        ].join(" ")
+        ]
     });
 
 

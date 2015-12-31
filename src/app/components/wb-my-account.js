@@ -5,8 +5,6 @@
     function MyAccountComponent() {
         var self = this;
 
-
-
         return self;
     }
 
@@ -17,7 +15,6 @@
         template: [
             "<div class='myAccount'>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
 })();

@@ -7,13 +7,8 @@
         component: function TextAreaFormControlComponent($attrs) {
             var self = this;
             self.$attrs = $attrs;
-
-            self.onInit = function () {
-                
-            }
-
+            self.onInit = function () { }
             self.rows = self.$attrs["rows"] || 4;
-
             return self;
         },
         styles: [
@@ -28,15 +23,13 @@
             " } ",
 
             " .formControl { margin-bottom: 15px; } ",
-        ].join(" \n "),
+        ],
         inputs: ["placeholder", "model"],
         providers: ["$attrs"],
         template: [
             "<div class='formControl'>",
-            "<textarea class='textareaField' rows='{{ ::vm.rows }}' placeholder='{{ ::vm.placeholder}}' data-ng-model='vm.model'></input>",
+            "   <textarea class='textareaField' rows='{{ ::vm.rows }}' placeholder='{{ ::vm.placeholder}}' data-ng-model='vm.model'></input>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
-
 })();

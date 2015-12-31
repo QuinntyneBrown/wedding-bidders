@@ -47,7 +47,7 @@
         template: [
             "<div class='myMessages'>",
             "</div>"
-        ].join(" ")
+        ]
     });
 
 })();

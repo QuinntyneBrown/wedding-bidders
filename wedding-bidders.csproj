@@ -261,7 +261,6 @@
     <Content Include="src\app\components\wb-manage-profiles.js" />
     <Content Include="src\app\components\wb-my-messages.js" />
     <Content Include="src\app\components\wb-my-billing.js" />
-    <Content Include="src\app\components\wb-app-manager.js" />
     <Content Include="src\app\app.module.js" />
     <Content Include="src\app\components\wb-about.js" />
     <Content Include="src\app\components\wb-app.js" />
@@ -281,7 +280,6 @@
     <Content Include="src\app\components\wb-customer-weddings.js" />
     <Content Include="src\app\components\wb-edit-wedding-form.js" />
     <Content Include="src\app\components\wb-caterer.js" />
-    <Content Include="src\app\components\wb-customer.js" />
     <Content Include="src\app\components\wb-edit-wedding.js" />
     <Content Include="src\app\components\wb-footer.js" />
     <Content Include="src\app\components\wb-hamburger-button.js" />
@@ -291,7 +289,6 @@
     <Content Include="src\app\components\wb-my-account.js" />
     <Content Include="src\app\components\wb-navigation.js" />
     <Content Include="src\app\components\wb-promotion.js" />
-    <Content Include="src\app\components\wb-registration.js" />
     <Content Include="src\app\components\wb-report-an-issue.js" />
     <Content Include="src\app\components\wb-text-area-control.js" />
     <Content Include="src\app\components\wb-text-form-control.js" />

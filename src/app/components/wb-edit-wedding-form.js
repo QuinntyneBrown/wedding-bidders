@@ -79,7 +79,7 @@
             " .formControl { margin-bottom: 15px; } ",
 
             " .editWeddingForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; } "
-        ].join(" \n "),
+        ],
         inputs:["model"],
         template: [
             "<form class='editWeddingForm' name='editWeddingForm'>",
@@ -109,8 +109,6 @@
             "<button data-ng-click='vm.add()'>Create</button>",
 
             "</form>"
-        ].join(" ")
+        ]
     });
-
-
 })();

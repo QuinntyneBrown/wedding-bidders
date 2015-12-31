@@ -71,7 +71,7 @@
             " } ",
             " .bidderRegistrationForm-categories span { margin-bottom:7px; display:block; } ",
             " .bidderRegistrationForm { padding-bottom: 30px; } "
-        ].join( " \n "),
+        ],
         providers: [
             "bidderActions",
             "bidderStore",
@@ -95,7 +95,6 @@
 
             "   <button data-ng-click='vm.tryToRegister()'>Register</button>",
             "</form>"
-        ].join(" ")
+        ]
     });
-
 })();

@@ -36,12 +36,12 @@
             "bidActions",
             "dispatcher",
             "profileStore",
-            "weddingStore"],
+            "weddingStore"
+        ],
         template: [
             "<div class='bidderMyProfile viewComponent'>",
             "<h1>{{ vm.profile.firstname }}  {{ vm.profile.lastname }}</h1><br/><br/>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
 })();

@@ -8,11 +8,7 @@
             var self = this;
             self.bidActions = bidActions;
             self.dispatcher = dispatcher;
-
-            self.onInit = function () {
-
-            }
-
+            self.onInit = function () { }
             self.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
                 callback: function (options) {
@@ -59,7 +55,6 @@
             "   <text-area-form-control placeholder='vm.descriptionPlaceholder' model='vm.description' ></text-area-form-control>",
             "   <button data-ng-click='vm.tryToAdd()'>Add</button>",
             "</form>"
-        ].join(" ")
+        ]
     });
-
 })();

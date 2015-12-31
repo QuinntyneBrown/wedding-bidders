@@ -17,6 +17,7 @@
         self.onDestroy = function () {
             self.dispatcher.removeListener({ id: self.listenerId });
         };
+
         return self;
     }
 
@@ -64,12 +65,12 @@
         component: EditBidComponent,
         routes: ["/bid/create/:weddingId"],
         providers: ["$location", "$routeParams", "appManager","dispatcher","weddingStore"],
-        styles: [" .editWeddingComponent { padding-left:15px; } "].join(" /n "),
+        styles: [" .editWeddingComponent { padding-left:15px; } "],
         template: [
             "<div class='editWeddingComponent viewComponent'>",
-            "<bid-form wedding-id='vm.wedding.id'></bid-form>",
+            "   <bid-form wedding-id='vm.wedding.id'></bid-form>",
             "</div>"
-        ].join(" ")
+        ]
     });
 
 })();

@@ -56,7 +56,6 @@
             "   <text-form-control placeholder='vm.passwordPlaceholder' model='vm.password' ></text-form-control>",
             "   <button data-ng-click='vm.tryToLogin()'>Login</button>",
             "</form>"
-        ].join(" ")
+        ]
     });
-
 })();
