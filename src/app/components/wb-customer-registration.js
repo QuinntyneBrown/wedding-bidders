@@ -4,7 +4,6 @@
 
     ngX.Component({
         component: function CustomerRegistrationComponent($location, dispatcher, securityActions) {
-
             var self = this;
             self.$location = $location;
             self.dispatcher = dispatcher;
@@ -36,16 +35,12 @@
                     self.dispatcher.removeListener({ id: self.listenerIds[i] });
                 }
             }
-
-
         },
         providers:["$location","dispatcher","securityActions"],
         template: [
             "<div class='customerRegistration viewComponent'>",
             "<customer-registration-form></customer-registration-form>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
-
 })();

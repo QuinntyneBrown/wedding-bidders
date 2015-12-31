@@ -54,7 +54,7 @@
         template: [
             "<div class='customerWeddings viewComponent'>",
             "</div>"
-        ].join(" ")
+        ]
     });
 
 })();

@@ -4,11 +4,7 @@
 
     function HomeSlideComponent($scope) {
         var self = this;
-
-        self.onResize = function () {
-
-        }
-
+        self.onResize = function () { }
         return self;
     }
 
@@ -16,9 +12,8 @@
         selector:"home-slide",
         component: HomeSlideComponent,
         inputs: ["photo"],
-        styles:[" .homeSlide"].join(" \n "),
+        styles:[" .homeSlide"],
         providers:["$scope"],
-        template: ["<img src='{{ vm.photo.imageUrl }}' height='450' width='675'></img>"].join(" ")
+        template: ["<img src='{{ vm.photo.imageUrl }}' height='450' width='675'></img>"]
     });
-
 })();

@@ -60,7 +60,7 @@
             "  ",
             "  }",
             " .customerRegistrationForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; } "
-        ].join(" \n "),
+        ],
         template: [
             "<form class='customerRegistrationForm' name='customerRegistrationForm'>",
             "   <text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
@@ -70,7 +70,6 @@
             "   <text-form-control placeholder='vm.passwordPlaceholder' model='vm.password'></text-form-control>",
             "   <button data-ng-click='vm.tryToRegister()'>Register</button>",
             "</form>"
-        ].join(" ")
+        ]
     });
-
 })();

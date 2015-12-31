@@ -44,7 +44,7 @@
             "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() !== vm.PROFILE_TYPE.CUSTOMER' href='#/bids'>BIDS</a>",
             "<a data-ng-if='vm.isLoggedIn() && vm.getProfileType() !== vm.PROFILE_TYPE.CUSTOMER' href='#/weddings'>WEDDINGS</a>",
             "</div>"
-        ].join(" ")
+        ]
     });
 
 

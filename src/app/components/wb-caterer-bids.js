@@ -15,7 +15,6 @@
         template: [
             "<div class='catererBids'>",
             "</div>"
-        ].join(" ")
+        ]
     });
-
 })();

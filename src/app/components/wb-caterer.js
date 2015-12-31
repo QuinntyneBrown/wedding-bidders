@@ -42,7 +42,7 @@
         providers: ["$routeParams", "dispatcher", "catererStore"],
         template: [
             "<div class='caterer viewComponent'>",
-            "<h1>{{ vm.caterer.firstname }}  {{ vm.caterer.lastname }}</h1><br/><br/>",
+            "   <h1>{{ vm.caterer.firstname }}  {{ vm.caterer.lastname }}</h1><br/><br/>",
             "</div>"
         ]
     });

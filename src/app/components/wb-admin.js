@@ -7,6 +7,6 @@
         template: [
             "<div class='admin viewComponent'>",
             "</div>"
-        ].join(" ")
+        ]
     });    
 })();
