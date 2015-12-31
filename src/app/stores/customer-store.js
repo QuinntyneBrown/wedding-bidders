@@ -11,7 +11,7 @@
         self.dispatcher.addListener({
             actionType: CUSTOMER_ACTIONS.ADD_CUSTOMER,
             callback: function (options) {
-                self.storeInstance.addItem(options.data);
+                self.storeInstance.addOrUpdate(options.data);
                 self.storeInstance.currentCustomer = options.data;
                 self.storeInstance.emitChange({ id: options.id });
             }

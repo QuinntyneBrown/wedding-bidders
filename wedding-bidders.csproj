@@ -205,6 +205,7 @@
     <Content Include="assets\images\carousel_button_next.png" />
     <Content Include="assets\images\carousel_button_prev.png" />
     <Content Include="assets\images\icon_search_sm.png" />
+    <Content Include="assets\images\name.jpg" />
     <Content Include="assets\images\rotator_button_next.png" />
     <Content Include="assets\images\rotator_button_prev.png" />
     <Content Include="dist\app.js" />
@@ -326,7 +327,9 @@
     <Content Include="src\app\stores\security-store.js" />
     <Content Include="src\app\metal\store.js" />
     <Content Include="src\app\stores\wedding-store.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Migrations\Configuration.cs" />

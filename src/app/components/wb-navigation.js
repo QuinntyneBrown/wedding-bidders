@@ -26,7 +26,7 @@
         styles: [
             " .wbNavigation { height: 100px; text-align: center; } ",
 
-            " .wbNavigation a { text-decoration: none; color: #000; padding-right:7px; padding-left:7px; font-weight:300; } ",
+            " .wbNavigation a { text-decoration: none; color: #000; padding-right:7px; padding-left:7px; font-weight:300; line-height:28px; } ",
 
             " .wbNavigation a { transition: all 0.3s; } ",
 

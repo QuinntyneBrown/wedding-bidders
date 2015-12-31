@@ -123,6 +123,8 @@
 
 }]).run([function () {
     FastClick.attach(document.body);
+}]).run(["carouselConfig", function (carouselConfig) {
+    carouselConfig.default.startIndex = 175;
 }]).config([
     "routeResolverServiceProvider", function (routeResolverServiceProvider) {
         routeResolverServiceProvider.configure({
