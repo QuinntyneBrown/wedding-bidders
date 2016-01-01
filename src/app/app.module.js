@@ -8,6 +8,10 @@
         "componentName": "paymentComponent"
     });
 
+    $routeProvider.when("/personalize", {
+        "componentName": "personalizeComponent"
+    });
+
     $routeProvider.when("/promotion", {
         "componentName": "promotionComponent"
     });
@@ -120,7 +124,7 @@
 }]);
 
 ngX.ConfigureRoutePromise({
-    promise: function ($q, accountActions, accountStore, ACCOUNT_STATUS, invokeAsync, $location, profileActions, securityStore) {
+    promise: function ($q, accountActions, accountStore, ACCOUNT_STATUS, invokeAsync, $location, profileActions, profileStore, securityStore) {
         if (securityStore.token) {
             $q.all([
                 invokeAsync(accountActions.getCurrentAccount),
@@ -130,9 +134,13 @@ ngX.ConfigureRoutePromise({
                     $location.path("/payment");
                     return $q.reject();
                 }
-                else {
-                    return $q.when(true);
+
+                if (!profileStore.currentProfile.isPersonalized) {
+                    $location.path("/personalize");
+                    return $q.reject();
                 }
+
+                return $q.when(true);
             });
         } else {
             return $q.when(true);

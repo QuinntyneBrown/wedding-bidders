@@ -17,6 +17,14 @@
             }
         });
 
+        self.dispatcher.addListener({
+            actionType: PROFILE_ACTIONS.UPDATE_IS_PERSONALIZED_FLAG,
+            callback: function (options) {
+                self.currentProfile.isPersonalized = true;
+                self.emitChange({ id: options.id });
+            }
+        });
+
         self.emitChange = function (options) {
             self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
         }

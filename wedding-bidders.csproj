@@ -230,7 +230,7 @@
     <Content Include="connectionStrings.config" />
     <Content Include="src\app\actions\subscription-actions.js" />
     <Content Include="src\app\components\wb-payment.js" />
-    <Content Include="src\app\components\wb-personalization.js" />
+    <Content Include="src\app\components\wb-personalize.js" />
     <Content Include="src\app\services\subscriptionService.js" />
     <Content Include="StripeConfiguration.config" />
     <None Include="Properties\PublishProfiles\weddingbidders - FTP.pubxml" />

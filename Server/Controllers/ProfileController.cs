@@ -18,6 +18,13 @@ namespace WeddingBidders.Server.Controllers
             return Ok(service.GetCurrentProfile(Request));
         }
 
+        [HttpPost]
+        public IHttpActionResult UpdateIsPersonalizedFlag()
+        {
+            service.UpdateIsPersonalizedFlag(Request);
+            return Ok();
+        }
+
         protected readonly IProfileService service;
     }
 }

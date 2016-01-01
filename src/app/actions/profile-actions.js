@@ -25,6 +25,19 @@
             return newGuid;
         };
 
+        self.updateIsPersonalizedFlag = function () {
+            var newGuid = guid();
+            profileService.updateIsPersonalizedFlag().then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.PROFILE_ACTIONS.UPDATE_IS_PERSONALIZED_FLAG,
+                    options: {
+                        id: newGuid
+                    }
+                });
+            });
+            return newGuid;
+        }
+
         return self;
     }
 

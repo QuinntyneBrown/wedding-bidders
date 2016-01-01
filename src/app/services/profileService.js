@@ -13,6 +13,14 @@
             return deferred.promise;
         };
 
+        self.updateIsPersonalizedFlag = function (options) {
+            var deferred = self.$q.defer();
+            fetch.fromService({ method: "POST", url: self.baseUri + "/updateIsPersonalizedFlag" }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        };
+
         self.baseUri = apiEndpoint.getBaseUrl() + "/profile";
 
         return self;
