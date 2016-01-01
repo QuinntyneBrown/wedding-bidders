@@ -17,6 +17,7 @@ angular.module("app").value("ACCOUNT_ACTIONS", {
 
 angular.module("app").value("SECURITY_ACTIONS", {
     LOGIN: "LOGIN",
+    LOGIN_FAIL: "LOGIN_FAIL"
 });
 
 angular.module("app").value("BIDDER_ACTIONS", {

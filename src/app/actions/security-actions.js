@@ -15,15 +15,30 @@
                     password:options.password
                 }
             }).then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.SECURITY_ACTIONS.LOGIN, options: {
-                        token: results.access_token,
-                        id: newGuid
-                    }
-                });                
+                if (results.access_token) {
+                    self.dispatcher.emit({
+                        actionType: self.SECURITY_ACTIONS.LOGIN, options: {
+                            token: results.access_token,
+                            id: newGuid
+                        }
+                    });
+                } else {
+                    self.dispatcher.emit({
+                        actionType: self.SECURITY_ACTIONS.LOGIN_FAIL, options: {
+                            id: newGuid
+                        }
+                    });
+                }
+                
             });
             return newGuid;
         };
+
+        self.loginSuccess = function () {
+            self.dispatcher.emit({
+                actionType: "LOGIN_SUCCESS"
+            });
+        }
         return self;
     }
 

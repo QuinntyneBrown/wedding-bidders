@@ -229,6 +229,7 @@
     <Content Include="commonConfiguration.config" />
     <Content Include="connectionStrings.config" />
     <Content Include="src\app\components\wb-payment.js" />
+    <Content Include="src\app\components\wb-personalization.js" />
     <Content Include="StripeConfiguration.config" />
     <None Include="Properties\PublishProfiles\weddingbidders - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\weddingbidders - Web Deploy.pubxml" />

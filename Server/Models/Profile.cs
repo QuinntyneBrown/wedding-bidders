@@ -17,5 +17,9 @@ namespace WeddingBidders.Server.Models
         public Account Account { get; set; }
 
         public ProfileType ProfileType { get; set; }
+
+        public bool IsPersonalized { get; set; }
+
+        public bool IsApproved { get; set; }
     }
 }

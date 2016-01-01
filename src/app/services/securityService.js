@@ -12,6 +12,8 @@
             var headers = { "Content-Type": "application/x-www-form-urlencoded" };
             fetch.fromService({ method: "POST", url: self.baseUri + "/token", data: formEncodedData, headers: headers }).then(function (results) {
                 deferred.resolve(results.data);
+            }).catch(function (error) {
+                deferred.resolve(error);
             });
             return deferred.promise;            
         };

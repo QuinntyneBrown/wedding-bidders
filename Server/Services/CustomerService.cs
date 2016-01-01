@@ -42,7 +42,9 @@ namespace WeddingBidders.Server.Services
             {
                 Name = string.Format("{0} {1}",dto.Firstname, dto.Lastname),
                 Account = account,
-                ProfileType = ProfileType.Customer
+                ProfileType = ProfileType.Customer,
+                IsPersonalized = true,
+                IsApproved = true,                
             };
 
             var customer = new Customer()

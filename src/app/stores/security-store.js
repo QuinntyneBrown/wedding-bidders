@@ -16,6 +16,13 @@
             }
         });
 
+        self.dispatcher.addListener({
+            actionType: SECURITY_ACTIONS.LOGIN_FAIL,
+            callback: function (options) {
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
         Object.defineProperty(self, "token", {
             get: function () { return self.localStorageManager.get({ name: "token" }); },
             set: function (value) { self.localStorageManager.put({ name: "token", value: value }); }

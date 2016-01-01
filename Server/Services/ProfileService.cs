@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Data.Entity;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Services.Contracts;
+using WeddingBidders.Server.Dtos;
 
 namespace WeddingBidders.Server.Services
 {
@@ -18,23 +19,13 @@ namespace WeddingBidders.Server.Services
         public dynamic GetCurrentProfile(HttpRequestMessage request)
         {
             var username = request.GetRequestContext().Principal.Identity.Name;
-
             var user = uow.Users.GetAll()
                 .Include(x => x.Accounts)
                 .Include("Accounts.Profiles")
                 .Single(x => x.Username == username);
-
             var account = user.Accounts.First();
             var profile = account.Profiles.First();
-            return new
-            {
-                Firstname = account.Firstname,
-                Lastname = account.Lastname,
-                Email = account.Email,
-                ProfileType = profile.ProfileType,
-                Id = profile.Id
-            };
+            return new ProfileDto(profile);
         }
-
     }
 }
