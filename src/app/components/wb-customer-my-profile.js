@@ -40,7 +40,7 @@
         return ["$q", "invokeAsync", "bidActions", "weddingActions", function ($q, invokeAsync, bidActions, weddingActions) {
             return $q.all([
                 invokeAsync(bidActions.getAllByCurrentProfile),
-                invokeAsync(weddingActions.getByCurrentProfile)
+                invokeAsync(weddingActions.getAllByCurrentProfile)
             ]);
         }];
     }

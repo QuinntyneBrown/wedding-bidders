@@ -140,10 +140,10 @@ ngX.ConfigureRoutePromise({
                     return $q.reject();
                 }
 
-                return $q.when(true);
+                return $q.resolve();
             });
         } else {
-            return $q.when(true);
+            return $q.resolve();
         }
     },
     priority:-999

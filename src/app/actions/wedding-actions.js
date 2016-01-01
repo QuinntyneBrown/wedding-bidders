@@ -63,24 +63,9 @@
             return newGuid;
         };
 
-        self.getAllAsync = function () {
-            var deferred = self.$q.defer();
-            var actionId = self.getAll();
-            var listenerId = dispatcher.addListener({
-                actionType: "CHANGE",
-                callback: function (options) {
-                    if (actionId === options.id) {
-                        dispatcher.removeListener({ id: listenerId });
-                        deferred.resolve();
-                    }
-                }
-            })
-            return deferred.promise;
-        }
-
-        self.getByCurrentProfile = function () {
+        self.getAllByCurrentProfile = function () {
             var newGuid = guid();
-            weddingService.getByCurrentProfile().then(function (results) {
+            weddingService.getAllByCurrentProfile().then(function (results) {
                 self.dispatcher.emit({
                     actionType: self.WEDDING_ACTIONS.UPDATE_BY_PROFILE,
                     options: {
@@ -91,21 +76,6 @@
             });
 
             return newGuid;
-        }
-
-        self.getByCurrentProfileAsync = function () {
-            var deferred = self.$q.defer();
-            var actionId = self.getByCurrentProfile();
-            var listenerId = dispatcher.addListener({
-                actionType: "CHANGE",
-                callback: function (options) {
-                    if (actionId === options.id) {
-                        dispatcher.removeListener({ id: listenerId });
-                        deferred.resolve();
-                    }
-                }
-            })
-            return deferred.promise;
         }
 
         return self;

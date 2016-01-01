@@ -24,8 +24,11 @@
     }
 
     BidderMyProfileComponent.canActivate = function () {
-        return ["$q","weddingActions", function ($q, weddingActions) {
-            return weddingActions.getByCurrentProfileAsync();
+        return ["$q", "bidActions", "invokeAsync", "weddingActions", function ($q, bidActions, invokeAsync, weddingActions) {
+            return $q.all([
+                invokeAsync(bidActions.getAllByCurrentProfile),
+                invokeAsync(weddingActions.getAllByCurrentProfile)
+            ]);
         }];
     }
 

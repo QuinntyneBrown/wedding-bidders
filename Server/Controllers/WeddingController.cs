@@ -84,8 +84,8 @@ namespace WeddingBidders.Server.Controllers
         }
 
         [HttpGet]
-        [Route("getByCurrentProfile")]
-        public IHttpActionResult GetByCurrentProfile()
+        [Route("getAllByCurrentProfile")]
+        public IHttpActionResult GetAllByCurrentProfile()
         {
             var username = Request.GetRequestContext().Principal.Identity.Name;
 

@@ -20,32 +20,12 @@
         return self;
     }
 
-    BidderProfileComponent.prototype.canActivate = function () {
-        return ["$q", "$routeParams", "dispatcher", "bidderActions", "bidderStore", function ($q, $routeParams, dispatcher, bidderActions, bidderStore) {
-
-            var deferred = $q.defer();
-            var actionIds = [];
-            var name = $routeParams.name;
-
-            actionIds.push(bidderActions.getByName({ name: name }));
-
-            var listenerId = dispatcher.addListener({
-                actionType: "CHANGE",
-                callback: function (options) {
-                    for (var i = 0; i < actionIds.length; i++) {
-                        if (actionIds[i] === options.id) {
-                            actionIds.splice(i, 1);
-                        }
-                    }
-
-                    if (actionIds.length === 0) {
-                        dispatcher.removeListener({ id: listenerId });
-                        deferred.resolve();
-                    }
-
-                }
+    BidderProfileComponent.canActivate = function () {
+        return ["$routeParams", "bidderActions", "invokeAsync", function ($routeParams, bidderActions, invokeAsync) {
+            return invokeAsync({
+                action: bidderActions.getByName,
+                params: { name: $routeParams.name }
             });
-            return deferred.promise;
         }];
     }
 

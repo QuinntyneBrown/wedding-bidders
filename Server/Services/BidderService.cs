@@ -80,6 +80,12 @@ namespace WeddingBidders.Server.Services
                     Email = dto.Email
                 };
 
+                var gallery = new Gallery() { Name = "Profile" };
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_1.jpg" });
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_2.jpg" });
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_3.jpg" });
+                bidder.Galleries.Add(gallery);
+
                 uow.Caterers.Add(bidder as Caterer);
             }
 
@@ -92,6 +98,12 @@ namespace WeddingBidders.Server.Services
                     Profile = profile,
                     Email = dto.Email
                 };
+
+                var gallery = new Gallery() { Name = "Profile" };
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_1.jpg" });
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_2.jpg" });
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_3.jpg" });
+                bidder.Galleries.Add(gallery);
 
                 uow.EventPlanners.Add(bidder as EventPlanner);
             }
@@ -106,6 +118,12 @@ namespace WeddingBidders.Server.Services
                     Email = dto.Email
                 };
 
+                var gallery = new Gallery() { Name = "Profile" };
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_1.jpg" });
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_2.jpg" });
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_3.jpg" });
+                bidder.Galleries.Add(gallery);
+
                 uow.MakeUpArtists.Add(bidder as MakeUpArtist);
             }
 
@@ -118,6 +136,12 @@ namespace WeddingBidders.Server.Services
                     Profile = profile,
                     Email = dto.Email
                 };
+
+                var gallery = new Gallery() { Name = "Profile" };
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_1.jpg" });
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_2.jpg" });
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_3.jpg" });
+                bidder.Galleries.Add(gallery);
 
                 uow.Photographers.Add(bidder as Photographer);
             }

@@ -33,8 +33,8 @@
 
 
     WeddingsComponent.canActivate = function () {
-        return ["weddingActions", function (weddingActions) {
-            return weddingActions.getByCurrentProfile();
+        return ["invokeAsync", "weddingActions", function (invokeAsync, weddingActions) {
+            return invokeAsync(weddingActions.getAllByCurrentProfile);
         }];
     };
 
