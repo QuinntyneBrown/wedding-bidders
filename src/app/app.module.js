@@ -85,33 +85,21 @@
     $routeProvider.when("/myprofile", {
         "authorizationRequired": true,
         resolve: {
-            redirect: ["$q", "$location", "dispatcher", "profileActions", "profileService", "profileStore", "PROFILE_TYPE", function ($q, $location, dispatcher, profileActions, profileService, profileStore, PROFILE_TYPE) {
-                var deferred = $q.defer();
-
-                var actionId = profileActions.getCurrentProfile();
-
-                var listenerId = dispatcher.addListener({
-                    actionType: "CHANGE",
-                    callback: function (options) {
-                        if (actionId === options.id) {
-                            dispatcher.removeListener({ id: listenerId });
-
-                            if (profileStore.currentProfile.profileType === PROFILE_TYPE.CUSTOMER) {
-                                $location.path("/customer/myprofile");
-                            }
-                            else if (profileStore.currentProfile.profileType === PROFILE_TYPE.INTERNAL) {
-                                $location.path("/admin");
-                            }
-                            else {
-                                $location.path("/bidder/myprofile");
-                            }
-
-                            deferred.reject();
-                        }
-                    }
+            redirect: ["$q", "$location", "invokeAsync", "profileActions", "profileStore", "PROFILE_TYPE",
+                function ($q, $location, invokeAsync, profileActions, profileStore, PROFILE_TYPE) {
+                invokeAsync(profileActions.getCurrentProfile).then(function () {
+                    if (profileStore.currentProfile.profileType === PROFILE_TYPE.CUSTOMER)
+                        $location.path("/customer/myprofile");
+                    
+                    if(profileStore.currentProfile.profileType === PROFILE_TYPE.INTERNAL)
+                        $location.path("/admin");
+                    
+                    if (profileStore.currentProfile.profileType !== PROFILE_TYPE.INTERNAL
+                        && profileStore.currentProfile.profileType !== PROFILE_TYPE.CUSTOMER)
+                        $location.path("/bidder/myprofile");
+                    
+                    return $q.reject();
                 });
-
-                return deferred.promise;
             }]
         }
     });
@@ -140,9 +128,7 @@ ngX.ConfigureRoutePromise({
             ]).then(function () {
                 if (accountStore.currentAccount.accountStatus === ACCOUNT_STATUS.UNPAID) {
                     $location.path("/payment");
-                    var deferred = $q.defer();
-                    deferred.reject();
-                    return deferred.promise;
+                    return $q.reject();
                 }
                 else {
                     return $q.when(true);
