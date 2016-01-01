@@ -243,7 +243,6 @@
     <Content Include="reset.css" />
     <Content Include="site.css" />
     <Content Include="src\app\actions\account-actions.js" />
-    <Content Include="src\app\actions\invoke-async.js" />
     <Content Include="src\app\actions\action-constants.js" />
     <Content Include="src\app\actions\bid-actions.js" />
     <Content Include="src\app\actions\bidder-actions.js" />
