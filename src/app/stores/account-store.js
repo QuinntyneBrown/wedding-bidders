@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function accountStore(dispatcher, guid, ACCOUNT_ACTIONS, store) {
+    function accountStore(dispatcher, guid, ACCOUNT_ACTIONS, ACCOUNT_STATUS, store, SUBSCRIPTION_ACTIONS) {
 
         var self = this;
         self.store = store;
@@ -17,6 +17,15 @@
             }
         });
 
+        self.dispatcher.addListener({
+            actionType: SUBSCRIPTION_ACTIONS.CHARGE_SUCCESS,
+            callback: function (options) {
+                self.currentAccount.accountStatus = ACCOUNT_STATUS.PAID;
+                self.emitChange({ id: options.id });
+            }
+        });
+
+
         self.emitChange = function (options) {
             self.dispatcher.emit({ actionType: "CHANGE", options: { id: options.id } });
         }
@@ -28,6 +37,6 @@
         return self;
     }
 
-    ngX.Store({ store: accountStore, providers: ["dispatcher", "guid", "ACCOUNT_ACTIONS", "store"] });
+    ngX.Store({ store: accountStore, providers: ["dispatcher", "guid", "ACCOUNT_ACTIONS", "ACCOUNT_STATUS", "store", "SUBSCRIPTION_ACTIONS"] });
 
 })();

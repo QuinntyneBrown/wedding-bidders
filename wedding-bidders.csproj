@@ -228,8 +228,10 @@
     <Content Include="package.json" />
     <Content Include="commonConfiguration.config" />
     <Content Include="connectionStrings.config" />
+    <Content Include="src\app\actions\subscription-actions.js" />
     <Content Include="src\app\components\wb-payment.js" />
     <Content Include="src\app\components\wb-personalization.js" />
+    <Content Include="src\app\services\subscriptionService.js" />
     <Content Include="StripeConfiguration.config" />
     <None Include="Properties\PublishProfiles\weddingbidders - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\weddingbidders - Web Deploy.pubxml" />
@@ -364,6 +366,7 @@
     <Compile Include="Server\Controllers\MessageController.cs" />
     <Compile Include="Server\Controllers\ProfileController.cs" />
     <Compile Include="Server\Controllers\ProfileTypeController.cs" />
+    <Compile Include="Server\Controllers\SubscriptionController.cs" />
     <Compile Include="Server\Controllers\WeddingController.cs" />
     <Compile Include="Server\Data\Contracts\IWeddingBiddersContext.cs" />
     <Compile Include="Server\Data\Contracts\IWeddingBiddersUow.cs" />
@@ -393,6 +396,7 @@
     <Compile Include="Server\Dtos\RegistrationRequestDto.cs" />
     <Compile Include="Server\Dtos\RoleDto.cs" />
     <Compile Include="Server\Dtos\SignInDto.cs" />
+    <Compile Include="Server\Dtos\SubscriptionChargeDto.cs" />
     <Compile Include="Server\Dtos\TokenDto.cs" />
     <Compile Include="Server\Dtos\UserDto.cs" />
     <Compile Include="Server\Dtos\WeddingDto.cs" />
@@ -450,6 +454,7 @@
     <Compile Include="Server\Services\Contracts\IProfileService.cs" />
     <Compile Include="Server\Services\Contracts\ISecurityService.cs" />
     <Compile Include="Server\Services\Contracts\ISessionService.cs" />
+    <Compile Include="Server\Services\Contracts\ISubscriptionService.cs" />
     <Compile Include="Server\Services\Contracts\IWeddingService.cs" />
     <Compile Include="Server\Services\CustomerService.cs" />
     <Compile Include="Server\Services\EmailBuilder.cs" />
@@ -461,6 +466,7 @@
     <Compile Include="Server\Services\ProfileService.cs" />
     <Compile Include="Server\Services\SecurityService.cs" />
     <Compile Include="Server\Services\SessionService.cs" />
+    <Compile Include="Server\Services\SubscriptionService.cs" />
     <Compile Include="Server\Services\WeddingService.cs" />
     <Compile Include="Server\SignalRContractResolver.cs" />
     <Compile Include="Server\UnityConfiguration.cs" />

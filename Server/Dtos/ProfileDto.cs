@@ -18,6 +18,7 @@ namespace WeddingBidders.Server.Dtos
             this.Status = profile.Account.AccountStatus;
             this.IsApproved = profile.IsApproved;
             this.IsPersonalized = profile.IsPersonalized;
+            this.ProfileType = profile.ProfileType;
         }
 
         public int? Id { get; set; }
@@ -33,5 +34,7 @@ namespace WeddingBidders.Server.Dtos
         public bool IsApproved { get; set; }
 
         public AccountStatus Status { get; set; }
+
+        public ProfileType ProfileType { get; set; }
     }
 }

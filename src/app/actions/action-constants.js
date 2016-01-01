@@ -40,3 +40,9 @@ angular.module("app").value("BID_ACTIONS", {
 angular.module("app").value("PROFILE_ACTIONS", {
     UPDATE_CURRENT_PROFILE: "UPDATE_CURRENT_PROFILE"
 });
+
+angular.module("app").value("SUBSCRIPTION_ACTIONS", {
+    CHARGE: "CHARGE",
+    CHARGE_SUCCESS: "CHARGE_SUCCESS",
+    CHARGE_FAILED: "CHARGE_FAILED"
+});
