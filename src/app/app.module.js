@@ -132,12 +132,22 @@
 }]);
 
 ngX.ConfigureRoutePromise({
-    promise: function ($q, accountActions, invokeAsync, profileActions, securityStore) {
+    promise: function ($q, accountActions, accountStore, ACCOUNT_STATUS, invokeAsync, $location, profileActions, securityStore) {
         if (securityStore.token) {
-            return $q.all([
+            $q.all([
                 invokeAsync(accountActions.getCurrentAccount),
                 invokeAsync(profileActions.getCurrentProfile)
-            ]);
+            ]).then(function () {
+                if (accountStore.currentAccount.accountStatus === ACCOUNT_STATUS.UNPAID) {
+                    $location.path("/payment");
+                    var deferred = $q.defer();
+                    deferred.reject();
+                    return deferred.promise;
+                }
+                else {
+                    return $q.when(true);
+                }
+            });
         } else {
             return $q.when(true);
         }

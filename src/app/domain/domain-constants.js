@@ -15,5 +15,5 @@ angular.module("app").value("MESSAGE_TYPE", {
 angular.module("app").value("ACCOUNT_STATUS", {
     FREE: 0,
     PAID: 1,
-    UPDAID: 2
+    UNPAID: 2
 });
