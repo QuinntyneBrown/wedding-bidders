@@ -37,10 +37,10 @@
     }
 
     CustomerMyProfileComponent.canActivate = function () {
-        return ["$q", "bidActions", "weddingActions", function ($q, bidActions, weddingActions) {
+        return ["$q", "actionAsync", "bidActions", "weddingActions", function ($q, actionAsync, bidActions, weddingActions) {
             return $q.all([
-                bidActions.getAllByCurrentProfileAsync(),
-                weddingActions.getByCurrentProfile()
+                actionAsync.invoke(bidActions.getAllByCurrentProfile),
+                actionAsync.invoke(weddingActions.getByCurrentProfile)
             ]);
         }];
     }

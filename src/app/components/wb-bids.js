@@ -9,8 +9,8 @@
     }
 
     BidsComponent.canActivate = function () {
-        return ["bidActions", function (bidActions) {
-            return bidActions.getAllByCurrentProfileAsync();
+        return ["actionAsync", "bidActions", function (actionAsync, bidActions) {
+            return actionAsync.invoke(bidActions.getAllByCurrentProfile);
         }];
     };  
 

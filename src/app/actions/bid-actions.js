@@ -38,21 +38,6 @@
             return newGuid;
         }
 
-        self.getAllByCurrentProfileAsync = function () {
-            var deferred = self.$q.defer();
-            var actionId = self.getAllByCurrentProfile();
-            var listenerId = dispatcher.addListener({
-                actionType: "CHANGE",
-                callback: function (options) {
-                    if (actionId === options.id) {
-                        dispatcher.removeListener({ id: listenerId });
-                        deferred.resolve();
-                    }
-                }
-            })
-            return deferred.promise;
-        }
-
         return self;
     }
 
