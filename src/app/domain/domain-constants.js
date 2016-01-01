@@ -11,3 +11,9 @@ angular.module("app").value("MESSAGE_TYPE", {
     NORMAL: 0,
     ISSUE: 1
 });
+
+angular.module("app").value("ACCOUNT_STATUS", {
+    FREE: 0,
+    PAID: 1,
+    UPDAID: 2
+});

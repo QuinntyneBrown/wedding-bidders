@@ -34,7 +34,8 @@ namespace WeddingBidders.Server.Services
                 Lastname = dto.Lastname,
                 Email = dto.Email,
                 AccountType = AccountType.Customer,
-                User = user
+                User = user,
+                AccountStatus = AccountStatus.Free
             };
 
             var profile = new Profile()

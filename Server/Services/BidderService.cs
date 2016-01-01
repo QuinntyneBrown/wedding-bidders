@@ -42,7 +42,8 @@ namespace WeddingBidders.Server.Services
                 Lastname = dto.Lastname,
                 Email = dto.Email,
                 AccountType = AccountType.Bidder,
-                User = user
+                User = user,
+                AccountStatus = AccountStatus.Unpaid
             };
 
             user.Accounts.Add(account);
