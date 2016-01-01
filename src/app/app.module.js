@@ -128,11 +128,11 @@
 }]);
 
 ngX.ConfigureRoutePromise({
-    promise: function ($q, accountActions, profileActions, securityStore) {        
+    promise: function ($q, accountActions, actionAsync, profileActions, securityStore) {
         if (securityStore.token) {
             return $q.all([
-                accountActions.getCurrentAccountAsync(),
-                profileActions.getCurrentProfileAsync()
+                actionAsync.invoke(accountActions.getCurrentAccount),
+                actionAsync.invoke(profileActions.getCurrentProfile)
             ]);
         } else {
             return $q.when(true);

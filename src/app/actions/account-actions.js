@@ -19,22 +19,6 @@
             });
             return newGuid;
         }
-
-        self.getCurrentAccountAsync = function () {
-            var deferred = self.$q.defer();
-            var actionId = self.getCurrentAccount();
-            var listenerId = dispatcher.addListener({
-                actionType: "CHANGE",
-                callback: function (options) {
-                    if (actionId === options.id) {
-                        dispatcher.removeListener({ id: listenerId });
-                        deferred.resolve();
-                    }
-                }
-            })
-            return deferred.promise;
-        }
-
         return self;
     }
 
