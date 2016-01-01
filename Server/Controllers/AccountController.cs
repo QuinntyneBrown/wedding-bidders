@@ -7,7 +7,7 @@ namespace WeddingBidders.Server.Controllers
     [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
-        public AccountController(IProfileService service)
+        public AccountController(IAccountService service)
         {
             this.service = service;
         }
@@ -15,9 +15,9 @@ namespace WeddingBidders.Server.Controllers
         [HttpGet]
         public IHttpActionResult Current()
         {
-            return Ok(service.GetCurrentProfile(Request));
+            return Ok(service.GetCurrentAccount(Request));
         }
 
-        protected readonly IProfileService service;
+        protected readonly IAccountService service;
     }
 }

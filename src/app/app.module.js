@@ -125,31 +125,18 @@
     FastClick.attach(document.body);
 }]).run(["carouselConfig", function (carouselConfig) {
     carouselConfig.default.startIndex = 175;
-}]).config([
-    "routeResolverServiceProvider", function (routeResolverServiceProvider) {
-        routeResolverServiceProvider.configure({
-            priority: -999,
-            promise: ["$q", "dispatcher", "profileActions", "securityStore", function ($q, dispatcher, profileActions, securityStore) {
-                var deferred = $q.defer();
+}]);
 
-                if (!securityStore.token) {
-                    deferred.resolve("true");
-                } else {
-                    var actionId = profileActions.getCurrentProfile();
-
-                    var listenerId = dispatcher.addListener({
-                        actionType: "CHANGE",
-                        callback: function (options) {
-                            if (actionId === options.id) {
-                                dispatcher.removeListener({ id: listenerId });
-                                deferred.resolve(true);
-                            }
-                        }
-                    });
-                }
-
-                return deferred.promise;
-            }]
-        });
-    }
-]);
+ngX.ConfigureRoutePromise({
+    promise: function ($q, accountActions, profileActions, securityStore) {        
+        if (securityStore.token) {
+            return $q.all([
+                accountActions.getCurrentAccountAsync(),
+                profileActions.getCurrentProfileAsync()
+            ]);
+        } else {
+            return $q.when(true);
+        }
+    },
+    priority:-999
+});
