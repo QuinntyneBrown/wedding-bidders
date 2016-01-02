@@ -12,6 +12,7 @@ angular.module("app").value("MESSAGE_ACTIONS", {
 
 angular.module("app").value("ACCOUNT_ACTIONS", {
     UPDATE_CURRENT_ACCOUNT: "UPDATE_CURRENT_ACCOUNT",
+    UPDATE_BILLING: "UPDATE_BILLING",
 });
 
 

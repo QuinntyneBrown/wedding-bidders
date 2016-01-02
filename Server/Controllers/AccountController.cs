@@ -18,6 +18,12 @@ namespace WeddingBidders.Server.Controllers
             return Ok(service.GetCurrentAccount(Request));
         }
 
+        [HttpGet]
+        public IHttpActionResult Billing()
+        {
+            return Ok(service.GetBilling(Request));
+        }
+
         protected readonly IAccountService service;
     }
 }

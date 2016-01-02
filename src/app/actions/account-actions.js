@@ -19,6 +19,18 @@
             });
             return newGuid;
         }
+
+        self.getBilling = function (options) {
+            var newGuid = guid();
+            accountService.getBilling().then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.ACCOUNT_ACTIONS.UPDATE_BILLING, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
+
         return self;
     }
 

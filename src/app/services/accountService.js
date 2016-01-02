@@ -13,6 +13,14 @@
             return deferred.promise;
         };
 
+        self.getBilling = function (options) {
+            var deferred = self.$q.defer();
+            fetch.fromService({ method: "GET", url: self.baseUri + "/billing" }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        };
+
         self.baseUri = apiEndpoint.getBaseUrl() + "/account";
 
         return self;

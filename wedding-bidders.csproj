@@ -425,13 +425,16 @@
     <Compile Include="Server\Models\Message.cs" />
     <Compile Include="Server\Models\MessageType.cs" />
     <Compile Include="Server\Models\Page.cs" />
+    <Compile Include="Server\Models\Payment.cs" />
     <Compile Include="Server\Models\Person.cs" />
     <Compile Include="Server\Models\Photo.cs" />
     <Compile Include="Server\Models\Photographer.cs" />
+    <Compile Include="Server\Models\Plan.cs" />
     <Compile Include="Server\Models\Profile.cs" />
     <Compile Include="Server\Models\ProfileType.cs" />
     <Compile Include="Server\Models\Role.cs" />
     <Compile Include="Server\Models\Session.cs" />
+    <Compile Include="Server\Models\Subscription.cs" />
     <Compile Include="Server\Models\Tenant.cs" />
     <Compile Include="Server\Models\User.cs" />
     <Compile Include="Server\Models\Wedding.cs" />

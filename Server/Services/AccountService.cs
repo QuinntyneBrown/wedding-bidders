@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using WeddingBidders.Server.Config.Contracts;
@@ -25,6 +26,11 @@ namespace WeddingBidders.Server.Services
 
             var account = user.Accounts.First();
             return new AccountDto(account);
+        }
+
+        public dynamic GetBilling(HttpRequestMessage request)
+        {
+            throw new NotImplementedException();
         }
 
         protected readonly IWeddingBiddersUow uow;
