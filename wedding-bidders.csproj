@@ -313,7 +313,6 @@
     <Content Include="src\app\domain\bid.js" />
     <Content Include="src\app\domain\weddingCollection.js" />
     <Content Include="src\app\metal\convertCamelCaseToTitleCase.js" />
-    <Content Include="src\app\metal\dispatcher.js" />
     <Content Include="src\app\metal\fetch.js" />
     <Content Include="src\app\metal\isMobile.js" />
     <Content Include="src\app\metal\jQuery.js" />
@@ -334,7 +333,6 @@
     <Content Include="src\app\stores\message-store.js" />
     <Content Include="src\app\stores\profile-store.js" />
     <Content Include="src\app\stores\security-store.js" />
-    <Content Include="src\app\metal\store.js" />
     <Content Include="src\app\stores\wedding-store.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

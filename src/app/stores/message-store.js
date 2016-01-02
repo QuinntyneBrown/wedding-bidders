@@ -4,15 +4,12 @@
 
     function messageStore($, dispatcher, MESSAGE_ACTIONS) {
         var self = this;
-
         self.connection = $.hubConnection();
         self.hub = self.connection.createHubProxy("messageHub");
+
         self.hub.on("onMessageAdded", function (options) {
             self.storeInstance.addOrUpdate({ data: options });
             self.storeInstance.emitChange();
-        });
-        self.connection.start({ transport: 'longPolling' }, function () {
-
         });
         
         dispatcher.addListener({

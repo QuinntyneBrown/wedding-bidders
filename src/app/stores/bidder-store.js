@@ -4,6 +4,7 @@
 
     function bidderStore(dispatcher, BIDDER_ACTIONS) {
         var self = this;
+
         dispatcher.addListener({
             actionType: BIDDER_ACTIONS.ADD,
             callback: function (options) {

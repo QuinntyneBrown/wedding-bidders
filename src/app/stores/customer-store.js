@@ -4,6 +4,7 @@
 
     function customerStore(dispatcher, CUSTOMER_ACTIONS) {
         var self = this;
+
         dispatcher.addListener({
             actionType: CUSTOMER_ACTIONS.ADD_CUSTOMER,
             callback: function (options) {

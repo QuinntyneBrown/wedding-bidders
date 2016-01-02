@@ -6,12 +6,10 @@
         var self = this;
         self.connection = $.hubConnection();
         self.hub = self.connection.createHubProxy("weddingHub");
+
         self.hub.on("onWeddingAdded", function (options) {
             self.storeInstance.addOrUpdate({ data: options.data });
             self.storeInstance.emitChange();
-        });
-        self.connection.start({ transport: 'longPolling' },function () {
-
         });
 
         dispatcher.addListener({

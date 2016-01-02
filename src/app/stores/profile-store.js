@@ -4,6 +4,7 @@
 
     function profileStore(dispatcher, PROFILE_ACTIONS) {
         var self = this;
+
         dispatcher.addListener({
             actionType: PROFILE_ACTIONS.UPDATE_CURRENT_PROFILE,
             callback: function (options) {                

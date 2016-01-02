@@ -7,12 +7,10 @@
         self.$ = $;
         self.connection = self.$.hubConnection();
         self.hub = self.connection.createHubProxy("bidHub");
+
         self.hub.on("onBidAdded", function (options) {
             self.storeInstance.addOrUpdate({ data: options });
             self.storeInstance.emitChange();
-        });
-        self.connection.start({ transport: 'longPolling' }, function () {
-            
         });
 
         dispatcher.addListener({
