@@ -28,6 +28,14 @@
             }
         });
 
+        dispatcher.addListener({
+            actionType: MESSAGE_ACTIONS.UPDATE_ALL_ISSUES,
+            callback: function (options) {
+                self.issues = options.data;
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
         return self;
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WeddingBidders.Server.Models
 {
@@ -9,6 +10,9 @@ namespace WeddingBidders.Server.Models
 
         }
 
+        [ForeignKey("Conversation")]
+        public int? ConversationId { get; set; }
+
         public int? ToProfileId { get; set; }
 
         public int? FromProfileId { get; set; }
@@ -18,5 +22,9 @@ namespace WeddingBidders.Server.Models
         public string Content { get; set; }
         
         public bool IsRead { get; set; }
+
+        public MessageType MessageType { get; set; }
+
+        public Conversation Conversation { get; set; }
     }
 }

@@ -51,6 +51,8 @@ namespace WeddingBidders.Server.Data
 
         public IRepository<HtmlContent> HtmlContents { get { return GetStandardRepo<HtmlContent>(); } }
 
+        public IRepository<Conversation> Conversations { get { return GetStandardRepo<Conversation>(); } }
+
         public void SaveChanges()
         {
             base.dbContext.SaveChanges();

@@ -39,6 +39,18 @@
             return newGuid;
         }
 
+        self.getAllIssues = function (options) {
+            var newGuid = guid();
+            self.messageService.getAllIssues()
+                .then(function (results) {
+                    self.dispatcher.emit({
+                        actionType: self.MESSAGE_ACTIONS.UPDATE_ALL_ISSUES, options:
+                            { data: results, id: newGuid }
+                    });
+                });
+            return newGuid;
+        }
+
         return self;
     }
 

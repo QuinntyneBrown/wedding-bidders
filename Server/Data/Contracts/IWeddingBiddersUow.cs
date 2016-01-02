@@ -43,6 +43,8 @@ namespace WeddingBidders.Server.Data.Contracts
 
         IRepository<Photographer> Photographers { get; }
 
+        IRepository<Conversation> Conversations { get; }
+
         void SaveChanges();
     }
 }

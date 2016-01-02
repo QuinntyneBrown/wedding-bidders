@@ -20,6 +20,14 @@
             return deferred.promise;
         }
 
+        self.getAllIssues = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "GET", url: self.baseUri + "/allIssues" }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        }
+
         self.baseUri = apiEndpoint.getBaseUrl() + "/message";
         return self;
     }

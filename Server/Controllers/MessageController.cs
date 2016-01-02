@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WeddingBidders.Server.Data.Contracts;
@@ -60,6 +59,7 @@ namespace WeddingBidders.Server.Controllers
                 ToProfileId = dto.ToProfileId,
                 Subject = dto.Subject,
                 Content = dto.Content,
+                MessageType = dto.MessageType,
                 CreatedDate = DateTime.Now
             };
             uow.Messages.Add(message);
@@ -71,6 +71,20 @@ namespace WeddingBidders.Server.Controllers
             var context = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
             context.Clients.All.onMessageAdded(new { Data = dto });
             return Ok(dto);
+        }
+
+
+        [HttpGet]
+        [Route("allIssues")]
+        [System.Web.Http.Authorize(Roles = "System")]
+        public IHttpActionResult AllIssues()
+        {
+            var messages = new List<MessageDto>();
+            foreach(var message in repository.GetAll().Where(x => x.MessageType == MessageType.Issue))
+            {
+                messages.Add(new MessageDto(message));
+            }
+            return Ok(messages);
         }
 
         protected readonly IWeddingBiddersUow uow;

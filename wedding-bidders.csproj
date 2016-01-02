@@ -359,6 +359,7 @@
     <Compile Include="Server\Controllers\AccountController.cs" />
     <Compile Include="Server\Controllers\BidController.cs" />
     <Compile Include="Server\Controllers\BidderController.cs" />
+    <Compile Include="Server\Controllers\ConversationController.cs" />
     <Compile Include="Server\Controllers\CustomerController.cs" />
     <Compile Include="Server\Controllers\CatererController.cs" />
     <Compile Include="Server\Controllers\HtmlContentController.cs" />
@@ -413,6 +414,8 @@
     <Compile Include="Server\Models\BidderType.cs" />
     <Compile Include="Server\Models\Category.cs" />
     <Compile Include="Server\Models\Caterer.cs" />
+    <Compile Include="Server\Models\Conversation.cs" />
+    <Compile Include="Server\Models\ConversationType.cs" />
     <Compile Include="Server\Models\Customer.cs" />
     <Compile Include="Server\Models\EventPlanner.cs" />
     <Compile Include="Server\Models\Gallery.cs" />

@@ -2,6 +2,7 @@
 using WeddingBidders.Server.Services.Contracts;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System;
 
 namespace WeddingBidders.Server.Auth
 {
@@ -45,7 +46,7 @@ namespace WeddingBidders.Server.Auth
                     context.Rejected();
                 }
             }
-            catch
+            catch(Exception exception)
             {
                 context.SetError("Server error");
                 context.Rejected();
