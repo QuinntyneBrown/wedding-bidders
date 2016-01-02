@@ -40,8 +40,8 @@
     }
 
     BidderRegistrationComponent.canActivate = function () {
-        return ["bidderActions", function (bidderActions) {
-            return bidderActions.getTypesAsync();   
+        return ["bidderActions", "invokeAsync", function (bidderActions, invokeAsync) {
+            return invokeAsync(bidderActions.getTypes);   
         }]
     }
 
