@@ -13,6 +13,14 @@ namespace WeddingBidders.Server.Dtos
 
         }
 
+        public CustomerDto(Customer customer)
+        {
+            this.Id = customer.Id;
+            this.Firstname = customer.Firstname;
+            this.Lastname = customer.Lastname;
+            this.Email = customer.Email;                
+        }
+
         public int? Id { get; set; }
 
         public string Firstname { get; set; }

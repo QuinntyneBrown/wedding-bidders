@@ -10,7 +10,6 @@
 
         self.add = function (options) {
             var newGuid = guid();
-
             customerService.add({
                 data: {
                     firstname: options.firstname,
@@ -22,6 +21,17 @@
             }).then(function (results) {
                 self.dispatcher.emit({
                     actionType: self.CUSTOMER_ACTIONS.ADD_CUSTOMER, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
+
+        self.getAll = function (options) {
+            var newGuid = guid();
+            customerService.getAll().then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.CUSTOMER_ACTIONS.UPDATE_ALL, options:
                         { data: results, id: newGuid }
                 });
             });

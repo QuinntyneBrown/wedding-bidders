@@ -31,7 +31,6 @@
 
         self.getAll = function (options) {
             var newGuid = guid();
-
             bidderService.getAll().then(function (results) {
                 self.dispatcher.emit({
                     actionType: self.BIDDER_ACTIONS.UPDATE_ALL, options:

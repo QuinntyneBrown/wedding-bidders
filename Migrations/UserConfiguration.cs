@@ -19,6 +19,10 @@ namespace WeddingBidders.Migrations
                     Password = "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=",
                 };
 
+                var systemRole = context.Roles.Where(x => x.Name == "System").First();
+
+                user.Roles.Add(systemRole);
+
                 var account = new Account()
                 {
                     Firstname = "Quinntyne",

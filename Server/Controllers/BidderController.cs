@@ -31,32 +31,25 @@ namespace WeddingBidders.Server.Controllers
 
         [HttpGet]
         [Route("getAll")]
+        [Authorize(Roles = "System")]
         public IHttpActionResult getAll()
         {
-            var caterers = this.uow.Bidders.GetAll();
-            var dtos = new List<BidderDto>();
-
-            foreach (var caterer in caterers)
+            var bidders = new List<BidderDto>();
+            foreach (var bidder in this.uow.Bidders.GetAll())
             {
-                dtos.Add(new BidderDto()
-                {
-                });
+                bidders.Add(new BidderDto(bidder));
             }
-
-            return Ok(dtos);
+            return Ok(bidders);
         }
 
         [HttpGet]
         [Route("getById")]
         public IHttpActionResult GetById(int id)
         {
-            var caterer = this.uow.Bidders.GetAll().Where(x => x.Id == id).Single();
-            var dto = new BidderDto()
-            {
-
-            };
-            return Ok(dto);
+            var bidder = new BidderDto(this.uow.Bidders.GetAll().Where(x => x.Id == id).Single());
+            return Ok(bidder);
         }
+
         [HttpPost]
         [Route("add")]
         [AllowAnonymous]

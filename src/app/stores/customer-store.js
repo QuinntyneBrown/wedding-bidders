@@ -14,6 +14,14 @@
             }
         });
 
+        dispatcher.addListener({
+            actionType: CUSTOMER_ACTIONS.UPDATE_ALL,
+            callback: function (options) {
+                self.storeInstance.items = options.data;
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
         return self;
     }
     ngX.Store({ store: customerStore, providers: ["dispatcher", "CUSTOMER_ACTIONS"] });

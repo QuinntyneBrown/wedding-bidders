@@ -30,6 +30,7 @@ angular.module("app").value("BIDDER_ACTIONS", {
 
 angular.module("app").value("CUSTOMER_ACTIONS", {
     ADD_CUSTOMER: "ADD_CUSTOMER",
+    UPDATE_ALL: "UPDATE_ALL_CUSTOMERS",
 });
 
 angular.module("app").value("BID_ACTIONS", {

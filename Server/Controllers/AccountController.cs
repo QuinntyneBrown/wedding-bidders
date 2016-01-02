@@ -13,12 +13,14 @@ namespace WeddingBidders.Server.Controllers
         }
 
         [HttpGet]
+        [Route("current")]
         public IHttpActionResult Current()
         {
             return Ok(service.GetCurrentAccount(Request));
         }
 
         [HttpGet]
+        [Route("billing")]
         public IHttpActionResult Billing()
         {
             return Ok(service.GetBilling(Request));
