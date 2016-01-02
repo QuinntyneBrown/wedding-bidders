@@ -2,13 +2,9 @@
 
     "use strict";
 
-    function customerStore(dispatcher, guid, CUSTOMER_ACTIONS, store) {
+    function customerStore(dispatcher, CUSTOMER_ACTIONS) {
         var self = this;
-        self.dispatcher = dispatcher;
-        self.store = store;
-        self.storeInstance = self.store.createInstance();
-
-        self.dispatcher.addListener({
+        dispatcher.addListener({
             actionType: CUSTOMER_ACTIONS.ADD_CUSTOMER,
             callback: function (options) {
                 self.storeInstance.addOrUpdate(options.data);
@@ -17,14 +13,8 @@
             }
         });
 
-        self.currentCustomer = null;
-
-        Object.defineProperty(self, "items", {
-            "get": function () { return self.storeInstance.items; }
-        });
-
         return self;
     }
-    ngX.Store({ store: customerStore, providers: ["dispatcher", "guid", "CUSTOMER_ACTIONS", "store"] });
+    ngX.Store({ store: customerStore, providers: ["dispatcher", "CUSTOMER_ACTIONS"] });
 
 })();

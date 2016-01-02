@@ -2,12 +2,9 @@
 
     "use strict";
 
-    function bidStore($, dispatcher, BID_ACTIONS, store) {
+    function bidStore($, dispatcher, BID_ACTIONS) {
         var self = this;
-        self.dispatcher = dispatcher;
-        self.store = store;
         self.$ = $;
-        self.storeInstance = self.store.createInstance();
         self.connection = self.$.hubConnection();
         self.hub = self.connection.createHubProxy("bidHub");
         self.hub.on("onBidAdded", function (options) {
@@ -18,7 +15,7 @@
             
         });
 
-        self.dispatcher.addListener({
+        dispatcher.addListener({
             actionType: BID_ACTIONS.ADD_BID,
             callback: function (options) {
                 self.storeInstance.addOrUpdate({ data: options.data });
@@ -27,7 +24,7 @@
             }
         });
 
-        self.dispatcher.addListener({
+        dispatcher.addListener({
             actionType: BID_ACTIONS.ADD_BID,
             callback: function (options) {
                 self.storeInstance.addOrUpdate({ data: options.data });
@@ -36,7 +33,7 @@
             }
         });
 
-        self.dispatcher.addListener({
+        dispatcher.addListener({
             actionType: BID_ACTIONS.UPDATE_BY_PROFILE,
             callback: function (options) {
                 self.byProfile = options.data;
@@ -44,19 +41,9 @@
             }
         });
 
-        self.getById = function (id) {
-            return self.storeInstance.getById(id);
-        }
-
-        Object.defineProperty(self, "items", {
-            "get": function () { return self.storeInstance.items; }
-        });
-
-        self.currentBid = null;
-        self.types = null;
         return self;
     }
 
-    ngX.Store({ store: bidStore, providers: ["$", "dispatcher", "BID_ACTIONS", "store"] });
+    ngX.Store({ store: bidStore, providers: ["$", "dispatcher", "BID_ACTIONS"] });
 
 })();

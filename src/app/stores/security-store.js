@@ -2,13 +2,11 @@
 
     "use strict";
 
-    function securityStore(dispatcher, localStorageManager, SECURITY_ACTIONS, store) {
+    function securityStore(dispatcher, localStorageManager, SECURITY_ACTIONS) {
         var self = this;
-        self.dispatcher = dispatcher;
         self.localStorageManager = localStorageManager;
-        self.store = store;
-        self.storeInstance = self.store.createInstance();
-        self.dispatcher.addListener({
+
+        dispatcher.addListener({
             actionType: SECURITY_ACTIONS.LOGIN,
             callback: function (options) {                
                 self.token = options.token;
@@ -16,7 +14,7 @@
             }
         });
 
-        self.dispatcher.addListener({
+        dispatcher.addListener({
             actionType: SECURITY_ACTIONS.LOGIN_FAIL,
             callback: function (options) {
                 self.storeInstance.emitChange({ id: options.id });
