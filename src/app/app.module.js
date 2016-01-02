@@ -86,6 +86,10 @@
         "authorizationRequired": true
     });
 
+    $routeProvider.when("/caterer/:id", {
+        "componentName": "catererComponent"
+    });
+
     $routeProvider.when("/myprofile", {
         "authorizationRequired": true,
         resolve: {
@@ -106,10 +110,6 @@
                 });
             }]
         }
-    });
-
-    $routeProvider.when("/caterer/:id", {
-        "componentName": "catererComponent"
     });
 
     apiEndpointProvider.configure("/api");
