@@ -16,12 +16,24 @@
         ],
         template: [
             "<div class='adminSlide' data-ng-click='vm.onClick()'>",
-            "<h1>{{ vm.title }}</h1>",
-            "<h1>{{ vm.value }}</h1>",
+            "<h1 class='adminSlide-heading'>{{ vm.title }}</h1>",
+            "<h1 class='adminSlide-subHeading'>{{ vm.value }}</h1>",
             "</div>"
         ],
         styles: [
             " .adminSlide { ",
+            "   position:relative; ",
+            "   float:left; ",
+            "   width:300px; ",
+            "   padding:15px; ",
+            " } ",
+
+            " .adminSlide-heading, .adminSlide-subHeading { ",
+            "   font-family: 'Lato', sans-serif; ",
+            " } ",
+
+            " .adminSlide-heading { ",
+            "   font-weight:400; ",
             " } "
         ],
         inputs: [
