@@ -38,6 +38,7 @@ namespace WeddingBidders.Server
             container.RegisterType<IEmailService, EmailService>();
             container.RegisterType<IEmailBuilder, EmailBuilder>();
             container.RegisterType<IConfigurationProvider, ConfigurationProvider>();
+            container.RegisterType<IMessageService, MessageService>();
             return container;
         }
     }

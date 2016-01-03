@@ -13,5 +13,7 @@ namespace WeddingBidders.Server.Models
         public ICollection<Message> Messages { get; set; }
 
         public ConversationType ConversationType { get; set; }
+
+        public bool IsResolved { get; set; }
     }
 }

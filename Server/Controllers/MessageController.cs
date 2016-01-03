@@ -10,16 +10,18 @@ using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Hubs;
 using WeddingBidders.Server.Models;
+using WeddingBidders.Server.Services.Contracts;
 
 namespace WeddingBidders.Server.Controllers
 {
     [RoutePrefix("api/message")]
     public class MessageController : ApiController
     {
-        public MessageController(IWeddingBiddersUow uow)
+        public MessageController(IMessageService messageService,IWeddingBiddersUow uow)
         {
             this.uow = uow;
             this.repository = uow.Messages;
+            this.messageService = messageService;
         }
 
         [HttpGet]
@@ -47,27 +49,9 @@ namespace WeddingBidders.Server.Controllers
         [Route("add")]
         public IHttpActionResult add(MessageDto dto)
         {
-            var username = Request.GetRequestContext().Principal.Identity.Name;
-            var profileId = uow.Accounts.GetAll()
-                .Include(x=>x.Profiles).Single(x => x.Email == username)
-                .Profiles
-                .First().Id;
-
-            var message = new Message()
-            {
-                FromProfileId = profileId,
-                ToProfileId = dto.ToProfileId,
-                Subject = dto.Subject,
-                Content = dto.Content,
-                MessageType = dto.MessageType,
-                CreatedDate = DateTime.Now
-            };
-            uow.Messages.Add(message);
-            uow.SaveChanges();
-
+            var message = this.messageService.Add(Request, dto);
             dto.FromProfileId = message.FromProfileId;
             dto.Id = message.Id;
-
             var context = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
             context.Clients.All.onMessageAdded(new { Data = dto });
             return Ok(dto);
@@ -88,6 +72,8 @@ namespace WeddingBidders.Server.Controllers
         }
 
         protected readonly IWeddingBiddersUow uow;
+
+        protected readonly IMessageService messageService;
 
         protected readonly IRepository<Message> repository;
     }

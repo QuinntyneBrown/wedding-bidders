@@ -19,6 +19,7 @@ namespace WeddingBidders.Server.Dtos
             this.Content = message.Content;
             this.IsRead = message.IsRead;
             this.CreatedDate = message.CreatedDate;
+            this.ConversationId = message.ConversationId;
         }
 
         public int? Id { get; set; }
@@ -29,6 +30,7 @@ namespace WeddingBidders.Server.Dtos
         public bool IsRead { get; set; }
         public DateTime? CreatedDate { get; set; }
         public MessageType MessageType { get; set; }
-        
+        public int? ConversationId { get; set; }
+
     }
 }
