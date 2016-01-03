@@ -230,6 +230,10 @@
     <Content Include="connectionStrings.config" />
     <Content Include="src\app\actions\conversation-actions.js" />
     <Content Include="src\app\actions\subscription-actions.js" />
+    <Content Include="src\app\components\admin\wb-admin-bidders.js" />
+    <Content Include="src\app\components\admin\wb-admin-converstations.js" />
+    <Content Include="src\app\components\admin\wb-admin-customers.js" />
+    <Content Include="src\app\components\admin\wb-admin-issues.js" />
     <Content Include="src\app\components\wb-payment.js" />
     <Content Include="src\app\components\wb-personalize.js" />
     <Content Include="src\app\components\admin\wb-admin-slide.js" />
