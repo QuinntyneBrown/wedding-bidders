@@ -19,6 +19,13 @@
             }
             return instance;
         }
+
+        self.delete = function () {
+            weddingActions.delete({
+                id: self.id
+            });
+        }
+
         return self;
     }
 

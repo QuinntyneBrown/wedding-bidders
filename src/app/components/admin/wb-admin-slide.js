@@ -26,6 +26,7 @@
             "   float:left; ",
             "   width:300px; ",
             "   padding:15px; ",
+            "   cursor:pointer; ",
             " } ",
 
             " .adminSlide-heading, .adminSlide-subHeading { ",

@@ -1,13 +1,10 @@
-﻿using Common.Controllers;
-using Common.Data.Contracts;
+﻿using Common.Data.Contracts;
 using System.Linq;
 using System.Web.Http;
-using System.Net.Http;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
 using System.Collections.Generic;
-using WeddingBidders.Server.Hubs.contracts;
 using Microsoft.AspNet.SignalR;
 using WeddingBidders.Server.Hubs;
 using System.Data.Entity;
@@ -16,23 +13,23 @@ namespace WeddingBidders.Server.Controllers
 {
     [System.Web.Http.Authorize]
     [RoutePrefix("api/wedding")]
-    public class WeddingController : EFController<Wedding>
+    public class WeddingController : ApiControllerBase
     {
         public WeddingController(IWeddingBiddersUow uow)
         {
             this.repository = uow.Weddings;
-            this.uow = uow;
-            
+            this.uow = uow;            
         }
 
         [HttpGet]
         [Route("getAll")]
+        [System.Web.Http.Authorize(Roles = "System")]
         public IHttpActionResult GetAll()
         {
-            var weddings = this.repository.GetAll();
+            var weddings = this.repository.GetAll().Where(x=>x.IsDeleted ==false);
             var dtos = new List<WeddingDto>();
 
-            foreach(var wedding in weddings.OrderBy(x=>x.Date))
+            foreach (var wedding in weddings.OrderBy(x => x.Date))
             {
                 dtos.Add(new WeddingDto()
                 {
@@ -47,11 +44,22 @@ namespace WeddingBidders.Server.Controllers
             return Ok(dtos);
         }
 
+        [HttpDelete]
+        [Route("remove")]
+        [System.Web.Http.Authorize(Roles="System")]
+        public IHttpActionResult Remove(int id)
+        {
+            var wedding = repository.GetById(id);
+            wedding.IsDeleted = true;
+            uow.SaveChanges();
+            return Ok();
+        }
+
         [HttpGet]
         [Route("getAllByCustomerId")]
         public IHttpActionResult GetAllByCustomerId(int id)
         {
-            var weddings = this.repository.GetAll().Where(x => x.CustomerId == id).ToList();
+            var weddings = this.repository.GetAll().Where(x => x.CustomerId == id && x.IsDeleted == false).ToList();
             var dtos = new HashSet<WeddingDto>();
             foreach(var wedding in weddings)
             {
@@ -71,7 +79,7 @@ namespace WeddingBidders.Server.Controllers
         [Route("getById")]
         public IHttpActionResult GetById(int id)
         {
-            var wedding = this.repository.GetAll().Where(x => x.Id == id).Single();
+            var wedding = this.repository.GetAll().Where(x => x.Id == id && x.IsDeleted == false).Single();
             var dto = new WeddingDto()
             {
                 Id = wedding.Id,
@@ -87,11 +95,9 @@ namespace WeddingBidders.Server.Controllers
         [Route("getAllByCurrentProfile")]
         public IHttpActionResult GetAllByCurrentProfile()
         {
-            var username = Request.GetRequestContext().Principal.Identity.Name;
-
             var profile = uow.Accounts.GetAll()
                 .Include(x=>x.Profiles)
-                .Where(x => x.Email.ToLower() == username.ToLower())
+                .Where(x => x.Email.ToLower() == Username.ToLower())
                 .First()
                 .Profiles.First();
 
@@ -99,11 +105,11 @@ namespace WeddingBidders.Server.Controllers
             var dtos = new List<WeddingDto>();
 
             if (profile.ProfileType == ProfileType.Customer) {
-                var customer = uow.Customers.GetAll().Where(x => x.Email == username).First();
-                weddings = uow.Weddings.GetAll().Include(x=>x.Categories).Where(x => x.CustomerId == customer.Id).ToList();
+                var customer = uow.Customers.GetAll().Where(x => x.Email == Username).First();
+                weddings = uow.Weddings.GetAll().Include(x=>x.Categories).Where(x => x.CustomerId == customer.Id && x.IsDeleted == false).ToList();
             } else {
-                var bidder = uow.Bidders.GetAll().Where(x => x.Email == username).First();
-                foreach(var wedding in this.repository.GetAll().Include(x => x.Categories).ToList())
+                var bidder = uow.Bidders.GetAll().Where(x => x.Email == Username).First();
+                foreach(var wedding in this.repository.GetAll().Include(x => x.Categories).Where( x=> x.IsDeleted == false).ToList())
                 {                    
                     foreach(var category in wedding.Categories)
                     {
@@ -131,8 +137,7 @@ namespace WeddingBidders.Server.Controllers
         [Route("add")]
         public IHttpActionResult add(WeddingDto dto)
         {
-            var username = Request.GetRequestContext().Principal.Identity.Name;
-            var customerId = uow.Customers.GetAll().Single(x => x.Email == username).Id;
+            var customerId = uow.Customers.GetAll().Single(x => x.Email == Username).Id;
             var wedding = new Wedding() {
                 NumberOfGuests = dto.NumberOfGuests,
                 Location = dto.Location,

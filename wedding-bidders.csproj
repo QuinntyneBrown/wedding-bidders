@@ -230,10 +230,14 @@
     <Content Include="connectionStrings.config" />
     <Content Include="src\app\actions\conversation-actions.js" />
     <Content Include="src\app\actions\subscription-actions.js" />
+    <Content Include="src\app\components\admin\admin-wedding.js" />
+    <Content Include="src\app\components\admin\wb-admin-bidder.js" />
     <Content Include="src\app\components\admin\wb-admin-bidders.js" />
     <Content Include="src\app\components\admin\wb-admin-converstations.js" />
+    <Content Include="src\app\components\admin\wb-admin-customer.js" />
     <Content Include="src\app\components\admin\wb-admin-customers.js" />
     <Content Include="src\app\components\admin\wb-admin-issues.js" />
+    <Content Include="src\app\components\admin\wb-admin-weddings.js" />
     <Content Include="src\app\components\wb-payment.js" />
     <Content Include="src\app\components\wb-personalize.js" />
     <Content Include="src\app\components\admin\wb-admin-slide.js" />
@@ -367,6 +371,7 @@
     <Compile Include="Server\Controllers\AccountController.cs" />
     <Compile Include="Server\Controllers\BidController.cs" />
     <Compile Include="Server\Controllers\BidderController.cs" />
+    <Compile Include="Server\Controllers\ApiControllerBase.cs" />
     <Compile Include="Server\Controllers\ConversationController.cs" />
     <Compile Include="Server\Controllers\CustomerController.cs" />
     <Compile Include="Server\Controllers\CatererController.cs" />

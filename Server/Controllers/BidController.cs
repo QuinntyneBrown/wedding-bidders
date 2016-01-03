@@ -14,7 +14,7 @@ using Microsoft.AspNet.SignalR;
 namespace WeddingBidders.Server.Controllers
 {
     [RoutePrefix("api/bid")]
-    public class BidController : ApiController
+    public class BidController : ApiControllerBase
     {
         public BidController(IBidHub bidHub, IWeddingBiddersUow uow)
         {
@@ -26,8 +26,7 @@ namespace WeddingBidders.Server.Controllers
         [Route("add")]
         public IHttpActionResult TryToAddBid(BidRequestDto dto)
         {
-            var username = Request.GetRequestContext().Principal.Identity.Name;
-            var bidder = this.uow.Bidders.GetAll().Where(x => x.Email.ToLower() == username.ToLower()).Single();
+            var bidder = this.uow.Bidders.GetAll().Where(x => x.Email.ToLower() == Username.ToLower()).Single();
             var bid = new Bid() {
                 BidderId = bidder.Id,
                 Description = dto.Description,
@@ -84,11 +83,10 @@ namespace WeddingBidders.Server.Controllers
         [Route("getAllByCurrentProfile")]
         public IHttpActionResult GetAllByCurrentProfile()
         {
-            var username = Request.GetRequestContext().Principal.Identity.Name;
             var profile = uow.Accounts
                 .GetAll()
                 .Include(x => x.Profiles)
-                .Where(x => x.Email == username)
+                .Where(x => x.Email == Username)
                 .First()
                 .Profiles.First();
             var dtos = new List<BidDto>();
@@ -116,7 +114,7 @@ namespace WeddingBidders.Server.Controllers
                 }               
             } else
             {
-                var bidder = uow.Bidders.GetAll().Where(x => x.Email.ToLower() == username.ToLower()).First();
+                var bidder = uow.Bidders.GetAll().Where(x => x.Email.ToLower() == Username.ToLower()).First();
                 var bids = uow.Bids.GetAll().Where(x => x.BidderId == bidder.Id);
                 foreach (var bid in bids)
                 {

@@ -12,6 +12,14 @@
             return deferred.promise;            
         }
 
+        self.remove = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "DELETE", url: self.baseUri + "/remove", params: options.data }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        }
+
         self.getAll = function (options) {
             var deferred = $q.defer();
             fetch.fromService({ method: "GET", url: self.baseUri + "/getAll" }).then(function (results) {

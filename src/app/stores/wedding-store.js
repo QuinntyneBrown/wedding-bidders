@@ -22,6 +22,20 @@
         });
 
         dispatcher.addListener({
+            actionType: WEDDING_ACTIONS.DELETE,
+            callback: function (options) {
+                var weddings = self.storeInstance.items;
+                for (var i = 0; i < weddings.length; i++) {
+                    if (options.data === weddings[i].id) {
+                        weddings.splice(i, 1);
+                    }
+                }
+                self.storeInstance.items = weddings;
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
+        dispatcher.addListener({
             actionType: WEDDING_ACTIONS.UPDATE_BY_PROFILE,
             callback: function (options) {
                 self.weddingsByProfile = options.data;

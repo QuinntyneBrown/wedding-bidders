@@ -33,6 +33,24 @@
             return newGuid;
         };
 
+        self.delete = function (options) {
+            var newGuid = guid();
+            weddingService.remove({
+                data: {
+                    id: options.id
+                }
+            }).then(function (results) {
+                self.dispatcher.emit({
+                    actionType: self.WEDDING_ACTIONS.DELETE,
+                    options: {
+                        data: options.id,
+                        id: newGuid
+                    }
+                })
+            });
+            return newGuid;
+        };
+
         self.getAll = function () {
             var newGuid = guid();
             weddingService.getAll().then(function (results) {
