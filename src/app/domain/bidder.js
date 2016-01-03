@@ -2,9 +2,8 @@
 
     "use strict";
 
-    function customer($injector, $q, messageActions) {
+    function bidder($injector, $q, messageActions) {
         var self = this;
-
         self.$injector = $injector;
         self.$q = $q;
         self.messageActions = messageActions;
@@ -19,17 +18,15 @@
             if (options.profile) {
                 var profile = instance.$injector.get("profile");
 
-                instance.profile = profile.createInstance({ data: options.profile})
+                instance.profile = profile.createInstance({ data: options.profile })
             }
-
 
             return instance;
         }
 
-       
         return self;
     }
 
-    angular.module("app").service("customer", ["$injector", "$q",customer]);
+    angular.module("app").service("bidder", ["$injector", "$q", bidder]);
 
 })();

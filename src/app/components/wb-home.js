@@ -33,7 +33,23 @@
         component: HomeComponent,
         route: "/",
         templateUrl:"/src/app/components/wb-home.html",
-        providers: ["$scope", "safeDigest"]
+        providers: ["$scope", "safeDigest"],
+        styles: [
+            ".carousel img { ",
+            "   -webkit-filter: blur(1px) grayscale(100%); ",
+            "   -ms-filter: blur(1px) grayscale(100%); ",
+            "   filter: blur(1px) grayscale(100%);",
+            "   opacity:.5;",
+            " } ",
+            ".carousel img.current, ",
+            ".carousel .previous-arrow img, ",
+            ".carousel .next-arrow img { ",
+            "   -webkit-filter: blur(0px) grayscale(0%); ",
+            "   -ms-filter: blur(0px) grayscale(0%); ",
+            "   filter:blur(0px) grayscale(0%); ",
+            "   opacity:1; ",
+            "} "
+        ]
     });
 
 })();

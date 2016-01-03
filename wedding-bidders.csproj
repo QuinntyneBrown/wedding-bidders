@@ -238,9 +238,11 @@
     <Content Include="src\app\components\admin\wb-admin-customers.js" />
     <Content Include="src\app\components\admin\wb-admin-issues.js" />
     <Content Include="src\app\components\admin\wb-admin-weddings.js" />
+    <Content Include="src\app\components\wb-bid-item.js" />
     <Content Include="src\app\components\wb-payment.js" />
     <Content Include="src\app\components\wb-personalize.js" />
     <Content Include="src\app\components\admin\wb-admin-slide.js" />
+    <Content Include="src\app\components\wb-wedding-detail.js" />
     <Content Include="src\app\components\wb-wedding-item.js" />
     <Content Include="src\app\metal\work-spinner.js" />
     <Content Include="src\app\services\conversationService.js" />
@@ -318,8 +320,7 @@
     <Content Include="src\app\components\wb-top-banner.js" />
     <Content Include="src\app\components\wb-vendors.js" />
     <Content Include="src\app\components\wb-weddings.js" />
-    <Content Include="src\app\domain\caterer.js" />
-    <Content Include="src\app\domain\currentProfile.js" />
+    <Content Include="src\app\domain\bidder.js" />
     <Content Include="src\app\domain\customer.js" />
     <Content Include="src\app\domain\domain-constants.js" />
     <Content Include="src\app\domain\wedding.js" />
