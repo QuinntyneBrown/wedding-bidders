@@ -45,14 +45,7 @@
         template: [
             "<div class='weddings viewComponent'>",
             "   <h1>Weddings</h1>",
-            "   <div data-ng-repeat='wedding in vm.weddings'> ",
-            "       <h3>Number of Guests:  {{ ::wedding.numberOfGuests }}</h3>",
-            "       <h3>Hours:  {{ ::wedding.numberOfHours }}</h3>",
-            "       <h3>Location:  {{ ::wedding.location }}</h3>",
-            "       <h3>Date:  {{ ::wedding.date }}</h3>",
-            "       <a href='#/bid/create/{{ ::wedding.id }}'>Bid</a>",
-            "       <br/><br/> ",
-            "   </div> ",
+            "   <wedding-item wedding='wedding' data-ng-repeat='wedding in vm.weddings'></wedding-item> ",
             "</div>"
         ]
     });

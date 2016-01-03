@@ -23,15 +23,6 @@
         });
 
         dispatcher.addListener({
-            actionType: BID_ACTIONS.ADD_BID,
-            callback: function (options) {
-                self.storeInstance.addOrUpdate({ data: options.data });
-                self.currentBid = options.data;
-                self.storeInstance.emitChange({ id: options.id });
-            }
-        });
-
-        dispatcher.addListener({
             actionType: BID_ACTIONS.UPDATE_BY_PROFILE,
             callback: function (options) {
                 self.byProfile = options.data;

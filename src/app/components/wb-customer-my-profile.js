@@ -2,36 +2,28 @@
 
     "use strict";
 
-    function CustomerMyProfileComponent(safeDigest, $scope, bidStore, dispatcher, moment, profileStore, weddingCollection, weddingStore) {
+    function CustomerMyProfileComponent(safeDigest, $scope, bidStore, profileStore, weddingCollection, weddingStore) {
         var self = this;
         self.profileStore = profileStore;
         self.bidStore = bidStore;
         self.weddingCollection = weddingCollection;
         self.weddingStore = weddingStore;
-        self.dispatcher = dispatcher;
-        self.moment = moment;
         self.safeDigest = safeDigest;
 
-        self.profile = self.profileStore.currentProfile;
+        self.initialize = function () {
+            self.profile = self.profileStore.currentProfile;
+            self.weddings = self.weddingCollection.createInstance({
+                data: self.weddingStore.weddingsByProfile,
+                bids: self.bidStore.byProfile
+            }).items;
+            self.safeDigest($scope);
+        }
 
-        self.weddings = self.weddingCollection.createInstance({
-            data: self.weddingStore.weddingsByProfile,
-            bids: self.bidStore.items
-        }).items;
+        self.storeOnChange = function () {
+            self.initialize();
+        }
 
-        self.listenerId = self.dispatcher.addListener({
-            actionType: "CHANGE",
-            callback: function (options) {
-                self.profile = self.profileStore.currentProfile;
-                self.weddings = self.weddingCollection.createInstance({
-                    data: self.weddingStore.weddingsByProfile,
-                    bids: self.bidStore.items
-                }).items;
-                self.safeDigest($scope);
-            }
-        });
-
-        self.deactivate = function () { self.dispatcher.removeListener({ id: self.listenerId }); }
+        self.initialize();
 
         return self;
     }
@@ -52,8 +44,6 @@
             "safeDigest",
             "$scope",
             "bidStore",
-            "dispatcher",
-            "moment",
             "profileStore",
             "weddingCollection",
             "weddingStore"
@@ -61,20 +51,26 @@
         template: [
             "<div class='customerMyProfile viewComponent'>",
             "<h1>{{ vm.profile.firstname }}  {{ vm.profile.lastname }}</h1><br/><br/>",
-
             "<div> ",
-            "<h1>Weddings</h1>",
-            "   <div data-ng-repeat='wedding in vm.weddings'> ",
-            "       <h3>Number of Guests:  {{ ::wedding.numberOfGuests }}</h3>",
-            "       <h3>Hours:  {{ ::wedding.numberOfHours }}</h3>",
-            "       <h3>Location:  {{ ::wedding.location }}</h3>",            
-            "       <h3>Date:  {{ ::wedding.date }}</h3>",
-            "       <h3>Bids:  {{ ::wedding.bids.length }}</h3>",
-            "       <br/><br/> ",
-            "   </div> ",
-            "</div> ",
-
+            "   <div class='customerMyProfile-list'> ",
+            "       <h1>Weddings</h1>",
+            "       <wedding-item wedding='wedding' data-ng-repeat='wedding in vm.weddings'></wedding-item> ",
+            "   </div>",
+            "   <div class='customerMyProfile-detail'> ",
+            "       <h1>Wedding Detail</h1>",
+            "   </div>",
+            "   <div class='clear:both;'></div> ",
             "</div>"
+        ],
+        styles: [
+            " .customerMyProfile { ",
+            "   width:100%;",
+            " } ",
+            " .customerMyProfile-list, .customerMyProfile-detail { ",
+            "   width:50%; ",
+            "   position:relative; ",
+            "   float:left; ",
+            " } ",
         ]
     });
 

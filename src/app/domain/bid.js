@@ -19,6 +19,17 @@
             return deferred.promise;
         }
 
+        self.createInstance = function (options) {
+            var instance = new bid(self.$q);
+            if (options.data) {
+                instance.id = options.data.id;
+                instance.weddingId = options.data.weddingId;
+                instance.description = options.data.description;
+                instance.price = options.data.price;
+            }
+            return instance;
+        }
+
         return self;
     }
 

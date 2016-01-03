@@ -59,6 +59,14 @@
             }
         });
 
+        dispatcher.addListener({
+            actionType: WEDDING_ACTIONS.UPDATE_CURRENT_WEDDING,
+            callback: function (options) {
+                self.currentWedding = options.data;
+                self.storeInstance.emitChange({ id: options.id, data: options.data });
+            }
+        });
+
         return self;
     }
 

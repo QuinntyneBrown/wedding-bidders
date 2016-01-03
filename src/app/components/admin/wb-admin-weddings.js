@@ -4,6 +4,10 @@
 
     function AdminWeddingsComponent(wedding, weddingStore) {
         var self = this;
+        self.weddings = [];
+        for (var i = 0; i < weddingStore.items.length; i++) {
+            self.weddings.push(wedding.createInstance({ data: weddingStore.items[i] }));
+        }
         self.storeOnChange = function () {
             self.weddings = [];
             for (var i = 0; i < weddingStore.items.length; i++) {

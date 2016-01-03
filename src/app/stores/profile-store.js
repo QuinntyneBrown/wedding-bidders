@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function profileStore(dispatcher, PROFILE_ACTIONS) {
+    function profileStore(dispatcher, PROFILE_ACTIONS, PROFILE_TYPE) {
         var self = this;
 
         dispatcher.addListener({
@@ -21,9 +21,25 @@
             }
         });
 
+        self.isCustomer = function () {
+            return self.currentProfile
+                && self.currentProfile.profileType === PROFILE_TYPE.CUSTOMER;
+        }
+
+        self.isInternal = function () {
+            return self.currentProfile
+                && self.currentProfile.profileType === PROFILE_TYPE.INTERNAL;
+        }
+
+        self.isBidder = function () {
+            return self.currentProfile
+                && self.currentProfile.profileType !== PROFILE_TYPE.CUSTOMER
+                && self.currentProfile.profileType !== PROFILE_TYPE.INTERNAL;
+        }
+
         return self;
     }
 
-    ngX.Store({ store: profileStore, providers: ["dispatcher", "PROFILE_ACTIONS"] });
+    ngX.Store({ store: profileStore, providers: ["dispatcher", "PROFILE_ACTIONS", "PROFILE_TYPE"] });
 
 })();

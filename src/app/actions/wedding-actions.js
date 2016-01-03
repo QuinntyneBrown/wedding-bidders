@@ -26,8 +26,8 @@
                     options: {
                         data: results,
                         id: newGuid
-                    }                    
-                })
+                    }
+                });
             });
            
             return newGuid;
@@ -50,6 +50,18 @@
             });
             return newGuid;
         };
+
+        self.select = function (options) {
+            var newGuid = guid();
+            self.dispatcher.emit({
+                actionType: self.WEDDING_ACTIONS.UPDATE_CURRENT_WEDDING,
+                options: {
+                    data: options.id,
+                    id: newGuid
+                }
+            });
+            return newGuid;
+        }
 
         self.getAll = function () {
             var newGuid = guid();

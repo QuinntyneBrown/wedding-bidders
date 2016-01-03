@@ -12,7 +12,10 @@
             var instance = new weddingCollection(self.moment, self.wedding);
             if (options.data) {
                 for (var i = 0; i < options.data.length; i++) {
-                    instance.items.push(self.wedding.createInstance({ data: options.data[i] }));
+                    instance.items.push(self.wedding.createInstance({
+                        data: options.data[i],
+                        bids: options.bids
+                    }));
                 }                
             }
             return instance;

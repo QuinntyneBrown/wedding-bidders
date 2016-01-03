@@ -241,6 +241,7 @@
     <Content Include="src\app\components\wb-payment.js" />
     <Content Include="src\app\components\wb-personalize.js" />
     <Content Include="src\app\components\admin\wb-admin-slide.js" />
+    <Content Include="src\app\components\wb-wedding-item.js" />
     <Content Include="src\app\metal\work-spinner.js" />
     <Content Include="src\app\services\conversationService.js" />
     <Content Include="src\app\services\subscriptionService.js" />
