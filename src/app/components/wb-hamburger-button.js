@@ -4,7 +4,7 @@
 
     ngX.Component({
         selector: "wb-hamburger-button",
-        component: function HamburgerButtonComponent($compile, $location, $q, $scope, appendToBodyAsync, extendCssAsync, removeElement, securityStore, setOpacityAsync) {
+        component: function HamburgerButtonComponent($compile, $location, $q, $scope, appendToBodyAsync, extendCssAsync, profileStore, PROFILE_TYPE, removeElement, securityStore, setOpacityAsync) {
             var self = this;
             self.$compile = $compile;
             self.$location = $location;
@@ -15,6 +15,8 @@
             self.removeElement = removeElement;
             self.securityStore = securityStore;
             self.setOpacityAsync = setOpacityAsync;
+            self.profileStore = profileStore;
+            self.PROFILE_TYPE = PROFILE_TYPE;
 
             self.isOpen = false;
 
@@ -101,6 +103,22 @@
                 });
             }
 
+            self.isCustomer = function () {
+                return self.profileStore.currentProfile
+                    && self.profileStore.currentProfile.profileType === self.PROFILE_TYPE.CUSTOMER;
+            }
+
+            self.isInternal = function () {
+                return self.profileStore.currentProfile
+                    && self.profileStore.currentProfile.profileType === self.PROFILE_TYPE.INTERNAL;
+            }
+
+            self.isBidder = function () {
+                return self.profileStore.currentProfile
+                    && self.profileStore.currentProfile.profileType !== self.PROFILE_TYPE.CUSTOMER
+                    && self.profileStore.currentProfile.profileType !== self.PROFILE_TYPE.INTERNAL;
+            }
+
             self.menuHTML = [
                 "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
                 "   <div class='wbHamburgerMenu-container'>",
@@ -127,10 +145,21 @@
                 "</div>"
             ].join(" ");
 
+            self.internalMenuHTML = [
+                "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
+                "   <div class='wbHamburgerMenu-container'>",
+                "       <div class='wbHamburgerMenu-links'>",
+                "           <div><a data-ng-click='vm.navigateToMyProfile()'>Dashboard</a><div>",
+                "           <div><a data-ng-click='vm.navigateToLogin()'>Logout</a><div>",
+                "       </div>",
+                "   </div>",
+                "</div>"
+            ].join(" ");
+
             self.initializeAsync = function() {
                 var deferred = self.$q.defer();
-
-                self.augmentedJQuery = self.$compile(angular.element(securityStore.token ? self.menuHTML : self.anonymousMenuHtml))(self.$scope);
+                var html = self.getMenuHtml();
+                self.augmentedJQuery = self.$compile(angular.element(html))(self.$scope);
                 self.nativeElement = self.augmentedJQuery[0];
 
                 self.extendCssAsync({
@@ -156,6 +185,16 @@
                 return deferred.promise;
             }
 
+            self.getMenuHtml = function () {
+                if (!securityStore.token)
+                    return self.anonymousMenuHtml;
+
+                if (self.isBidder() || self.isCustomer())
+                    return self.menuHTML;
+
+                if (self.isInternal())
+                    return self.internalMenuHTML;
+            }
             self.showAsync = function() {
                 return self.setOpacityAsync({ nativeHtmlElement: self.nativeElement, opacity: 25 });
             }
@@ -233,7 +272,7 @@
             "     margin-right: 70px; ",
             " } "
         ],
-        providers: ["$compile","$location","$q", "$scope", "appendToBodyAsync", "extendCssAsync", "removeElement", "securityStore", "setOpacityAsync"],
+        providers: ["$compile","$location","$q", "$scope", "appendToBodyAsync", "extendCssAsync", "profileStore", "PROFILE_TYPE", "removeElement", "securityStore", "setOpacityAsync"],
         template: [
             "<div class='wbHamburgerButton' data-ng-click='vm.onClick()'>",
             "<div></div>",
