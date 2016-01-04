@@ -22,6 +22,12 @@
                 instance.description = options.data.description;
                 instance.price = options.data.price;
             }
+
+            if (options.bidder) {
+                var bidder = self.$injector.get("bidder");
+                instance.bidder = bidder.createInstance({ data: options.data, profile: options.profile });
+            }
+
             return instance;
         }
 

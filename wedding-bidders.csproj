@@ -244,6 +244,9 @@
     <Content Include="src\app\components\admin\wb-admin-slide.js" />
     <Content Include="src\app\components\wb-wedding-detail.js" />
     <Content Include="src\app\components\wb-wedding-item.js" />
+    <Content Include="src\app\domain\conversation.js" />
+    <Content Include="src\app\domain\message.js" />
+    <Content Include="src\app\domain\profile.js" />
     <Content Include="src\app\metal\work-spinner.js" />
     <Content Include="src\app\services\conversationService.js" />
     <Content Include="src\app\services\subscriptionService.js" />
