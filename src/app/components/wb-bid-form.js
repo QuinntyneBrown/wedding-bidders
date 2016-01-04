@@ -4,27 +4,22 @@
 
     ngX.Component({
         selector: "bid-form",
-        component: function BidFormComponent(bidActions, invokeAsync) {
+        component: function BidFormComponent(bid) {
             var self = this;
-            self.bidActions = bidActions;
             self.tryToAdd = function () {
-                invokeAsync({
-                    action: self.bidActions.add,
-                    params: {
-                        weddingId: self.weddingId,
-                        price: self.price,
-                        description: self.description
-                    }
+                bid.addAsync({
+                    weddingId: self.weddingId,
+                    price: self.price,
+                    description: self.description
                 }).then(function () {
                     if(self.successCallback)
                         self.successCallback();
                 });
             };
-
             return self;
         },
         providers: [
-            "bidActions", "invokeAsync"
+            "bid"
         ],
         styles: [
             ".bidForm button { background-color:#222; color:#FFF; border: 0px solid; font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px; } "

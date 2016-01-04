@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function bid($injector, $q, messageActions) {
+    function bid($injector, $q, bidActions, invokeAsync, messageActions) {
         var self = this;
         self.$injector = $injector;
         self.$q = $q;
@@ -31,9 +31,19 @@
             return instance;
         }
 
+        self.addAsync = function (options) {
+            return invokeAsync({
+                action: bidActions.add,
+                params: {
+                    weddingId: options.weddingId,
+                    price: options.price,
+                    description: options.description
+                }
+            });
+        }
         return self;
     }
 
-    angular.module("app").service("bid", ["$injector","$q","messageActions",bid]);
+    angular.module("app").service("bid", ["$injector", "$q", "bidActions", "invokeAsync","messageActions", bid]);
 
 })();

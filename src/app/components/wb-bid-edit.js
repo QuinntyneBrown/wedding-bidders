@@ -2,21 +2,17 @@
 
     "use strict";
 
-    function EditBidComponent($location, $routeParams, dispatcher, weddingStore) {
+    function EditBidComponent($location, $routeParams) {
         var self = this;
-        self.weddingStore = weddingStore;
-        self.$location = $location;
         self.wedding = { id: Number($routeParams.weddingId) };
-        self.successCallback = function () {
-            $location.path("/bids");
-        }
+        self.successCallback = function () { $location.path("/bids"); }
         return self;
     }
 
     ngX.Component({
         component: EditBidComponent,
         routes: ["/bid/create/:weddingId"],
-        providers: ["$location", "$routeParams","dispatcher","weddingStore"],
+        providers: ["$location", "$routeParams"],
         styles: [" .editWeddingComponent { padding-left:15px; } "],
         template: [
             "<div class='editWeddingComponent viewComponent'>",
