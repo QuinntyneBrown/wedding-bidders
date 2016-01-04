@@ -2,22 +2,18 @@
 
     "use strict";
 
-    function BidderMyProfileComponent(bidActions, dispatcher, profileStore, weddingStore) {
+    function BidderMyProfileComponent(profileStore, weddingStore) {
         var self = this;
         self.profile = profileStore.currentProfile;
         self.weddings = weddingStore.weddingsByProfile;
-        self.dispatcher = dispatcher;
+        
+        self.storeOnChange = function () {
+            self.initialize();
+        };
 
-        self.listenerId = self.dispatcher.addListener({
-            actionType: "CHANGE",
-            callback: function (options) {
-                self.profile = profileStore.currentProfile;
-                self.weddings = weddingStore.weddingsByProfile;
-            }
-        });
-
-        self.dispose = function () {
-            self.dispatcher.removeListener({ id: self.listenerId });
+        self.initialize = function () {
+            self.profile = profileStore.currentProfile;
+            self.weddings = weddingStore.weddingsByProfile;
         }
 
         return self;
@@ -36,8 +32,6 @@
         component: BidderMyProfileComponent,
         route: "/bidder/myprofile",
         providers: [
-            "bidActions",
-            "dispatcher",
             "profileStore",
             "weddingStore"
         ],
