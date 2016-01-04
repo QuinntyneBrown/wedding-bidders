@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function CustomerMyProfileComponent(safeDigest, $scope, bidStore, profileStore, weddingCollection, weddingStore) {
+    function CustomerMyProfileComponent(safeDigest, $scope, bidStore, profileStore, weddingActions, weddingCollection, weddingStore) {
         var self = this;
         self.profileStore = profileStore;
         self.bidStore = bidStore;
@@ -17,7 +17,7 @@
                 bids: self.bidStore.byProfile
             }).items;
 
-            if (self.weddings.length > 0) {
+            if (self.weddings.length > 0 && self.weddingStore.currentWedding) {
                 if (self.weddingStore.currentWedding) {
                     for (var i = 0; i < self.weddings.length; i++) {
                         if (self.weddings[i].id === self.weddingStore.currentWedding.id) {
@@ -25,11 +25,11 @@
                         }
                     }
                 }
-                else {
-                    self.currentWedding = self.weddings[0];
-                }
             }
 
+            if (self.weddings.length > 0 && !self.weddingStore.currentWedding)
+                weddingActions.select({ wedding: self.weddings[0] });
+            
             self.safeDigest($scope);
         }
 
@@ -59,6 +59,7 @@
             "$scope",
             "bidStore",
             "profileStore",
+            "weddingActions",
             "weddingCollection",
             "weddingStore"
         ],

@@ -2,11 +2,18 @@
 
     "use strict";
 
-    function WeddingItemComponent(profileStore) {
+    function WeddingItemComponent($element, profileStore, weddingStore) {
         var self = this;        
         self.isCustomer = profileStore.isCustomer;
         self.isBidder = profileStore.isBidder;
         self.isInternal = profileStore.isInternal;
+        
+        self.getClass = function () {
+            if (weddingStore.currentWedding && self.wedding.id === weddingStore.currentWedding.id)
+                return 'selected';
+            return '';
+        }
+
         return self;
     }
 
@@ -14,7 +21,7 @@
         component: WeddingItemComponent,
         selector: "wedding-item",
         template: [
-            "<div class='weddingItem' data-ng-click='vm.wedding.select()'>",
+            "<div class='weddingItem' data-ng-click='vm.wedding.select()' data-ng-class='vm.getClass()'>",
             "       <h3>Number of Guests:  {{ ::vm.wedding.numberOfGuests }}</h3>",
             "       <h3>Hours:  {{ ::vm.wedding.numberOfHours }}</h3>",
             "       <h3>Location:  {{ ::vm.wedding.location }}</h3>",
@@ -25,11 +32,21 @@
             "</div>"
         ],
         providers:[
-            'profileStore'
+            '$element', 'profileStore', 'weddingStore'
         ],
         styles: [
             " .weddingItem { ",
             "   cursor:pointer; ",
+            "   padding:15px; ",
+            " } ",
+
+            " .weddingItem h3 { ",
+            "   line-height:30px; ",
+            " } ",
+
+            " .weddingItem.selected { ",
+            "   background-color:rgb(243,108,129); ",
+            "   color:#FFF; ",
             " } "
         ],
         inputs: [
