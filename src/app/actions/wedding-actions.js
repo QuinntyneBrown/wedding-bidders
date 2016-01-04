@@ -56,7 +56,7 @@
             self.dispatcher.emit({
                 actionType: self.WEDDING_ACTIONS.UPDATE_CURRENT_WEDDING,
                 options: {
-                    data: options.id,
+                    data: options.wedding,
                     id: newGuid
                 }
             });

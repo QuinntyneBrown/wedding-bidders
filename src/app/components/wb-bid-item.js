@@ -19,6 +19,8 @@
         ],
         styles: [
             " .bidItem { ",
+            "   display:block; ",
+            "   margin:15px; ",
             " } "
         ],
         inputs: [

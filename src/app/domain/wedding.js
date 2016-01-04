@@ -38,7 +38,7 @@
 
         self.select = function () {
             self.weddingActions.select({
-                id: self.id
+                wedding: self
             });
         }
 

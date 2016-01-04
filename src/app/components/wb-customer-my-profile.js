@@ -16,7 +16,20 @@
                 data: self.weddingStore.weddingsByProfile,
                 bids: self.bidStore.byProfile
             }).items;
-            self.currentWedding = self.weddings[0];
+
+            if (self.weddings.length > 0) {
+                if (self.weddingStore.currentWedding) {
+                    for (var i = 0; i < self.weddings.length; i++) {
+                        if (self.weddings[i].id === self.weddingStore.currentWedding.id) {
+                            self.currentWedding = self.weddings[i];
+                        }
+                    }
+                }
+                else {
+                    self.currentWedding = self.weddings[0];
+                }
+            }
+
             self.safeDigest($scope);
         }
 
@@ -51,21 +64,26 @@
         ],
         template: [
             "<div class='customerMyProfile viewComponent'>",
-            "<h1>{{ vm.profile.firstname }}  {{ vm.profile.lastname }}</h1><br/><br/>",
-            "<div> ",
-            "   <div class='customerMyProfile-list'> ",
-            "       <h1>Weddings</h1>",
-            "       <wedding-item wedding='wedding' data-ng-repeat='wedding in vm.weddings'></wedding-item> ",
-            "   </div>",
-            "   <div class='customerMyProfile-detail'> ",
-            "       <wedding-detail wedding='vm.currentWedding'></wedding-detail>",
-            "   </div>",
-            "   <div class='clear:both;'></div> ",
+            "   <div> ",
+            "       <h1>{{ vm.profile.firstname }}  {{ vm.profile.lastname }}</h1><br/><br/>",
+            "   </div> ",
+            "   <div> ",
+            "       <div class='customerMyProfile-list'> ",
+            "           <h1>Weddings</h1>",
+            "           <wedding-item wedding='wedding' data-ng-repeat='wedding in vm.weddings'></wedding-item> ",
+            "       </div>",
+            "       <div class='customerMyProfile-detail'> ",
+            "           <wedding-detail wedding='vm.currentWedding'></wedding-detail>",
+            "       </div>",
+            "   <div style='clear:both;'></div> ",
             "</div>"
         ],
         styles: [
             " .customerMyProfile { ",
-            "   width:100%;",
+            "   width:100%; ",
+            "   min-height:100%; ",
+            "   display:block; ",
+            "   position:relative; ",
             " } ",
             " .customerMyProfile-list, .customerMyProfile-detail { ",
             "   width:50%; ",
