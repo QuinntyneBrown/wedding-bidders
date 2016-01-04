@@ -13,6 +13,7 @@
         component: WeddingDetailComponent,        
         template: [
             "<div class='weddingDetail'>",
+            "   <h1>Wedding Detail</h1>",
             "   <bid-item bid='bid' data-ng-repeat='bid in vm.wedding.bids'>",
             "   </bid-item>",
             "</div>"

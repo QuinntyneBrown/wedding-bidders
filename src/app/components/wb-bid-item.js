@@ -9,10 +9,12 @@
     }
 
     ngX.Component({
-        selector: "wedding-detail",
+        selector: "bid-item",
         component: BidItemComponent,
         template: [
             "<div class='bidItem'>",
+            "   <h1>{{ ::vm.bid.price }}</h1>",
+            "   <p>{{ ::vm.bid.description }}</p>",
             "</div>"
         ],
         styles: [

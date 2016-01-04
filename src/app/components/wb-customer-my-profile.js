@@ -16,6 +16,7 @@
                 data: self.weddingStore.weddingsByProfile,
                 bids: self.bidStore.byProfile
             }).items;
+            self.currentWedding = self.weddings[0];
             self.safeDigest($scope);
         }
 
@@ -57,7 +58,7 @@
             "       <wedding-item wedding='wedding' data-ng-repeat='wedding in vm.weddings'></wedding-item> ",
             "   </div>",
             "   <div class='customerMyProfile-detail'> ",
-            "       <h1>Wedding Detail</h1>",
+            "       <wedding-detail wedding='vm.currentWedding'></wedding-detail>",
             "   </div>",
             "   <div class='clear:both;'></div> ",
             "</div>"
