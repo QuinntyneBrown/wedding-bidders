@@ -19,7 +19,12 @@
 
     ngX.Component({
         component: PaymentComponent,
-        providers: ["$location", "ACCOUNT_STATUS", "accountStore", "invokeAsync", "subscriptionActions"],
+        providers: [
+            "$location",
+            "ACCOUNT_STATUS",
+            "accountStore",
+            "invokeAsync",
+            "subscriptionActions"],
         template: [
             "<div class='paymentComponent viewComponent'>",
             "   <button data-ng-click='vm.charge()'>Charge</button>",

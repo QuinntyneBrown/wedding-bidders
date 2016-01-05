@@ -2,11 +2,9 @@
 
     "use strict";
 
-    function bidderActions($q, dispatcher, guid, bidderService, BIDDER_ACTIONS) {
+    function bidderActions(dispatcher, guid, bidderService, BIDDER_ACTIONS) {
 
         var self = this;
-        self.dispatcher = dispatcher;
-        self.BIDDER_ACTIONS = BIDDER_ACTIONS;
 
         self.add = function (options) {
             var newGuid = guid();
@@ -21,8 +19,8 @@
                     bidderType: options.bidderType
                 }
             }).then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.BIDDER_ACTIONS.ADD, options:
+                dispatcher.emit({
+                    actionType: BIDDER_ACTIONS.ADD, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -32,8 +30,8 @@
         self.getAll = function (options) {
             var newGuid = guid();
             bidderService.getAll().then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.BIDDER_ACTIONS.UPDATE_ALL, options:
+                dispatcher.emit({
+                    actionType: BIDDER_ACTIONS.UPDATE_ALL, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -43,8 +41,8 @@
         self.getById = function (options) {
             var newGuid = guid();
             bidderService.getById({ id: options.id }).then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.BIDDER_ACTIONS.UPDATE_BY_ID, options:
+                dispatcher.emit({
+                    actionType: BIDDER_ACTIONS.UPDATE_BY_ID, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -54,8 +52,8 @@
         self.getTypes = function () {
             var newGuid = guid();
             bidderService.getTypes().then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.BIDDER_ACTIONS.UPDATE_TYPES, options:
+                dispatcher.emit({
+                    actionType: BIDDER_ACTIONS.UPDATE_TYPES, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -66,7 +64,7 @@
     }
 
     angular.module("app")
-        .service("bidderActions", ["$q","dispatcher", "guid", "bidderService", "BIDDER_ACTIONS", bidderActions])
+        .service("bidderActions", ["dispatcher", "guid", "bidderService", "BIDDER_ACTIONS", bidderActions])
 
 
 })();

@@ -16,7 +16,7 @@
         dispatcher.addListener({
             actionType: SUBSCRIPTION_ACTIONS.CHARGE_SUCCESS,
             callback: function (options) {
-                self.billing = options.data;
+                self.currentAccount.accountStatus = ACCOUNT_STATUS.PAID;
                 self.emitChange({ id: options.id });
             }
         });

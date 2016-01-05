@@ -2,12 +2,9 @@
 
     "use strict";
 
-    function bidActions($q, dispatcher, guid, bidService, BID_ACTIONS) {
+    function bidActions(dispatcher, guid, bidService, BID_ACTIONS) {
 
         var self = this;
-        self.$q = $q;
-        self.dispatcher = dispatcher;
-        self.BID_ACTIONS = BID_ACTIONS;
 
         self.add = function (options) {
             var newGuid = guid();
@@ -19,8 +16,8 @@
                     description: options.description
                 }
             }).then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.BID_ACTIONS.ADD_BID, options:
+                dispatcher.emit({
+                    actionType: BID_ACTIONS.ADD_BID, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -30,8 +27,8 @@
         self.getAllByCurrentProfile = function (options) {
             var newGuid = guid();
             bidService.getAllByCurrentProfile().then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.BID_ACTIONS.UPDATE_BY_PROFILE, options:
+                dispatcher.emit({
+                    actionType: BID_ACTIONS.UPDATE_BY_PROFILE, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -42,7 +39,7 @@
     }
 
     angular.module("app")
-        .service("bidActions", ["$q", "dispatcher", "guid", "bidService", "BID_ACTIONS", bidActions])
+        .service("bidActions", ["dispatcher", "guid", "bidService", "BID_ACTIONS", bidActions])
 
 
 })();
