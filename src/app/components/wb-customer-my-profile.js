@@ -10,7 +10,8 @@
             self.weddings = weddingCollection.createInstance({
                 data: weddingStore.weddingsByProfile,
                 bids: bidStore.byProfile,
-                bidders: bidderStore.items
+                bidders: bidderStore.items,
+                profiles: profileStore.items
             }).items;
 
             if (self.weddings.length > 0 && weddingStore.currentWedding) {
@@ -41,7 +42,7 @@
     }
 
     CustomerMyProfileComponent.canActivate = function () {
-        return ["$q", "invokeAsync", "bidderActions", "bidActions", "bidStore", "weddingActions", function ($q, invokeAsync, bidderActions, bidActions, bidStore, weddingActions) {
+        return ["$q", "invokeAsync", "bidderActions", "bidActions", "bidStore", "profileActions", "weddingActions", function ($q, invokeAsync, bidderActions, bidActions, bidStore, profileActions, weddingActions) {
             var deferred = $q.defer();
             $q.all([
                 invokeAsync(bidActions.getAllByCurrentProfile),
@@ -49,10 +50,16 @@
             ]).then(function (results) {
                 var promises = [];
                 for (var i = 0; i < bidStore.byProfile.length; i++) {                    
-                    promises.push(invokeAsync({
-                        action: bidderActions.getByBidId,
-                        params: { bidId: bidStore.byProfile[i].id }
-                    }));
+                    promises.push($q.all([
+                        invokeAsync({
+                            action: bidderActions.getByBidId,
+                            params: { bidId: bidStore.byProfile[i].id }
+                        }),
+                        invokeAsync({
+                            action: profileActions.getByBidId,
+                            params: { bidId: bidStore.byProfile[i].id }
+                        })
+                    ]));
                 };
                 $q.all(promises).then(function () {
                     deferred.resolve();

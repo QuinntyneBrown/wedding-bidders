@@ -18,11 +18,19 @@
                 instance.companyName = options.data.companyName;
                 instance.email = options.data.email;
                 instance.bidderType = options.data.bidderType;
+                instance.profileId = options.data.profileId;
             }
 
-            if (options.profile) {
-                var profile = instance.$injector.get("profile");
-                instance.profile = profile.createInstance({ data: options.profile })
+            if (options.profiles) {
+                for (var i = 0; i < options.profiles.length; i++) {
+                    if (options.profiles[i].id == instance.profileId) {
+                        var profile = instance.$injector.get("profile");
+                        instance.profile = profile.createInstance({ data: options.profiles[i] })
+                    }
+                    
+                }
+                
+                
             }
 
             return instance;

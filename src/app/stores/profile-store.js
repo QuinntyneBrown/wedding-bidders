@@ -21,6 +21,14 @@
             }
         });
 
+        dispatcher.addListener({
+            actionType: PROFILE_ACTIONS.UPDATE_PROFILE_BY_BID,
+            callback: function (options) {
+                self.storeInstance.addOrUpdate({ data: options.data });
+                self.emitChange({ id: options.id });
+            }
+        });
+
         self.isCustomer = function () {
             return self.currentProfile
                 && self.currentProfile.profileType === PROFILE_TYPE.CUSTOMER;

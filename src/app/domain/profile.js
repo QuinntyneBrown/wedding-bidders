@@ -11,7 +11,7 @@
         self.MESSAGE_TYPE = MESSAGE_TYPE;
 
         self.createInstance = function (options) {
-            var instance = new bidder(self.$injector, self.$q, self.messageActions);
+            var instance = new profile(self.$injector, self.$q, self.messageActions);
             if (options.data) {
                 instance.id = options.data.id;
                 instance.firstname = options.data.firstname;

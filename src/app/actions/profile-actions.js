@@ -22,6 +22,21 @@
             return newGuid;
         };
 
+        self.getByBidId = function (options) {
+            var newGuid = guid();
+            profileService.getByBidId({ bidId: options.bidId }).then(function (results) {
+                dispatcher.emit({
+                    actionType: PROFILE_ACTIONS.UPDATE_PROFILE_BY_BID,
+                    options: {
+                        data: results,
+                        id: newGuid
+                    }
+                });
+            });
+
+            return newGuid;
+        };
+
         self.updateIsPersonalizedFlag = function () {
             var newGuid = guid();
             profileService.updateIsPersonalizedFlag().then(function (results) {

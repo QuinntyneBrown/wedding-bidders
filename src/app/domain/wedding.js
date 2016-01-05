@@ -25,7 +25,8 @@
                     if (instance.id === options.bids[i].weddingId) {
                         instance.bids.push(bid.createInstance({
                             data: options.bids[i],
-                            bidders: options.bidders
+                            bidders: options.bidders,
+                            profiles: options.profiles
                         }));
                     }
                 }

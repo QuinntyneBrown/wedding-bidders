@@ -15,7 +15,8 @@
                     instance.items.push(self.wedding.createInstance({
                         data: options.data[i],
                         bids: options.bids,
-                        bidders: options.bidders
+                        bidders: options.bidders,
+                        profiles: options.profiles
                     }));
                 }                
             }
