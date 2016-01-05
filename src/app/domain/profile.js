@@ -2,16 +2,16 @@
 
     "use strict";
 
-    function profile($injector, $q, messageActions, MESSAGE_TYPE) {
+    function profile($injector, dispatcher, messageActions, messageStore, MESSAGE_TYPE) {
         var self = this;
 
         self.$injector = $injector;
-        self.$q = $q;
+        self.dispatcher = dispatcher;
         self.messageActions = messageActions;
         self.MESSAGE_TYPE = MESSAGE_TYPE;
 
         self.createInstance = function (options) {
-            var instance = new profile(self.$injector, self.$q, self.messageActions);
+            var instance = new profile(self.$injector, self.dispatcher, self.messageActions, self.messageStore, self.MESSAGE_TYPE);
             if (options.data) {
                 instance.id = options.data.id;
                 instance.firstname = options.data.firstname;
@@ -33,9 +33,13 @@
             });
         }
 
+        self.storeOnChange = function () {
+
+        }
+
         return self;
     }
 
-    angular.module("app").service("profile", ["$injector", "$q", "messageActions", "MESSAGE_TYPE",profile]);
+    angular.module("app").service("profile", ["$injector", "dispatcher", "messageActions", "messageStore", "MESSAGE_TYPE",profile]);
 
 })();

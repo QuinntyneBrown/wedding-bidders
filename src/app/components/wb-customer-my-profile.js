@@ -5,7 +5,7 @@
     function CustomerMyProfileComponent(safeDigest, $scope, bidderStore, bidStore, profileStore, weddingActions, weddingCollection, weddingStore) {
         var self = this;
         
-        self.initialize = function () {
+        self.onInit = function () {
             self.profile = profileStore.currentProfile;
             self.weddings = weddingCollection.createInstance({
                 data: weddingStore.weddingsByProfile,
@@ -25,18 +25,10 @@
             }
 
             if (self.weddings.length > 0 && !weddingStore.currentWedding)
-                setTimeout(function () {
-                    weddingActions.select({ wedding: self.weddings[0] });
-                }, 0);
-            
-            safeDigest($scope);
+                weddingActions.select({ wedding: self.weddings[0] });            
         }
 
-        self.storeOnChange = function () {
-            self.initialize();
-        }
-
-        self.initialize();
+        self.storeOnChange = function () { self.onInit(); }
 
         return self;
     }
