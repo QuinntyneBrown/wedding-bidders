@@ -2,37 +2,33 @@
 
     "use strict";
 
-    function CustomerMyProfileComponent(safeDigest, $scope, bidStore, profileStore, weddingActions, weddingCollection, weddingStore) {
+    function CustomerMyProfileComponent(safeDigest, $scope, bidderStore, bidStore, profileStore, weddingActions, weddingCollection, weddingStore) {
         var self = this;
-        self.profileStore = profileStore;
-        self.bidStore = bidStore;
-        self.weddingCollection = weddingCollection;
-        self.weddingStore = weddingStore;
-        self.safeDigest = safeDigest;
-
+        
         self.initialize = function () {
-            self.profile = self.profileStore.currentProfile;
-            self.weddings = self.weddingCollection.createInstance({
-                data: self.weddingStore.weddingsByProfile,
-                bids: self.bidStore.byProfile
+            self.profile = profileStore.currentProfile;
+            self.weddings = weddingCollection.createInstance({
+                data: weddingStore.weddingsByProfile,
+                bids: bidStore.byProfile,
+                bidders: bidderStore.items
             }).items;
 
-            if (self.weddings.length > 0 && self.weddingStore.currentWedding) {
-                if (self.weddingStore.currentWedding) {
+            if (self.weddings.length > 0 && weddingStore.currentWedding) {
+                if (weddingStore.currentWedding) {
                     for (var i = 0; i < self.weddings.length; i++) {
-                        if (self.weddings[i].id === self.weddingStore.currentWedding.id) {
+                        if (self.weddings[i].id === weddingStore.currentWedding.id) {
                             self.currentWedding = self.weddings[i];
                         }
                     }
                 }
             }
 
-            if (self.weddings.length > 0 && !self.weddingStore.currentWedding)
+            if (self.weddings.length > 0 && !weddingStore.currentWedding)
                 setTimeout(function () {
                     weddingActions.select({ wedding: self.weddings[0] });
                 }, 0);
             
-            self.safeDigest($scope);
+            safeDigest($scope);
         }
 
         self.storeOnChange = function () {
@@ -72,6 +68,7 @@
         providers: [
             "safeDigest",
             "$scope",
+            "bidderStore",
             "bidStore",
             "profileStore",
             "weddingActions",

@@ -23,7 +23,10 @@
                 var bid = self.$injector.get('bid');
                 for (var i = 0; i < options.bids.length; i++) {
                     if (instance.id === options.bids[i].weddingId) {
-                        instance.bids.push(bid.createInstance({ data: options.bids[i] }));
+                        instance.bids.push(bid.createInstance({
+                            data: options.bids[i],
+                            bidders: options.bidders
+                        }));
                     }
                 }
             }

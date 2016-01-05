@@ -15,6 +15,7 @@
             "<div class='bidItem'>",
             "   <h1>{{ ::vm.bid.price }}</h1>",
             "   <p>{{ ::vm.bid.description }}</p>",
+            "   <p> Bidder: {{ ::vm.bid.bidder.firstname + ' ' + vm.bid.bidder.lastname }}</p> ",
             "</div>"
         ],
         styles: [

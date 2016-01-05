@@ -17,7 +17,7 @@
                 instance.lastname = options.data.lastname;
                 instance.companyName = options.data.companyName;
                 instance.email = options.data.email;
-                instance.bidderType = options.data.bidderType
+                instance.bidderType = options.data.bidderType;
             }
 
             if (options.profile) {

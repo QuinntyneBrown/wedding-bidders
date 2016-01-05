@@ -21,11 +21,15 @@
                 instance.weddingId = options.data.weddingId;
                 instance.description = options.data.description;
                 instance.price = options.data.price;
+                instance.bidderId = options.data.bidderId;
             }
 
-            if (options.bidder) {
+            if (options.bidders) {
                 var bidder = self.$injector.get("bidder");
-                instance.bidder = bidder.createInstance({ data: options.data, profile: options.profile });
+                for (var i = 0; i < options.bidders.length; i++) {
+                    if (options.bidders[0].id == instance.bidderId)
+                        instance.bidder = bidder.createInstance({ data: options.bidders[0], profile: options.profile });
+                }                
             }
 
             return instance;

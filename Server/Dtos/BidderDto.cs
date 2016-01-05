@@ -15,6 +15,7 @@ namespace WeddingBidders.Server.Dtos
             this.Firstname = bidder.Firstname;
             this.Lastname = bidder.Lastname;
             this.Email = bidder.Email;
+            this.BidderType = bidder.BidderType;
         }
 
         public int? Id { get; set; }
@@ -24,5 +25,8 @@ namespace WeddingBidders.Server.Dtos
         public string Lastname { get; set; }
 
         public string Email { get; set; }
+
+        public BidderType BidderType { get; set; }
     }
+
 }

@@ -14,7 +14,8 @@
                 for (var i = 0; i < options.data.length; i++) {
                     instance.items.push(self.wedding.createInstance({
                         data: options.data[i],
-                        bids: options.bids
+                        bids: options.bids,
+                        bidders: options.bidders
                     }));
                 }                
             }

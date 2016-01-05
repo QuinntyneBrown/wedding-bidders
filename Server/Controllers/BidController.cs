@@ -103,13 +103,7 @@ namespace WeddingBidders.Server.Controllers
                 {
                     foreach(var bid in wedding.Bids)
                     {
-                        dtos.Add(new BidDto()
-                        {
-                            Id = bid.Id,
-                            Price = bid.Price,
-                            Description = bid.Description,
-                            WeddingId = bid.WeddingId
-                        });
+                        dtos.Add(new BidDto(bid));
                     }
                 }               
             } else
@@ -118,13 +112,7 @@ namespace WeddingBidders.Server.Controllers
                 var bids = uow.Bids.GetAll().Where(x => x.BidderId == bidder.Id);
                 foreach (var bid in bids)
                 {
-                    dtos.Add(new BidDto()
-                    {
-                        Id = bid.Id,
-                        Price = bid.Price,
-                        Description = bid.Description,
-                        WeddingId = bid.WeddingId
-                    });
+                    dtos.Add(new BidDto(bid));
                 }
 
             }
