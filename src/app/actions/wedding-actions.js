@@ -3,12 +3,9 @@
     "use strict";
 
 
-    function weddingActions($q, dispatcher, guid, weddingService, WEDDING_ACTIONS) {
+    function weddingActions(dispatcher, guid, weddingService, WEDDING_ACTIONS) {
 
         var self = this;
-        self.$q = $q;
-        self.dispatcher = dispatcher;
-        self.WEDDING_ACTIONS = WEDDING_ACTIONS;
 
         self.add = function (options) {
             var newGuid = guid();
@@ -21,8 +18,8 @@
                     categories: options.categories
                 }
             }).then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.WEDDING_ACTIONS.ADD_WEDDING,
+                dispatcher.emit({
+                    actionType: WEDDING_ACTIONS.ADD_WEDDING,
                     options: {
                         data: results,
                         id: newGuid
@@ -40,8 +37,8 @@
                     id: options.id
                 }
             }).then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.WEDDING_ACTIONS.DELETE,
+                dispatcher.emit({
+                    actionType: WEDDING_ACTIONS.DELETE,
                     options: {
                         data: options.id,
                         id: newGuid
@@ -53,8 +50,8 @@
 
         self.select = function (options) {
             var newGuid = guid();
-            self.dispatcher.emit({
-                actionType: self.WEDDING_ACTIONS.UPDATE_CURRENT_WEDDING,
+            dispatcher.emit({
+                actionType: WEDDING_ACTIONS.UPDATE_CURRENT_WEDDING,
                 options: {
                     data: options.wedding,
                     id: newGuid
@@ -66,8 +63,8 @@
         self.getAll = function () {
             var newGuid = guid();
             weddingService.getAll().then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.WEDDING_ACTIONS.UPDATE_ALL_WEDDINGS,
+                dispatcher.emit({
+                    actionType: WEDDING_ACTIONS.UPDATE_ALL_WEDDINGS,
                     options: {
                         data: results,
                         id: newGuid
@@ -81,8 +78,8 @@
         self.getById = function (options) {
             var newGuid = guid();
             weddingService.getById({ id: options.id }).then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.WEDDING_ACTIONS.UPDATE_BY_ID,
+                dispatcher.emit({
+                    actionType: WEDDING_ACTIONS.UPDATE_BY_ID,
                     options: {
                         data: results,
                         id: newGuid
@@ -96,8 +93,8 @@
         self.getAllByCurrentProfile = function () {
             var newGuid = guid();
             weddingService.getAllByCurrentProfile().then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.WEDDING_ACTIONS.UPDATE_BY_PROFILE,
+                dispatcher.emit({
+                    actionType: WEDDING_ACTIONS.UPDATE_BY_PROFILE,
                     options: {
                         data: results,
                         id: newGuid
@@ -112,7 +109,7 @@
     }
 
     angular.module("app")
-        .service("weddingActions", ["$q","dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
+        .service("weddingActions", ["dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
 
 
 })();

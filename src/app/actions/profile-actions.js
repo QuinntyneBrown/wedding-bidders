@@ -3,18 +3,15 @@
     "use strict";
 
 
-    function profileActions($q, dispatcher, guid, profileService, PROFILE_ACTIONS) {
+    function profileActions(dispatcher, guid, profileService, PROFILE_ACTIONS) {
 
         var self = this;
-        self.dispatcher = dispatcher;
-        self.PROFILE_ACTIONS = PROFILE_ACTIONS;
-        self.$q = $q;
 
         self.getCurrentProfile = function () {
             var newGuid = guid();
             profileService.getCurrentProfile().then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.PROFILE_ACTIONS.UPDATE_CURRENT_PROFILE,
+                dispatcher.emit({
+                    actionType: PROFILE_ACTIONS.UPDATE_CURRENT_PROFILE,
                     options: {
                         data: results,
                         id: newGuid
@@ -28,8 +25,8 @@
         self.updateIsPersonalizedFlag = function () {
             var newGuid = guid();
             profileService.updateIsPersonalizedFlag().then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.PROFILE_ACTIONS.UPDATE_IS_PERSONALIZED_FLAG,
+                dispatcher.emit({
+                    actionType: PROFILE_ACTIONS.UPDATE_IS_PERSONALIZED_FLAG,
                     options: {
                         id: newGuid
                     }
@@ -42,7 +39,7 @@
     }
 
     angular.module("app")
-        .service("profileActions", ["$q", "dispatcher", "guid", "profileService", "PROFILE_ACTIONS", profileActions])
+        .service("profileActions", ["dispatcher", "guid", "profileService", "PROFILE_ACTIONS", profileActions])
 
 
 })();

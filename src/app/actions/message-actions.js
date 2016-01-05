@@ -5,13 +5,10 @@
     function messageActions(dispatcher, guid, messageService, MESSAGE_ACTIONS) {
 
         var self = this;
-        self.dispatcher = dispatcher;
-        self.MESSAGE_ACTIONS = MESSAGE_ACTIONS;
-        self.messageService = messageService;
 
         self.add = function (options) {
             var newGuid = guid();
-            self.messageService.add({
+            messageService.add({
                 data: {
                     toProfileId: options.toProfileId,
                     subject: options.subject,
@@ -19,8 +16,8 @@
                     messageType: options.messageType
                 }
             }).then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.MESSAGE_ACTIONS.ADD_MESSAGE, options:
+                dispatcher.emit({
+                    actionType: MESSAGE_ACTIONS.ADD_MESSAGE, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -29,10 +26,10 @@
 
         self.getAllForCurrentProfile = function (options) {
             var newGuid = guid();
-            self.messageService.getAllForCurrentProfile()
+            messageService.getAllForCurrentProfile()
                 .then(function (results) {
-                self.dispatcher.emit({
-                    actionType: self.MESSAGE_ACTIONS.UPDATE_ALL_CURRENT_PROFILE_MESSAGES, options:
+                dispatcher.emit({
+                    actionType: MESSAGE_ACTIONS.UPDATE_ALL_CURRENT_PROFILE_MESSAGES, options:
                         { data: results, id: newGuid }
                 });
             });
@@ -41,10 +38,10 @@
 
         self.getAllIssues = function (options) {
             var newGuid = guid();
-            self.messageService.getAllIssues()
+            messageService.getAllIssues()
                 .then(function (results) {
-                    self.dispatcher.emit({
-                        actionType: self.MESSAGE_ACTIONS.UPDATE_ALL_ISSUES, options:
+                    dispatcher.emit({
+                        actionType: MESSAGE_ACTIONS.UPDATE_ALL_ISSUES, options:
                             { data: results, id: newGuid }
                     });
                 });
