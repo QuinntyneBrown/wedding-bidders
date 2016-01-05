@@ -55,14 +55,12 @@ namespace WeddingBidders.Server.Controllers
         [HttpGet]
         [Route("GetByBidId")]
         public IHttpActionResult GetByBidId(int bidId)
-        {
-            var bidder = this.uow.Bidders
+            => Ok(new BidderDto(this.uow.Bidders
                 .GetAll()
                 .Include(x => x.Bids)
                 .Where(x => x.Bids.Any(b => b.Id == bidId))
-                .First();               
-            return Ok(new BidderDto(bidder));
-        }
+                .Single()));
+        
 
         [HttpPost]
         [Route("add")]
