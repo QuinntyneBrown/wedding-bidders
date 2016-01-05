@@ -28,7 +28,9 @@
             }
 
             if (self.weddings.length > 0 && !self.weddingStore.currentWedding)
-                weddingActions.select({ wedding: self.weddings[0] });
+                setTimeout(function () {
+                    weddingActions.select({ wedding: self.weddings[0] });
+                }, 0);
             
             self.safeDigest($scope);
         }
@@ -43,11 +45,24 @@
     }
 
     CustomerMyProfileComponent.canActivate = function () {
-        return ["$q", "invokeAsync", "bidActions", "weddingActions", function ($q, invokeAsync, bidActions, weddingActions) {
-            return $q.all([
+        return ["$q", "invokeAsync", "bidderActions", "bidActions", "bidStore", "weddingActions", function ($q, invokeAsync, bidderActions, bidActions, bidStore, weddingActions) {
+            var deferred = $q.defer();
+            $q.all([
                 invokeAsync(bidActions.getAllByCurrentProfile),
                 invokeAsync(weddingActions.getAllByCurrentProfile)
-            ]);
+            ]).then(function (results) {
+                var promises = [];
+                for (var i = 0; i < bidStore.byProfile.length; i++) {                    
+                    promises.push(invokeAsync({
+                        action: bidderActions.getByBidId,
+                        params: { bidId: bidStore.byProfile[i].id }
+                    }));
+                };
+                $q.all(promises).then(function () {
+                    deferred.resolve();
+                });                
+            });
+            return deferred.promise;
         }];
     }
 

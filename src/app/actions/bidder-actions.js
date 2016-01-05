@@ -49,6 +49,17 @@
             return newGuid;
         }
 
+        self.getByBidId = function (options) {
+            var newGuid = guid();
+            bidderService.getByBidId({ bidId: options.bidId }).then(function (results) {
+                dispatcher.emit({
+                    actionType: BIDDER_ACTIONS.UPDATE_BY_BID_ID, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
+
         self.getTypes = function () {
             var newGuid = guid();
             bidderService.getTypes().then(function (results) {

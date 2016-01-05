@@ -36,6 +36,14 @@
             return deferred.promise;
         }
 
+        self.getByBidId = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({ method: "GET", url: self.baseUri + "/getByBidId", params: { bidId: options.bidId } }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        }
+
         self.baseUri = apiEndpoint.getBaseUrl() + "/bidder";
         return self;
     }

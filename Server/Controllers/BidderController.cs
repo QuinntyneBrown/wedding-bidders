@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -48,6 +49,19 @@ namespace WeddingBidders.Server.Controllers
         {
             var bidder = new BidderDto(this.uow.Bidders.GetAll().Where(x => x.Id == id).Single());
             return Ok(bidder);
+        }
+
+
+        [HttpGet]
+        [Route("GetByBidId")]
+        public IHttpActionResult GetByBidId(int bidId)
+        {
+            var bidder = this.uow.Bidders
+                .GetAll()
+                .Include(x => x.Bids)
+                .Where(x => x.Bids.Any(b => b.Id == bidId))
+                .First();               
+            return Ok(new BidderDto(bidder));
         }
 
         [HttpPost]
