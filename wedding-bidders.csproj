@@ -209,6 +209,7 @@
     <Content Include="assets\images\carousel_button_next.png" />
     <Content Include="assets\images\carousel_button_prev.png" />
     <Content Include="assets\images\icon_search_sm.png" />
+    <Content Include="assets\images\logo_tag_line.jpg" />
     <Content Include="assets\images\name.jpg" />
     <Content Include="assets\images\rotator_button_next.png" />
     <Content Include="assets\images\rotator_button_prev.png" />
@@ -238,10 +239,22 @@
     <Content Include="src\app\components\admin\wb-admin-customers.js" />
     <Content Include="src\app\components\admin\wb-admin-issues.js" />
     <Content Include="src\app\components\admin\wb-admin-weddings.js" />
+    <Content Include="src\app\components\wb-banner.js">
+      <DependentUpon>wb-header.js</DependentUpon>
+    </Content>
     <Content Include="src\app\components\wb-bid-item.js" />
+    <Content Include="src\app\components\wb-hamburger-button.js">
+      <DependentUpon>wb-header.js</DependentUpon>
+    </Content>
+    <Content Include="src\app\components\wb-navigation.js">
+      <DependentUpon>wb-header.js</DependentUpon>
+    </Content>
     <Content Include="src\app\components\wb-payment.js" />
     <Content Include="src\app\components\wb-personalize.js" />
     <Content Include="src\app\components\admin\wb-admin-slide.js" />
+    <Content Include="src\app\components\wb-top-banner.js">
+      <DependentUpon>wb-header.js</DependentUpon>
+    </Content>
     <Content Include="src\app\components\wb-wedding-detail.js" />
     <Content Include="src\app\components\wb-wedding-item.js" />
     <Content Include="src\app\domain\conversation.js" />
@@ -292,7 +305,6 @@
     <Content Include="src\app\app.module.js" />
     <Content Include="src\app\components\wb-about.js" />
     <Content Include="src\app\components\wb-app.js" />
-    <Content Include="src\app\components\wb-banner.js" />
     <Content Include="src\app\components\wb-bid-edit.js" />
     <Content Include="src\app\components\wb-bid-form.js" />
     <Content Include="src\app\components\wb-bids.js" />
@@ -310,17 +322,14 @@
     <Content Include="src\app\components\wb-caterer.js" />
     <Content Include="src\app\components\wb-edit-wedding.js" />
     <Content Include="src\app\components\wb-footer.js" />
-    <Content Include="src\app\components\wb-hamburger-button.js" />
     <Content Include="src\app\components\wb-header.js" />
     <Content Include="src\app\components\wb-login-form.js" />
     <Content Include="src\app\components\wb-login.js" />
     <Content Include="src\app\components\wb-my-account.js" />
-    <Content Include="src\app\components\wb-navigation.js" />
     <Content Include="src\app\components\wb-promotion.js" />
     <Content Include="src\app\components\wb-report-an-issue.js" />
     <Content Include="src\app\components\wb-text-area-control.js" />
     <Content Include="src\app\components\wb-text-form-control.js" />
-    <Content Include="src\app\components\wb-top-banner.js" />
     <Content Include="src\app\components\wb-vendors.js" />
     <Content Include="src\app\components\wb-weddings.js" />
     <Content Include="src\app\domain\bidder.js" />
@@ -497,6 +506,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\app\components\header\" />
     <Folder Include="tests\" />
   </ItemGroup>
   <ItemGroup>

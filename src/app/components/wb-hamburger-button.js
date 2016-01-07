@@ -67,6 +67,19 @@
                 });
             }
 
+
+            self.navigateToWeddings = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/weddings");
+                });
+            }
+
+            self.navigateToBids = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/bids");
+                });
+            }
+
             self.navigateToMyAccount = function () {
                 self.closeAsync().then(function () {
                     self.$location.path("/myaccount");
@@ -97,6 +110,12 @@
                 });
             }
 
+            self.navigateToSubmitWedding = function () {
+                self.closeAsync().then(function () {
+                    self.$location.path("/wedding/create");
+                });
+            }
+
             self.navigateToCreateBidderAccount = function () {
                 self.closeAsync().then(function () {
                     self.$location.path("/bidder/register");
@@ -119,12 +138,12 @@
                     && self.profileStore.currentProfile.profileType !== self.PROFILE_TYPE.INTERNAL;
             }
 
-            self.menuHTML = [
+            self.customerMenuHTML = [
                 "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
                 "   <div class='wbHamburgerMenu-container'>",
                 "       <div class='wbHamburgerMenu-links'>",
+                "           <div><a data-ng-click='vm.navigateToSubmitWedding()'>Submit Wedding</a><div>",
                 "           <div><a data-ng-click='vm.navigateToMyProfile()'>My Profile</a><div>",
-                "           <div><a data-ng-click='vm.navigateToMyAccount()'>My Account</a><div>",
                 "           <div><a data-ng-click='vm.navigateToMyMessages()'>My Messages</a><div>",
                 "           <div><a data-ng-click='vm.navigateToReportAnIssue()'>Report an Issue</a><div>",
                 "           <div><a data-ng-click='vm.navigateToLogin()'>Logout</a><div>",                
@@ -133,6 +152,20 @@
                 "</div>"
             ].join(" ");
 
+            self.bidderMenuHTML = [
+            "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
+            "   <div class='wbHamburgerMenu-container'>",
+            "       <div class='wbHamburgerMenu-links'>",
+            "           <div><a data-ng-click='vm.navigateToWeddings()'>Weddings</a><div>",
+            "           <div><a data-ng-click='vm.navigateToBids()'>Bids</a><div>",
+            "           <div><a data-ng-click='vm.navigateToMyProfile()'>My Profle</a><div>",
+            "           <div><a data-ng-click='vm.navigateToMyMessages()'>My Messages</a><div>",
+            "           <div><a data-ng-click='vm.navigateToReportAnIssue()'>Report an Issue</a><div>",
+            "           <div><a data-ng-click='vm.navigateToLogin()'>Logout</a><div>",
+            "       </div>",
+            "   </div>",
+            "</div>"
+            ].join(" ");
             self.anonymousMenuHtml = [
                 "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
                 "   <div class='wbHamburgerMenu-container'>",
@@ -189,8 +222,11 @@
                 if (!securityStore.token)
                     return self.anonymousMenuHtml;
 
-                if (self.isBidder() || self.isCustomer())
-                    return self.menuHTML;
+                if (self.isCustomer())
+                    return self.customerMenuHTML;
+
+                if (self.isBidder())
+                    return self.bidderMenuHTML;
 
                 if (self.isInternal())
                     return self.internalMenuHTML;
