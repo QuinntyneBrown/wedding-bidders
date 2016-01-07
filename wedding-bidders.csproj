@@ -308,7 +308,6 @@
     <Content Include="src\app\components\wb-bid-edit.js" />
     <Content Include="src\app\components\wb-bid-form.js" />
     <Content Include="src\app\components\wb-bids.js" />
-    <Content Include="src\app\components\wb-caterer-bids.js" />
     <Content Include="src\app\components\wb-bidder-my-profile.js" />
     <Content Include="src\app\components\wb-bidder-profile.js" />
     <Content Include="src\app\components\wb-bidder-registration-form.js" />
@@ -319,7 +318,6 @@
     <Content Include="src\app\components\wb-customer-registration.js" />
     <Content Include="src\app\components\wb-customer-weddings.js" />
     <Content Include="src\app\components\wb-edit-wedding-form.js" />
-    <Content Include="src\app\components\wb-caterer.js" />
     <Content Include="src\app\components\wb-edit-wedding.js" />
     <Content Include="src\app\components\wb-footer.js" />
     <Content Include="src\app\components\wb-header.js" />
@@ -506,7 +504,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\app\components\header\" />
     <Folder Include="tests\" />
   </ItemGroup>
   <ItemGroup>

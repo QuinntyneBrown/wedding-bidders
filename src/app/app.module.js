@@ -4,6 +4,10 @@
         "componentName": "homeComponent"
     });
 
+    $routeProvider.when("/bidder/profile/:id", {
+        "componentName": "bidderProfileComponent"
+    });
+
     $routeProvider.when("/admin/weddings", {
         "componentName": "adminWeddingsComponent"
     });
@@ -90,9 +94,7 @@
         "authorizationRequired": true
     });
 
-    $routeProvider.when("/caterer/:id", {
-        "componentName": "catererComponent"
-    });
+
 
     $routeProvider.when("/myprofile", {
         "authorizationRequired": true,

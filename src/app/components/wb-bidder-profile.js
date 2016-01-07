@@ -2,38 +2,36 @@
 
     "use strict";
 
-    function BidderProfileComponent($routeParams, bidderStore) {
+    function BidderProfileComponent($routeParams, bidder, bidderStore) {
         var self = this;
-        self.bidder = bidderStore.getByName({ name: $routeParams.name });
+        
+        self.onInit = function () {
+            self.bidder = bidder.createInstance({
+                data: bidderStore.getById(Number($routeParams.id))
+            });
+        }
 
-        self.listenerId = self.dispatcher.addListener({
-            actionType: "CHANGE",
-            callback: function (options) {
-                self.caterer = bidderStore.getByName({ name: $routeParams.name });
-            }
-        });
+        self.storeOnChange = function () {
 
-        self.dispose = function () {
-            self.dispatcher.removeListener({ id: self.listenerId });
         }
 
         return self;
     }
 
     BidderProfileComponent.canActivate = function () {
-        return ["$routeParams", "bidderActions", "invokeAsync", function ($routeParams, bidderActions, invokeAsync) {
+        return ["$route", "bidderActions", "invokeAsync", function ($route, bidderActions, invokeAsync) {
             return invokeAsync({
-                action: bidderActions.getByName,
-                params: { name: $routeParams.name }
+                action: bidderActions.getById,
+                params: { id: $route.current.params.id }
             });
         }];
     }
 
     ngX.Component({
         component: BidderProfileComponent,
-        route: "/bidder/profile/:name",
+        route: "/bidder/profile/:id",
         providers: [
-            "bidderStore"
+            "$routeParams", "bidder", "bidderStore"
         ],
         template: [
             "<div class='bidderProfile viewComponent'>",
