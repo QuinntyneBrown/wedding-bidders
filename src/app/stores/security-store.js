@@ -5,7 +5,7 @@
     function securityStore(dispatcher, localStorageManager, SECURITY_ACTIONS) {
         var self = this;
         self.localStorageManager = localStorageManager;
-
+         
         dispatcher.addListener({
             actionType: SECURITY_ACTIONS.LOGIN,
             callback: function (options) {                

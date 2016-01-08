@@ -4,6 +4,9 @@
 
     function AdminCustomersComponent(customerStore) {
         var self = this;
+
+        self.customers = customerStore.items;
+
         return self;
     }
 

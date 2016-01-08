@@ -2,7 +2,7 @@
 
     "use strict";
 
-    function conversationStore($, dispatcher, CONVERSATION_ACTIONS) {
+    function conversationStore(dispatcher, CONVERSATION_ACTIONS) {
         var self = this;
 
         dispatcher.addListener({
@@ -21,9 +21,17 @@
             }
         });
 
+        dispatcher.addListener({
+            actionType: CONVERSATION_ACTIONS.UPDATE_ALL_CONVERSATIONS_BY_PROFILE,
+            callback: function (options) {
+                self.storeInstance.items = options.data;
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
         return self;
     }
 
-    ngX.Store({ store: conversationStore, providers: ["$", "dispatcher", "CONVERSATION_ACTIONS"] });
+    ngX.Store({ store: conversationStore, providers: ["dispatcher", "CONVERSATION_ACTIONS"] });
 
 })();

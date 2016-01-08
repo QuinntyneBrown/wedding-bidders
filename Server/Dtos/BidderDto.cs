@@ -17,6 +17,7 @@ namespace WeddingBidders.Server.Dtos
             this.Email = bidder.Email;
             this.BidderType = bidder.BidderType;
             this.ProfileId = bidder.ProfileId;
+            this.CompanyName = this.BidderType == BidderType.Caterer ? ((Caterer)bidder).CompanyName : null;
         }
 
         public int? Id { get; set; }
@@ -26,6 +27,8 @@ namespace WeddingBidders.Server.Dtos
         public string Lastname { get; set; }
 
         public string Email { get; set; }
+
+        public string CompanyName { get; set; }
 
         public int? ProfileId { get; set; }
 

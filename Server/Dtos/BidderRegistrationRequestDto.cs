@@ -18,6 +18,7 @@ namespace WeddingBidders.Server.Dtos
         public string ConfirmEmail { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string CompanyName { get; set; }
         public BidderType BidderType { get; set; }
     }
 }

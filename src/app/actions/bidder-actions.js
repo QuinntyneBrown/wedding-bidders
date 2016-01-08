@@ -16,7 +16,8 @@
                     email: options.email,
                     confirmEmail: options.confirmEmail,
                     password: options.password,
-                    bidderType: options.bidderType
+                    bidderType: options.bidderType,
+                    companyName: options.companyName
                 }
             }).then(function (results) {
                 dispatcher.emit({
@@ -43,6 +44,17 @@
             bidderService.getById({ id: options.id }).then(function (results) {
                 dispatcher.emit({
                     actionType: BIDDER_ACTIONS.UPDATE_BY_ID, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
+
+        self.getByProfileId = function (options) {
+            var newGuid = guid();
+            bidderService.getByProfileId({ profileId: options.profileId }).then(function (results) {
+                dispatcher.emit({
+                    actionType: BIDDER_ACTIONS.UPDATE_BY_PROFILE_ID, options:
                         { data: results, id: newGuid }
                 });
             });

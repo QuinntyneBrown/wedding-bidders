@@ -47,6 +47,23 @@ namespace WeddingBidders.Server.Controllers
 
             return Ok(converstations);
         }
+
+        [HttpGet]
+        [Route("allConversationsByProfileId")]
+        public IHttpActionResult AllConversationsByProfileId(int profileId)
+        {
+            var converstations = repository
+                .GetAll()
+                .Include(x => x.Messages)
+                .Where(x => x.ConversationType == ConversationType.InterProfile)
+                .Where(x => x.Messages.Any( m => m.ToProfileId == profileId) || x.Messages.Any(m => m.FromProfileId == profileId))
+                .ToList()
+                .Select(x => new ConversationDto(x));
+
+            return Ok(converstations);
+        }
+
+
         protected readonly IWeddingBiddersUow uow;
         protected readonly IRepository<Conversation> repository;
     }

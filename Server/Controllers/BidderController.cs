@@ -9,6 +9,7 @@ using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
 using WeddingBidders.Server.Services.Contracts;
+using Common.Data.Contracts;
 
 namespace WeddingBidders.Server.Controllers
 {
@@ -60,7 +61,15 @@ namespace WeddingBidders.Server.Controllers
                 .Include(x => x.Bids)
                 .Where(x => x.Bids.Any(b => b.Id == bidId))
                 .Single()));
-        
+
+        [HttpGet]
+        [Route("GetByProfileId")]
+        public IHttpActionResult GetByProfileId(int profileId)
+            => Ok(new BidderDto(this.uow.Bidders
+                .GetAll()
+                .Where(x => x.ProfileId == profileId)
+                .Single()));
+            
 
         [HttpPost]
         [Route("add")]
@@ -89,5 +98,6 @@ namespace WeddingBidders.Server.Controllers
         protected readonly IBidderService service;
 
         protected readonly IWeddingBiddersUow uow;
+
     }
 }

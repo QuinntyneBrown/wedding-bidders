@@ -245,6 +245,7 @@
       <DependentUpon>wb-header.js</DependentUpon>
     </Content>
     <Content Include="src\app\components\wb-bid-item.js" />
+    <Content Include="src\app\components\wb-bidder-item.js" />
     <Content Include="src\app\components\wb-hamburger-button.js">
       <DependentUpon>wb-header.js</DependentUpon>
     </Content>
@@ -260,7 +261,9 @@
     <Content Include="src\app\components\wb-wedding-detail.js" />
     <Content Include="src\app\components\wb-wedding-item.js" />
     <Content Include="src\app\domain\conversation.js" />
+    <Content Include="src\app\domain\conversationCollection.js" />
     <Content Include="src\app\domain\message.js" />
+    <Content Include="src\app\domain\messageCollection.js" />
     <Content Include="src\app\domain\profile.js" />
     <Content Include="src\app\metal\numeral.js" />
     <Content Include="src\app\metal\work-spinner.js" />

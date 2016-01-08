@@ -39,6 +39,14 @@
         });
 
         dispatcher.addListener({
+            actionType: BIDDER_ACTIONS.UPDATE_BY_PROFILE_ID,
+            callback: function (options) {
+                self.storeInstance.addOrUpdate({ data: options.data });
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
+        dispatcher.addListener({
             actionType: BIDDER_ACTIONS.UPDATE_TYPES,
             callback: function (options) {
                 self.types = options.data;
@@ -48,6 +56,16 @@
                 self.storeInstance.emitChange({ id: options.id });
             }
         });
+
+        self.getByProfileId = function (options) {
+            var bidder = null;
+            for (var i = 0; i < self.items.length; i++) {
+                if (self.items[i].profileId === options.profileId) {
+                    bidder = self.items[i];
+                }
+            }
+            return bidder;
+        }
 
         return self;
     }

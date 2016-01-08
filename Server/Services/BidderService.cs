@@ -77,7 +77,8 @@ namespace WeddingBidders.Server.Services
                     Firstname = dto.Firstname,
                     Lastname = dto.Lastname,
                     Profile = profile,
-                    Email = dto.Email
+                    Email = dto.Email,
+                    CompanyName = dto.CompanyName
                 };
 
                 var gallery = new Gallery() { Name = "Profile" };

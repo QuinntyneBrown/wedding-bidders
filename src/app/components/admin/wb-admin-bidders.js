@@ -22,6 +22,9 @@
         providers: ['bidderStore'],
         template: [
             "<div class='adminBidders viewComponent'>",
+            "   <div data-ng-repeat='bidder in vm.bidders'> ",
+            "       <p>{{ bidder.id }}</p> ",
+            "   </div> ",
             "</div>"
         ]
     });

@@ -1,5 +1,20 @@
 ﻿angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiEndpointProvider", "loginRedirectProvider", function ($routeProvider, apiEndpointProvider, loginRedirectProvider) {
 
+    $routeProvider.when("/admin", {
+        "componentName": "adminComponent",
+        "authorizationRequired": true
+    });
+
+    $routeProvider.when("/admin/customers", {
+        "componentName": "adminCustomersComponent",
+        "authorizationRequired": true
+    });
+
+    $routeProvider.when("/admin/bidders", {
+        "componentName": "adminBiddersComponent",
+        "authorizationRequired": true
+    });
+
     $routeProvider.when("/", {
         "componentName": "homeComponent"
     });
@@ -94,10 +109,7 @@
         "authorizationRequired": true
     });
 
-    $routeProvider.when("/admin", {
-        "componentName": "adminComponent",
-        "authorizationRequired": true
-    });
+
 
 
 

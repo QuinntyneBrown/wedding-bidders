@@ -2,29 +2,42 @@
 
     "use strict";
 
-    function BidderMyProfileComponent(profileStore, weddingStore) {
+    function BidderMyProfileComponent(bidder, bidderStore, profileStore, weddingStore) {
         var self = this;
-        self.profile = profileStore.currentProfile;
-        self.weddings = weddingStore.weddingsByProfile;
-        
+
         self.storeOnChange = function () {
-            self.initialize();
+            
         };
 
-        self.initialize = function () {
-            self.profile = profileStore.currentProfile;
-            self.weddings = weddingStore.weddingsByProfile;
+        self.onInit = function () {
+            self.bidder = bidder.createInstance({
+                data: bidderStore.getByProfileId({ profileId: profileStore.currentProfile.id }),
+                profile: profileStore.currentProfile
+            });
         }
 
         return self;
     }
 
     BidderMyProfileComponent.canActivate = function () {
-        return ["$q", "bidActions", "invokeAsync", "weddingActions", function ($q, bidActions, invokeAsync, weddingActions) {
-            return $q.all([
-                invokeAsync(bidActions.getAllByCurrentProfile),
-                invokeAsync(weddingActions.getAllByCurrentProfile)
-            ]);
+        return ["$q", "bidActions", "bidderActions", "invokeAsync", "profileActions", "profileStore", "weddingActions", function ($q, bidActions, bidderActions, invokeAsync, profileActions, profileStore, weddingActions) {
+
+            var deferred = $q.defer();
+
+            invokeAsync(profileActions.getCurrentProfile).then(function () {
+                $q.all([
+                    invokeAsync(bidActions.getAllByCurrentProfile),
+                    invokeAsync({
+                        action: bidderActions.getByProfileId,
+                        params: { profileId: profileStore.currentProfile.id }
+                    }),
+                    invokeAsync(weddingActions.getAllByCurrentProfile)
+                ]).then(function (results) {
+                    deferred.resolve();
+                });
+            });
+
+            return deferred.promise;
         }];
     }
 
@@ -32,12 +45,14 @@
         component: BidderMyProfileComponent,
         route: "/bidder/myprofile",
         providers: [
+            "bidder",
+            "bidderStore",
             "profileStore",
             "weddingStore"
         ],
         template: [
             "<div class='bidderMyProfile viewComponent'>",
-            "<h1>{{ vm.profile.firstname }}  {{ vm.profile.lastname }}</h1><br/><br/>",
+            "<h1>{{ vm.bidder.firstname }}  {{ vm.bidder.lastname }}, {{ vm.bidder.companyName }}</h1><br/><br/>",
             "</div>"
         ]
     });
