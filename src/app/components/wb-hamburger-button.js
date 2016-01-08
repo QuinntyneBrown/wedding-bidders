@@ -94,7 +94,7 @@
 
             self.navigateToMyMessages = function () {
                 self.closeAsync().then(function () {
-                    self.$location.path("/mymessages");
+                    self.$location.path("/messages");
                 });
             }
 

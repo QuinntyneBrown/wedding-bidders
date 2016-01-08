@@ -303,7 +303,7 @@
       <DependentUpon>wb-home.html</DependentUpon>
     </Content>
     <Content Include="src\app\components\wb-manage-profiles.js" />
-    <Content Include="src\app\components\wb-my-messages.js" />
+    <Content Include="src\app\components\wb-messages.js" />
     <Content Include="src\app\components\wb-my-billing.js" />
     <Content Include="src\app\app.module.js" />
     <Content Include="src\app\components\wb-about.js" />
