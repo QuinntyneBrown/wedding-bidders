@@ -5,10 +5,6 @@
     function BidItemComponent() {
         var self = this;
 
-        self.onMessageBidder = function () {
-            alert('message Bidder');
-        }
-
         return self;
     }
 
@@ -19,7 +15,7 @@
             "<div class='bidItem'>",
             "   <p>Bidder: {{ ::vm.bid.bidder.firstname + ' ' + vm.bid.bidder.lastname }}</p> ",
             "   <p><a class='bidItem-profileLink' data-ng-href='#/bidder/profile/{{ ::vm.bid.bidder.id }}'>View Profile</a></p> ",
-            "   <p class='bidItem-messageLink' data-ng-click='vm.onMessageBidder()'><a>Message Bidder</a></p> ",
+            "   <p><a class='bidItem-messageLink' data-ng-href='#/messages/{{ ::vm.bid.bidder.profile.id }}'>Messages</a></p> ",
             "   <p>Quoted Price: {{ ::vm.bid.price }}</p>",
             "   <p>Description: {{ ::vm.bid.description }}</p>",
             "</div>"
@@ -40,7 +36,7 @@
             " } ",
 
             " .bidItem-messageLink { ",
-            "   text-decoration: none; cursor:pointer; ",
+            "   text-decoration: none; cursor:pointer; color: #000; ",
             " } "
 
         ],
