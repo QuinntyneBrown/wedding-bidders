@@ -2,9 +2,13 @@
 
     "use strict";
 
-    function BidsComponent(bidStore) {
+    function BidsComponent(bid, bidStore) {
         var self = this;
-        self.bids = bidStore.byProfile;
+        self.bids = [];
+        for(var i = 0; i < bidStore.byProfile.length; i++) {
+            self.bids.push(bid.createInstance({ data: bidStore.byProfile[i]}));
+        }
+
         return self;
     }
 
@@ -17,7 +21,7 @@
     ngX.Component({
         component: BidsComponent,
         route: "/bids",
-        providers: ["bidStore"],
+        providers: ["bid", "bidStore"],
         template: [
             "<div class='bids viewComponent'>",
             "<h1>Bids</h1>",

@@ -13,14 +13,18 @@
         component: WeddingDetailComponent,        
         template: [
             "<div class='weddingDetail'>",
-            "   <h1>Wedding Detail</h1>",
-            "   <bid-item bid='bid' data-ng-repeat='bid in vm.wedding.bids'>",
+            "   <h1 class='weddingDetail-heading'>Wedding Detail</h1>",
+            "   <bid-item bid='bid' data-ng-repeat='bid in vm.wedding.bids'ng-class-odd=\"'bidItemOdd'\">",
             "   </bid-item>",
             "</div>"
         ],
         styles: [
-            " .weddingDetail { ",
-            " } "
+            " .weddingDetail-container { ",
+            "   padding: 15px; ",
+            " } ",
+            " .bidItemOdd { background-color:#CCC; } ",
+            " .weddingDetail-heading { padding-left:15px; } "
+
         ],
         inputs: [
             'wedding'

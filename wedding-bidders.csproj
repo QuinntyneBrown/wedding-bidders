@@ -218,6 +218,7 @@
     <Content Include="gulpfile.js" />
     <Content Include="lib\jquery.signalR-2.2.0.js" />
     <Content Include="lib\moment.min.js" />
+    <Content Include="lib\numeral.js" />
     <Content Include="node_modules\angular-route\angular-route.js" />
     <Content Include="node_modules\angular\angular.js" />
     <Content Include="node_modules\fastclick\lib\fastclick.js" />
@@ -225,6 +226,7 @@
     <Content Include="node_modules\moment\min\moment.min.js" />
     <Content Include="node_modules\ng-x-components\dist\ngX.components.js" />
     <Content Include="node_modules\ng-x\dist\ngX.js" />
+    <Content Include="node_modules\numeraljs\numeral.js" />
     <Content Include="packages.config" />
     <Content Include="package.json" />
     <Content Include="commonConfiguration.config" />
@@ -260,6 +262,7 @@
     <Content Include="src\app\domain\conversation.js" />
     <Content Include="src\app\domain\message.js" />
     <Content Include="src\app\domain\profile.js" />
+    <Content Include="src\app\metal\numeral.js" />
     <Content Include="src\app\metal\work-spinner.js" />
     <Content Include="src\app\services\conversationService.js" />
     <Content Include="src\app\services\subscriptionService.js" />

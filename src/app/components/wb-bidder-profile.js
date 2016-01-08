@@ -35,6 +35,7 @@
         ],
         template: [
             "<div class='bidderProfile viewComponent'>",
+            "   <div>{{ vm.bidder.firstname }}  {{ vm.bidder.lastname }}</div>",
             "</div>"
         ]
     });

@@ -2,11 +2,12 @@
 
     "use strict";
 
-    function bid($injector, $q, bidActions, invokeAsync, messageActions) {
+    function bid($injector, $q, bidActions, invokeAsync, messageActions, numeral) {
         var self = this;
         self.$injector = $injector;
         self.$q = $q;
         self.messageActions = messageActions;
+        self.numeral = numeral;
 
         self.createInstanceAsync = function (options) {
             var deferred = self.$q.defer();
@@ -15,12 +16,12 @@
         }
 
         self.createInstance = function (options) {
-            var instance = new bid(self.$injector, self.$q, self.messageActions);
+            var instance = new bid(self.$injector, self.$q, self.messageActions, self.numeral);
             if (options.data) {
                 instance.id = options.data.id;
                 instance.weddingId = options.data.weddingId;
                 instance.description = options.data.description;
-                instance.price = options.data.price;
+                instance.price = self.numeral(options.data.price).format('$0,0.00');;
                 instance.bidderId = options.data.bidderId;
             }
 
@@ -48,6 +49,6 @@
         return self;
     }
 
-    angular.module("app").service("bid", ["$injector", "$q", "bidActions", "invokeAsync","messageActions", bid]);
+    angular.module("app").service("bid", ["$injector", "$q", "bidActions", "invokeAsync", "messageActions", "numeral", bid]);
 
 })();
