@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using WeddingBidders.Server.Hubs.contracts;
+using WeddingBidders.Server.Hubs.Contracts;
 using WeddingBidders.Server.Models;
 using WeddingBidders.Server.Services.Contracts;
 

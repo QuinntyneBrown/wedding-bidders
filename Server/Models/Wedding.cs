@@ -12,19 +12,12 @@ namespace WeddingBidders.Server.Models
         }
 
         public int NumberOfGuests { get; set; }
-
         public int NumberOfHours { get; set; }
-
         public string Location { get; set; }
-
         public ICollection<Bid> Bids { get; set; }
-
         public int? CustomerId { get; set; }
-
         public Customer Customer { get; set; }
-
         public DateTime Date { get; set; }
-
         public ICollection<Category> Categories { get; set; }
     }
 }

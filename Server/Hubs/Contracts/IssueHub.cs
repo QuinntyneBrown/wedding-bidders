@@ -2,8 +2,8 @@
 
 namespace WeddingBidders.Server.Hubs.Contracts
 {
-    public interface IWeddingHub
+    public interface IIssueHub
     {
-        void OnWeddingAdded(Wedding wedding);
+        void OnIssueAdded(Wedding wedding);
     }
 }

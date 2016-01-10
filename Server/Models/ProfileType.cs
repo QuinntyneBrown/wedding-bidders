@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WeddingBidders.Server.Models
+﻿namespace WeddingBidders.Server.Models
 {
     public enum ProfileType
     {
@@ -12,6 +7,7 @@ namespace WeddingBidders.Server.Models
         Photographer = 2,
         MakeUpArtist = 3,
         EventPlanner = 4,
-        Internal = 5
+        Internal = 5,
+        DiscJockey = 6
     }
 }

@@ -41,7 +41,6 @@ namespace WeddingBidders.Server.Controllers
                             .Where(x => x.Bids.Any(b => b.Id == bidId))
                             .Single().Profile));
         
-
         protected readonly IProfileService service;
 
         protected readonly IWeddingBiddersUow uow;

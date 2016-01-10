@@ -7,7 +7,7 @@ using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
 using System.Collections.Generic;
-using WeddingBidders.Server.Hubs.contracts;
+using WeddingBidders.Server.Hubs.Contracts;
 using WeddingBidders.Server.Hubs;
 using Microsoft.AspNet.SignalR;
 

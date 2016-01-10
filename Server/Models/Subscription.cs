@@ -11,13 +11,9 @@ namespace WeddingBidders.Server.Models
         }
 
         public int AccountId { get; set; }
-
         public int PlanId { get; set; }
-
         public DateTime EffectiveDate { get; set; }
-
         public DateTime ExpirtyDate { get; set; }
-
         public ICollection<Payment> Payments { get; set; }
     }
 }

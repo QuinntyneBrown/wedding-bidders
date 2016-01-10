@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WeddingBidders.Server.Models
+﻿namespace WeddingBidders.Server.Models
 {
     public class MakeUpArtist: Bidder
     {
@@ -11,6 +6,5 @@ namespace WeddingBidders.Server.Models
         {
             this.BidderType = BidderType.MakeUpArtist;
         }
-
     }
 }

@@ -11,20 +11,14 @@ namespace WeddingBidders.Server.Models
             this.Bids = new HashSet<Bid>();
         }
 
+        public string CompanyName { get; set; }
         public string Description { get; set; }
-
         [ForeignKey("Profile")]
         public int? ProfileId { get; set; }
-
         public Profile Profile { get; set; }
-
         public ICollection<Gallery> Galleries { get; set; }
-
         public ICollection<Bid> Bids { get; set; }
-
         public BidderType BidderType { get; set; }
-
         public bool IsApproved { get; set; }        
-
     }
 }

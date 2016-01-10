@@ -24,27 +24,7 @@ namespace WeddingBidders.Server.Controllers
             this.messageService = messageService;
         }
 
-        [HttpGet]
-        [Route("getAllForCurrentProfile")]
-        public IHttpActionResult GetAllForCurrentProfile()
-        {
-            var username = Request.GetRequestContext().Principal.Identity.Name;
-            var profileId = uow.Accounts.GetAll()
-                .Include(x => x.Profiles).Single(x => x.Email == username)
-                .Profiles
-                .First().Id;
-            var dtos = new List<MessageDto>();
-            var messages = this.uow.Messages
-                .GetAll()
-                .Where(x => x.ToProfileId == profileId || x.FromProfileId == profileId)
-                .ToList();
-            foreach(var message in messages)
-            {
-                dtos.Add(new MessageDto(message));
-            }
-            return Ok(dtos);
-        }
-
+        
         [HttpPost]
         [Route("add")]
         public IHttpActionResult add(MessageDto dto)
@@ -58,23 +38,8 @@ namespace WeddingBidders.Server.Controllers
         }
 
 
-        [HttpGet]
-        [Route("allIssues")]
-        [System.Web.Http.Authorize(Roles = "System")]
-        public IHttpActionResult AllIssues()
-        {
-            var messages = new List<MessageDto>();
-            foreach(var message in repository.GetAll().Where(x => x.MessageType == MessageType.Issue))
-            {
-                messages.Add(new MessageDto(message));
-            }
-            return Ok(messages);
-        }
-
         protected readonly IWeddingBiddersUow uow;
-
         protected readonly IMessageService messageService;
-
         protected readonly IRepository<Message> repository;
     }
 }

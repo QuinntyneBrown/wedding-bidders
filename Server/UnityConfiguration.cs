@@ -6,7 +6,7 @@ using WeddingBidders.Server.Config.Contracts;
 using WeddingBidders.Server.Data;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Hubs;
-using WeddingBidders.Server.Hubs.contracts;
+using WeddingBidders.Server.Hubs.Contracts;
 using WeddingBidders.Server.Services;
 using WeddingBidders.Server.Services.Contracts;
 

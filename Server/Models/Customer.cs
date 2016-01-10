@@ -12,9 +12,7 @@ namespace WeddingBidders.Server.Models
 
         [ForeignKey("Profile")]
         public int? ProfileId { get; set; }
-
         public ICollection<Wedding> Weddings { get; set; }
-
         public Profile Profile { get; set; }
     }
 }

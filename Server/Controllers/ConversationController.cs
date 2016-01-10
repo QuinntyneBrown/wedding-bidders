@@ -17,53 +17,7 @@ namespace WeddingBidders.Server.Controllers
             this.uow = uow;
             this.repository = uow.Conversations;
         }
-
-        [HttpGet]
-        [Route("allIssues")]
-        [Authorize(Roles="System")]
-        public IHttpActionResult AllIssues ()
-        {
-            var converstations = repository
-                .GetAll()
-                .Include(x => x.Messages)
-                .Where(x => x.ConversationType == ConversationType.Issue)
-                .ToList()
-                .Select(x => new ConversationDto(x));
-                            
-            return Ok(converstations);
-        }
-
-        [HttpGet]
-        [Route("allInterProfileConversations")]
-        [Authorize(Roles = "System")]
-        public IHttpActionResult AllInterProfileConversations()
-        {
-            var converstations = repository
-                .GetAll()
-                .Include(x => x.Messages)
-                .Where(x => x.ConversationType == ConversationType.InterProfile)
-                .ToList()
-                .Select(x => new ConversationDto(x));
-
-            return Ok(converstations);
-        }
-
-        [HttpGet]
-        [Route("allConversationsByProfileId")]
-        public IHttpActionResult AllConversationsByProfileId(int profileId)
-        {
-            var converstations = repository
-                .GetAll()
-                .Include(x => x.Messages)
-                .Where(x => x.ConversationType == ConversationType.InterProfile)
-                .Where(x => x.Messages.Any( m => m.ToProfileId == profileId) || x.Messages.Any(m => m.FromProfileId == profileId))
-                .ToList()
-                .Select(x => new ConversationDto(x));
-
-            return Ok(converstations);
-        }
-
-
+        
         protected readonly IWeddingBiddersUow uow;
         protected readonly IRepository<Conversation> repository;
     }

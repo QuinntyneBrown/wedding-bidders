@@ -10,9 +10,7 @@ namespace WeddingBidders.Server.Models
         }
 
         public string Description { get; set; }
-
         public decimal Price { get; set; }
-
         public ICollection<Subscription> Subscriptions { get; set; }
     }
 }

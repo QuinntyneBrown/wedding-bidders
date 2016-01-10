@@ -10,7 +10,6 @@ namespace WeddingBidders.Server.Models
         }
 
         public string Route { get; set; }
-
         public ICollection<HtmlContent> HtmlContentCollection { get; set; }
     }
 }

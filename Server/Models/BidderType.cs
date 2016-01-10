@@ -5,6 +5,7 @@
         Caterer = 0,
         Photographer = 1,
         MakeUpArtist = 2,
-        EventPlanner = 3
+        EventPlanner = 3,
+        DiscJockey = 4
     }
 }

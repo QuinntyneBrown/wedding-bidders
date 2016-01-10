@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
@@ -135,7 +134,8 @@ namespace WeddingBidders.Server.Services
                     Firstname = dto.Firstname,
                     Lastname = dto.Lastname,
                     Profile = profile,
-                    Email = dto.Email
+                    Email = dto.Email,
+                    CompanyName = dto.CompanyName                    
                 };
 
                 var gallery = new Gallery() { Name = "Profile" };
@@ -145,6 +145,26 @@ namespace WeddingBidders.Server.Services
                 bidder.Galleries.Add(gallery);
 
                 uow.Photographers.Add(bidder as Photographer);
+            }
+
+            if (dto.BidderType == BidderType.DiscJockey)
+            {
+                bidder = new DiscJockey()
+                {
+                    Firstname = dto.Firstname,
+                    Lastname = dto.Lastname,
+                    Profile = profile,
+                    Email = dto.Email,
+                    CompanyName = dto.CompanyName
+                };
+
+                var gallery = new Gallery() { Name = "Profile" };
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_1.jpg" });
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_2.jpg" });
+                gallery.Photos.Add(new Photo() { Url = "assets/images/carousel_3.jpg" });
+                bidder.Galleries.Add(gallery);
+
+                uow.DiscJockeys.Add(bidder as DiscJockey);
             }
 
             return bidder;
@@ -191,6 +211,16 @@ namespace WeddingBidders.Server.Services
                     Name = string.Format("{0} {1}", firstname, lastname),
                     Account = account,
                     ProfileType = ProfileType.EventPlanner
+                };
+            }
+
+            if (bidderType == BidderType.DiscJockey)
+            {
+                profile = new Profile()
+                {
+                    Name = string.Format("{0} {1}", firstname, lastname),
+                    Account = account,
+                    ProfileType = ProfileType.DiscJockey
                 };
             }
 

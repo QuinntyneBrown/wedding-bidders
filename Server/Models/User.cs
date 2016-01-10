@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WeddingBidders.Server.Models
 {
@@ -20,7 +17,6 @@ namespace WeddingBidders.Server.Models
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Password { get; set; }
-
         public DateTime? LastLogin { get; set; }
         public virtual ICollection<Account> Accounts { get; set; }
         public virtual ICollection<Role> Roles { get; set; }

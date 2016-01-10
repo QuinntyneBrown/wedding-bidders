@@ -7,13 +7,10 @@ namespace WeddingBidders.Server.Models
         public Conversation()
         {
             this.Messages = new HashSet<Message>();
-            this.ConversationType = ConversationType.InterProfile;
+            this.Profiles = new HashSet<Profile>();
         }
 
+        public ICollection<Profile> Profiles { get; set; }
         public ICollection<Message> Messages { get; set; }
-
-        public ConversationType ConversationType { get; set; }
-
-        public bool IsResolved { get; set; }
     }
 }

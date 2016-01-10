@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WeddingBidders.Server.Models;
+﻿using WeddingBidders.Server.Models;
 
-namespace WeddingBidders.Server.Hubs.contracts
+namespace WeddingBidders.Server.Hubs.Contracts
 {
     public interface IBidHub
     {

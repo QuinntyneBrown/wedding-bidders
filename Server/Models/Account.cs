@@ -11,23 +11,14 @@ namespace WeddingBidders.Server.Models
         }
 
         public string Firstname { get; set; }
-
         public string Lastname { get; set; }
-
         public string Email { get; set; }
-
         public AccountType AccountType { get; set; }
-
         [ForeignKey("User")]
         public int? UserId { get; set; }
-
         public int? DefaultProfileId { get; set; }
-
-        public ICollection<Profile> Profiles { get; set; }
-        
+        public ICollection<Profile> Profiles { get; set; }       
         public User User { get; set; }
-
         public AccountStatus AccountStatus { get; set; }
-
     }
 }

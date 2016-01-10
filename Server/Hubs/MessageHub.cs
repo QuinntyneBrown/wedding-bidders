@@ -3,7 +3,7 @@ using Microsoft.AspNet.SignalR.Hubs;
 using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using WeddingBidders.Server.Hubs.contracts;
+using WeddingBidders.Server.Hubs.Contracts;
 using WeddingBidders.Server.Services.Contracts;
 using WeddingBidders.Server.Models;
 

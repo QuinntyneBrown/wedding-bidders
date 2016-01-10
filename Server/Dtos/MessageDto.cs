@@ -5,10 +5,7 @@ namespace WeddingBidders.Server.Dtos
 {
     public class MessageDto
     {
-        public MessageDto()
-        {
-
-        }
+        public MessageDto() { }
 
         public MessageDto(Message message)
         {
@@ -29,8 +26,6 @@ namespace WeddingBidders.Server.Dtos
         public int? ToProfileId { get; set; }
         public bool IsRead { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public MessageType MessageType { get; set; }
         public int? ConversationId { get; set; }
-
     }
 }

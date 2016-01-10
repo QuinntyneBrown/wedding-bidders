@@ -34,21 +34,11 @@ namespace WeddingBidders.Server.Services
                 ToProfileId = dto.ToProfileId,
                 Subject = dto.Subject,
                 Content = dto.Content,
-                MessageType = dto.MessageType,
                 CreatedDate = DateTime.Now
             };
 
             if (dto.ConversationId == null)
             {
-                if (message.MessageType == MessageType.Issue)
-                {
-                    converation.ConversationType = ConversationType.Issue;
-                }
-                else
-                {
-                    converation.ConversationType = ConversationType.InterProfile;
-                }
-
                 converation.Messages.Add(message);
                 uow.Conversations.Add(converation);                                
             }            
