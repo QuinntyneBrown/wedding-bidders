@@ -1,10 +1,9 @@
-﻿using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace WeddingBidders.Server.Controllers
 {
     public class ApiControllerBase: ApiController
     {
-        public string Username { get { return Request.GetRequestContext().Principal.Identity.Name; } }
+        public string Username { get { return User.Identity.Name; } }
     }
 }

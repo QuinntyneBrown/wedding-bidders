@@ -21,10 +21,17 @@
             return deferred.promise;
         };
         
-
         self.updateIsPersonalizedFlag = function (options) {
             var deferred = self.$q.defer();
             fetch.fromService({ method: "POST", url: self.baseUri + "/updateIsPersonalizedFlag" }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        };
+
+        self.getOtherBidders = function (options) {
+            var deferred = self.$q.defer();
+            fetch.fromService({ method: "GET", url: self.baseUri + "/getOtherBidders" }).then(function (results) {
                 deferred.resolve(results.data);
             });
             return deferred.promise;

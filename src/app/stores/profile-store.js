@@ -37,6 +37,14 @@
             }
         });
 
+        dispatcher.addListener({
+            actionType: PROFILE_ACTIONS.OTHER_BIDDERS,
+            callback: function (options) {
+                self.otherBidders = options.data;
+                self.emitChange({ id: options.id });
+            }
+        });
+
         self.isCustomer = function () {
             return self.currentProfile
                 && self.currentProfile.profileType === PROFILE_TYPE.CUSTOMER;

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Http;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
+using WeddingBidders.Server.Models;
 using WeddingBidders.Server.Services.Contracts;
 
 namespace WeddingBidders.Server.Controllers
@@ -18,10 +19,8 @@ namespace WeddingBidders.Server.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Current()
-        {            
-            return Ok(service.GetCurrentProfile(Request));
-        }
+        [Route("Current")]
+        public IHttpActionResult Current() => Ok(service.GetCurrentProfile(Request));
 
         [HttpPost]
         public IHttpActionResult UpdateIsPersonalizedFlag()
@@ -40,7 +39,18 @@ namespace WeddingBidders.Server.Controllers
                             .Include("Profile.Account")
                             .Where(x => x.Bids.Any(b => b.Id == bidId))
                             .Single().Profile));
-        
+
+        [HttpGet]
+        [Route("GetOtherBidders")]
+        public IHttpActionResult GetOtherBidders()
+            => Ok(this.uow.Profiles
+                .GetAll()
+                .Include(x=>x.Account)
+                .Where(x => x.ProfileType != ProfileType.Customer 
+                && x.ProfileType != ProfileType.Internal)
+                .ToList()
+                .Select(x => new ProfileDto(x)));
+
         protected readonly IProfileService service;
 
         protected readonly IWeddingBiddersUow uow;

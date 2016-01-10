@@ -2,19 +2,20 @@
 
     "use strict";
 
-    function MessagesComponent(conversationCollection, conversationStore) {
+    function MessagesComponent(profile, profileStore) {
         var self = this;
 
+        self.profiles = [];
+        for (var i = 0; i < profileStore.otherBidders.length; i++) {
+            self.profiles.push(profile.createInstance({ data: profileStore.otherBidders[i] }));
+        }
 
         return self;
     }
 
     MessagesComponent.canActivate = function () {
-        return ["invokeAsync", "conversationActions", "profileStore", function (invokeAsync, conversationActions, profileStore) {
-            return invokeAsync({
-                    action: conversationActions.getAllConversationsByProfileId,
-                    params: { profileId: profileStore.currentProfile.id }
-                });
+        return ["invokeAsync", "profileActions", "profileStore", function (invokeAsync, profileActions, profileStore) {
+            return invokeAsync(profileActions.getOtherBidders);
         }];
     }
 
@@ -22,9 +23,10 @@
         component: MessagesComponent,
         priority: 10,
         routes: ["/messages","/messages/:profileId"],
-        providers: ["conversationCollection", "conversationStore"],
+        providers: ["profile","profileStore"],
         template: [
             "<div class='messages'>",
+            "   <div data-ng-repeat='profile in vm.profiles'>{{ ::profile.firstname }} {{ ::profile.lastname }}</div>",
             "</div>"
         ]
     });

@@ -50,6 +50,19 @@
             return newGuid;
         }
 
+        self.getOtherBidders = function () {
+            var newGuid = guid();
+            profileService.getOtherBidders().then(function (results) {
+                dispatcher.emit({
+                    actionType: PROFILE_ACTIONS.OTHER_BIDDERS,
+                    options: {
+                        data: results,
+                        id: newGuid
+                    }
+                });
+            });
+            return newGuid;
+        }
         return self;
     }
 
