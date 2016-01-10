@@ -29,21 +29,29 @@
             }
         });
 
+        dispatcher.addListener({
+            actionType: PROFILE_ACTIONS.OTHER,
+            callback: function (options) {
+                self.other = options.data;
+                self.emitChange({ id: options.id });
+            }
+        });
+
         self.isCustomer = function () {
             return self.currentProfile
                 && self.currentProfile.profileType === PROFILE_TYPE.CUSTOMER;
-        }
+        };
 
         self.isInternal = function () {
             return self.currentProfile
                 && self.currentProfile.profileType === PROFILE_TYPE.INTERNAL;
-        }
+        };
 
         self.isBidder = function () {
             return self.currentProfile
                 && self.currentProfile.profileType !== PROFILE_TYPE.CUSTOMER
                 && self.currentProfile.profileType !== PROFILE_TYPE.INTERNAL;
-        }
+        };
 
         return self;
     }

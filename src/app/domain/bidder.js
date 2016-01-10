@@ -23,19 +23,19 @@
 
             if (options.profiles) {
                 for (var i = 0; i < options.profiles.length; i++) {
-                    if (options.profiles[i].id == instance.profileId) {
+                    if (options.profiles[i].id === instance.profileId) {
                         var profile = instance.$injector.get("profile");
-                        instance.profile = profile.createInstance({ data: options.profiles[i] })
-                    }                    
-                }                
+                        instance.profile = profile.createInstance({ data: options.profiles[i] });
+                    }
+                }
             }
 
             if (options.profile) {
-                instance.profile = instance.$injector.get("profile").createInstance({ data: options.profile })
+                instance.profile = instance.$injector.get("profile").createInstance({ data: options.profile });
             }
 
             return instance;
-        }
+        };
 
         return self;
     }

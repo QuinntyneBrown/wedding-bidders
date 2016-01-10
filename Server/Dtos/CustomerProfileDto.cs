@@ -7,11 +7,11 @@ namespace WeddingBidders.Server.Dtos
     {
         public CustomerProfileDto()
         {
-            this.Weddings = new HashSet<WeddingDto>();
+            this.Weddings = new HashSet<WeddingDto>();            
         }
 
         public ICollection<WeddingDto> Weddings { get; set; }
 
-        public ProfileType ProfileType { get { return ProfileType.Customer; } }
+        public new ProfileType ProfileType { get { return ProfileType.Customer; } }
     }
 }

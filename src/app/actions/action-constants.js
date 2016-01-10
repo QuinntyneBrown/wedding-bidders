@@ -27,7 +27,7 @@ angular.module("app").value("CONVERSATION_ACTIONS", {
 
 angular.module("app").value("ACCOUNT_ACTIONS", {
     UPDATE_CURRENT_ACCOUNT: "UPDATE_CURRENT_ACCOUNT",
-    UPDATE_BILLING: "UPDATE_BILLING",
+    UPDATE_BILLING: "UPDATE_BILLING"
 });
 
 
@@ -47,7 +47,7 @@ angular.module("app").value("BIDDER_ACTIONS", {
 
 angular.module("app").value("CUSTOMER_ACTIONS", {
     ADD_CUSTOMER: "ADD_CUSTOMER",
-    UPDATE_ALL: "UPDATE_ALL_CUSTOMERS",
+    UPDATE_ALL: "UPDATE_ALL_CUSTOMERS"
 });
 
 angular.module("app").value("BID_ACTIONS", {
@@ -59,7 +59,8 @@ angular.module("app").value("BID_ACTIONS", {
 angular.module("app").value("PROFILE_ACTIONS", {
     UPDATE_CURRENT_PROFILE: "UPDATE_CURRENT_PROFILE",
     UPDATE_IS_PERSONALIZED_FLAG: "UPDATE_IS_PERSONALIZED_FLAG",
-    UPDATE_PROFILE_BY_BID: "UPDATE_PROFILE_BY_BID"
+    UPDATE_PROFILE_BY_BID: "UPDATE_PROFILE_BY_BID",
+    OTHER: "OTHER_PROFILE"
 });
 
 angular.module("app").value("SUBSCRIPTION_ACTIONS", {

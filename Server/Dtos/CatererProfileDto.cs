@@ -12,6 +12,6 @@ namespace WeddingBidders.Server.Dtos
 
         public ICollection<BidDto> Bids { get; set; }
 
-        public ProfileType ProfileType {  get { return ProfileType.Caterer;  } }
+        public new ProfileType ProfileType {  get { return ProfileType.Caterer;  } }
     }
 }

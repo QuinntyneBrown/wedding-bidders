@@ -32,6 +32,6 @@ namespace WeddingBidders.Server.Data
         public IRepository<Issue> Issues { get { return GetStandardRepo<Issue>(); } }
         public IRepository<DiscJockey> DiscJockeys { get { return GetStandardRepo<DiscJockey>(); } }
 
-        public void SaveChanges() { base.dbContext.SaveChanges(); }
+        public new void SaveChanges() { base.dbContext.SaveChanges(); }
     }
 }
