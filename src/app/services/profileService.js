@@ -31,7 +31,7 @@
 
         self.getOtherBidders = function (options) {
             var deferred = self.$q.defer();
-            fetch.fromService({ method: "GET", url: self.baseUri + "/getOtherBidders" }).then(function (results) {
+            fetch.fromService({ method: "GET", url: self.baseUri + "/getOthers" }).then(function (results) {
                 deferred.resolve(results.data);
             });
             return deferred.promise;
