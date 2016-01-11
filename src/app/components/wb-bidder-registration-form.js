@@ -4,57 +4,31 @@
 
     ngX.Component({
         selector: "bidder-registration-form",
-        component: function BidderRegistrationFormComponent(bidderActions, bidderStore, dispatcher) {
+        component: function BidderRegistrationFormComponent(bidderActions, bidderStore, dispatcher, invokeAsync) {
             var self = this;
-            self.bidderActions = bidderActions;
-            self.dispatcher = dispatcher;
-            self.bidderStore = bidderStore;
-
-            self.firstname = null;
-            self.lastname = null;
-            self.companyName = null;
-            self.email = null;
-            self.confirmEmail = null;
-            self.password = null;
-            self.bidderType = null;
-
-            self.firstnamePlaceholder = "Firstname";
-            self.lastnamePlaceholder = "Lastname";
-            self.companyNamePlaceholder = "Company Name";
-            self.emailPlaceholder = "Email";
-            self.confirmEmailPlaceholder = "Confirm Email";
-            self.passwordPlaceholder = "Password";
-            self.addActionId = null;
-
-            self.listenerId = self.dispatcher.addListener({
-                actionType: "CHANGE",
-                callback: function (options) {
-                    if (self.addActionId === options.id) {
-                        self.dispatcher.emit({
-                            actionType: "BIDDER_ADDED", options: {
-                                username: self.email,
-                                password: self.password
-                            }
-                        });
-                    }
-                }
-            });
+            self.types = bidderStore.types;
 
             self.tryToRegister = function () {
-                self.addActionId = self.bidderActions.add({
-                    firstname: self.firstname,
-                    lastname: self.lastname,
-                    companyName: self.companyName,
-                    email: self.email,
-                    confirmEmail: self.confirmEmail,
-                    password: self.password,
-                    bidderType: self.bidderType
+                invokeAsync({
+                    action: bidderActions.add,
+                    params: {
+                        firstname: self.firstname,
+                        lastname: self.lastname,
+                        companyName: self.companyName,
+                        email: self.email,
+                        confirmEmail: self.confirmEmail,
+                        password: self.password,
+                        bidderType: self.bidderType
+                    }
+                }).then(function () {
+                    dispatcher.emit({
+                        actionType: "BIDDER_ADDED", options: {
+                            username: self.email,
+                            password: self.password
+                        }
+                    });
                 });
             };
-
-            self.dispose = function () {
-                self.dispatcher.removeListener({ id: self.listenerId });
-            }
 
             return self;
         },
@@ -75,21 +49,22 @@
         providers: [
             "bidderActions",
             "bidderStore",
-            "dispatcher"
+            "dispatcher",
+            "invokeAsync",
         ],
         template: [
             "<form class='bidderRegistrationForm' name='bidderRegistrationForm'>",
-            "   <text-form-control placeholder='vm.firstnamePlaceholder' model='vm.firstname' ></text-form-control>",
-            "   <text-form-control placeholder='vm.lastnamePlaceholder' model='vm.lastname' ></text-form-control>",
-            "   <text-form-control placeholder='vm.companyNamePlaceholder' model='vm.companyName' ></text-form-control>",
-            "   <text-form-control placeholder='vm.emailPlaceholder' model='vm.email' ></text-form-control>",
-            "   <text-form-control placeholder='vm.confirmEmailPlaceholder' model='vm.confirmEmail'></text-form-control>",
-            "   <text-form-control placeholder='vm.passwordPlaceholder' model='vm.password'></text-form-control>",
+            "   <text-form-control placeholder='\"Firstname\"' model='vm.firstname' ></text-form-control>",
+            "   <text-form-control placeholder='\"Lastname\"' model='vm.lastname' ></text-form-control>",
+            "   <text-form-control placeholder='\"Company Name\"' model='vm.companyName' ></text-form-control>",
+            "   <text-form-control placeholder='\"Email\"' model='vm.email' ></text-form-control>",
+            "   <text-form-control placeholder='\"Confirm Email\"' model='vm.confirmEmail'></text-form-control>",
+            "   <text-form-control placeholder='\"Password\"' model='vm.password'></text-form-control>",
 
             "   <div class='bidderRegistrationForm-categories'> ",
             "       <span>Choose a category: </span>",
-            "       <select data-ng-model='vm.bidderType' data-ng-init='vm.bidderType = vm.bidderStore.types[0].value'",
-            "           data-ng-options='type.value as type.displayName for type in vm.bidderStore.types'> ",
+            "       <select data-ng-model='vm.bidderType' data-ng-init='vm.bidderType = vm.types[0].value'",
+            "           data-ng-options='type.value as type.displayName for type in vm.types'> ",
             "       </select>",
             "   </div> ",
 
