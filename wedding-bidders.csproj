@@ -210,6 +210,8 @@
     <Content Include="assets\images\carousel_button_prev.png" />
     <Content Include="assets\images\icon_search_sm.png" />
     <Content Include="assets\images\logo_tag_line.jpg" />
+    <Content Include="assets\images\logo_tag_line_mobile.jpg" />
+    <Content Include="assets\images\logo_universal.jpg" />
     <Content Include="assets\images\name.jpg" />
     <Content Include="assets\images\rotator_button_next.png" />
     <Content Include="assets\images\rotator_button_prev.png" />
@@ -247,6 +249,7 @@
     </Content>
     <Content Include="src\app\components\wb-bid-item.js" />
     <Content Include="src\app\components\wb-bidder-item.js" />
+    <Content Include="src\app\components\wb-conversation.js" />
     <Content Include="src\app\components\wb-hamburger-button.js">
       <DependentUpon>wb-header.js</DependentUpon>
     </Content>

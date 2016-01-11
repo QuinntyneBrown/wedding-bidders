@@ -50,11 +50,11 @@
             return newGuid;
         }
 
-        self.getOtherBidders = function () {
+        self.getOthers = function () {
             var newGuid = guid();
             profileService.getOtherBidders().then(function (results) {
                 dispatcher.emit({
-                    actionType: PROFILE_ACTIONS.OTHER_BIDDERS,
+                    actionType: PROFILE_ACTIONS.OTHERS,
                     options: {
                         data: results,
                         id: newGuid

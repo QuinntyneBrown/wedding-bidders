@@ -6,6 +6,7 @@
         selector: "wb-app",
         component: function AppComponent(requestCounter) {
             var self = this;
+            
             self.requestCounter = requestCounter;
             return self;
         },

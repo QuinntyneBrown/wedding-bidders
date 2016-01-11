@@ -38,9 +38,9 @@
         });
 
         dispatcher.addListener({
-            actionType: PROFILE_ACTIONS.OTHER_BIDDERS,
+            actionType: PROFILE_ACTIONS.OTHERS,
             callback: function (options) {
-                self.otherBidders = options.data;
+                self.others = options.data;
                 self.emitChange({ id: options.id });
             }
         });

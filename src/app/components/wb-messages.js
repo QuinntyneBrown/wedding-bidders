@@ -6,8 +6,8 @@
         var self = this;
 
         self.profiles = [];
-        for (var i = 0; i < profileStore.otherBidders.length; i++) {
-            self.profiles.push(profile.createInstance({ data: profileStore.otherBidders[i] }));
+        for (var i = 0; i < profileStore.others.length; i++) {
+            self.profiles.push(profile.createInstance({ data: profileStore.others[i] }));
         }
 
         return self;
@@ -15,19 +15,24 @@
 
     MessagesComponent.canActivate = function () {
         return ["invokeAsync", "profileActions", "profileStore", function (invokeAsync, profileActions, profileStore) {
-            return invokeAsync(profileActions.getOtherBidders);
+            return invokeAsync(profileActions.getOthers);
         }];
     }
 
     ngX.Component({
         component: MessagesComponent,
         priority: 10,
-        routes: ["/messages","/messages/:profileId"],
+        route: "/messages",
         providers: ["profile","profileStore"],
         template: [
-            "<div class='messages'>",
-            "   <div data-ng-repeat='profile in vm.profiles'>{{ ::profile.firstname }} {{ ::profile.lastname }}</div>",
+            "<div class='messages viewComponent'>",
+            "   <div data-ng-repeat='profile in vm.profiles'>",
+            "       <a class='messages-profile-name' href='#/messages/{{ ::profile.id}}'>{{ ::profile.firstname }} {{ ::profile.lastname }}</a>",
+            "   </div>",
             "</div>"
+        ],
+        styles: [
+            ' .messages-profile-name { text-decoration:none; color:#000; line-height:1.5em; } '
         ]
     });
 

@@ -39,8 +39,8 @@
         "componentName": "promotionComponent"
     });
 
-    $routeProvider.when("/messages/:profileId", {
-        "componentName": "messagesComponent",
+    $routeProvider.when("/messages/:otherProfileId", {
+        "componentName": "conversationComponent",
         "authorizationRequired": true
     });
 
