@@ -74,10 +74,7 @@
             "   <h1>@{{ ::vm.other.firstname }}</h1>",
             "   <message-form></message-form>",
             '   <div>',
-            '       <div data-ng-repeat="message in vm.messages track by $index">',
-            '           <span data-ng-if="vm.isFromOther(message)">{{ ::vm.other.firstname }} : {{ ::message.content }}</span>',
-            '           <span data-ng-if="vm.isToOther(message)">{{ ::vm.current.firstname }} : {{ ::message.content }}</span>',
-            '       </div>',
+            '       <message-item message="message" data-ng-repeat="message in vm.messages"><message-item>',
             '   </div>',
             "</div>"
         ],

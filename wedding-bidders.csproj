@@ -216,6 +216,7 @@
     <Content Include="assets\images\rotator_button_next.png" />
     <Content Include="assets\images\rotator_button_prev.png" />
     <Content Include="dist\app.js" />
+    <Content Include="lib\moment-timezone.js" />
     <Content Include="gulpfile.config.js" />
     <Content Include="gulpfile.js" />
     <Content Include="lib\jquery.signalR-2.2.0.js" />
@@ -225,6 +226,7 @@
     <Content Include="node_modules\angular\angular.js" />
     <Content Include="node_modules\fastclick\lib\fastclick.js" />
     <Content Include="node_modules\jquery\dist\jquery.js" />
+    <Content Include="node_modules\moment-timezone\moment-timezone.js" />
     <Content Include="node_modules\moment\min\moment.min.js" />
     <Content Include="node_modules\ng-x-components\dist\ngX.components.js" />
     <Content Include="node_modules\ng-x\dist\ngX.js" />
@@ -256,6 +258,7 @@
     <Content Include="src\app\components\wb-message-form.js">
       <DependentUpon>wb-conversation.js</DependentUpon>
     </Content>
+    <Content Include="src\app\components\wb-message-item.js" />
     <Content Include="src\app\components\wb-navigation.js">
       <DependentUpon>wb-header.js</DependentUpon>
     </Content>
@@ -433,6 +436,7 @@
     <Compile Include="Server\Dtos\GalleryDto.cs" />
     <Compile Include="Server\Dtos\GroupDto.cs" />
     <Compile Include="Server\Dtos\IssueDto.cs" />
+    <Compile Include="Server\Dtos\IssueRequestDto.cs" />
     <Compile Include="Server\Dtos\MessageDto.cs" />
     <Compile Include="Server\Dtos\ProfileDto.cs" />
     <Compile Include="Server\Dtos\RegistrationRequestDto.cs" />
@@ -523,9 +527,7 @@
     <Compile Include="Server\UnityConfiguration.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="tests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="typings\jquery\jquery.d.ts" />

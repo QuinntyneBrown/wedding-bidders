@@ -10,10 +10,8 @@
             var newGuid = guid();
             issueService.add({
                 data: {
-                    toProfileId: options.toProfileId,
                     subject: options.subject,
-                    content: options.content,
-                    issueType: options.issueType
+                    content: options.content
                 }
             }).then(function (results) {
                 dispatcher.emit({

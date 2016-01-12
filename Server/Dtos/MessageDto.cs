@@ -15,7 +15,7 @@ namespace WeddingBidders.Server.Dtos
             this.Subject = message.Subject;
             this.Content = message.Content;
             this.IsRead = message.IsRead;
-            this.CreatedDate = message.CreatedDate;
+            this.CreatedDate = TimeZoneInfo.ConvertTimeFromUtc(message.CreatedDate.Value, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));          
             this.ConversationId = message.ConversationId;
         }
 
@@ -25,7 +25,7 @@ namespace WeddingBidders.Server.Dtos
         public int? FromProfileId { get; set; }
         public int? ToProfileId { get; set; }
         public bool IsRead { get; set; }
-        public DateTime? CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         public int? ConversationId { get; set; }
     }
 }

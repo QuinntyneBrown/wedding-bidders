@@ -2,13 +2,15 @@
 
     "use strict";
 
-    function ReportAnIssueComponent($location, message, MESSAGE_TYPE) {
+    function ReportAnIssueComponent($location, invokeAsync, issueActions) {
         var self = this;
         self.tryToReport = function () {
-            message.sendAsync({
-                subject: self.subject,
-                content: self.content,
-                messageType: MESSAGE_TYPE.ISSUE
+            invokeAsync({
+                action: issueActions.add,
+                params: {
+                    subject: self.subject,
+                    content: self.content
+                }
             }).then(function () {
                 $location.path("/myprofile");
             });
@@ -19,7 +21,7 @@
     ngX.Component({
         component: ReportAnIssueComponent,
         route: "/reportanissue",
-        providers: ["$location", "message",  "MESSAGE_TYPE"],
+        providers: ["$location", "invokeAsync", "issueActions"],
         template: [
             "<div class='reportAnIssue viewComponent'>",
             "   <text-form-control placeholder='\"Subject\"' model='vm.subject' ></text-form-control>",

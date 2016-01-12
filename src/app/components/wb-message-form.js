@@ -7,8 +7,12 @@
             content: self.content,
             otherProfileId: profileStore.other.id
         });
-
         self.content = null;
+    }
+
+    self.onKeyDown = function (options) {
+        if (options.keyCode == 13 && self.content)
+            self.send();
     }
 
     return self;
@@ -18,9 +22,8 @@ ngX.Component({
     selector: "message-form",
     component: messsageFormComponent,
     template: [
-        '<div class="message-form" style="width:100%">',
-        '   <input class="message-form-input" placeholder="Type a message..." data-ng-model="vm.content"></input>',
-        '   <button class="message-form-button" data-ng-click="vm.send()">Send</button>',
+        '<div class="message-form" style="max-width:600px;">',
+        '   <input class="message-form-input" placeholder="Send a message" data-ng-model="vm.content" style="display:table-cell; width:80%;"></input>',
         '</div>'
     ],
     styles: [
