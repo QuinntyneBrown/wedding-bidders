@@ -63,6 +63,18 @@
             });
             return newGuid;
         }
+
+        self.getOtherProfile = function (options) {
+            var newGuid = guid();
+            profileService.getProfileById({ id: options.id }).then(function (results) {
+                dispatcher.emit({
+                    actionType: PROFILE_ACTIONS.OTHER, options:
+                        { data: results, id: newGuid }
+                });
+            });
+            return newGuid;
+        }
+
         return self;
     }
 

@@ -253,6 +253,9 @@
     <Content Include="src\app\components\wb-hamburger-button.js">
       <DependentUpon>wb-header.js</DependentUpon>
     </Content>
+    <Content Include="src\app\components\wb-message-form.js">
+      <DependentUpon>wb-conversation.js</DependentUpon>
+    </Content>
     <Content Include="src\app\components\wb-navigation.js">
       <DependentUpon>wb-header.js</DependentUpon>
     </Content>
@@ -435,6 +438,7 @@
     <Compile Include="Server\Dtos\ProfileDto.cs" />
     <Compile Include="Server\Dtos\RegistrationRequestDto.cs" />
     <Compile Include="Server\Dtos\RoleDto.cs" />
+    <Compile Include="Server\Dtos\SendMessageRequestDto.cs" />
     <Compile Include="Server\Dtos\SignInDto.cs" />
     <Compile Include="Server\Dtos\SubscriptionChargeDto.cs" />
     <Compile Include="Server\Dtos\TokenDto.cs" />

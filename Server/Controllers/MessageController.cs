@@ -12,6 +12,7 @@ using WeddingBidders.Server.Hubs;
 using WeddingBidders.Server.Models;
 using WeddingBidders.Server.Services.Contracts;
 
+
 namespace WeddingBidders.Server.Controllers
 {
     [RoutePrefix("api/message")]
@@ -24,17 +25,63 @@ namespace WeddingBidders.Server.Controllers
             this.messageService = messageService;
         }
 
-        
+
+        [HttpGet]
+        [Route("getByOtherProfileId")]
+        public IHttpActionResult GetByOtherProfileId(int otherProfileId)
+        {
+            IEnumerable<MessageDto> response = new List<MessageDto>();
+
+            var currentProfile = uow.Accounts
+                .GetAll()
+                .Where(x => x.Email == User.Identity.Name)
+                .Single().Profiles.First();
+
+            var conversation = uow.Conversations
+                .GetAll()
+                .Include(x => x.Messages)
+                .Where(x => x.Profiles.Any(p => p.Id == currentProfile.Id) && x.Profiles.Any(p => p.Id == otherProfileId))
+                .FirstOrDefault();
+
+            if (conversation != null)
+                response = conversation.Messages.Select(x => new MessageDto(x));
+
+            return Ok(response);
+        }
+
         [HttpPost]
         [Route("add")]
-        public IHttpActionResult add(MessageDto dto)
+        public IHttpActionResult Send(SendMessageRequestDto dto)
         {
-            var message = this.messageService.Add(Request, dto);
-            dto.FromProfileId = message.FromProfileId;
-            dto.Id = message.Id;
-            var context = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
-            context.Clients.All.onMessageAdded(new { Data = dto });
-            return Ok(dto);
+            var currentProfile = uow.Accounts
+                .GetAll()
+                .Include(x=> x.Profiles)
+                .Where(x => x.Email == User.Identity.Name)
+                .Single().Profiles.First();
+
+            var conversation = uow.Conversations
+                .GetAll()
+                .Where(x => x.Profiles.Any(p => p.Id == currentProfile.Id))
+                .Where(x => x.Profiles.Any(p => p.Id == dto.OtherProfileId))
+                .FirstOrDefault();
+
+            if (conversation == null)
+            {
+                conversation = new Conversation();
+                conversation.Profiles.Add(currentProfile);
+                conversation.Profiles.Add(uow.Profiles.GetById(dto.OtherProfileId));
+                uow.Conversations.Add(conversation);
+            }
+
+            var message = new Message();
+            message.FromProfileId = currentProfile.Id;
+            message.ToProfileId = dto.OtherProfileId;
+            message.Content = dto.Content;
+            conversation.Messages.Add(message);
+
+            uow.SaveChanges();
+
+            return Ok(new MessageDto(message));
         }
 
 

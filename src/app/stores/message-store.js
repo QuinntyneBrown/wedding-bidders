@@ -17,6 +17,7 @@
             callback: function (options) {
                 self.storeInstance.addOrUpdate({ data: options.data });
                 self.storeInstance.emitChange({ id: options.id });
+                self.hub.invoke("send", options.data);
             }
         });
 

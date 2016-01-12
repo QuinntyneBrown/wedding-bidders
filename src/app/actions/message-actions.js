@@ -10,10 +10,8 @@
             var newGuid = guid();
             messageService.add({
                 data: {
-                    toProfileId: options.toProfileId,
-                    subject: options.subject,
-                    content: options.content,
-                    messageType: options.messageType
+                    otherProfileId: options.otherProfileId,
+                    content: options.content
                 }
             }).then(function (results) {
                 dispatcher.emit({

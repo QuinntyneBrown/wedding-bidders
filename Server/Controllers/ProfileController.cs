@@ -42,6 +42,15 @@ namespace WeddingBidders.Server.Controllers
                             .Single().Profile));
 
         [HttpGet]
+        [Authorize]
+        [Route("getProfileById")]
+        public IHttpActionResult GetById(int id)
+            => Ok(new ProfileDto(uow.Profiles
+                .GetAll()
+                .Include(x=>x.Account)
+                .Where(x=>x.Id ==id).Single()));
+
+        [HttpGet]
         [Route("GetOthers")]
         public IHttpActionResult GetOthers()
         {
