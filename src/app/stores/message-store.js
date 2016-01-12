@@ -7,7 +7,7 @@
         self.connection = $.hubConnection();
         self.hub = self.connection.createHubProxy("messageHub");
 
-        self.hub.on("onMessageAdded", function (options) {
+        self.hub.on("broadcastMessage", function (options) {
             self.storeInstance.addOrUpdate({ data: options });
             self.storeInstance.emitChange();
         });
@@ -33,6 +33,16 @@
             actionType: MESSAGE_ACTIONS.UPDATE_ALL_ISSUES,
             callback: function (options) {
                 self.issues = options.data;
+                self.storeInstance.emitChange({ id: options.id });
+            }
+        });
+
+        dispatcher.addListener({
+            actionType: MESSAGE_ACTIONS.GET_BY_OTHER_PROFILE,
+            callback: function (options) {
+                for (var i = 0; i < options.data.length; i++) {
+                    self.storeInstance.addOrUpdate({ data: options.data[i] });
+                }
                 self.storeInstance.emitChange({ id: options.id });
             }
         });

@@ -2,14 +2,16 @@
 
     "use strict";
 
-    function ConversationComponent(messageStore, profile, profileStore) {
+    function ConversationComponent($scope, messageStore, profile, profileStore, safeDigest) {
         var self = this;
 
         self.messages = [];
+        self.other = profileStore.other;
+        self.current = profileStore.currentProfile;
 
         self.storeOnChange = function () {
             self.messages = [];
-            for (var i = 0; i < messageStore.items.length; i++) {
+            for (var i = messageStore.items.length - 1; i > 0; i--) {
                 if (self.isInCurrentConversation(messageStore.items[i])) {
                     self.messages.push(messageStore.items[i]);
                 }
@@ -18,34 +20,47 @@
         }
 
         self.isFromOther = function (message) {
-            return message.toId === profileStore.current.id
-                    && message.fromId == profileStore.other.id
+            return message.toProfileId === profileStore.currentProfile.id
+                    && message.fromProfileId == profileStore.other.id
         }
 
         self.isToOther = function (message) {
-            return message.fromId === profileStore.current.id
-                    && message.toId == profileStore.other.id
+            return message.fromProfileId === profileStore.currentProfile.id
+                    && message.toProfileId == profileStore.other.id
         }
 
         self.isInCurrentConversation = function (message) {
             return self.isFromOther(message) || self.isToOther(message);
         }
 
-        for (var i = 0; i < messageStore.items.length; i++) {
+        for (var i = messageStore.items.length - 1; i > 0; i--) {
             if (self.isInCurrentConversation(messageStore.items[i])) {
                 self.messages.push(messageStore.items[i]);
             }
         }
+        
 
         return self;
     }
 
     ConversationComponent.canActivate = function () {
-        return ["$route","invokeAsync", "profileActions", function ($route,invokeAsync, profileActions) {
-            return invokeAsync({
-                action: profileActions.getOtherProfile,
-                params: { id: Number($route.current.params.otherProfileId)}
+        return ["$q","$route","invokeAsync", "messageActions", "profileActions", function ($q, $route, invokeAsync, messageActions, profileActions) {
+            var deferred = $q.defer();
+
+            $q.all([
+                invokeAsync({
+                    action: profileActions.getOtherProfile,
+                    params: { id: Number($route.current.params.otherProfileId) }
+                }),
+                invokeAsync({
+                    action: messageActions.getMessagesByOtherProfileId,
+                    params: { id: Number($route.current.params.otherProfileId) }
+                })
+            ]).then(function () {
+                deferred.resolve();
             });
+
+            return deferred.promise;
         }];
     }
 
@@ -53,12 +68,17 @@
         component: ConversationComponent,
         priority: 10,
         route: "/messages/:otherProfileId",
-        providers: ["messageStore", "profile", "profileStore"],
+        providers: ["$scope","messageStore", "profile", "profileStore", "safeDigest"],
         template: [
             "<div class='conversation viewComponent'>",
+            "   <h1>@{{ ::vm.other.firstname }}</h1>",
             "   <message-form></message-form>",
-            "   <div>",
-            "   </div>",
+            '   <div>',
+            '       <div data-ng-repeat="message in vm.messages track by $index">',
+            '           <span data-ng-if="vm.isFromOther(message)">{{ ::vm.other.firstname }} : {{ ::message.content }}</span>',
+            '           <span data-ng-if="vm.isToOther(message)">{{ ::vm.current.firstname }} : {{ ::message.content }}</span>',
+            '       </div>',
+            '   </div>',
             "</div>"
         ],
         styles: [

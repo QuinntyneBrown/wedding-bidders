@@ -28,6 +28,19 @@
             return deferred.promise;
         }
 
+        self.getByOtherProfileId = function (options) {
+            var deferred = $q.defer();
+            fetch.fromService({
+                method: "GET", url: self.baseUri + "/getByOtherProfileId", params:
+                    {
+                        otherProfileId: options.otherProfileId
+                    }
+            }).then(function (results) {
+                deferred.resolve(results.data);
+            });
+            return deferred.promise;
+        };
+
         self.baseUri = apiEndpoint.getBaseUrl() + "/message";
         return self;
     }

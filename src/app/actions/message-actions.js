@@ -46,6 +46,21 @@
             return newGuid;
         }
 
+        self.getMessagesByOtherProfileId = function (options) {
+            var newGuid = guid();
+
+            messageService.getByOtherProfileId({
+                otherProfileId: options.id
+            }).then(function (results) {
+                dispatcher.emit({
+                    actionType: MESSAGE_ACTIONS.GET_BY_OTHER_PROFILE, options:
+                        { data: results, id: newGuid }
+                });
+            });
+
+            return newGuid;
+        }
+
         return self;
     }
 

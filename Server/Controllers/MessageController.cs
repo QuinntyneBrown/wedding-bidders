@@ -34,6 +34,7 @@ namespace WeddingBidders.Server.Controllers
 
             var currentProfile = uow.Accounts
                 .GetAll()
+                .Include(x => x.Profiles)
                 .Where(x => x.Email == User.Identity.Name)
                 .Single().Profiles.First();
 

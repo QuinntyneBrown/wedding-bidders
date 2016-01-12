@@ -401,7 +401,6 @@
     <Compile Include="Server\Controllers\ApiControllerBase.cs" />
     <Compile Include="Server\Controllers\ConversationController.cs" />
     <Compile Include="Server\Controllers\CustomerController.cs" />
-    <Compile Include="Server\Controllers\CatererController.cs" />
     <Compile Include="Server\Controllers\HtmlContentController.cs" />
     <Compile Include="Server\Controllers\IssueController.cs" />
     <Compile Include="Server\Controllers\MessageController.cs" />
