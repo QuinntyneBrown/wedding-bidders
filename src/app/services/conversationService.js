@@ -5,9 +5,9 @@
     function conversationService($q, apiEndpoint, fetch) {
         var self = this;
 
-        self.getAllIssues = function (options) {
+        self.getAll = function (options) {
             var deferred = $q.defer();
-            fetch.fromService({ method: "GET", url: self.baseUri + "/allIssues" }).then(function (results) {
+            fetch.fromService({ method: "GET", url: self.baseUri + "/getAll" }).then(function (results) {
                 deferred.resolve(results.data);
             });
             return deferred.promise;

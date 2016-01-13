@@ -6,9 +6,9 @@
         var self = this;
 
         dispatcher.addListener({
-            actionType: CONVERSATION_ACTIONS.UPDATE_ALL_ISSUE_CONVERSATIONS,
+            actionType: CONVERSATION_ACTIONS.ALL,
             callback: function (options) {
-                self.issues = options.data;
+                self.storeInstance.items = options.data;
                 self.storeInstance.emitChange({ id: options.id });
             }
         });

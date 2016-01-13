@@ -5,7 +5,7 @@
     function AdminComponent(conversationStore, customerStore, bidderStore, messageStore, weddingStore) {
         var self = this;
         self.issues = conversationStore.issues;
-        self.conversations = conversationStore.interProfileConversations;
+        self.conversations = conversationStore.items;
         self.customers = customerStore.items;
         self.bidders = bidderStore.items;
         self.newIssues = messageStore.issues;
@@ -17,12 +17,12 @@
         return ["$q", "invokeAsync", "conversationActions", "customerActions", "bidderActions", "messageActions", "weddingActions",
             function ($q, invokeAsync, conversationActions, customerActions, bidderActions, messageActions, weddingActions) {
             return $q.all([
-                //invokeAsync(conversationActions.getAllIssues),
+                invokeAsync(conversationActions.getAll),
                 //invokeAsync(conversationActions.getAllInterProfileConversations),
                 invokeAsync(customerActions.getAll),
                 invokeAsync(bidderActions.getAll),
                 //invokeAsync(messageActions.getAllIssues),
-                //invokeAsync(weddingActions.getAll)
+                invokeAsync(weddingActions.getAll)
             ]);
         }]
     }

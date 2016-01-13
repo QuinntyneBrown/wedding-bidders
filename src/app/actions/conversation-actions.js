@@ -6,12 +6,12 @@
 
         var self = this;
 
-        self.getAllIssues = function (options) {
+        self.getAll = function (options) {
             var newGuid = guid();
-            conversationService.getAllIssues()
+            conversationService.getAll()
                 .then(function (results) {
                     dispatcher.emit({
-                        actionType: CONVERSATION_ACTIONS.UPDATE_ALL_ISSUE_CONVERSATIONS, options:
+                        actionType: CONVERSATION_ACTIONS.ALL, options:
                             { data: results, id: newGuid }
                     });
                 });

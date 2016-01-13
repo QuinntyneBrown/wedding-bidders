@@ -1,7 +1,5 @@
 ﻿using Common.Data.Contracts;
-using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
 using System.Web.Http;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
@@ -14,11 +12,15 @@ namespace WeddingBidders.Server.Controllers
     {
         public ConversationController(IWeddingBiddersUow uow)
         {
-            this.uow = uow;
             this.repository = uow.Conversations;
         }
+
+        [HttpGet]
+        [Route("getAll")]
+        [Authorize(Roles = "System")]
+        public IHttpActionResult getAll()
+            => Ok(repository.GetAll().ToList().Select(x => new ConversationDto(x)));
         
-        protected readonly IWeddingBiddersUow uow;
         protected readonly IRepository<Conversation> repository;
     }
 }
