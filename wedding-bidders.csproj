@@ -235,6 +235,7 @@
     <Content Include="package.json" />
     <Content Include="commonConfiguration.config" />
     <Content Include="connectionStrings.config" />
+    <Content Include="src\app\actions\bidder-description-actions.js" />
     <Content Include="src\app\actions\conversation-actions.js" />
     <Content Include="src\app\actions\issue-actions.js" />
     <Content Include="src\app\actions\subscription-actions.js" />
@@ -277,9 +278,11 @@
     <Content Include="src\app\domain\profile.js" />
     <Content Include="src\app\metal\numeral.js" />
     <Content Include="src\app\metal\work-spinner.js" />
+    <Content Include="src\app\services\bidderDescriptionService.js" />
     <Content Include="src\app\services\conversationService.js" />
     <Content Include="src\app\services\issueService.js" />
     <Content Include="src\app\services\subscriptionService.js" />
+    <Content Include="src\app\stores\bidder-description-store.js" />
     <Content Include="src\app\stores\conversation-store.js" />
     <Content Include="src\app\stores\issueStore.js" />
     <Content Include="StripeConfiguration.config" />
@@ -402,6 +405,7 @@
     <Compile Include="Server\Controllers\BidController.cs" />
     <Compile Include="Server\Controllers\BidderController.cs" />
     <Compile Include="Server\Controllers\ApiControllerBase.cs" />
+    <Compile Include="Server\Controllers\BidderDescriptionController.cs" />
     <Compile Include="Server\Controllers\ConversationController.cs" />
     <Compile Include="Server\Controllers\CustomerController.cs" />
     <Compile Include="Server\Controllers\HtmlContentController.cs" />
@@ -416,6 +420,7 @@
     <Compile Include="Server\Data\WeddingBiddersContext.cs" />
     <Compile Include="Server\Data\WeddingBiddersUow.cs" />
     <Compile Include="Server\Dtos\AccountDto.cs" />
+    <Compile Include="Server\Dtos\BidderDescriptionDto.cs" />
     <Compile Include="Server\Dtos\BidderDto.cs" />
     <Compile Include="Server\Dtos\BidderRegistrationRequestDto.cs" />
     <Compile Include="Server\Dtos\BidderRegistrationResponseDto.cs" />
@@ -460,6 +465,7 @@
     <Compile Include="Server\Models\AccountType.cs" />
     <Compile Include="Server\Models\BaseEntity.cs" />
     <Compile Include="Server\Models\Bidder.cs" />
+    <Compile Include="Server\Models\BidderDescription.cs" />
     <Compile Include="Server\Models\BidderType.cs" />
     <Compile Include="Server\Models\Category.cs" />
     <Compile Include="Server\Models\Caterer.cs" />

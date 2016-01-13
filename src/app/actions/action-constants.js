@@ -46,6 +46,11 @@ angular.module("app").value("BIDDER_ACTIONS", {
     UPDATE_BY_BID_ID: "UPDATE_BY_BID_ID"
 });
 
+angular.module("app").value("BIDDER_DESCRIPTION_ACTIONS", {
+    ADD_OR_UPDATE: "ADD_OR_UPDATE_BIDDER_DESCRIPTION",
+    ALL: "ALL_BIDDER_DESCRIPTIONS"
+});
+
 angular.module("app").value("CUSTOMER_ACTIONS", {
     ADD_CUSTOMER: "ADD_CUSTOMER",
     UPDATE_ALL: "UPDATE_ALL_CUSTOMERS"

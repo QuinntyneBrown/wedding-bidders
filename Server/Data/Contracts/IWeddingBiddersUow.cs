@@ -27,6 +27,7 @@ namespace WeddingBidders.Server.Data.Contracts
         IRepository<Conversation> Conversations { get; }
         IRepository<Issue> Issues { get; }
         IRepository<DiscJockey> DiscJockeys { get; }
+        IRepository<BidderDescription> BidderDescriptions { get; }
 
         void SaveChanges();
     }

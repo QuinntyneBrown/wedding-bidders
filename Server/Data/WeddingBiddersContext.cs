@@ -27,7 +27,8 @@ namespace WeddingBidders.Server.Data
         public DbSet<HtmlContent> HtmlContents { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
         public DbSet<Issue> Issues { get; set; }
-
+        public DbSet<BidderDescription> BidderDescriptions { get; set; }
+        
         public override int SaveChanges()
         {
             foreach (var entry in this.ChangeTracker.Entries()

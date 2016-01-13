@@ -1,7 +1,6 @@
 ﻿using Common.Data.Contracts;
 using System.Data.Entity;
 using System.Web.Http;
-using System.Net.Http;
 using System.Linq;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
