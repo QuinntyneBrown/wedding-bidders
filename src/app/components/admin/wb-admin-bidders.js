@@ -24,6 +24,8 @@
             "<div class='adminBidders viewComponent'>",
             "   <div data-ng-repeat='bidder in vm.bidders'> ",
             "       <p>{{ bidder.id }}</p> ",
+            "       <p>{{ bidder.firstname }} {{ bidder.lastname }}</p> ",
+            "       <p>{{ bidder.email }}</p> ",
             "   </div> ",
             "</div>"
         ]

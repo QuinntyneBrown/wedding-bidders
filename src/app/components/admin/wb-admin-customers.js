@@ -4,9 +4,7 @@
 
     function AdminCustomersComponent(customerStore) {
         var self = this;
-
         self.customers = customerStore.items;
-
         return self;
     }
 
@@ -24,6 +22,8 @@
         providers: ['customerStore'],
         template: [
             "<div class='adminCustomers viewComponent'>",
+            "   <admin-customer-item customer='customer' data-ng-repeat='customer in vm.customers'> ",
+            "   </admin-customer-item>",
             "</div>"
         ]
     });

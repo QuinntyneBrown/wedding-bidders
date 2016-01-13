@@ -17,12 +17,12 @@
         return ["$q", "invokeAsync", "conversationActions", "customerActions", "bidderActions", "messageActions", "weddingActions",
             function ($q, invokeAsync, conversationActions, customerActions, bidderActions, messageActions, weddingActions) {
             return $q.all([
-                invokeAsync(conversationActions.getAllIssues),
-                invokeAsync(conversationActions.getAllInterProfileConversations),
+                //invokeAsync(conversationActions.getAllIssues),
+                //invokeAsync(conversationActions.getAllInterProfileConversations),
                 invokeAsync(customerActions.getAll),
                 invokeAsync(bidderActions.getAll),
-                invokeAsync(messageActions.getAllIssues),
-                invokeAsync(weddingActions.getAll)
+                //invokeAsync(messageActions.getAllIssues),
+                //invokeAsync(weddingActions.getAll)
             ]);
         }]
     }
