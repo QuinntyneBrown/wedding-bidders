@@ -13,14 +13,12 @@ namespace WeddingBidders.Server.Controllers
     {
         public IssueController(IWeddingBiddersUow uow)
             :base()
-        {
-            this.uow = uow;
-        }
+        { this.uow = uow; }
 
         [HttpGet]
-        [Route("get")]
+        [Route("getAll")]
         [Authorize(Roles = "System")]
-        public IHttpActionResult Get() => Ok();
+        public IHttpActionResult Get() => Ok(uow.Issues.GetAll().ToList().Select(x=> new IssueDto(x)));
 
         [HttpPost]
         [Route("add")]
