@@ -18,8 +18,8 @@
     EditWeddingComponent.canActivate = function () {
         return ["bidderActions", "invokeAsync", function (bidderActions, invokeAsync) {
             return invokeAsync(bidderActions.getTypes);
-        }]
-    }
+        }];
+    };
 
     ngX.Component({
         component: EditWeddingComponent,

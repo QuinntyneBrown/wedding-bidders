@@ -28,7 +28,7 @@
             if (options.bidders) {
                 var bidder = self.$injector.get("bidder");
                 for (var i = 0; i < options.bidders.length; i++) {
-                    if (options.bidders[i].id == instance.bidderId)
+                    if (options.bidders[i].id === instance.bidderId)
                         instance.bidder = bidder.createInstance({ data: options.bidders[i], profiles: options.profiles });
                 }                
             }

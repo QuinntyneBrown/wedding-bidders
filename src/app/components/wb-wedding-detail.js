@@ -10,7 +10,7 @@
 
     ngX.Component({
         selector: "wedding-detail",
-        component: WeddingDetailComponent,        
+        component: WeddingDetailComponent,
         template: [
             "<div class='weddingDetail'>",
             "   <h1 class='weddingDetail-heading'>Wedding Detail</h1>",
@@ -29,5 +29,5 @@
         inputs: [
             'wedding'
         ]
-    })
+    });
 })();

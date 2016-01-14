@@ -16,7 +16,7 @@
                     });
                 });
             return newGuid;
-        }
+        };
 
         self.getAllInterProfileConversations = function (options) {
             var newGuid = guid();
@@ -28,7 +28,7 @@
                     });
                 });
             return newGuid;
-        }
+        };
 
         self.getAllConversationsByProfileId = function (options) {
             var newGuid = guid();
@@ -40,15 +40,13 @@
                     });
                 });
             return newGuid;
-        }
-
-        //UPDATE_ALL_CONVERSATIONS_BY_PROFILE
+        };
 
         return self;
     }
 
     angular.module("app")
-        .service("conversationActions", ["dispatcher", "guid", "conversationService", "CONVERSATION_ACTIONS", conversationActions])
+        .service("conversationActions", ["dispatcher", "guid", "conversationService", "CONVERSATION_ACTIONS", conversationActions]);
 
 
 })();

@@ -65,7 +65,7 @@
                 }
             }
             return bidder;
-        }
+        };
 
         return self;
     }

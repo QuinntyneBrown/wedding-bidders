@@ -11,7 +11,7 @@
             self.bidderStore = bidderStore;
             self.bidderTypes = [];
             for (var i = 0; i < bidderStore.types.length; i++) {
-                self.bidderTypes.push(angular.extend(bidderStore.types[i], { checked: false }))
+                self.bidderTypes.push(angular.extend(bidderStore.types[i], { checked: false }));
             }
             self.date = Date();
             self.categories = [];
@@ -31,7 +31,7 @@
                     }
                 });
                 return categories;
-            }
+            };
 
             self.listenerId = self.dispatcher.addListener({
                 actionType: "CHANGE",
@@ -59,7 +59,8 @@
 
             self.dispose = function () {
                 self.dispatcher.removeListener({ id: self.listenerId });
-            }
+            };
+
             return self;
         },
         providers: ["bidderStore", "dispatcher", "weddingActions"],

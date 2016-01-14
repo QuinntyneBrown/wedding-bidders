@@ -26,7 +26,7 @@
 
         self.deactivate = function () {
             self.dispatcher.removeListener({ id: self.listenerId });
-        }
+        };
 
         return self;
     }

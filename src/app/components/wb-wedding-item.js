@@ -12,7 +12,7 @@
             if (weddingStore.currentWedding && self.wedding.id === weddingStore.currentWedding.id)
                 return 'selected';
             return '';
-        }
+        };
 
         return self;
     }

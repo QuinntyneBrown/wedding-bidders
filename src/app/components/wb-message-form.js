@@ -11,7 +11,7 @@
     }
 
     self.onKeyDown = function (options) {
-        if (options.keyCode == 13 && self.content)
+        if (options.keyCode === 13 && self.content)
             self.send();
     }
 

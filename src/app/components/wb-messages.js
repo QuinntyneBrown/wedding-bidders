@@ -17,7 +17,7 @@
         return ["invokeAsync", "profileActions", "profileStore", function (invokeAsync, profileActions, profileStore) {
             return invokeAsync(profileActions.getOthers);
         }];
-    }
+    };
 
     ngX.Component({
         component: MessagesComponent,

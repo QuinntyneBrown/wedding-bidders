@@ -48,7 +48,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.getOthers = function () {
             var newGuid = guid();
@@ -62,7 +62,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.getOtherProfile = function (options) {
             var newGuid = guid();
@@ -73,13 +73,13 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         return self;
     }
 
     angular.module("app")
-        .service("profileActions", ["dispatcher", "guid", "profileService", "PROFILE_ACTIONS", profileActions])
+        .service("profileActions", ["dispatcher", "guid", "profileService", "PROFILE_ACTIONS", profileActions]);
 
 
 })();

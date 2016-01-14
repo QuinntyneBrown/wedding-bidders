@@ -7,7 +7,7 @@
         component: function TextAreaFormControlComponent($attrs) {
             var self = this;
             self.$attrs = $attrs;
-            self.onInit = function () { }
+            self.onInit = function () { };
             self.rows = self.$attrs["rows"] || 4;
             return self;
         },
@@ -22,7 +22,7 @@
             "   width: 200px; ",
             " } ",
 
-            " .formControl { margin-bottom: 15px; } ",
+            " .formControl { margin-bottom: 15px; } "
         ],
         inputs: ["placeholder", "model"],
         providers: ["$attrs"],

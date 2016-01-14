@@ -14,7 +14,7 @@
             }).then(function () {
                 $location.path("/myprofile");
             });
-        }
+        };
         return self;
     }
 

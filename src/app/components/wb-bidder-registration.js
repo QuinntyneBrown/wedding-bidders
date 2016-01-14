@@ -34,16 +34,16 @@
             for (var i = 0; i < self.listenerIds.length; i++) {
                 self.dispatcher.removeListener({ id: self.listenerIds[i] });
             }
-        }
+        };
 
         return self;
     }
 
     BidderRegistrationComponent.canActivate = function () {
         return ["bidderActions", "invokeAsync", function (bidderActions, invokeAsync) {
-            return invokeAsync(bidderActions.getTypes);   
-        }]
-    }
+            return invokeAsync(bidderActions.getTypes);
+        }];
+    };
 
     ngX.Component({
         component: BidderRegistrationComponent,

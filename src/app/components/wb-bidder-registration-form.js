@@ -50,7 +50,7 @@
             "bidderActions",
             "bidderStore",
             "dispatcher",
-            "invokeAsync",
+            "invokeAsync"
         ],
         template: [
             "<form class='bidderRegistrationForm' name='bidderRegistrationForm'>",

@@ -8,17 +8,18 @@
         self.current = profileStore.currentProfile;
         self.isFromOther = function (message) {
             return message.toProfileId === profileStore.currentProfile.id
-                    && message.fromProfileId == profileStore.other.id
-        }
+                    && message.fromProfileId === profileStore.other.id;
+        };
 
         self.isToOther = function (message) {
             return message.fromProfileId === profileStore.currentProfile.id
-                    && message.toProfileId == profileStore.other.id
-        }
+                    && message.toProfileId === profileStore.other.id;
+        };
 
         self.displayDate = function (date) {
             return moment(date).format('MMMM Do YYYY, h:mm:ss a');
-        }
+        };
+
         return self;
     }
         
@@ -45,7 +46,7 @@
             '       <span data-ng-if="vm.isFromOther(vm.message)">{{ ::vm.other.firstname }} : {{ ::vm.displayDate(vm.message.createdDate) }}</span>',
             '       <span data-ng-if="vm.isToOther(vm.message)">{{ ::vm.current.firstname }} : {{ ::vm.displayDate(vm.message.createdDate) }}</span>',
             '   </div>',
-            '</div>',
+            '</div>'
         ],
         inputs: ['message'],
         providers: [

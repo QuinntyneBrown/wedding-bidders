@@ -25,10 +25,10 @@
             }
 
             if (self.weddings.length > 0 && !weddingStore.currentWedding)
-                weddingActions.select({ wedding: self.weddings[0] });            
-        }
+                weddingActions.select({ wedding: self.weddings[0] });
+        };
 
-        self.storeOnChange = function () { self.onInit(); }
+        self.storeOnChange = function () { self.onInit(); };
 
         return self;
     }
@@ -41,7 +41,7 @@
                 invokeAsync(weddingActions.getAllByCurrentProfile)
             ]).then(function (results) {
                 var promises = [];
-                for (var i = 0; i < bidStore.byProfile.length; i++) {                    
+                for (var i = 0; i < bidStore.byProfile.length; i++) {
                     promises.push($q.all([
                         invokeAsync({
                             action: bidderActions.getByBidId,
@@ -52,14 +52,14 @@
                             params: { bidId: bidStore.byProfile[i].id }
                         })
                     ]));
-                };
+                }
                 $q.all(promises).then(function () {
                     deferred.resolve();
-                });                
+                });
             });
             return deferred.promise;
         }];
-    }
+    };
 
     ngX.Component({
         component: CustomerMyProfileComponent,
@@ -101,7 +101,7 @@
             "   width:50%; ",
             "   position:relative; ",
             "   float:left; ",
-            " } ",
+            " } "
         ]
     });
 

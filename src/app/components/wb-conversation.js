@@ -17,21 +17,21 @@
                 }
             }
             safeDigest($scope);
-        }
+        };
 
         self.isFromOther = function (message) {
             return message.toProfileId === profileStore.currentProfile.id
-                    && message.fromProfileId == profileStore.other.id
-        }
+                    && message.fromProfileId === profileStore.other.id;
+        };
 
         self.isToOther = function (message) {
             return message.fromProfileId === profileStore.currentProfile.id
-                    && message.toProfileId == profileStore.other.id
-        }
+                    && message.toProfileId === profileStore.other.id;
+        };
 
         self.isInCurrentConversation = function (message) {
             return self.isFromOther(message) || self.isToOther(message);
-        }
+        };
 
         for (var i = messageStore.items.length - 1; i > 0; i--) {
             if (self.isInCurrentConversation(messageStore.items[i])) {
@@ -44,7 +44,7 @@
     }
 
     ConversationComponent.canActivate = function () {
-        return ["$q","$route","invokeAsync", "messageActions", "profileActions", function ($q, $route, invokeAsync, messageActions, profileActions) {
+        return ["$q", "$route", "invokeAsync", "messageActions", "profileActions", function ($q, $route, invokeAsync, messageActions, profileActions) {
             var deferred = $q.defer();
 
             $q.all([
@@ -62,7 +62,7 @@
 
             return deferred.promise;
         }];
-    }
+    };
 
     ngX.Component({
         component: ConversationComponent,

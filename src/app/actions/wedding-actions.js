@@ -43,7 +43,7 @@
                         data: options.id,
                         id: newGuid
                     }
-                })
+                });
             });
             return newGuid;
         };
@@ -58,7 +58,7 @@
                 }
             });
             return newGuid;
-        }
+        };
 
         self.getAll = function () {
             var newGuid = guid();
@@ -103,13 +103,13 @@
             });
 
             return newGuid;
-        }
+        };
 
         return self;
     }
 
     angular.module("app")
-        .service("weddingActions", ["dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions])
+        .service("weddingActions", ["dispatcher", "guid", "weddingService", "WEDDING_ACTIONS", weddingActions]);
 
 
 })();

@@ -9,7 +9,7 @@
             var newGuid = guid();
             subscriptionService.charge({
                 data: {
-                    token: options.token,
+                    token: options.token
                 }
             }).then(function (results) {
                 dispatcher.emit({
@@ -25,7 +25,7 @@
     }
 
     angular.module("app")
-        .service("subscriptionActions", ["dispatcher", "guid", "subscriptionService", "SUBSCRIPTION_ACTIONS", subscriptionActions])
+        .service("subscriptionActions", ["dispatcher", "guid", "subscriptionService", "SUBSCRIPTION_ACTIONS", subscriptionActions]);
 
 
 })();

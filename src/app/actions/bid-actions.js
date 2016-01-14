@@ -22,7 +22,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.getAllByCurrentProfile = function (options) {
             var newGuid = guid();
@@ -33,13 +33,13 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         return self;
     }
 
     angular.module("app")
-        .service("bidActions", ["dispatcher", "guid", "bidService", "BID_ACTIONS", bidActions])
+        .service("bidActions", ["dispatcher", "guid", "bidService", "BID_ACTIONS", bidActions]);
 
 
 })();

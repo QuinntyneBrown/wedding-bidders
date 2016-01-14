@@ -34,7 +34,7 @@
                 for (var i = 0; i < self.listenerIds.length; i++) {
                     self.dispatcher.removeListener({ id: self.listenerIds[i] });
                 }
-            }
+            };
         },
         providers:["$location","dispatcher","securityActions"],
         template: [

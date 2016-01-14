@@ -4,13 +4,10 @@
 
     function PersonalizeComponent(profileActions, profileStore) {
         var self = this;
-
         self.onInit = function () {
             if (!profileStore.currentProfile.isPersonalized)
                 profileActions.updateIsPersonalizedFlag();
-        }
-
-
+        };
         return self;
     }
 

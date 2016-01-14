@@ -14,7 +14,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.getBilling = function (options) {
             var newGuid = guid();
@@ -25,13 +25,13 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         return self;
     }
 
     angular.module("app")
-        .service("accountActions", ["dispatcher", "guid", "accountService", "ACCOUNT_ACTIONS", accountActions])
+        .service("accountActions", ["dispatcher", "guid", "accountService", "ACCOUNT_ACTIONS", accountActions]);
 
 
 })();

@@ -12,7 +12,7 @@
                 self.password = null;
                 self.attempts = 0;
                 self.message = null;
-            }
+            };
 
             self.usernamePlaceholder = "Username";
             self.passwordPlaceholder = "Password";
@@ -26,13 +26,13 @@
                     }
                 }).then(function () {
                     if (securityStore.token) {
-                        securityActions.loginSuccess()
+                        securityActions.loginSuccess();
                     } else {
                         self.attempts = self.attempts + 1;
                         self.message = "Login Failed.";
                     }
                 });
-            }
+            };
 
             return self;
         },

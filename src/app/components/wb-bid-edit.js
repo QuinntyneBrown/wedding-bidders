@@ -5,7 +5,7 @@
     function EditBidComponent($location, $routeParams) {
         var self = this;
         self.wedding = { id: Number($routeParams.weddingId) };
-        self.successCallback = function () { $location.path("/bids"); }
+        self.successCallback = function () { $location.path("/bids"); };
         return self;
     }
 

@@ -20,7 +20,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.getAllForCurrentProfile = function (options) {
             var newGuid = guid();
@@ -32,7 +32,7 @@
                     });
                 });
             return newGuid;
-        }
+        };
 
         self.getAll = function (options) {
             var newGuid = guid();
@@ -44,13 +44,13 @@
                     });
                 });
             return newGuid;
-        }
+        };
 
         return self;
     }
 
     angular.module("app")
-        .service("issueActions", ["dispatcher", "guid", "issueService", "ISSUE_ACTIONS", issueActions])
+        .service("issueActions", ["dispatcher", "guid", "issueService", "ISSUE_ACTIONS", issueActions]);
 
 
 })();

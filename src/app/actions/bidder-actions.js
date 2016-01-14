@@ -26,7 +26,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.getAll = function (options) {
             var newGuid = guid();
@@ -37,7 +37,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.getById = function (options) {
             var newGuid = guid();
@@ -48,7 +48,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.getByProfileId = function (options) {
             var newGuid = guid();
@@ -59,7 +59,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.getByBidId = function (options) {
             var newGuid = guid();
@@ -70,7 +70,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.getTypes = function () {
             var newGuid = guid();
@@ -81,13 +81,13 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         return self;
     }
 
     angular.module("app")
-        .service("bidderActions", ["dispatcher", "guid", "bidderService", "BIDDER_ACTIONS", bidderActions])
+        .service("bidderActions", ["dispatcher", "guid", "bidderService", "BIDDER_ACTIONS", bidderActions]);
 
 
 })();

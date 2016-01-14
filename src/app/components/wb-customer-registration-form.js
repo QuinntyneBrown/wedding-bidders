@@ -24,7 +24,7 @@
                             password: self.password
                         }
                     });
-                })
+                });
             };
 
             return self;
@@ -36,7 +36,7 @@
             " .customerRegistrationForm button { ",
             "   background-color:#222; color:#FFF; border: 0px solid;",
             "   font-size:11px; height:30px; line-height:30px; padding-left:7px; padding-right:7px; width:50px;",
-            " } ",
+            " } "
         ],
         template: [
             "<form class='customerRegistrationForm' name='customerRegistrationForm'>",

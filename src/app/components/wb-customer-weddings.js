@@ -17,11 +17,11 @@
         });
         self.onInit = function () {
             self.customer = self.customerStore.getCurrentCustomer();
-        }
+        };
 
         self.onUpdate = function () {
             self.customer = self.customerStore.getCurrentCustomer();
-        }
+        };
 
         self.deactivate = function () {
             self.dispatcher.removeListener({ id: self.listenerId });
@@ -29,18 +29,18 @@
             self.customerStore = null;
             delete self.customer;
             delete self.customerStore;
-        }
+        };
 
         return self;
     }
 
     CustomerWeddingsComponent.prototype.canActivate = function () {
-        return ["$q",function($q) {
+        return ["$q", function ($q) {
             var deferred = $q.defer();
             deferred.resolve(true);
             return deferred.promise;
         }];
-    }
+    };
 
     ngX.Component({
         component: CustomerWeddingsComponent,

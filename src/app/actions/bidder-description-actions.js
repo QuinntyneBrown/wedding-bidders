@@ -19,7 +19,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.all = function (options) {
             var newGuid = guid();
@@ -30,13 +30,13 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         return self;
     }
 
     angular.module("app")
-        .service("bidderDescriptionActions", ["dispatcher", "guid", "bidderDescriptionService", "BIDDER_DESCRIPTION_ACTIONS", bidderDescriptionActions])
+        .service("bidderDescriptionActions", ["dispatcher", "guid", "bidderDescriptionService", "BIDDER_DESCRIPTION_ACTIONS", bidderDescriptionActions]);
 
 
 })();

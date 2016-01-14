@@ -9,11 +9,11 @@
             self.bidder = bidder.createInstance({
                 data: bidderStore.getById(Number($routeParams.id))
             });
-        }
+        };
 
         self.storeOnChange = function () {
 
-        }
+        };
 
         return self;
     }
@@ -25,7 +25,7 @@
                 params: { id: $route.current.params.id }
             });
         }];
-    }
+    };
 
     ngX.Component({
         component: BidderProfileComponent,

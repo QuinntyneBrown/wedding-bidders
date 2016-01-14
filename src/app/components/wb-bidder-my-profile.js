@@ -14,7 +14,7 @@
                 data: bidderStore.getByProfileId({ profileId: profileStore.currentProfile.id }),
                 profile: profileStore.currentProfile
             });
-        }
+        };
 
         return self;
     }
@@ -39,7 +39,7 @@
 
             return deferred.promise;
         }];
-    }
+    };
 
     ngX.Component({
         component: BidderMyProfileComponent,

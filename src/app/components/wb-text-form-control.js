@@ -8,7 +8,7 @@
             var self = this;
             self.onInit = function () {
                 self.type = self.placeholder === 'Password' ? "password" : "text";
-            }            
+            };
             return self;
         },
         styles: [
@@ -21,7 +21,7 @@
             "   text-align: left; ",
             "   width: 200px; ",
             " } ",
-            " .formControl { margin-bottom: 15px; } ",
+            " .formControl { margin-bottom: 15px; } "
         ],
         inputs: ["placeholder", "model"],
         providers: ["$attrs"],

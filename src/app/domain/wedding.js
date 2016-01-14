@@ -32,19 +32,19 @@
                 }
             }
             return instance;
-        }
+        };
 
         self.delete = function () {
             self.weddingActions.delete({
                 id: self.id
             });
-        }
+        };
 
         self.select = function () {
             self.weddingActions.select({
                 wedding: self
             });
-        }
+        };
 
         return self;
     }

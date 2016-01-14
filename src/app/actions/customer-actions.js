@@ -25,7 +25,7 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         self.getAll = function (options) {
             var newGuid = guid();
@@ -36,13 +36,13 @@
                 });
             });
             return newGuid;
-        }
+        };
 
         return self;
     }
 
     angular.module("app")
-        .service("customerActions", ["dispatcher", "guid", "customerService", "CUSTOMER_ACTIONS", customerActions])
+        .service("customerActions", ["dispatcher", "guid", "customerService", "CUSTOMER_ACTIONS", customerActions]);
 
 
 })();

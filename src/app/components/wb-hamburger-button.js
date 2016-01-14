@@ -249,7 +249,7 @@
                     self.augmentedJQuery = null;
                 }
                 catch (error) {
-
+                    // swallow error
                 }
             }
 

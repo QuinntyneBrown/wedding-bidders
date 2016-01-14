@@ -37,12 +37,12 @@
             dispatcher.emit({
                 actionType: "LOGIN_SUCCESS"
             });
-        }
+        };
         return self;
     }
 
     angular.module("app")
-        .service("securityActions", ["dispatcher", "formEncode", "guid", "securityService", "SECURITY_ACTIONS", securityActions])
+        .service("securityActions", ["dispatcher", "formEncode", "guid", "securityService", "SECURITY_ACTIONS", securityActions]);
 
 
 })();
