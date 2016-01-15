@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
 using WeddingBidders.Server.Services.Contracts;
-using Common.Data.Contracts;
 
 namespace WeddingBidders.Server.Controllers
 {
@@ -69,15 +67,13 @@ namespace WeddingBidders.Server.Controllers
                 .GetAll()
                 .Where(x => x.ProfileId == profileId)
                 .Single()));
-            
+
 
         [HttpPost]
         [Route("add")]
         [AllowAnonymous]
         public IHttpActionResult TryToRegister(BidderRegistrationRequestDto dto)
-        {
-            return Ok(this.service.TryToRegister(dto));
-        }
+            => Ok(this.service.TryToRegister(dto));
 
         [HttpGet]
         [AllowAnonymous]
@@ -96,8 +92,6 @@ namespace WeddingBidders.Server.Controllers
         }
 
         protected readonly IBidderService service;
-
         protected readonly IWeddingBiddersUow uow;
-
     }
 }

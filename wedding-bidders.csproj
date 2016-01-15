@@ -216,6 +216,7 @@
     <Content Include="assets\images\rotator_button_next.png" />
     <Content Include="assets\images\rotator_button_prev.png" />
     <Content Include="dist\app.js" />
+    <Content Include="lib\angular-payments.js" />
     <Content Include="lib\moment-timezone.js" />
     <Content Include="gulpfile.config.js" />
     <Content Include="gulpfile.js" />

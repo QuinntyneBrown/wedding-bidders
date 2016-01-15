@@ -1,4 +1,4 @@
-﻿angular.module("app", ["ngX", "ngX.components"]).config(["$routeProvider", "apiEndpointProvider", "loginRedirectProvider", function ($routeProvider, apiEndpointProvider, loginRedirectProvider) {
+﻿angular.module("app", ["angularPayments", "ngX", "ngX.components"]).config(["$routeProvider", "apiEndpointProvider", "loginRedirectProvider", function ($routeProvider, apiEndpointProvider, loginRedirectProvider) {
 
     $routeProvider.when("/admin", {
         "componentName": "adminComponent",
@@ -144,8 +144,8 @@
     FastClick.attach(document.body);
 }]).run(["carouselConfig", function (carouselConfig) {
     carouselConfig.default.startIndex = 175;
-}]).config([function () {
-    window.Stripe.setPublishableKey(' pk_test_ytc8jUooGvdToOgRs6ybU0g0');
+}]).run(["$window", function ($window) {
+    $window.Stripe.setPublishableKey('pk_test_ytc8jUooGvdToOgRs6ybU0g0');
 }]);
 
 ngX.ConfigureRoutePromise({
