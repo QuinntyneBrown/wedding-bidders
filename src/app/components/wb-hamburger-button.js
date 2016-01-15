@@ -142,7 +142,7 @@
                 "<div class='wbHamburgerMenu' data-ng-click='vm.onClick()'>",
                 "   <div class='wbHamburgerMenu-container'>",
                 "       <div class='wbHamburgerMenu-links'>",
-                "           <div><a data-ng-click='vm.navigateToSubmitWedding()'>Submit Wedding</a><div>",
+                "           <div><a data-ng-click='vm.navigateToSubmitWedding()'>Post a Wedding</a><div>",
                 "           <div><a data-ng-click='vm.navigateToMyProfile()'>My Profile</a><div>",
                 "           <div><a data-ng-click='vm.navigateToMyMessages()'>My Messages</a><div>",
                 "           <div><a data-ng-click='vm.navigateToReportAnIssue()'>Report an Issue</a><div>",

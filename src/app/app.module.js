@@ -144,6 +144,8 @@
     FastClick.attach(document.body);
 }]).run(["carouselConfig", function (carouselConfig) {
     carouselConfig.default.startIndex = 175;
+}]).config([function () {
+    window.Stripe.setPublishableKey(' pk_test_ytc8jUooGvdToOgRs6ybU0g0');
 }]);
 
 ngX.ConfigureRoutePromise({
