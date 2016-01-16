@@ -2,12 +2,17 @@
 
     "use strict";
 
-    function PaymentComponent($location, ACCOUNT_STATUS, accountStore, invokeAsync, subscriptionActions) {
+    function PaymentComponent($location, $scope, ACCOUNT_STATUS, accountStore, invokeAsync, subscriptionActions) {
         var self = this;
-        self.charge = function () {
+
+        $scope.stripeCallback = function (code, results) {
+            self.charge({ token: results.id });
+        }
+
+        self.charge = function (options) {
             invokeAsync({
                 action: subscriptionActions.tryToCharge,
-                params: { token: self.token }
+                params: { token: options.token }
             }).then(function () {
                 if (accountStore.currentAccount.accountStatus === ACCOUNT_STATUS.PAID) {
                     $location.path("/myprofile");
@@ -18,17 +23,29 @@
     }
 
     ngX.Component({
+        route:"/payment",
         component: PaymentComponent,
         providers: [
             "$location",
+            "$scope",
             "ACCOUNT_STATUS",
             "accountStore",
             "invokeAsync",
             "subscriptionActions"],
         template: [
             "<div class='paymentComponent viewComponent'>",
-            "   <button data-ng-click='vm.charge()'>Charge</button>",
+            "   <form stripe-form='stripeCallback' name='checkoutForm'>",
+            "       <input ng-model='number' placeholder='Card Number' payments-format='card' payments-validate='card' name='card' />",
+            "       <input ng-model='expiry' placeholder='Expiration' payments-format='expiry' payments-validate='expiry' name='expiry' />",
+            "       <input ng-model='cvc' placeholder='CVC' payments-format='cvc' payments-validate='cvc' name='cvc' />",
+            "       <button type='submit'>Submit</button>",
+            "   </form>",
+            "   <div data-ng-if='checkoutForm.card.$invalid'>Error: invalid card number!</div>",
+            "   <div data-ng-if='checkoutForm.expiry.$invalid'>Error: invalid expiry date!</div>",
             "</div>"
+        ],
+        styles: [
+            " .ng-invalid { color: red; } "
         ]
     });
 })();
