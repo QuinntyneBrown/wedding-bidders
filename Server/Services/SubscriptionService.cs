@@ -6,6 +6,7 @@ using WeddingBidders.Server.Data.Contracts;
 using WeddingBidders.Server.Dtos;
 using WeddingBidders.Server.Models;
 using WeddingBidders.Server.Services.Contracts;
+using Stripe;
 
 namespace WeddingBidders.Server.Services
 {
@@ -16,9 +17,20 @@ namespace WeddingBidders.Server.Services
             this.uow = uow;
         }
 
-        public void Charge(HttpRequestMessage request, SubscriptionChargeDto subscriptionChargeDto)
+        public void Charge(string username, SubscriptionChargeDto subscriptionChargeDto)
         {
-            var username = request.GetRequestContext().Principal.Identity.Name;
+            var chargeOptions = new StripeChargeCreateOptions()
+            {
+                Amount = 18000,
+                Currency = "cad",
+                Source = new StripeSourceOptions() {  TokenId = subscriptionChargeDto.Token },
+                Description = "Membership Payment",
+                ReceiptEmail = username
+            };
+
+            var chargeService = new StripeChargeService();
+            var stripeCharge = chargeService.Create(chargeOptions);
+
             var user = uow.Users.GetAll()
                 .Include(x => x.Accounts)
                 .Include("Accounts.Profiles")

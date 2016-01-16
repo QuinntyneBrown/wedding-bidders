@@ -5,6 +5,6 @@ namespace WeddingBidders.Server.Services.Contracts
 {
     public interface ISubscriptionService
     {
-        void Charge(HttpRequestMessage request, SubscriptionChargeDto subscriptionChargeDto);
+        void Charge(string username, SubscriptionChargeDto subscriptionChargeDto);
     }
 }

@@ -5,6 +5,10 @@
     function PaymentComponent($location, $scope, ACCOUNT_STATUS, accountStore, invokeAsync, subscriptionActions) {
         var self = this;
 
+        $scope.number = '4242-4242-4242-4242';
+        $scope.expiry = '12/16';
+        $scope.cvc = '999';
+
         $scope.stripeCallback = function (code, results) {
             self.charge({ token: results.id });
         }
@@ -45,7 +49,7 @@
             "</div>"
         ],
         styles: [
-            " .ng-invalid { color: red; } "
+            " .paymentComponent .ng-invalid { color: red; } "
         ]
     });
 })();
