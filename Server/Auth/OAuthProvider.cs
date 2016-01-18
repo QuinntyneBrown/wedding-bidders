@@ -46,9 +46,9 @@ namespace WeddingBidders.Server.Auth
                     context.Rejected();
                 }
             }
-            catch
+            catch(Exception exception)
             {
-                context.SetError("Server error");
+                context.SetError(exception.Message);
                 context.Rejected();
             }
             return Task.FromResult(0);

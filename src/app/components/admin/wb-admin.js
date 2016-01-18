@@ -31,11 +31,12 @@
         providers: ['conversationStore', 'customerStore', 'bidderStore', 'issueStore', 'weddingStore'],
         template: [
             "<div class='admin viewComponent'>",
-            "<admin-slide href='\"/admin/issues\"' title='\"Issues\"' value='vm.issues.length'></admin-slide>",
-            "<admin-slide href='\"/admin/conversations\"' title='\"Conversations\"' value='vm.conversations.length'></admin-slide>",
-            "<admin-slide href='\"/admin/customers\"' title='\"Customers\"' value='vm.customers.length'></admin-slide>",
-            "<admin-slide href='\"/admin/bidders\"' title='\"Bidders\"' value='vm.bidders.length'></admin-slide>",
-            "<admin-slide href='\"/admin/weddings\"' title='\"Weddings\"' value='vm.weddings.length'></admin-slide>",
+            "   <admin-slide href='\"/admin/issues\"' title='\"Issues\"' value='vm.issues.length'></admin-slide>",
+            "   <admin-slide href='\"/admin/conversations\"' title='\"Conversations\"' value='vm.conversations.length'></admin-slide>",
+            "   <admin-slide href='\"/admin/customers\"' title='\"Customers\"' value='vm.customers.length'></admin-slide>",
+            "   <admin-slide href='\"/admin/bidders\"' title='\"Bidders\"' value='vm.bidders.length'></admin-slide>",
+            "   <admin-slide href='\"/admin/weddings\"' title='\"Weddings\"' value='vm.weddings.length'></admin-slide>",
+            "   <div style='clear:both;'",
             "</div>"
         ]
     });    
