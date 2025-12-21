@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ng serve:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
