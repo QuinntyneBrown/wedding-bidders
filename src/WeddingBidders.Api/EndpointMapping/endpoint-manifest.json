@@ -1,0 +1,300 @@
+{
+  "version": "1.0",
+  "description": "Frontend-to-backend endpoint mapping manifest for integration validation",
+  "endpoints": [
+    {
+      "service": "AccountService",
+      "frontendFile": "account.service.ts",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/account/current",
+          "description": "Get current account",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/account/billing",
+          "description": "Get billing information",
+          "requiresAuth": true
+        }
+      ]
+    },
+    {
+      "service": "AuthService",
+      "frontendFile": "auth.service.ts",
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/user/token",
+          "description": "Authenticate and get JWT token",
+          "requiresAuth": false
+        },
+        {
+          "method": "GET",
+          "path": "/api/user/current",
+          "description": "Get current user",
+          "requiresAuth": true
+        },
+        {
+          "method": "POST",
+          "path": "/api/user/change-password",
+          "description": "Change password",
+          "requiresAuth": true
+        }
+      ]
+    },
+    {
+      "service": "BidService",
+      "frontendFile": "bid.service.ts",
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/bid/add",
+          "description": "Create a new bid",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/bid/getAllByWeddingId",
+          "description": "Get bids by wedding ID",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/bid/getAllByCatererId",
+          "description": "Get bids by bidder ID",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/bid/getAllByCurrentProfile",
+          "description": "Get bids by current profile",
+          "requiresAuth": true
+        }
+      ]
+    },
+    {
+      "service": "BidderService",
+      "frontendFile": "bidder.service.ts",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/bidder/current",
+          "description": "Get current bidder",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/bidder/getAll",
+          "description": "Get all bidders",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/bidder/getById",
+          "description": "Get bidder by ID",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/bidder/GetByBidId",
+          "description": "Get bidder by bid ID",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/bidder/GetByProfileId",
+          "description": "Get bidder by profile ID",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/bidder/gettypes",
+          "description": "Get bidder types",
+          "requiresAuth": false
+        },
+        {
+          "method": "POST",
+          "path": "/api/bidder/add",
+          "description": "Register a new bidder",
+          "requiresAuth": false
+        }
+      ]
+    },
+    {
+      "service": "CustomerService",
+      "frontendFile": "customer.service.ts",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/customer/current",
+          "description": "Get current customer",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/customer/getAll",
+          "description": "Get all customers",
+          "requiresAuth": true
+        },
+        {
+          "method": "POST",
+          "path": "/api/customer/add",
+          "description": "Register a new customer",
+          "requiresAuth": false
+        }
+      ]
+    },
+    {
+      "service": "IssueService",
+      "frontendFile": "issue.service.ts",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/issue/getAll",
+          "description": "Get all issues",
+          "requiresAuth": true
+        },
+        {
+          "method": "POST",
+          "path": "/api/issue/add",
+          "description": "Create a new issue",
+          "requiresAuth": true
+        }
+      ]
+    },
+    {
+      "service": "MessageService",
+      "frontendFile": "message.service.ts",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/message/getByOtherProfileId",
+          "description": "Get messages by other profile ID",
+          "requiresAuth": true
+        },
+        {
+          "method": "POST",
+          "path": "/api/message/add",
+          "description": "Send a message",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/conversation/getAll",
+          "description": "Get all conversations",
+          "requiresAuth": true
+        }
+      ]
+    },
+    {
+      "service": "ProfileService",
+      "frontendFile": "profile.service.ts",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/profile/current",
+          "description": "Get current profile",
+          "requiresAuth": true
+        },
+        {
+          "method": "POST",
+          "path": "/api/profile",
+          "description": "Create a new profile",
+          "requiresAuth": false
+        }
+      ]
+    },
+    {
+      "service": "SubscriptionService",
+      "frontendFile": "subscription.service.ts",
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/subscription/charge",
+          "description": "Charge subscription",
+          "requiresAuth": true
+        }
+      ]
+    },
+    {
+      "service": "UserService",
+      "frontendFile": "user.service.ts",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/user/current",
+          "description": "Get current user",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/user/exists/{username}",
+          "description": "Check if username exists",
+          "requiresAuth": false
+        },
+        {
+          "method": "GET",
+          "path": "/api/user",
+          "description": "Get all users",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/user/{userId}",
+          "description": "Get user by ID",
+          "requiresAuth": true
+        }
+      ]
+    },
+    {
+      "service": "WeddingService",
+      "frontendFile": "wedding.service.ts",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/wedding/getAll",
+          "description": "Get all weddings",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/wedding/getById",
+          "description": "Get wedding by ID",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/wedding/getAllByCustomerId",
+          "description": "Get weddings by customer ID",
+          "requiresAuth": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/wedding/getAllByCurrentProfile",
+          "description": "Get weddings by current profile",
+          "requiresAuth": true
+        },
+        {
+          "method": "POST",
+          "path": "/api/wedding/add",
+          "description": "Create a new wedding",
+          "requiresAuth": true
+        },
+        {
+          "method": "PUT",
+          "path": "/api/wedding/update",
+          "description": "Update a wedding",
+          "requiresAuth": true
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/wedding/remove",
+          "description": "Delete a wedding",
+          "requiresAuth": true
+        }
+      ]
+    }
+  ]
+}

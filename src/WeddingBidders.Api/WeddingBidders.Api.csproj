@@ -20,4 +20,10 @@
     <ProjectReference Include="..\WeddingBidders.Infrastructure\WeddingBidders.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="EndpointMapping\endpoint-manifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
