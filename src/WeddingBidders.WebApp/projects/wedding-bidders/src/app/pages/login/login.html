@@ -1,0 +1,56 @@
+<div class="login">
+  <mat-card class="login__card">
+    <mat-card-header>
+      <mat-card-title>Sign In</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login__form">
+        @if (errorMessage) {
+          <div class="login__error">{{ errorMessage }}</div>
+        }
+
+        <mat-form-field appearance="outline" class="login__field">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="username" type="email" autocomplete="email">
+          @if (loginForm.get('username')?.hasError('required')) {
+            <mat-error>Email is required</mat-error>
+          }
+          @if (loginForm.get('username')?.hasError('email')) {
+            <mat-error>Please enter a valid email</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="login__field">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" autocomplete="current-password">
+          @if (loginForm.get('password')?.hasError('required')) {
+            <mat-error>Password is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-checkbox formControlName="rememberMe" class="login__remember">
+          Remember me
+        </mat-checkbox>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="loginForm.invalid || isLoading"
+          class="login__submit"
+        >
+          @if (isLoading) {
+            <mat-spinner diameter="20"></mat-spinner>
+          } @else {
+            Sign In
+          }
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <a routerLink="/create-account" class="login__link">Create an account</a>
+    </mat-card-actions>
+  </mat-card>
+</div>
