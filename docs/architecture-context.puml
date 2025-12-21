@@ -1,0 +1,71 @@
+@startuml
+!define RECTANGLE class
+
+title Wedding Bidders - System Context Diagram
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+skinparam rectangle {
+    BackgroundColor<<person>> #08427B
+    FontColor<<person>> #FFFFFF
+    BorderColor<<person>> #052E56
+
+    BackgroundColor<<system>> #1168BD
+    FontColor<<system>> #FFFFFF
+    BorderColor<<system>> #0B4884
+
+    BackgroundColor<<external>> #999999
+    FontColor<<external>> #FFFFFF
+    BorderColor<<external>> #666666
+}
+
+rectangle "Customer" <<person>> as customer {
+    Wedding customer who creates
+    wedding events and receives
+    bids from vendors
+}
+
+rectangle "Bidder / Vendor" <<person>> as bidder {
+    Service provider (Caterer,
+    Photographer, etc.) who
+    submits bids on weddings
+}
+
+rectangle "Administrator" <<person>> as admin {
+    System administrator who
+    manages users and handles
+    support issues
+}
+
+rectangle "Wedding Bidders Platform" <<system>> as system {
+    Online marketplace connecting
+    wedding customers with service
+    vendors through a bidding system
+}
+
+rectangle "Stripe" <<external>> as stripe {
+    Payment processing
+    service
+}
+
+rectangle "Email System" <<external>> as email {
+    SMTP service for
+    notifications
+}
+
+rectangle "SQL Server" <<external>> as database {
+    Database for storing
+    application data
+}
+
+customer --> system : Creates weddings,\nviews bids, messages vendors
+bidder --> system : Views weddings,\nsubmits bids, messages customers
+admin --> system : Manages users,\napproves bidders, handles issues
+
+system --> stripe : Processes payments
+system --> email : Sends notifications
+system --> database : Reads/writes data
+
+@enduml

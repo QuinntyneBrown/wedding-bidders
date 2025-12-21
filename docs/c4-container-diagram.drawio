@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2024-01-15T00:00:00.000Z" agent="Mozilla/5.0" version="21.0.0" type="device">
+  <diagram name="C4 Container Diagram" id="c4-container">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Wedding Bidders - C4 Container Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="400" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Users -->
+        <mxCell id="user" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="40" y="300" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="user-title" value="User" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontStyle=1;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="40" y="310" width="140" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="user-desc" value="Customer, Bidder, or Administrator" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="50" y="340" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- System Boundary -->
+        <mxCell id="boundary" value="Wedding Bidders Platform" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1168BD;strokeWidth=2;dashed=1;verticalAlign=top;fontStyle=1;fontSize=14;fontColor=#1168BD" vertex="1" parent="1">
+          <mxGeometry x="220" y="100" width="900" height="650" as="geometry" />
+        </mxCell>
+
+        <!-- Web Application (SPA) -->
+        <mxCell id="spa" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="280" y="180" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="spa-title" value="Single Page Application" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontStyle=1;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="280" y="190" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="spa-tech" value="AngularJS 1.4.8" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="280" y="210" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="spa-desc" value="Provides wedding and bid management UI, user registration, messaging, and payment forms" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="290" y="235" width="180" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- API Application -->
+        <mxCell id="api" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="580" y="180" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="api-title" value="Web API" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontStyle=1;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="580" y="190" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="api-tech" value="ASP.NET Web API 2, C#" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="580" y="210" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="api-desc" value="Provides REST endpoints for weddings, bids, users, messaging, and payments" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="590" y="235" width="180" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- SignalR Hub -->
+        <mxCell id="signalr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="880" y="180" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="signalr-title" value="SignalR Hubs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontStyle=1;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="880" y="190" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="signalr-tech" value="ASP.NET SignalR" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="880" y="210" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="signalr-desc" value="Provides real-time notifications for new bids, weddings, messages, and issues" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="890" y="235" width="180" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Services Layer -->
+        <mxCell id="services" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="430" y="380" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="services-title" value="Business Services" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontStyle=1;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="430" y="390" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="services-tech" value="C# Service Classes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="430" y="410" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="services-desc" value="Contains business logic for customers, bidders, weddings, bids, messaging, subscriptions" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="440" y="435" width="180" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Data Layer -->
+        <mxCell id="data" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="730" y="380" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="data-title" value="Data Access Layer" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontStyle=1;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="730" y="390" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="data-tech" value="Entity Framework, Unit of Work" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="730" y="410" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="data-desc" value="Repositories and DbContext for data persistence and retrieval" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="740" y="435" width="180" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Database -->
+        <mxCell id="database" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="580" y="580" width="140" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="database-title" value="Database" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontStyle=1;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="580" y="610" width="140" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="database-tech" value="SQL Server" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="580" y="630" width="140" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="database-desc" value="Stores all entity data" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="580" y="650" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- External Systems -->
+        <mxCell id="stripe" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="280" y="580" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="stripe-title" value="Stripe API" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontStyle=1;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="280" y="590" width="140" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="stripe-desc" value="Payment processing" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="280" y="610" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="email-sys" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="880" y="580" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="email-sys-title" value="SMTP Server" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontStyle=1;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="880" y="590" width="140" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="email-sys-desc" value="Email notifications" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#ffffff;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="880" y="610" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships -->
+        <mxCell id="rel-user-spa" value="Uses via browser" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#707070;fontColor=#707070;fontSize=9" edge="1" parent="1" source="user" target="spa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel-spa-api" value="JSON/HTTPS" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#707070;fontColor=#707070;fontSize=9" edge="1" parent="1" source="spa" target="api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel-spa-signalr" value="WebSocket" style="endArrow=classic;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#707070;fontColor=#707070;fontSize=9" edge="1" parent="1" source="spa" target="signalr">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="210" />
+              <mxPoint x="550" y="150" />
+              <mxPoint x="850" y="150" />
+              <mxPoint x="850" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="rel-api-services" value="Uses" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#707070;fontColor=#707070;fontSize=9" edge="1" parent="1" source="api" target="services">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel-signalr-services" value="Uses" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#707070;fontColor=#707070;fontSize=9" edge="1" parent="1" source="signalr" target="services">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="980" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="rel-services-data" value="Uses" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#707070;fontColor=#707070;fontSize=9" edge="1" parent="1" source="services" target="data">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel-data-db" value="SQL" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#707070;fontColor=#707070;fontSize=9" edge="1" parent="1" source="data" target="database">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel-services-stripe" value="HTTPS" style="endArrow=classic;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#707070;fontColor=#707070;fontSize=9" edge="1" parent="1" source="services" target="stripe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel-services-email" value="SMTP" style="endArrow=classic;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#707070;fontColor=#707070;fontSize=9" edge="1" parent="1" source="data" target="email-sys">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend-title" value="Legend" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="40" y="450" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-container" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295" vertex="1" parent="1">
+          <mxGeometry x="40" y="480" width="25" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-container-text" value="Container" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="70" y="480" width="70" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-external" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666" vertex="1" parent="1">
+          <mxGeometry x="40" y="505" width="25" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-external-text" value="External System" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="70" y="505" width="90" height="18" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

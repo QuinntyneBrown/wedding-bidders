@@ -1,0 +1,80 @@
+@startuml
+title Wedding Bidders - Messaging Sequence
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+
+skinparam participant {
+    BackgroundColor #FEFECE
+    BorderColor #A80036
+}
+
+skinparam sequence {
+    ArrowColor #A80036
+    LifeLineBorderColor #A80036
+}
+
+actor "Sender" as sender
+participant "SPA\n(AngularJS)" as spa
+participant "MessageController" as ctrl
+participant "WeddingBiddersUow" as uow
+database "SQL Server" as db
+participant "MessageHub\n(SignalR)" as hub
+actor "Recipient" as recipient
+
+sender -> spa : Navigate to /messages/:profileId
+activate spa
+
+spa -> ctrl : GET /api/message/getByOtherProfileId
+activate ctrl
+ctrl -> uow : Get Conversation
+activate uow
+uow -> db : SELECT Conversation, Messages
+db --> uow : Messages
+deactivate uow
+ctrl --> spa : List of MessageDto
+deactivate ctrl
+
+spa --> sender : Display conversation
+
+sender -> spa : Type message content
+sender -> spa : Click Send
+
+spa -> ctrl : POST /api/message/add\n(SendMessageRequestDto)
+activate ctrl
+
+ctrl -> uow : Find existing conversation
+activate uow
+uow -> db : SELECT Conversation
+db --> uow : Conversation or null
+deactivate uow
+
+alt No existing conversation
+    ctrl -> uow : Create new Conversation
+    activate uow
+    uow -> db : INSERT Conversation
+    uow -> db : Link Profiles
+    db --> uow : Conversation ID
+    deactivate uow
+end
+
+ctrl -> uow : Add Message
+activate uow
+uow -> db : INSERT Message
+db --> uow : Message ID
+deactivate uow
+
+ctrl -> hub : Broadcast onMessageReceived
+activate hub
+hub -> recipient : WebSocket notification
+note right of recipient : Recipient sees\nnew message in real-time
+deactivate hub
+
+ctrl --> spa : MessageDto
+deactivate ctrl
+
+spa --> sender : Update conversation view
+deactivate spa
+
+@enduml

@@ -1,0 +1,237 @@
+@startuml
+title Wedding Bidders - Entity Relationship Diagram
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultFontSize 10
+
+skinparam class {
+    BackgroundColor #FEFECE
+    BorderColor #A80036
+    ArrowColor #A80036
+}
+
+class User {
+    +Id : int
+    +Username : string
+    +Password : string
+    --
+    +Accounts : ICollection
+    +Roles : ICollection
+}
+
+class Account {
+    +Id : int
+    +Firstname : string
+    +Lastname : string
+    +Email : string
+    +AccountType : AccountType
+    +AccountStatus : AccountStatus
+    +UserId : int
+    +DefaultProfileId : int
+    --
+    +Profiles : ICollection
+    +User : User
+}
+
+class Profile {
+    +Id : int
+    +AccountId : int
+    +Name : string
+    +ProfileType : ProfileType
+    +IsPersonalized : bool
+    +IsApproved : bool
+    --
+    +Account : Account
+    +Conversations : ICollection
+}
+
+abstract class Person {
+    +Id : int
+    +Firstname : string
+    +Lastname : string
+    +Email : string
+}
+
+class Customer {
+    +ProfileId : int
+    --
+    +Profile : Profile
+    +Weddings : ICollection
+}
+
+class Bidder {
+    +CompanyName : string
+    +Description : string
+    +ProfileId : int
+    +BidderType : BidderType
+    +IsApproved : bool
+    --
+    +Profile : Profile
+    +Galleries : ICollection
+    +Bids : ICollection
+}
+
+class Wedding {
+    +Id : int
+    +NumberOfGuests : int
+    +NumberOfHours : int
+    +Location : string
+    +Date : DateTime
+    +CustomerId : int
+    --
+    +Customer : Customer
+    +Bids : ICollection
+    +Categories : ICollection
+}
+
+class Bid {
+    +Id : int
+    +WeddingId : int
+    +BidderId : int
+    +Description : string
+    +Price : float
+    --
+    +Wedding : Wedding
+    +Bidder : Bidder
+}
+
+class Category {
+    +Id : int
+    +Name : string
+}
+
+class Message {
+    +Id : int
+    +ConversationId : int
+    +ToProfileId : int
+    +FromProfileId : int
+    +Subject : string
+    +Content : string
+    +IsRead : bool
+    --
+    +Conversation : Conversation
+}
+
+class Conversation {
+    +Id : int
+    --
+    +Messages : ICollection
+    +Profiles : ICollection
+}
+
+class Issue {
+    +Id : int
+    +Subject : string
+    +Content : string
+    +IssueStatus : IssueStatus
+    +ReportedById : int
+    --
+    +ReportedBy : Profile
+}
+
+class Gallery {
+    +Id : int
+    +Name : string
+    --
+    +Photos : ICollection
+}
+
+class Photo {
+    +Id : int
+    +Url : string
+}
+
+class Subscription {
+    +Id : int
+    +AccountId : int
+    +PlanId : int
+    +EffectiveDate : DateTime
+    +ExpiryDate : DateTime
+    --
+    +Payments : ICollection
+}
+
+class Payment {
+    +Id : int
+    +AccountId : int
+    +Amount : float
+    +DateTime : DateTime
+}
+
+class Plan {
+    +Id : int
+    +Description : string
+    +Price : decimal
+    --
+    +Subscriptions : ICollection
+}
+
+enum AccountType {
+    Bidder
+    Customer
+    Internal
+}
+
+enum AccountStatus {
+    Free
+    Paid
+    Unpaid
+}
+
+enum ProfileType {
+    Customer
+    Caterer
+    Photographer
+    MakeUpArtist
+    EventPlanner
+    Internal
+    DiscJockey
+}
+
+enum BidderType {
+    Caterer
+    Photographer
+    MakeUpArtist
+    EventPlanner
+    DiscJockey
+}
+
+enum IssueStatus {
+    New
+    Open
+    Resolved
+}
+
+Person <|-- Customer
+Person <|-- Bidder
+
+User "1" --> "*" Account
+Account "1" --> "*" Profile
+Account "1" --> "*" Subscription
+
+Customer "1" --> "1" Profile
+Customer "1" --> "*" Wedding
+
+Bidder "1" --> "1" Profile
+Bidder "1" --> "*" Gallery
+Bidder "1" --> "*" Bid
+
+Wedding "1" --> "*" Bid
+Wedding "1" --> "*" Category
+Wedding "*" --> "1" Customer
+
+Bid "*" --> "1" Wedding
+Bid "*" --> "1" Bidder
+
+Gallery "1" --> "*" Photo
+
+Conversation "*" --> "*" Profile
+Conversation "1" --> "*" Message
+
+Issue "*" --> "1" Profile
+
+Subscription "*" --> "1" Plan
+Subscription "1" --> "*" Payment
+
+@enduml
