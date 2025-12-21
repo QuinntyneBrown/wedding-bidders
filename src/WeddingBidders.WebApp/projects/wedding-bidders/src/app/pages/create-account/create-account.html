@@ -1,0 +1,99 @@
+<div class="create-account">
+  <mat-card class="create-account__card">
+    <mat-card-header>
+      <mat-card-title>Create Account</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="createAccountForm" (ngSubmit)="onSubmit()" class="create-account__form">
+        @if (errorMessage) {
+          <div class="create-account__error">{{ errorMessage }}</div>
+        }
+
+        @if (successMessage) {
+          <div class="create-account__success">{{ successMessage }}</div>
+        }
+
+        <mat-form-field appearance="outline" class="create-account__field">
+          <mat-label>Invitation Token</mat-label>
+          <input matInput formControlName="invitationToken">
+          @if (createAccountForm.get('invitationToken')?.hasError('required')) {
+            <mat-error>Invitation token is required</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="create-account__row">
+          <mat-form-field appearance="outline" class="create-account__field create-account__field--half">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstname">
+            @if (createAccountForm.get('firstname')?.hasError('required')) {
+              <mat-error>First name is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="create-account__field create-account__field--half">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastname">
+            @if (createAccountForm.get('lastname')?.hasError('required')) {
+              <mat-error>Last name is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="create-account__field">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email">
+          @if (createAccountForm.get('email')?.hasError('required')) {
+            <mat-error>Email is required</mat-error>
+          }
+          @if (createAccountForm.get('email')?.hasError('email')) {
+            <mat-error>Please enter a valid email</mat-error>
+          }
+          @if (createAccountForm.get('email')?.hasError('existingValue')) {
+            <mat-error>Email already exists</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="create-account__field">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password">
+          @if (createAccountForm.get('password')?.hasError('required')) {
+            <mat-error>Password is required</mat-error>
+          }
+          @if (createAccountForm.get('password')?.hasError('minlength')) {
+            <mat-error>Password must be at least 6 characters</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="create-account__field">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput formControlName="passwordConfirmation" type="password">
+          @if (createAccountForm.get('passwordConfirmation')?.hasError('required')) {
+            <mat-error>Password confirmation is required</mat-error>
+          }
+          @if (createAccountForm.hasError('passwordMismatch')) {
+            <mat-error>Passwords do not match</mat-error>
+          }
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="createAccountForm.invalid || isLoading"
+          class="create-account__submit"
+        >
+          @if (isLoading) {
+            <mat-spinner diameter="20"></mat-spinner>
+          } @else {
+            Create Account
+          }
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <a routerLink="/login" class="create-account__link">Already have an account? Sign in</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

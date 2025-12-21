@@ -1,0 +1,38 @@
+<mat-sidenav-container class="workspace">
+  <mat-sidenav mode="side" opened class="workspace__sidenav">
+    <div class="workspace__logo">
+      <h2>Wedding Bidders</h2>
+    </div>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/workspace">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Dashboard</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="workspace__content">
+    <mat-toolbar color="primary" class="workspace__toolbar">
+      <span class="workspace__spacer"></span>
+
+      @if (currentUser$ | async; as user) {
+        <span class="workspace__user">{{ user.username }}</span>
+      }
+
+      <button mat-icon-button (click)="logout()" title="Logout">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <main class="workspace__main">
+      <router-outlet></router-outlet>
+
+      @if (!(currentUser$ | async)) {
+        <div class="workspace__welcome">
+          <h1>Welcome to Wedding Bidders</h1>
+          <p>Your workspace is ready.</p>
+        </div>
+      }
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
