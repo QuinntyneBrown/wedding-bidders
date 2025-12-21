@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2024-01-15T00:00:00.000Z" agent="Mozilla/5.0" version="21.0.0" type="device">
+  <diagram name="C4 Component Diagram - API" id="c4-component">
+    <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Wedding Bidders - C4 Component Diagram (Web API)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="450" y="20" width="500" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- API Container Boundary -->
+        <mxCell id="api-boundary" value="Web API Container" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#438DD5;strokeWidth=2;dashed=1;verticalAlign=top;fontStyle=1;fontSize=13;fontColor=#438DD5" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="1320" height="880" as="geometry" />
+        </mxCell>
+
+        <!-- Controllers Section -->
+        <mxCell id="controllers-section" value="Controllers" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=12;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="60" y="110" width="100" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Wedding Controller -->
+        <mxCell id="wedding-ctrl" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="60" y="140" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="wedding-ctrl-title" value="WeddingController" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="60" y="145" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="wedding-ctrl-desc" value="Handles wedding CRUD operations" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="65" y="165" width="140" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Bid Controller -->
+        <mxCell id="bid-ctrl" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="230" y="140" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bid-ctrl-title" value="BidController" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="230" y="145" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="bid-ctrl-desc" value="Handles bid submission and retrieval" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="235" y="165" width="140" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Customer Controller -->
+        <mxCell id="customer-ctrl" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="400" y="140" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="customer-ctrl-title" value="CustomerController" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="400" y="145" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="customer-ctrl-desc" value="Handles customer registration and profile" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="405" y="165" width="140" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Bidder Controller -->
+        <mxCell id="bidder-ctrl" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="570" y="140" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bidder-ctrl-title" value="BidderController" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="570" y="145" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="bidder-ctrl-desc" value="Handles bidder registration and profile" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="575" y="165" width="140" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Message Controller -->
+        <mxCell id="message-ctrl" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="740" y="140" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="message-ctrl-title" value="MessageController" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="740" y="145" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="message-ctrl-desc" value="Handles messaging between users" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="745" y="165" width="140" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Profile Controller -->
+        <mxCell id="profile-ctrl" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="910" y="140" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="profile-ctrl-title" value="ProfileController" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="910" y="145" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="profile-ctrl-desc" value="Handles profile viewing and updates" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="915" y="165" width="140" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Subscription Controller -->
+        <mxCell id="subscription-ctrl" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="1080" y="140" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="subscription-ctrl-title" value="SubscriptionController" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="1080" y="145" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="subscription-ctrl-desc" value="Handles payment processing" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="1085" y="165" width="140" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Issue Controller -->
+        <mxCell id="issue-ctrl" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="60" y="240" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="issue-ctrl-title" value="IssueController" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="60" y="245" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="issue-ctrl-desc" value="Handles issue reporting" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="65" y="265" width="140" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Account Controller -->
+        <mxCell id="account-ctrl" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="230" y="240" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="account-ctrl-title" value="AccountController" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="230" y="245" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="account-ctrl-desc" value="Handles account and billing info" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="235" y="265" width="140" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Services Section -->
+        <mxCell id="services-section" value="Services" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=12;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="60" y="350" width="100" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Customer Service -->
+        <mxCell id="customer-svc" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="60" y="380" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="customer-svc-title" value="CustomerService" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="60" y="385" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="customer-svc-desc" value="Customer business logic" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="65" y="405" width="140" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Bidder Service -->
+        <mxCell id="bidder-svc" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="230" y="380" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="bidder-svc-title" value="BidderService" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="230" y="385" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="bidder-svc-desc" value="Bidder business logic" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="235" y="405" width="140" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Message Service -->
+        <mxCell id="message-svc" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="400" y="380" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="message-svc-title" value="MessageService" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="400" y="385" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="message-svc-desc" value="Messaging business logic" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="405" y="405" width="140" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Profile Service -->
+        <mxCell id="profile-svc" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="570" y="380" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="profile-svc-title" value="ProfileService" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="570" y="385" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="profile-svc-desc" value="Profile business logic" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="575" y="405" width="140" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Account Service -->
+        <mxCell id="account-svc" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="740" y="380" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="account-svc-title" value="AccountService" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="740" y="385" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="account-svc-desc" value="Account business logic" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="745" y="405" width="140" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Subscription Service -->
+        <mxCell id="subscription-svc" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="910" y="380" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="subscription-svc-title" value="SubscriptionService" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="910" y="385" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="subscription-svc-desc" value="Payment processing via Stripe" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="915" y="405" width="140" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Encryption Service -->
+        <mxCell id="encryption-svc" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="1080" y="380" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="encryption-svc-title" value="EncryptionService" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="1080" y="385" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="encryption-svc-desc" value="Password hashing" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="1085" y="405" width="140" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- SignalR Hubs Section -->
+        <mxCell id="hubs-section" value="SignalR Hubs" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=12;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="60" y="480" width="120" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Bid Hub -->
+        <mxCell id="bid-hub" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="60" y="510" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bid-hub-title" value="BidHub" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="60" y="515" width="130" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="bid-hub-desc" value="Real-time bid notifications" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="60" y="535" width="130" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Wedding Hub -->
+        <mxCell id="wedding-hub" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="210" y="510" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="wedding-hub-title" value="WeddingHub" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="210" y="515" width="130" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="wedding-hub-desc" value="Real-time wedding notifications" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="210" y="535" width="130" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Message Hub -->
+        <mxCell id="msg-hub" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="360" y="510" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="msg-hub-title" value="MessageHub" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="360" y="515" width="130" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="msg-hub-desc" value="Real-time message notifications" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="360" y="535" width="130" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Issue Hub -->
+        <mxCell id="issue-hub" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="510" y="510" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="issue-hub-title" value="IssueHub" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="510" y="515" width="130" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="issue-hub-desc" value="Real-time issue notifications" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="510" y="535" width="130" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Data Access Section -->
+        <mxCell id="data-section" value="Data Access Layer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=12;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="60" y="600" width="140" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Unit of Work -->
+        <mxCell id="uow" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="60" y="630" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uow-title" value="WeddingBiddersUow" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="60" y="635" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="uow-desc" value="Unit of Work pattern, manages repositories and transactions" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="65" y="655" width="170" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- DbContext -->
+        <mxCell id="dbcontext" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="270" y="630" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="dbcontext-title" value="WeddingBiddersContext" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="270" y="635" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="dbcontext-desc" value="Entity Framework DbContext for SQL Server" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="275" y="655" width="170" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Repositories Box -->
+        <mxCell id="repos" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="480" y="630" width="320" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="repos-title" value="Repositories" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="480" y="635" width="320" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="repos-desc" value="Weddings, Bids, Customers, Bidders, Profiles, Accounts, Messages, Conversations, Issues, Subscriptions, Payments" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8" vertex="1" parent="1">
+          <mxGeometry x="485" y="655" width="310" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- External Systems -->
+        <mxCell id="external-section" value="External Systems" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=12;fontColor=#333333" vertex="1" parent="1">
+          <mxGeometry x="60" y="730" width="140" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Database -->
+        <mxCell id="db-ext" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="60" y="760" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="db-ext-title" value="SQL Server" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="60" y="790" width="120" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Stripe -->
+        <mxCell id="stripe-ext" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="210" y="760" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="stripe-ext-title" value="Stripe API" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10;fontColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="210" y="790" width="120" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend-title" value="Legend" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="60" y="870" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-component" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#5A9BD5" vertex="1" parent="1">
+          <mxGeometry x="60" y="895" width="25" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-component-text" value="Component" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="90" y="895" width="70" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-ext" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#666666" vertex="1" parent="1">
+          <mxGeometry x="170" y="895" width="25" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-ext-text" value="External System" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9" vertex="1" parent="1">
+          <mxGeometry x="200" y="895" width="90" height="18" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

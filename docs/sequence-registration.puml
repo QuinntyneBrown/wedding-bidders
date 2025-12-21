@@ -1,0 +1,90 @@
+@startuml
+title Wedding Bidders - User Registration Sequence
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+
+skinparam participant {
+    BackgroundColor #FEFECE
+    BorderColor #A80036
+}
+
+skinparam sequence {
+    ArrowColor #A80036
+    LifeLineBorderColor #A80036
+}
+
+actor "New User" as user
+participant "SPA\n(AngularJS)" as spa
+participant "CustomerController\nor BidderController" as ctrl
+participant "CustomerService\nor BidderService" as svc
+participant "EncryptionService" as encrypt
+participant "WeddingBiddersUow" as uow
+database "SQL Server" as db
+
+user -> spa : Navigate to registration page
+activate spa
+spa --> user : Display registration form
+
+user -> spa : Fill in details\n(name, email, password)
+spa -> spa : Client-side validation
+
+spa -> ctrl : POST /api/customer/add\nor /api/bidder/add
+activate ctrl
+
+ctrl -> svc : TryToRegister(dto)
+activate svc
+
+svc -> uow : Check email uniqueness
+activate uow
+uow -> db : SELECT by email
+db --> uow : null or existing
+deactivate uow
+
+alt Email already exists
+    svc --> ctrl : Error: Email exists
+    ctrl --> spa : 400 Bad Request
+    spa --> user : Show error message
+else Email is unique
+    svc -> encrypt : Hash password
+    activate encrypt
+    encrypt --> svc : Hashed password
+    deactivate encrypt
+
+    svc -> uow : Create User
+    activate uow
+    uow -> db : INSERT User
+    db --> uow : User ID
+    deactivate uow
+
+    svc -> uow : Create Account
+    activate uow
+    uow -> db : INSERT Account
+    db --> uow : Account ID
+    deactivate uow
+
+    svc -> uow : Create Profile
+    activate uow
+    uow -> db : INSERT Profile
+    db --> uow : Profile ID
+    deactivate uow
+
+    svc -> uow : Create Customer/Bidder
+    activate uow
+    uow -> db : INSERT Customer/Bidder
+    db --> uow : ID
+    deactivate uow
+
+    svc --> ctrl : RegistrationResponseDto
+    deactivate svc
+
+    ctrl --> spa : 200 OK
+    deactivate ctrl
+
+    spa --> user : Show success message
+    spa -> spa : Redirect to login
+    deactivate spa
+end
+
+@enduml

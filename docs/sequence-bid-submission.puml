@@ -1,0 +1,61 @@
+@startuml
+title Wedding Bidders - Bid Submission Sequence
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+
+skinparam participant {
+    BackgroundColor #FEFECE
+    BorderColor #A80036
+}
+
+skinparam sequence {
+    ArrowColor #A80036
+    LifeLineBorderColor #A80036
+}
+
+actor Bidder as bidder
+participant "SPA\n(AngularJS)" as spa
+participant "BidController" as ctrl
+participant "WeddingBiddersUow" as uow
+database "SQL Server" as db
+participant "BidHub\n(SignalR)" as hub
+participant "Customer Client" as customer
+
+bidder -> spa : View wedding details
+activate spa
+
+spa -> spa : Navigate to /bid/create/:weddingId
+bidder -> spa : Enter price and description
+spa -> spa : Validate form
+
+spa -> ctrl : POST /api/bid/add\n(BidRequestDto)
+activate ctrl
+
+ctrl -> uow : Get Bidder by email
+activate uow
+uow -> db : SELECT Bidder
+db --> uow : Bidder record
+deactivate uow
+
+ctrl -> uow : Add(Bid)
+activate uow
+uow -> db : INSERT Bid
+db --> uow : Bid ID
+deactivate uow
+
+ctrl -> hub : Broadcast onBiddAdded
+activate hub
+hub -> customer : WebSocket notification
+note right of customer : Customer receives\nreal-time bid notification
+deactivate hub
+
+ctrl --> spa : BidResponseDto
+deactivate ctrl
+
+spa --> bidder : Show success message
+spa -> spa : Navigate to bids list
+deactivate spa
+
+@enduml

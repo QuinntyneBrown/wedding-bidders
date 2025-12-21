@@ -1,0 +1,85 @@
+@startuml
+title Wedding Bidders - Container Diagram
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+
+skinparam rectangle {
+    BackgroundColor<<person>> #08427B
+    FontColor<<person>> #FFFFFF
+    BorderColor<<person>> #052E56
+
+    BackgroundColor<<container>> #438DD5
+    FontColor<<container>> #FFFFFF
+    BorderColor<<container>> #2E6295
+
+    BackgroundColor<<external>> #999999
+    FontColor<<external>> #FFFFFF
+    BorderColor<<external>> #666666
+}
+
+skinparam database {
+    BackgroundColor<<container>> #438DD5
+    FontColor<<container>> #FFFFFF
+    BorderColor<<container>> #2E6295
+}
+
+rectangle "User" <<person>> as user {
+    Customer, Bidder,
+    or Administrator
+}
+
+package "Wedding Bidders Platform" {
+    rectangle "Single Page Application\n[AngularJS 1.4.8]" <<container>> as spa {
+        Provides wedding and bid
+        management UI, user registration,
+        messaging, and payment forms
+    }
+
+    rectangle "Web API\n[ASP.NET Web API 2, C#]" <<container>> as api {
+        Provides REST endpoints
+        for all business operations
+    }
+
+    rectangle "SignalR Hubs\n[ASP.NET SignalR]" <<container>> as signalr {
+        Provides real-time
+        notifications for bids,
+        weddings, and messages
+    }
+
+    rectangle "Business Services\n[C# Service Classes]" <<container>> as services {
+        Contains business logic
+        for all domain operations
+    }
+
+    rectangle "Data Access Layer\n[Entity Framework]" <<container>> as dal {
+        Unit of Work and
+        repositories for
+        data persistence
+    }
+
+    database "Database\n[SQL Server]" <<container>> as db {
+        Stores all entity data
+    }
+}
+
+rectangle "Stripe API" <<external>> as stripe {
+    Payment processing
+}
+
+rectangle "SMTP Server" <<external>> as email {
+    Email notifications
+}
+
+user --> spa : Uses via browser
+spa --> api : JSON/HTTPS
+spa --> signalr : WebSocket
+api --> services : Uses
+signalr --> services : Uses
+services --> dal : Uses
+dal --> db : SQL
+services --> stripe : HTTPS
+services --> email : SMTP
+
+@enduml

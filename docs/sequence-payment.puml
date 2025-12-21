@@ -1,0 +1,74 @@
+@startuml
+title Wedding Bidders - Payment Processing Sequence
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+
+skinparam participant {
+    BackgroundColor #FEFECE
+    BorderColor #A80036
+}
+
+skinparam sequence {
+    ArrowColor #A80036
+    LifeLineBorderColor #A80036
+}
+
+actor User as user
+participant "SPA\n(AngularJS)" as spa
+participant "Stripe.js" as stripejs
+participant "SubscriptionController" as ctrl
+participant "SubscriptionService" as svc
+participant "Stripe API" as stripe
+participant "WeddingBiddersUow" as uow
+database "SQL Server" as db
+
+user -> spa : Navigate to /payment
+activate spa
+spa --> user : Display payment form
+
+user -> spa : Enter card details
+spa -> stripejs : Tokenize card
+activate stripejs
+stripejs -> stripejs : Validate card
+stripejs --> spa : Stripe Token
+deactivate stripejs
+
+spa -> ctrl : POST /api/subscription/charge\n(token)
+activate ctrl
+
+ctrl -> svc : Charge(username, token)
+activate svc
+
+svc -> stripe : Create Charge\n($180 CAD)
+activate stripe
+stripe -> stripe : Process payment
+stripe --> svc : Charge successful
+deactivate stripe
+
+svc -> uow : Get User and Account
+activate uow
+uow -> db : SELECT User, Account
+db --> uow : Records
+deactivate uow
+
+svc -> uow : Update AccountStatus = Paid
+activate uow
+uow -> db : UPDATE Account
+db --> uow : Updated
+deactivate uow
+
+svc --> ctrl : Success
+deactivate svc
+
+ctrl --> spa : 200 OK
+deactivate ctrl
+
+spa --> user : Show success message
+spa -> spa : Redirect to dashboard
+deactivate spa
+
+note over stripe : Stripe sends\nemail receipt
+
+@enduml

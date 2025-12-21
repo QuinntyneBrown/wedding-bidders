@@ -1,0 +1,57 @@
+@startuml
+title Wedding Bidders - Wedding Creation Sequence
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+
+skinparam participant {
+    BackgroundColor #FEFECE
+    BorderColor #A80036
+}
+
+skinparam sequence {
+    ArrowColor #A80036
+    LifeLineBorderColor #A80036
+}
+
+actor Customer as customer
+participant "SPA\n(AngularJS)" as spa
+participant "WeddingController" as ctrl
+participant "WeddingService" as svc
+participant "WeddingBiddersUow" as uow
+database "SQL Server" as db
+participant "WeddingHub\n(SignalR)" as hub
+participant "Bidder Clients" as bidders
+
+customer -> spa : Fill wedding form
+activate spa
+
+spa -> spa : Validate form data
+spa -> ctrl : POST /api/wedding/add\n(WeddingDto)
+activate ctrl
+
+ctrl -> ctrl : Get CustomerId from current user
+ctrl -> uow : Add(Wedding)
+activate uow
+
+uow -> db : INSERT Wedding
+uow -> db : INSERT Categories
+db --> uow : Wedding ID
+
+uow --> ctrl : Wedding saved
+deactivate uow
+
+ctrl -> hub : Broadcast onWeddingAdded
+activate hub
+hub -> bidders : WebSocket notification
+deactivate hub
+
+ctrl --> spa : WeddingDto with ID
+deactivate ctrl
+
+spa --> customer : Show success message
+spa -> spa : Navigate to weddings list
+deactivate spa
+
+@enduml
