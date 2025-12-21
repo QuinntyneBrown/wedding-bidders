@@ -197,3 +197,8 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+# Frontend test output
+playwright-report/
+test-results/
+coverage/
