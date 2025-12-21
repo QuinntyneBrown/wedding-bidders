@@ -1,0 +1,35 @@
+<div class="bids">
+  <div class="bids__header">
+    <h1>Bids</h1>
+  </div>
+
+  @if (isLoading) {
+    <div class="bids__loading">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else if (errorMessage) {
+    <div class="bids__error">{{ errorMessage }}</div>
+  } @else if (bids.length === 0) {
+    <div class="bids__empty">
+      <mat-icon>gavel</mat-icon>
+      <p>No bids found</p>
+    </div>
+  } @else {
+    <div class="bids__list">
+      @for (bid of bids; track bid.bidId) {
+        <mat-card class="bids__card">
+          <mat-card-header>
+            <mat-card-title>{{ formatCurrency(bid.price) }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="bids__description">{{ bid.description }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="primary">View Bidder Profile</button>
+            <button mat-button>Contact</button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
+</div>

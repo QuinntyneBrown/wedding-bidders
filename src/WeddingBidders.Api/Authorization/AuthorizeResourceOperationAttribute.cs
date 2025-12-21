@@ -27,4 +27,13 @@ public static class AggregateNames
     public const string Role = "Role";
     public const string Profile = "Profile";
     public const string InvitationToken = "InvitationToken";
+    public const string Bidder = "Bidder";
+    public const string Customer = "Customer";
+    public const string Wedding = "Wedding";
+    public const string Bid = "Bid";
+    public const string Message = "Message";
+    public const string Conversation = "Conversation";
+    public const string Account = "Account";
+    public const string Issue = "Issue";
+    public const string Subscription = "Subscription";
 }
