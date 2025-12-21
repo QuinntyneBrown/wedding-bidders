@@ -16,8 +16,36 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/create-account').then(m => m.CreateAccount)
   },
   {
+    path: 'register-bidder',
+    loadComponent: () => import('./pages/register-bidder').then(m => m.RegisterBidder)
+  },
+  {
+    path: 'register-customer',
+    loadComponent: () => import('./pages/register-customer').then(m => m.RegisterCustomer)
+  },
+  {
     path: 'workspace',
     loadComponent: () => import('./pages/workspace').then(m => m.Workspace),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'weddings',
+    loadComponent: () => import('./pages/weddings').then(m => m.Weddings),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'create-wedding',
+    loadComponent: () => import('./pages/create-wedding').then(m => m.CreateWedding),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'bids',
+    loadComponent: () => import('./pages/bids').then(m => m.Bids),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'bids/:weddingId',
+    loadComponent: () => import('./pages/bids').then(m => m.Bids),
     canActivate: [AuthGuard]
   },
   {

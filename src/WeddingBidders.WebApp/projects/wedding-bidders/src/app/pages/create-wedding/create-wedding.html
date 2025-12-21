@@ -1,0 +1,83 @@
+<div class="create-wedding">
+  <mat-card class="create-wedding__card">
+    <mat-card-header>
+      <mat-card-title>Create Wedding</mat-card-title>
+      <mat-card-subtitle>Tell us about your special day</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="weddingForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="create-wedding__full-width">
+          <mat-label>Location</mat-label>
+          <input matInput formControlName="location" placeholder="Enter venue location">
+          @if (weddingForm.get('location')?.hasError('required')) {
+            <mat-error>Location is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="create-wedding__full-width">
+          <mat-label>Wedding Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date" [min]="minDate">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (weddingForm.get('date')?.hasError('required')) {
+            <mat-error>Date is required</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="create-wedding__row">
+          <mat-form-field appearance="outline">
+            <mat-label>Number of Guests</mat-label>
+            <input matInput type="number" formControlName="numberOfGuests" placeholder="Expected guests">
+            @if (weddingForm.get('numberOfGuests')?.hasError('required')) {
+              <mat-error>Required</mat-error>
+            }
+            @if (weddingForm.get('numberOfGuests')?.hasError('min')) {
+              <mat-error>Must be at least 1</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Duration (Hours)</mat-label>
+            <input matInput type="number" formControlName="numberOfHours" placeholder="Event duration">
+            @if (weddingForm.get('numberOfHours')?.hasError('required')) {
+              <mat-error>Required</mat-error>
+            }
+            @if (weddingForm.get('numberOfHours')?.hasError('min')) {
+              <mat-error>Must be at least 1</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="create-wedding__section">
+          <h3>Services Needed</h3>
+          <p class="create-wedding__hint">Select the services you need for your wedding</p>
+          <div class="create-wedding__categories">
+            @for (type of bidderTypes; track type.value) {
+              <mat-chip-option
+                [selected]="isCategorySelected(type.name)"
+                (click)="toggleCategory(type.name)">
+                {{ type.name }}
+              </mat-chip-option>
+            }
+          </div>
+        </div>
+
+        @if (errorMessage) {
+          <div class="create-wedding__error">{{ errorMessage }}</div>
+        }
+
+        <div class="create-wedding__actions">
+          <button mat-button type="button" routerLink="/weddings">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="isLoading">
+            @if (isLoading) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              Create Wedding
+            }
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
