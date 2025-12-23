@@ -12,6 +12,7 @@ using WeddingBidders.Core.Services;
 using WeddingBidders.Infrastructure;
 using WeddingBidders.Infrastructure.Seeding;
 using Microsoft.AspNetCore.Authorization;
+using WeddingBidders.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,6 +78,7 @@ builder.Services.AddScoped<SeedingService>();
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
     cfg.AddOpenBehavior(typeof(ResourceOperationAuthorizationBehavior<,>));
 });
@@ -168,16 +170,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("CorsPolicy");
+
+// Correlation ID middleware - adds tracking ID to all requests
+app.UseMiddleware<CorrelationIdMiddleware>();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Request logging
+// Request logging with Serilog
 app.UseSerilogRequestLogging(options =>
 {
     options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
     {
         var userId = httpContext.User.FindFirst("UserId")?.Value ?? "Anonymous";
         diagnosticContext.Set("UserId", userId);
+        diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
+        diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
     };
 });
 
