@@ -1,0 +1,55 @@
+<div class="report-issue">
+  <div class="report-issue__header">
+    <h1>Report an Issue</h1>
+    <p>Having trouble? Let us know and we'll help you out.</p>
+  </div>
+
+  <mat-card class="report-issue__card">
+    <mat-card-content>
+      @if (errorMessage) {
+        <div class="report-issue__error">{{ errorMessage }}</div>
+      }
+
+      <form [formGroup]="issueForm" (ngSubmit)="onSubmit()" class="report-issue__form">
+        <mat-form-field appearance="outline" class="report-issue__field">
+          <mat-label>Subject</mat-label>
+          <input matInput formControlName="subject" placeholder="Brief description of the issue">
+          @if (issueForm.get('subject')?.touched && issueForm.get('subject')?.invalid) {
+            <mat-error>{{ getErrorMessage('subject') }}</mat-error>
+          }
+          <mat-hint>{{ issueForm.value.subject?.length || 0 }}/200</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="report-issue__field">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="content" rows="8" placeholder="Please describe the issue in detail. Include steps to reproduce if applicable."></textarea>
+          @if (issueForm.get('content')?.touched && issueForm.get('content')?.invalid) {
+            <mat-error>{{ getErrorMessage('content') }}</mat-error>
+          }
+          <mat-hint>{{ issueForm.value.content?.length || 0 }}/2000</mat-hint>
+        </mat-form-field>
+
+        <div class="report-issue__actions">
+          <button mat-button type="button" routerLink="/profile" [disabled]="isSubmitting">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting || issueForm.invalid">
+            @if (isSubmitting) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              Submit Issue
+            }
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="report-issue__tips">
+    <h3>Tips for reporting issues</h3>
+    <ul>
+      <li>Be specific about what you were trying to do</li>
+      <li>Include any error messages you saw</li>
+      <li>Mention which browser you're using</li>
+      <li>Describe the steps to reproduce the problem</li>
+    </ul>
+  </div>
+</div>
