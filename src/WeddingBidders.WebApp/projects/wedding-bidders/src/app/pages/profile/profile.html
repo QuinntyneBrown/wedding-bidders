@@ -1,0 +1,136 @@
+<div class="profile">
+  <div class="profile__header">
+    <h1>My Profile</h1>
+  </div>
+
+  @if (isLoading) {
+    <div class="profile__loading">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else if (errorMessage) {
+    <div class="profile__error">{{ errorMessage }}</div>
+  } @else if (profile) {
+    <div class="profile__content">
+      <mat-card class="profile__card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar class="profile__avatar">person</mat-icon>
+          <mat-card-title>{{ profile.firstname }} {{ profile.lastname }}</mat-card-title>
+          <mat-card-subtitle>
+            <mat-chip>{{ getProfileTypeName(profile.profileType) }}</mat-chip>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="profile__info">
+            @if (profile.accountEmail) {
+              <div class="profile__info-item">
+                <mat-icon>email</mat-icon>
+                <span>{{ profile.accountEmail }}</span>
+              </div>
+            }
+            @if (profile.phoneNumber) {
+              <div class="profile__info-item">
+                <mat-icon>phone</mat-icon>
+                <span>{{ profile.phoneNumber }}</span>
+              </div>
+            }
+            <div class="profile__info-item">
+              <mat-icon>verified</mat-icon>
+              <span>{{ profile.isApproved ? 'Approved' : 'Pending Approval' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      @if (profile.profileType === ProfileType.Customer) {
+        <mat-card class="profile__section">
+          <mat-card-header>
+            <mat-card-title>My Weddings</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            @if (weddings.length === 0) {
+              <div class="profile__empty">
+                <p>No weddings yet</p>
+                <button mat-raised-button color="primary" routerLink="/create-wedding">Create Wedding</button>
+              </div>
+            } @else {
+              <div class="profile__list">
+                @for (wedding of weddings; track wedding.weddingId) {
+                  <div class="profile__list-item">
+                    <div class="profile__list-item-main">
+                      <strong>{{ wedding.location }}</strong>
+                      <span>{{ formatDate(wedding.date) }}</span>
+                    </div>
+                    <div class="profile__list-item-detail">
+                      <span>{{ wedding.numberOfGuests }} guests</span>
+                    </div>
+                    <button mat-button [routerLink]="['/bids', wedding.weddingId]">View Bids</button>
+                  </div>
+                }
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
+      } @else if (bidder) {
+        <mat-card class="profile__section">
+          <mat-card-header>
+            <mat-card-title>Business Information</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="profile__info">
+              @if (bidder.companyName) {
+                <div class="profile__info-item">
+                  <mat-icon>business</mat-icon>
+                  <span>{{ bidder.companyName }}</span>
+                </div>
+              }
+              @if (bidder.description) {
+                <div class="profile__info-item profile__info-item--description">
+                  <mat-icon>description</mat-icon>
+                  <span>{{ bidder.description }}</span>
+                </div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="profile__section">
+          <mat-card-header>
+            <mat-card-title>My Bids</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            @if (bids.length === 0) {
+              <div class="profile__empty">
+                <p>No bids submitted yet</p>
+                <button mat-raised-button color="primary" routerLink="/weddings">Browse Weddings</button>
+              </div>
+            } @else {
+              <div class="profile__list">
+                @for (bid of bids; track bid.bidId) {
+                  <div class="profile__list-item">
+                    <div class="profile__list-item-main">
+                      <strong>{{ formatCurrency(bid.price) }}</strong>
+                    </div>
+                    <div class="profile__list-item-detail">
+                      <span>{{ bid.description }}</span>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+
+      <div class="profile__actions">
+        <button mat-raised-button routerLink="/messages">
+          <mat-icon>message</mat-icon>
+          Messages
+        </button>
+        <button mat-raised-button routerLink="/report-issue">
+          <mat-icon>report_problem</mat-icon>
+          Report Issue
+        </button>
+      </div>
+    </div>
+  }
+</div>

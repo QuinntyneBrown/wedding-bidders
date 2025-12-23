@@ -1,0 +1,79 @@
+<div class="messages">
+  <div class="messages__header">
+    <h1>Messages</h1>
+  </div>
+
+  @if (isLoadingContacts) {
+    <div class="messages__loading">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else if (errorMessage) {
+    <div class="messages__error">{{ errorMessage }}</div>
+  } @else {
+    <div class="messages__container">
+      <div class="messages__contacts">
+        <h3>Contacts</h3>
+        @if (contacts.length === 0) {
+          <div class="messages__empty-contacts">
+            <mat-icon>people_outline</mat-icon>
+            <p>No contacts yet</p>
+          </div>
+        } @else {
+          <mat-list>
+            @for (contact of contacts; track contact.profileId) {
+              <mat-list-item
+                [class.messages__contact--selected]="selectedContact?.profileId === contact.profileId"
+                (click)="selectContact(contact)">
+                <mat-icon matListItemIcon>person</mat-icon>
+                <span matListItemTitle>{{ getContactName(contact) }}</span>
+                <span matListItemLine>{{ contact.accountEmail }}</span>
+              </mat-list-item>
+            }
+          </mat-list>
+        }
+      </div>
+
+      <div class="messages__conversation">
+        @if (!selectedContact) {
+          <div class="messages__no-selection">
+            <mat-icon>chat</mat-icon>
+            <p>Select a contact to start messaging</p>
+          </div>
+        } @else {
+          <div class="messages__conversation-header">
+            <h3>{{ getContactName(selectedContact) }}</h3>
+          </div>
+
+          <div class="messages__conversation-body">
+            @if (isLoadingMessages) {
+              <div class="messages__loading">
+                <mat-spinner diameter="32"></mat-spinner>
+              </div>
+            } @else if (messages.length === 0) {
+              <div class="messages__no-messages">
+                <p>No messages yet. Start the conversation!</p>
+              </div>
+            } @else {
+              @for (message of messages; track message.messageId) {
+                <div class="messages__message" [class.messages__message--sent]="message.toProfileId === selectedContact.profileId">
+                  <div class="messages__message-content">{{ message.content }}</div>
+                  <div class="messages__message-time">{{ formatDate(message.createdDate) }}</div>
+                </div>
+              }
+            }
+          </div>
+
+          <div class="messages__conversation-input">
+            <mat-form-field class="messages__input-field">
+              <mat-label>Type a message</mat-label>
+              <input matInput [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" [disabled]="isSending">
+            </mat-form-field>
+            <button mat-icon-button color="primary" (click)="sendMessage()" [disabled]="isSending || !newMessage.trim()">
+              <mat-icon>send</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,95 @@
+<div class="payment">
+  <div class="payment__header">
+    <h1>Upgrade Your Account</h1>
+    <p>Get access to premium features with a membership subscription.</p>
+  </div>
+
+  <div class="payment__content">
+    <mat-card class="payment__summary">
+      <mat-card-header>
+        <mat-card-title>Premium Membership</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="payment__price">
+          <span class="payment__price-amount">${{ membershipPrice }}</span>
+          <span class="payment__price-currency">CAD</span>
+        </div>
+        <ul class="payment__features">
+          <li>
+            <mat-icon>check_circle</mat-icon>
+            <span>Unlimited bid submissions</span>
+          </li>
+          <li>
+            <mat-icon>check_circle</mat-icon>
+            <span>Priority visibility in search</span>
+          </li>
+          <li>
+            <mat-icon>check_circle</mat-icon>
+            <span>Direct messaging with customers</span>
+          </li>
+          <li>
+            <mat-icon>check_circle</mat-icon>
+            <span>Analytics and insights</span>
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="payment__form-card">
+      <mat-card-header>
+        <mat-card-title>Payment Details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @if (errorMessage) {
+          <div class="payment__error">{{ errorMessage }}</div>
+        }
+
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment__form">
+          <mat-form-field appearance="outline" class="payment__field">
+            <mat-label>Card Number</mat-label>
+            <input matInput formControlName="cardNumber" placeholder="1234 5678 9012 3456" (input)="formatCardNumber($event)" maxlength="16">
+            <mat-icon matSuffix>credit_card</mat-icon>
+            @if (paymentForm.get('cardNumber')?.touched && paymentForm.get('cardNumber')?.invalid) {
+              <mat-error>{{ getErrorMessage('cardNumber') }}</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="payment__row">
+            <mat-form-field appearance="outline" class="payment__field">
+              <mat-label>Expiry Date</mat-label>
+              <input matInput formControlName="expiry" placeholder="MM/YY" (input)="formatExpiry($event)" maxlength="5">
+              @if (paymentForm.get('expiry')?.touched && paymentForm.get('expiry')?.invalid) {
+                <mat-error>{{ getErrorMessage('expiry') }}</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="payment__field">
+              <mat-label>CVC</mat-label>
+              <input matInput formControlName="cvc" placeholder="123" (input)="formatCvc($event)" maxlength="4" type="password">
+              <mat-icon matSuffix>lock</mat-icon>
+              @if (paymentForm.get('cvc')?.touched && paymentForm.get('cvc')?.invalid) {
+                <mat-error>{{ getErrorMessage('cvc') }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="payment__actions">
+            <button mat-button type="button" routerLink="/profile" [disabled]="isProcessing">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="isProcessing || paymentForm.invalid">
+              @if (isProcessing) {
+                <mat-spinner diameter="20"></mat-spinner>
+              } @else {
+                Pay ${{ membershipPrice }} CAD
+              }
+            </button>
+          </div>
+        </form>
+
+        <div class="payment__secure">
+          <mat-icon>lock</mat-icon>
+          <span>Your payment is secure and encrypted</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

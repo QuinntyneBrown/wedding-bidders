@@ -39,4 +39,38 @@ public class ProfileController : ControllerBase
         if (response == null) return NotFound();
         return Ok(response);
     }
+
+    [HttpGet("getProfileById")]
+    [Authorize]
+    public async Task<ActionResult<ProfileDto>> GetProfileById([FromQuery] Guid id)
+    {
+        var response = await _mediator.Send(new GetProfileByIdRequest { ProfileId = id });
+        if (response == null) return NotFound();
+        return Ok(response);
+    }
+
+    [HttpGet("getByBidId")]
+    [Authorize]
+    public async Task<ActionResult<ProfileDto>> GetByBidId([FromQuery] Guid bidId)
+    {
+        var response = await _mediator.Send(new GetProfileByBidIdRequest { BidId = bidId });
+        if (response == null) return NotFound();
+        return Ok(response);
+    }
+
+    [HttpGet("getOthers")]
+    [Authorize]
+    public async Task<ActionResult<List<ProfileDto>>> GetOthers()
+    {
+        var response = await _mediator.Send(new GetOtherProfilesRequest());
+        return Ok(response);
+    }
+
+    [HttpPost("personalized")]
+    [Authorize]
+    public async Task<ActionResult> UpdateIsPersonalized()
+    {
+        await _mediator.Send(new UpdateIsPersonalizedRequest());
+        return Ok();
+    }
 }

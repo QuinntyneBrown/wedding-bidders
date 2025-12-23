@@ -4,33 +4,38 @@ using WeddingBidders.Core;
 
 namespace WeddingBidders.Api.Features.Profiles;
 
-public class GetCurrentProfileRequest : IRequest<ProfileDto?>
+public class UpdateIsPersonalizedRequest : IRequest<Unit>
 {
 }
 
-public class GetCurrentProfileHandler : IRequestHandler<GetCurrentProfileRequest, ProfileDto?>
+public class UpdateIsPersonalizedHandler : IRequestHandler<UpdateIsPersonalizedRequest, Unit>
 {
     private readonly IWeddingBiddersContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetCurrentProfileHandler(IWeddingBiddersContext context, IHttpContextAccessor httpContextAccessor)
+    public UpdateIsPersonalizedHandler(IWeddingBiddersContext context, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<ProfileDto?> Handle(GetCurrentProfileRequest request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateIsPersonalizedRequest request, CancellationToken cancellationToken)
     {
         var userIdClaim = _httpContextAccessor.HttpContext?.User.FindFirst("UserId")?.Value;
         if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
         {
-            return null;
+            return Unit.Value;
         }
 
         var profile = await _context.Profiles
-            .Include(p => p.Account)
             .FirstOrDefaultAsync(p => p.UserId == userId, cancellationToken);
 
-        return profile?.ToDto();
+        if (profile != null)
+        {
+            profile.IsPersonalized = true;
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        return Unit.Value;
     }
 }

@@ -49,6 +49,26 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'messages',
+    loadComponent: () => import('./pages/messages').then(m => m.Messages),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile',
+    loadComponent: () => import('./pages/profile').then(m => m.ProfilePage),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'report-issue',
+    loadComponent: () => import('./pages/report-issue').then(m => m.ReportIssue),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'payment',
+    loadComponent: () => import('./pages/payment').then(m => m.Payment),
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     redirectTo: 'login'
   }
