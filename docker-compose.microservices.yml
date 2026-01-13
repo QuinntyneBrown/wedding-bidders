@@ -1,0 +1,167 @@
+version: '3.8'
+
+services:
+  # Infrastructure
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=WeddingBidders123!
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P WeddingBidders123! -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # API Gateway
+  gateway:
+    build:
+      context: ./services
+      dockerfile: gateway/WeddingBidders.Gateway/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Cors__Origins=http://localhost:4200
+      - ReverseProxy__Clusters__identity-cluster__Destinations__identity-destination__Address=http://identity:8080
+      - ReverseProxy__Clusters__wedding-cluster__Destinations__wedding-destination__Address=http://wedding:8080
+      - ReverseProxy__Clusters__bidding-cluster__Destinations__bidding-destination__Address=http://bidding:8080
+      - ReverseProxy__Clusters__messaging-cluster__Destinations__messaging-destination__Address=http://messaging:8080
+      - ReverseProxy__Clusters__subscription-cluster__Destinations__subscription-destination__Address=http://subscription:8080
+      - ReverseProxy__Clusters__support-cluster__Destinations__support-destination__Address=http://support:8080
+    depends_on:
+      - identity
+      - wedding
+      - bidding
+      - messaging
+      - subscription
+      - support
+
+  # Identity Service
+  identity:
+    build:
+      context: ./services
+      dockerfile: identity/WeddingBidders.Identity.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__IdentityConnection=Server=sqlserver;Database=WeddingBidders_Identity;User Id=sa;Password=WeddingBidders123!;TrustServerCertificate=True
+      - ConnectionStrings__Redis=redis:6379
+      - Jwt__SecretKey=WeddingBiddersSecretKeyForJwtTokenGenerationMustBe32CharsLong!
+      - Jwt__Issuer=localhost
+      - Jwt__Audience=all
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Wedding Service
+  wedding:
+    build:
+      context: ./services
+      dockerfile: wedding/WeddingBidders.Wedding.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__WeddingConnection=Server=sqlserver;Database=WeddingBidders_Wedding;User Id=sa;Password=WeddingBidders123!;TrustServerCertificate=True
+      - ConnectionStrings__Redis=redis:6379
+      - Jwt__SecretKey=WeddingBiddersSecretKeyForJwtTokenGenerationMustBe32CharsLong!
+      - Jwt__Issuer=localhost
+      - Jwt__Audience=all
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Bidding Service
+  bidding:
+    build:
+      context: ./services
+      dockerfile: bidding/WeddingBidders.Bidding.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__BiddingConnection=Server=sqlserver;Database=WeddingBidders_Bidding;User Id=sa;Password=WeddingBidders123!;TrustServerCertificate=True
+      - ConnectionStrings__Redis=redis:6379
+      - Jwt__SecretKey=WeddingBiddersSecretKeyForJwtTokenGenerationMustBe32CharsLong!
+      - Jwt__Issuer=localhost
+      - Jwt__Audience=all
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Messaging Service
+  messaging:
+    build:
+      context: ./services
+      dockerfile: messaging/WeddingBidders.Messaging.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__MessagingConnection=Server=sqlserver;Database=WeddingBidders_Messaging;User Id=sa;Password=WeddingBidders123!;TrustServerCertificate=True
+      - ConnectionStrings__Redis=redis:6379
+      - Jwt__SecretKey=WeddingBiddersSecretKeyForJwtTokenGenerationMustBe32CharsLong!
+      - Jwt__Issuer=localhost
+      - Jwt__Audience=all
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Subscription Service
+  subscription:
+    build:
+      context: ./services
+      dockerfile: subscription/WeddingBidders.Subscription.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__SubscriptionConnection=Server=sqlserver;Database=WeddingBidders_Subscription;User Id=sa;Password=WeddingBidders123!;TrustServerCertificate=True
+      - ConnectionStrings__Redis=redis:6379
+      - Jwt__SecretKey=WeddingBiddersSecretKeyForJwtTokenGenerationMustBe32CharsLong!
+      - Jwt__Issuer=localhost
+      - Jwt__Audience=all
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Support Service
+  support:
+    build:
+      context: ./services
+      dockerfile: support/WeddingBidders.Support.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__SupportConnection=Server=sqlserver;Database=WeddingBidders_Support;User Id=sa;Password=WeddingBidders123!;TrustServerCertificate=True
+      - ConnectionStrings__Redis=redis:6379
+      - Jwt__SecretKey=WeddingBiddersSecretKeyForJwtTokenGenerationMustBe32CharsLong!
+      - Jwt__Issuer=localhost
+      - Jwt__Audience=all
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  redis-data:
+  sqlserver-data:
