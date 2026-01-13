@@ -1,0 +1,104 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{11111111-1111-1111-1111-111111111111}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Shared.Core", "shared\WeddingBidders.Shared.Core\WeddingBidders.Shared.Core.csproj", "{22222222-2222-2222-2222-222222222201}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Shared.Messaging", "shared\WeddingBidders.Shared.Messaging\WeddingBidders.Shared.Messaging.csproj", "{22222222-2222-2222-2222-222222222202}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "identity", "identity", "{33333333-3333-3333-3333-333333333301}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Identity.Api", "identity\WeddingBidders.Identity.Api\WeddingBidders.Identity.Api.csproj", "{33333333-3333-3333-3333-333333333302}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Identity.Core", "identity\WeddingBidders.Identity.Core\WeddingBidders.Identity.Core.csproj", "{33333333-3333-3333-3333-333333333303}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Identity.Infrastructure", "identity\WeddingBidders.Identity.Infrastructure\WeddingBidders.Identity.Infrastructure.csproj", "{33333333-3333-3333-3333-333333333304}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wedding", "wedding", "{44444444-4444-4444-4444-444444444401}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Wedding.Api", "wedding\WeddingBidders.Wedding.Api\WeddingBidders.Wedding.Api.csproj", "{44444444-4444-4444-4444-444444444402}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Wedding.Core", "wedding\WeddingBidders.Wedding.Core\WeddingBidders.Wedding.Core.csproj", "{44444444-4444-4444-4444-444444444403}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Wedding.Infrastructure", "wedding\WeddingBidders.Wedding.Infrastructure\WeddingBidders.Wedding.Infrastructure.csproj", "{44444444-4444-4444-4444-444444444404}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bidding", "bidding", "{55555555-5555-5555-5555-555555555501}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Bidding.Api", "bidding\WeddingBidders.Bidding.Api\WeddingBidders.Bidding.Api.csproj", "{55555555-5555-5555-5555-555555555502}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Bidding.Core", "bidding\WeddingBidders.Bidding.Core\WeddingBidders.Bidding.Core.csproj", "{55555555-5555-5555-5555-555555555503}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Bidding.Infrastructure", "bidding\WeddingBidders.Bidding.Infrastructure\WeddingBidders.Bidding.Infrastructure.csproj", "{55555555-5555-5555-5555-555555555504}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "messaging", "messaging", "{66666666-6666-6666-6666-666666666601}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Messaging.Api", "messaging\WeddingBidders.Messaging.Api\WeddingBidders.Messaging.Api.csproj", "{66666666-6666-6666-6666-666666666602}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Messaging.Core", "messaging\WeddingBidders.Messaging.Core\WeddingBidders.Messaging.Core.csproj", "{66666666-6666-6666-6666-666666666603}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Messaging.Infrastructure", "messaging\WeddingBidders.Messaging.Infrastructure\WeddingBidders.Messaging.Infrastructure.csproj", "{66666666-6666-6666-6666-666666666604}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "subscription", "subscription", "{77777777-7777-7777-7777-777777777701}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Subscription.Api", "subscription\WeddingBidders.Subscription.Api\WeddingBidders.Subscription.Api.csproj", "{77777777-7777-7777-7777-777777777702}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Subscription.Core", "subscription\WeddingBidders.Subscription.Core\WeddingBidders.Subscription.Core.csproj", "{77777777-7777-7777-7777-777777777703}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Subscription.Infrastructure", "subscription\WeddingBidders.Subscription.Infrastructure\WeddingBidders.Subscription.Infrastructure.csproj", "{77777777-7777-7777-7777-777777777704}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "support", "support", "{88888888-8888-8888-8888-888888888801}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Support.Api", "support\WeddingBidders.Support.Api\WeddingBidders.Support.Api.csproj", "{88888888-8888-8888-8888-888888888802}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Support.Core", "support\WeddingBidders.Support.Core\WeddingBidders.Support.Core.csproj", "{88888888-8888-8888-8888-888888888803}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Support.Infrastructure", "support\WeddingBidders.Support.Infrastructure\WeddingBidders.Support.Infrastructure.csproj", "{88888888-8888-8888-8888-888888888804}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gateway", "gateway", "{99999999-9999-9999-9999-999999999901}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingBidders.Gateway", "gateway\WeddingBidders.Gateway\WeddingBidders.Gateway.csproj", "{99999999-9999-9999-9999-999999999902}"
+EndProject
+
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{22222222-2222-2222-2222-222222222201} = {11111111-1111-1111-1111-111111111111}
+		{22222222-2222-2222-2222-222222222202} = {11111111-1111-1111-1111-111111111111}
+		{33333333-3333-3333-3333-333333333302} = {33333333-3333-3333-3333-333333333301}
+		{33333333-3333-3333-3333-333333333303} = {33333333-3333-3333-3333-333333333301}
+		{33333333-3333-3333-3333-333333333304} = {33333333-3333-3333-3333-333333333301}
+		{44444444-4444-4444-4444-444444444402} = {44444444-4444-4444-4444-444444444401}
+		{44444444-4444-4444-4444-444444444403} = {44444444-4444-4444-4444-444444444401}
+		{44444444-4444-4444-4444-444444444404} = {44444444-4444-4444-4444-444444444401}
+		{55555555-5555-5555-5555-555555555502} = {55555555-5555-5555-5555-555555555501}
+		{55555555-5555-5555-5555-555555555503} = {55555555-5555-5555-5555-555555555501}
+		{55555555-5555-5555-5555-555555555504} = {55555555-5555-5555-5555-555555555501}
+		{66666666-6666-6666-6666-666666666602} = {66666666-6666-6666-6666-666666666601}
+		{66666666-6666-6666-6666-666666666603} = {66666666-6666-6666-6666-666666666601}
+		{66666666-6666-6666-6666-666666666604} = {66666666-6666-6666-6666-666666666601}
+		{77777777-7777-7777-7777-777777777702} = {77777777-7777-7777-7777-777777777701}
+		{77777777-7777-7777-7777-777777777703} = {77777777-7777-7777-7777-777777777701}
+		{77777777-7777-7777-7777-777777777704} = {77777777-7777-7777-7777-777777777701}
+		{88888888-8888-8888-8888-888888888802} = {88888888-8888-8888-8888-888888888801}
+		{88888888-8888-8888-8888-888888888803} = {88888888-8888-8888-8888-888888888801}
+		{88888888-8888-8888-8888-888888888804} = {88888888-8888-8888-8888-888888888801}
+		{99999999-9999-9999-9999-999999999902} = {99999999-9999-9999-9999-999999999901}
+	EndGlobalSection
+EndGlobal
